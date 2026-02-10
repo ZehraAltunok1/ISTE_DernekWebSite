@@ -1,0 +1,174 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.Home"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    
+    <Page
+        title="EduSupport - Eğitime Destek Platformu"
+        showNavButton="false">
+        
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="🎓 EduSupport" level="H3"/>
+                </contentLeft>
+                <contentRight>
+                    <Button text="Ana Sayfa" type="Transparent"/>
+                    <Button text="Hakkımızda" type="Transparent"/>
+                    <Button text="Burslar" type="Transparent"/>
+                    <Button text="Bağış Yap" type="Emphasized"/>
+                    <Button 
+                        text="Giriş" 
+                        icon="sap-icon://employee"
+                        type="Transparent"
+                        press="onNavToLogin"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        
+        <content>
+            <!-- Hero Section -->
+            <l:VerticalLayout width="100%" class="sapUiLargeMarginTop">
+                <VBox alignItems="Center" class="sapUiLargeMargin">
+                    <Title text="Eğitime Destek, Geleceğe Yatırım" level="H1" class="sapUiMediumMarginBottom"/>
+                    <Text 
+                        text="Üniversite öğrencilerinin eğitim hayallerini gerçekleştirmelerine yardımcı olun. Her bağış, bir gencin geleceğini aydınlatır."
+                        class="sapUiMediumMarginBottom"
+                        textAlign="Center"
+                        width="60%"/>
+                    <HBox class="sapUiSmallMarginTop">
+                        <Button 
+                            text="Şimdi Bağış Yap" 
+                            type="Emphasized" 
+                            icon="sap-icon://favorite"
+                            class="sapUiSmallMarginEnd"/>
+                        <Button 
+                            text="Burs Başvurusu Yap" 
+                            type="Default"
+                            icon="sap-icon://document"/>
+                    </HBox>
+                </VBox>
+            </l:VerticalLayout>
+
+            <!-- İstatistikler -->
+            <l:Grid 
+                defaultSpan="L3 M6 S12" 
+                class="sapUiLargeMarginTop sapUiLargeMarginBegin sapUiLargeMarginEnd">
+                
+                <GenericTile
+                    header="Toplam Bağışçı"
+                    subheader="Destekleyen kişi/kurum"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent 
+                                    value="245" 
+                                    icon="sap-icon://group"
+                                    valueColor="Good"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+                
+                <GenericTile
+                    header="Burs Alan Öğrenci"
+                    subheader="Desteklenen genç"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent 
+                                    value="158" 
+                                    icon="sap-icon://education"
+                                    valueColor="Good"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+                
+                <GenericTile
+                    header="Toplam Bağış"
+                    subheader="Toplanan fon"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent 
+                                    value="1.2M" 
+                                    scale="₺"
+                                    icon="sap-icon://money-bills"
+                                    valueColor="Good"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+                
+                <GenericTile
+                    header="Aktif Kampanya"
+                    subheader="Devam eden"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent 
+                                    value="3" 
+                                    icon="sap-icon://flag"
+                                    valueColor="Neutral"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </l:Grid>
+
+            <!-- Nasıl Çalışır -->
+            <l:VerticalLayout width="100%" class="sapUiLargeMarginTop sapUiLargeMarginBottom">
+                <Title 
+                    text="Nasıl Çalışır?" 
+                    level="H2" 
+                    textAlign="Center"
+                    class="sapUiMediumMarginBottom"/>
+                
+                <l:Grid defaultSpan="L4 M6 S12" class="sapUiLargeMarginBegin sapUiLargeMarginEnd">
+                    <VBox alignItems="Center" class="sapUiSmallMargin">
+                        <core:Icon 
+                            src="sap-icon://document" 
+                            size="3rem" 
+                            color="#0070F2"/>
+                        <Title text="1. Başvuru" level="H4" class="sapUiTinyMarginTop"/>
+                        <Text text="Öğrenciler online başvuru formunu doldurur" textAlign="Center"/>
+                    </VBox>
+                    
+                    <VBox alignItems="Center" class="sapUiSmallMargin">
+                        <core:Icon 
+                            src="sap-icon://inspection" 
+                            size="3rem" 
+                            color="#0070F2"/>
+                        <Title text="2. Değerlendirme" level="H4" class="sapUiTinyMarginTop"/>
+                        <Text text="Başvurular incelenir ve uygun öğrenciler seçilir" textAlign="Center"/>
+                    </VBox>
+                    
+                    <VBox alignItems="Center" class="sapUiSmallMargin">
+                        <core:Icon 
+                            src="sap-icon://wallet" 
+                            size="3rem" 
+                            color="#0070F2"/>
+                        <Title text="3. Burs Desteği" level="H4" class="sapUiTinyMarginTop"/>
+                        <Text text="Seçilen öğrencilere düzenli burs ödemeleri yapılır" textAlign="Center"/>
+                    </VBox>
+                </l:Grid>
+            </l:VerticalLayout>
+
+        </content>
+        
+        <footer>
+            <Bar>
+                <contentMiddle>
+                    <Text text="© 2026 EduSupport Platform - Tüm hakları saklıdır"/>
+                </contentMiddle>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
