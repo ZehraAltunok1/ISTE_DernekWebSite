@@ -20,15 +20,15 @@ sap.ui.define([
             oDeviceModel.setDefaultBindingMode("OneWay");
             this.setModel(oDeviceModel, "device");
 
-            // Create the views based on the url/hash
-            this.getRouter().initialize();
-
             // Set global data model
             var oDataModel = new JSONModel({
                 currentUser: null,
                 isAuthenticated: false
             });
             this.setModel(oDataModel, "appData");
+
+            // Create the views based on the url/hash
+            this.getRouter().initialize();
         }
     });
 });

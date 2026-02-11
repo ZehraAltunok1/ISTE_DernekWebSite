@@ -6,7 +6,7 @@ sap.ui.define([
     return Controller.extend("edusupport.platform.controller.App", {
 
         onInit: function () {
-            console.log("App Controller initialized");
+            console.log("App Controller Initialized");
         }
     });
 });

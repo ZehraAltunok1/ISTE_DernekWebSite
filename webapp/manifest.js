@@ -1,8 +1,8 @@
 sap.ui.require.preload({
-  "iste/ui5/manifest.json": {
+  "edusupport/platform/manifest.json": {
     "_version": "1.12.0",
     "sap.app": {
-      "id": "iste.ui5",
+      "id": "edusupport.platform",
       "type": "application",
       "title": "İSTE Dernek",
       "applicationVersion": {
@@ -19,9 +19,35 @@ sap.ui.require.preload({
     },
     "sap.ui5": {
       "rootView": {
-        "viewName": "public.Home",
+        "viewName": "edusupport.platform.view.public.Home",
         "type": "XML",
-        "async": true
+        "async": true,
+      },
+      "routing": {
+        "config": {
+          "routerClass": "sap.m.routing.Router",
+          "viewType": "XML",
+          "async": true,
+          "viewPath": "edusupport.platform.view",
+          "controlAggregation": "pages",
+          "controlId": "app",
+          "bypassed": {
+            "target": "NotFound"
+          }
+        },
+        "routes": [
+          {
+            "pattern": "",
+            "name": "home",
+            "target": "home"
+          }
+        ],
+        "targets": {
+          "home": {
+            "viewName": "public.Home",
+            "viewId": "home"
+          }
+        }
       }
     }
   }
