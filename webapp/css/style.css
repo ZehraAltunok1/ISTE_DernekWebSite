@@ -1,0 +1,283 @@
+/* ==================== GLOBAL ==================== */
+.customBackground {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* ==================== HEADER ==================== */
+.customHeader {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    height: 70px;
+}
+
+.brandTitle {
+    color: #6C63FF;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navButton {
+    color: #4A5568;
+    font-weight: 500;
+    margin: 0 8px;
+    transition: color 0.3s ease;
+}
+
+.navButton:hover {
+    color: #6C63FF;
+}
+
+.donateButton {
+    background: linear-gradient(135deg, #FF6B9D 0%, #FFA94D 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 24px;
+    border-radius: 25px;
+    margin-right: 12px;
+}
+
+.loginButton {
+    color: #6C63FF;
+    font-weight: 500;
+}
+
+/* ==================== HERO ==================== */
+.heroSection {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 120px 40px;
+    min-height: 500px;
+    border-radius: 24px;
+    margin: 40px auto;
+    max-width: 1300px;
+}
+
+.heroTitle {
+    color: #fff;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.heroTitleSecondary {
+    background: linear-gradient(to right, #FFE66D, #FFA94D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.heroSubtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-top: 24px;
+}
+
+.heroButtons {
+    gap: 16px;
+}
+
+.heroCTA {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.primaryCTA {
+    background: #fff;
+    color: #667eea;
+    border: none;
+}
+
+.secondaryCTA {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.heroCTA:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ==================== SECTIONS ==================== */
+
+
+
+.statsSection {
+    background: #fff;
+}
+
+.howItWorksSection {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2D3748;
+    margin-bottom: 16px;
+}
+
+.sectionSubtitle {
+    font-size: 1.1rem;
+    color: #718096;
+    margin-bottom: 60px;
+}
+
+
+.stepsGrid {
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 24px;
+}
+
+/* ==================== CARDS ==================== */
+.statCard,
+.stepCard {
+    background: #fff;
+    padding: 40px 24px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    will-change: transform;
+}
+
+.statCard:hover,
+.stepCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.statNumber {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2D3748;
+    margin: 16px 0 8px;
+}
+
+.statLabel {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4A5568;
+}
+
+.statSubLabel {
+    font-size: 0.95rem;
+    color: #A0AEC0;
+}
+
+/* ==================== CTA ==================== */
+.ctaSection {
+    background: linear-gradient(135deg, #6C63FF 0%, #764ba2 100%);
+    padding: 100px 40px;
+    margin-bottom: 40px;
+    border-radius: 32px;
+}
+
+.ctaTitle {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.ctaSubtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    line-height: 1.8;
+}
+
+.ctaButton {
+    background: #fff;
+    color: #667eea;
+    border: none;
+    padding: 16px 48px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 30px;
+    min-width: 280px;
+    transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== FOOTER ==================== */
+/* ========== FOOTER ========== */
+.customFooter {
+    background: #2D3748;
+    padding: 24px 40px;
+    width: 100%;
+}
+.footerText {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+.footerLink {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    text-decoration: none;
+    margin: 0 12px;
+    transition: color 0.3s ease;
+}
+.footerLink:hover {
+    color: #6C63FF;
+}
+.footerSeparator {
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 8px;
+}
+
+/* ==================== UI5 FIXES ==================== */
+
+/* DynamicPage content padding düzeltme */
+.sapFDynamicPageContent {
+    padding: 0;
+}
+
+/* Title içi button spacing */
+.sapFDynamicPageTitle .sapMBtn {
+    margin: 0 6px;
+}
+
+/* Grid margin fix */
+.sapUiRespGrid {
+    margin: 0;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .heroTitle {
+        font-size: 2rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+        width: 90%;
+    }
+
+    .heroCTA {
+        min-width: 150px;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .sapFDynamicPageTitle .sapMBtn {
+        margin: 2px;
+    }
+}

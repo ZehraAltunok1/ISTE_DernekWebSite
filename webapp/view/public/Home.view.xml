@@ -1,0 +1,181 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.Home"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <f:DynamicPage showFooter="true">
+
+        <!-- HEADER -->
+    <f:title>
+        <f:DynamicPageTitle>
+            <f:heading>
+                <HBox alignItems="Center">
+                    <core:Icon 
+                        src="sap-icon://education" 
+                        size="2rem"
+                        color="#6C63FF"
+                        class="sapUiTinyMarginEnd"/>
+                    <Title text="EduSupport" level="H3" class="brandTitle"/>
+                </HBox>
+            </f:heading>
+
+            <f:actions>
+                <Button text="Ana Sayfa" type="Transparent"/>
+                <Button text="Hakkımızda" type="Transparent"/>
+                <Button text="Burslar" type="Transparent"/>
+                <Button text="Nasıl Çalışır?" type="Transparent"/>
+                <Button text="İletişim" type="Transparent"/>
+                <Button text="Bağış Yap" type="Emphasized" icon="sap-icon://heart"/>
+                <Button text="Giriş" icon="sap-icon://customer" press="onNavToLogin"/>
+            </f:actions>
+        </f:DynamicPageTitle>
+    </f:title>
+
+        <!-- CONTENT -->
+        <f:content>
+            <VBox class="sapUiLargeMargin">
+
+                <!-- HERO -->
+                <VBox 
+                    alignItems="Center"
+                    justifyContent="Center"
+                    class="heroSection sapUiLargeMarginBottom">
+
+                    <Title 
+                        text="Eğitime Destek,"
+                        level="H1"
+                        textAlign="Center"
+                        class="heroMainTitle"/>
+
+                    <Title 
+                        text="Geleceğe Yatırım 🎓"
+                        level="H1"
+                        textAlign="Center"
+                        class="heroSubTitle"/>
+
+                    <Text 
+                        text="Her bağış bir öğrencinin hayatında gerçek bir fark yaratır. Desteğinizle yarınların güçlü bireylerini yetiştirelim."
+                        textAlign="Center"
+                        width="650px"
+                        class="sapUiMediumMarginTop sapUiMediumMarginBottom"/>
+
+                    <HBox>
+                        <Button 
+                            text="Hemen Bağış Yap"
+                            type="Emphasized"
+                            icon="sap-icon://heart-2"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="Burs Başvurusu"
+                            type="Default"
+                            icon="sap-icon://documents"/>
+                    </HBox>
+
+                </VBox>
+
+                <!-- STATS -->
+                <VBox class="sapUiLargeMarginBottom">
+                    <Title 
+                        text="Birlikte Başardıklarımız"
+                        level="H2"
+                        textAlign="Center"
+                        class="sapUiMediumMarginBottom"/>
+
+                    <l:Grid defaultSpan="L3 M6 S12" hSpacing="2" vSpacing="2">
+
+                        <VBox alignItems="Center" class="statCard statPurple">
+                            <core:Icon src="sap-icon://group" size="2.5rem" color="#6C63FF"/>
+                            <Title text="245+" level="H3"/>
+                            <Text text="Bağışçı"/>
+                        </VBox>
+
+                        <VBox alignItems="Center" class="statCard statPink">
+                            <core:Icon src="sap-icon://study-leave" size="2.5rem" color="#FF6B9D"/>
+                            <Title text="158" level="H3"/>
+                            <Text text="Burslu Öğrenci"/>
+                        </VBox>
+
+                        <VBox alignItems="Center" class="statCard statOrange">
+                            <core:Icon src="sap-icon://money-bills" size="2.5rem" color="#FFA94D"/>
+                            <Title text="1.2M ₺" level="H3"/>
+                            <Text text="Toplam Bağış"/>
+                        </VBox>
+
+                        <VBox alignItems="Center" class="statCard statTeal">
+                            <core:Icon src="sap-icon://flag" size="2.5rem" color="#4ECDC4"/>
+                            <Title text="3" level="H3"/>
+                            <Text text="Aktif Kampanya"/>
+                        </VBox>
+
+                    </l:Grid>
+                </VBox>
+
+                <!-- HOW IT WORKS -->
+                <VBox class="sapUiLargeMarginBottom">
+
+                    <Title 
+                        text="Nasıl Çalışır?"
+                        level="H2"
+                        textAlign="Center"
+                        class="sapUiMediumMarginBottom"/>
+
+                    <l:Grid defaultSpan="L4 M6 S12" hSpacing="2" vSpacing="2">
+
+                        <VBox alignItems="Center" class="stepCard">
+                            <core:Icon src="sap-icon://edit" size="2.5rem" color="#6C63FF"/>
+                            <Title text="Başvuru" level="H4"/>
+                            <Text text="Öğrenciler başvurularını online yapar." textAlign="Center"/>
+                        </VBox>
+
+                        <VBox alignItems="Center" class="stepCard">
+                            <core:Icon src="sap-icon://decision" size="2.5rem" color="#FF6B9D"/>
+                            <Title text="Değerlendirme" level="H4"/>
+                            <Text text="Başvurular titizlikle incelenir." textAlign="Center"/>
+                        </VBox>
+
+                        <VBox alignItems="Center" class="stepCard">
+                            <core:Icon src="sap-icon://money-bills" size="2.5rem" color="#4ECDC4"/>
+                            <Title text="Destek" level="H4"/>
+                            <Text text="Seçilen öğrencilere burs sağlanır." textAlign="Center"/>
+                        </VBox>
+
+                    </l:Grid>
+                </VBox>
+
+                <!-- CTA -->
+                <VBox alignItems="Center" class="ctaSection">
+                    <Title 
+                        text="Bir Gencin Geleceğine Işık Tutun"
+                        level="H2"
+                        textAlign="Center"
+                        class="sapUiSmallMarginBottom"/>
+                    <Button 
+                        text="Bağış Yapmaya Başla"
+                        type="Emphasized"
+                        icon="sap-icon://collaborate"/>
+                </VBox>
+
+            </VBox>
+        </f:content>
+
+        <!-- FOOTER -->
+        <f:footer>
+            <Toolbar class="footerBar">
+                <ToolbarSpacer/>
+                <Text text="© 2026 EduSupport Platform"/>
+                <ToolbarSpacer/>
+                <Link text="Gizlilik Politikası"/>
+                <Text text="|"/>
+                <Link text="Kullanım Koşulları"/>
+                <Text text="|"/>
+                <Link text="İletişim"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </f:footer>
+
+    </f:DynamicPage>
+
+</mvc:View>

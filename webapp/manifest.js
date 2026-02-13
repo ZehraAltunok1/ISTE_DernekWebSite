@@ -1,0 +1,54 @@
+sap.ui.require.preload({
+  "edusupport/platform/manifest.json": {
+    "_version": "1.12.0",
+    "sap.app": {
+      "id": "edusupport.platform",
+      "type": "application",
+      "title": "İSTE Dernek",
+      "applicationVersion": {
+        "version": "1.0.0"
+      }
+    },
+    "sap.ui": {
+      "technology": "UI5",
+      "deviceTypes": {
+        "desktop": true,
+        "tablet": true,
+        "phone": true
+      }
+    },
+    "sap.ui5": {
+      "rootView": {
+        "viewName": "edusupport.platform.view.public.Home",
+        "type": "XML",
+        "async": true,
+      },
+      "routing": {
+        "config": {
+          "routerClass": "sap.m.routing.Router",
+          "viewType": "XML",
+          "async": true,
+          "viewPath": "edusupport.platform.view",
+          "controlAggregation": "pages",
+          "controlId": "app",
+          "bypassed": {
+            "target": "NotFound"
+          }
+        },
+        "routes": [
+          {
+            "pattern": "",
+            "name": "home",
+            "target": "home"
+          }
+        ],
+        "targets": {
+          "home": {
+            "viewName": "public.Home",
+            "viewId": "home"
+          }
+        }
+      }
+    }
+  }
+});
