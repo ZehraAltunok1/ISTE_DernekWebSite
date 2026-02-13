@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.admin.Dashboard"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+    
+    <Page
+        title="Yönetim Paneli"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        
+        <content>
+            <VBox alignItems="Center" justifyContent="Center" class="sapUiLargeMargin">
+                <core:Icon src="sap-icon://sys-enter-2" size="5rem" color="#6C63FF"/>
+                <Title text="Hoş Geldiniz!" level="H2" class="sapUiMediumMarginTop"/>
+                <Text text="Dashboard yakında aktif olacak..." class="sapUiSmallMarginTop"/>
+                
+                <Button 
+                    text="Çıkış Yap" 
+                    type="Emphasized"
+                    icon="sap-icon://log"
+                    press="onLogout"
+                    class="sapUiLargeMarginTop"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
