@@ -1,0 +1,350 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.admin.Profile"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    displayBlock="true"
+    height="100%">
+    
+    <Page
+        showHeader="true"
+        title="Profilim"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+        class="profilePage">
+        
+        <headerContent>
+            <Button 
+                icon="sap-icon://edit" 
+                text="Düzenle"
+                type="Emphasized"
+                press="onEditProfile"/>
+        </headerContent>
+        
+        <content>
+            <ScrollContainer height="100%" vertical="true">
+                <VBox class="profileContent">
+                    
+                    <!-- PROFİL HEADER CARD -->
+                    <f:Card class="profileHeaderCard sapUiResponsiveMargin">
+                        <f:header>
+                            <card:Header
+                                title="Profil Bilgileri"
+                                iconSrc="sap-icon://employee"/>
+                        </f:header>
+                        <f:content>
+                            <VBox class="sapUiMediumMargin">
+                                <HBox alignItems="Center" class="profileHeader">
+                                    
+                                    <!-- Profil Fotoğrafı -->
+                                    <VBox alignItems="Center" class="avatarSection">
+                                        <Avatar
+                                            src="{profileData>/avatar}"
+                                            displaySize="XL"
+                                            class="profileAvatar"
+                                            press="onChangeAvatar">
+                                            <customData>
+                                                <core:CustomData 
+                                                    key="initials" 
+                                                    value="{profileData>/initials}"/>
+                                            </customData>
+                                        </Avatar>
+                                        <Button 
+                                            text="Fotoğraf Değiştir"
+                                            type="Transparent"
+                                            icon="sap-icon://camera"
+                                            press="onChangeAvatar"
+                                            class="sapUiTinyMarginTop"/>
+                                    </VBox>
+                                    
+                                    <!-- Temel Bilgiler -->
+                                    <VBox class="sapUiLargeMarginBegin">
+                                        <Title 
+                                            text="{profileData>/full_name}" 
+                                            level="H2"
+                                            class="profileName"/>
+                                        <ObjectStatus
+                                            text="{profileData>/role_display}"
+                                            state="Success"
+                                            icon="sap-icon://shield"
+                                            class="sapUiTinyMarginTop"/>
+                                        <Text 
+                                            text="{profileData>/email}" 
+                                            class="sapUiTinyMarginTop profileEmail">
+                                            <layoutData>
+                                                <FlexItemData growFactor="1"/>
+                                            </layoutData>
+                                        </Text>
+                                        <Text 
+                                            text="Üyelik Tarihi: {profileData>/created_at}" 
+                                            class="sapUiTinyMarginTop profileDate"/>
+                                    </VBox>
+                                    
+                                </HBox>
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+                    
+                    <!-- KİŞİSEL İSTATİSTİKLER -->
+                    <Panel 
+                        headerText="Kişisel İstatistikler" 
+                        class="sapUiResponsiveMargin statsPanel">
+                        
+                        <layout:Grid 
+                            defaultSpan="XL3 L3 M6 S12"
+                            class="profileStatsGrid">
+                            
+                            <VBox class="statCard statBlue" alignItems="Center">
+                                <core:Icon 
+                                    src="sap-icon://log" 
+                                    size="2rem" 
+                                    color="#0070F2"/>
+                                <Title 
+                                    text="{profileData>/stats/loginCount}" 
+                                    level="H3"
+                                    class="statNumber"/>
+                                <Text text="Toplam Giriş" class="statLabel"/>
+                                <Text 
+                                    text="Son: {profileData>/stats/lastLogin}" 
+                                    class="statSubtext"/>
+                            </VBox>
+                            
+                            <VBox class="statCard statGreen" alignItems="Center">
+                                <core:Icon 
+                                    src="sap-icon://accept" 
+                                    size="2rem" 
+                                    color="#10B981"/>
+                                <Title 
+                                    text="{profileData>/stats/approvedCount}" 
+                                    level="H3"
+                                    class="statNumber"/>
+                                <Text text="Onaylanan İşlem" class="statLabel"/>
+                                <Text text="Bu ay" class="statSubtext"/>
+                            </VBox>
+                            
+                            <VBox class="statCard statOrange" alignItems="Center">
+                                <core:Icon 
+                                    src="sap-icon://add" 
+                                    size="2rem" 
+                                    color="#F59E0B"/>
+                                <Title 
+                                    text="{profileData>/stats/addedMembers}" 
+                                    level="H3"
+                                    class="statNumber"/>
+                                <Text text="Eklenen Üye" class="statLabel"/>
+                                <Text text="Bu ay" class="statSubtext"/>
+                            </VBox>
+                            
+                            <VBox class="statCard statPurple" alignItems="Center">
+                                <core:Icon 
+                                    src="sap-icon://history" 
+                                    size="2rem" 
+                                    color="#8B5CF6"/>
+                                <Title 
+                                    text="{profileData>/stats/activeDays}" 
+                                    level="H3"
+                                    class="statNumber"/>
+                                <Text text="Aktif Gün" class="statLabel"/>
+                                <Text text="Bu ay" class="statSubtext"/>
+                            </VBox>
+                            
+                        </layout:Grid>
+                    </Panel>
+                    
+                    <!-- İKİ KOLONLU LAYOUT -->
+                    <layout:Grid 
+                        defaultSpan="XL6 L6 M12 S12"
+                        class="sapUiResponsiveMargin">
+                        
+                        <!-- DETAYLI BİLGİLER -->
+                        <Panel headerText="Detaylı Bilgiler" class="detailsPanel">
+                            <List>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Kullanıcı Adı:"/>
+                                        <Text text="{profileData>/username}"/>
+                                    </HBox>
+                                </CustomListItem>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Email:"/>
+                                        <Text text="{profileData>/email}"/>
+                                    </HBox>
+                                </CustomListItem>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Telefon:"/>
+                                        <Text text="{profileData>/phone}"/>
+                                    </HBox>
+                                </CustomListItem>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Rol:"/>
+                                        <ObjectStatus
+                                            text="{profileData>/role_display}"
+                                            state="Success"/>
+                                    </HBox>
+                                </CustomListItem>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Kayıt Tarihi:"/>
+                                        <Text text="{profileData>/created_at}"/>
+                                    </HBox>
+                                </CustomListItem>
+                                <CustomListItem>
+                                    <HBox 
+                                        justifyContent="SpaceBetween" 
+                                        width="100%"
+                                        class="profileInfoRow">
+                                        <Label text="Son Güncelleme:"/>
+                                        <Text text="{profileData>/updated_at}"/>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </Panel>
+                        
+                        <!-- HESAP AYARLARI -->
+                        <Panel headerText="Hesap Ayarları" class="settingsPanel">
+                            <VBox class="sapUiSmallMargin">
+                                <Button 
+                                    text="Şifre Değiştir" 
+                                    icon="sap-icon://key"
+                                    width="100%"
+                                    press="onChangePassword"
+                                    class="sapUiTinyMarginBottom"/>
+                                <Button 
+                                    text="Email Değiştir" 
+                                    icon="sap-icon://email"
+                                    width="100%"
+                                    press="onChangeEmail"
+                                    class="sapUiTinyMarginBottom"/>
+                                <Button 
+                                    text="İki Faktörlü Doğrulama" 
+                                    icon="sap-icon://shield"
+                                    width="100%"
+                                    press="onSetup2FA"
+                                    class="sapUiTinyMarginBottom"/>
+                                <Button 
+                                    text="Bildirim Ayarları" 
+                                    icon="sap-icon://bell"
+                                    width="100%"
+                                    press="onNotificationSettings"
+                                    class="sapUiTinyMarginBottom"/>
+                                <Button 
+                                    text="Oturum Geçmişi" 
+                                    icon="sap-icon://history"
+                                    width="100%"
+                                    press="onViewSessions"/>
+                            </VBox>
+                        </Panel>
+                        
+                    </layout:Grid>
+                    
+                    <!-- SON AKTİVİTELER -->
+                    <Panel 
+                        headerText="Son Aktivitelerim" 
+                        class="sapUiResponsiveMargin activityPanel">
+                        
+                        <Table
+                            items="{profileData>/recentActivities}"
+                            growing="true"
+                            growingThreshold="10">
+                            <columns>
+                                <Column width="3rem">
+                                    <Text text=""/>
+                                </Column>
+                                <Column>
+                                    <Text text="İşlem"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Detay"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Tarih"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <core:Icon 
+                                            src="{profileData>icon}" 
+                                            color="{profileData>color}"/>
+                                        <ObjectStatus
+                                            text="{profileData>action}"
+                                            state="{profileData>state}"/>
+                                        <Text text="{profileData>details}"/>
+                                        <Text text="{profileData>timestamp}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </Panel>
+                    
+                    <!-- OTURUM BİLGİLERİ -->
+                    <Panel 
+                        headerText="Aktif Oturumlar" 
+                        class="sapUiResponsiveMargin sessionsPanel">
+                        
+                        <List items="{profileData>/activeSessions}">
+                            <CustomListItem>
+                                <HBox 
+                                    justifyContent="SpaceBetween" 
+                                    alignItems="Center"
+                                    width="100%">
+                                    <HBox alignItems="Center">
+                                        <core:Icon 
+                                            src="{profileData>deviceIcon}" 
+                                            size="1.5rem"
+                                            class="sapUiSmallMarginEnd"/>
+                                        <VBox>
+                                            <Text 
+                                                text="{profileData>device}" 
+                                                class="sessionDevice"/>
+                                            <Text 
+                                                text="{profileData>location}" 
+                                                class="sessionLocation"/>
+                                            <Text 
+                                                text="Son Aktivite: {profileData>lastActive}" 
+                                                class="sessionTime"/>
+                                        </VBox>
+                                    </HBox>
+                                    <HBox>
+                                        <ObjectStatus
+                                            text="{profileData>status}"
+                                            state="{= ${profileData>isCurrent} ? 'Success' : 'Information' }"
+                                            class="sapUiSmallMarginEnd"/>
+                                        <Button 
+                                            icon="sap-icon://decline"
+                                            type="Reject"
+                                            visible="{= !${profileData>isCurrent} }"
+                                            press="onTerminateSession"
+                                            tooltip="Oturumu Sonlandır"/>
+                                    </HBox>
+                                </HBox>
+                            </CustomListItem>
+                        </List>
+                    </Panel>
+                    
+                </VBox>
+            </ScrollContainer>
+        </content>
+    </Page>
+</mvc:View>

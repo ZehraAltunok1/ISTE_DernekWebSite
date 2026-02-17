@@ -1,0 +1,63 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    
+    <Dialog
+        title="Profil Düzenle"
+        contentWidth="500px">
+        
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false">
+                
+                <f:content>
+                    <Label text="Ad" required="true"/>
+                    <Input
+                        id="editFirstName"
+                        placeholder="Adınızı girin"
+                        required="true"/>
+                    
+                    <Label text="Soyad" required="true"/>
+                    <Input
+                        id="editLastName"
+                        placeholder="Soyadınızı girin"
+                        required="true"/>
+                    
+                    <Label text="Telefon"/>
+                    <Input
+                        id="editPhone"
+                        placeholder="05XX XXX XX XX"
+                        type="Tel"/>
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        
+        <beginButton>
+            <Button
+                text="Kaydet"
+                type="Emphasized"
+                press="onSaveProfileEdit"/>
+        </beginButton>
+        
+        <endButton>
+            <Button
+                text="İptal"
+                press="onCancelProfileEdit"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

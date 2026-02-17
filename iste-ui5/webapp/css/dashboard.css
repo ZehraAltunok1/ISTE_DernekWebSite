@@ -1,0 +1,470 @@
+/* ================================================= */
+/* ADMIN DASHBOARD STYLES - FIXED */
+/* ================================================= */
+
+.adminDashboardPage {
+    background: #F5F6F8;
+}
+
+/* ================================================= */
+/* DASHBOARD CONTENT */
+/* ================================================= */
+
+.dashboardScrollContainer {
+    background: #F5F6F8;
+}
+
+.dashboardContent {
+    padding: 1.5rem;
+    max-width: 100%;
+}
+
+/* ================================================= */
+/* WELCOME BANNER */
+/* ================================================= */
+
+.welcomeBanner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.welcomeTitle {
+    color: white !important;
+    font-size: 1.75rem !important;
+    margin: 0 !important;
+}
+
+.welcomeSubtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+/* ================================================= */
+/* KPI CARDS */
+/* ================================================= */
+
+.kpiGrid {
+    padding: 1rem 0;
+}
+
+.kpiCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    min-height: 180px;
+}
+
+.kpiCard:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.kpiBlue {
+    border-left: 4px solid #0070F2;
+}
+
+.kpiGreen {
+    border-left: 4px solid #10B981;
+}
+
+.kpiOrange {
+    border-left: 4px solid #F59E0B;
+}
+
+.kpiPurple {
+    border-left: 4px solid #8B5CF6;
+}
+
+.kpiCardContent {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.kpiIcon {
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.kpiNumber {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #1F2937 !important;
+    margin: 0.5rem 0 !important;
+}
+
+.kpiLabel {
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.kpiTrend {
+    margin-top: 0.5rem;
+}
+
+/* ================================================= */
+/* PANELS - EN ÖNEMLİ KISIM! */
+/* ================================================= */
+
+/* Genel Panel Stilleri */
+.adminDashboardPage .sapMPanel {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.adminDashboardPage .sapMPanelHdr {
+    background: transparent;
+    border-bottom: 2px solid #F3F4F6;
+    padding: 1.5rem !important;  /* ← ÖNEMLİ: !important ekle */
+}
+
+/* BU ÇOK ÖNEMLİ - Panel Content Padding */
+.adminDashboardPage .sapMPanelContent {
+    padding: 1.5rem !important;  /* ← 0 değil, 1.5rem olmalı! */
+}
+
+/* Activity Panel - Özel Durum */
+.activityPanel .sapMPanelContent,
+.quickActionsPanel .sapMPanelContent {
+    padding: 0 !important;  /* ← Liste için padding 0 */
+}
+
+/* ================================================= */
+/* ACTIVITY LIST */
+/* ================================================= */
+
+.activityPanel .sapMList {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activityPanel .sapMFeedListItem {
+    border-bottom: 1px solid #F3F4F6;
+    padding: 1rem 1.5rem !important;  /* ← Padding buraya */
+}
+
+.activityPanel .sapMFeedListItem:last-child {
+    border-bottom: none;
+}
+
+.activityPanel .sapMListNoData {
+    padding: 3rem !important;  /* ← Boş mesaj için padding */
+    text-align: center;
+    color: #9CA3AF;
+}
+
+/* ================================================= */
+/* QUICK ACTIONS */
+/* ================================================= */
+
+.quickActionsPanel .sapMBtn {
+    width: 100%;
+    margin: 0.5rem 1.5rem !important;  /* ← Buton margin */
+    max-width: calc(100% - 3rem);
+    text-align: left;
+}
+
+.quickActionsPanel .sapMBtn:first-child {
+    margin-top: 1.5rem !important;
+}
+
+.quickActionsPanel .sapMBtn:last-child {
+    margin-bottom: 1.5rem !important;
+}
+
+/* ================================================= */
+/* TABLES */
+/* ================================================= */
+
+.membersTable {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.membersTable .sapMListTblHeaderCell {
+    background: #F9FAFB;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.membersTable .sapMListTblRow:hover {
+    background: #F9FAFB;}
+
+/* ================================================= */
+/* BUTTONS */
+/* ================================================= */
+
+.adminDashboardPage .sapMBtn {
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.adminDashboardPage .sapMBtn:hover {
+    transform: translateY(-1px);
+}
+
+.adminDashboardPage .sapMBtnEmphasized {
+    background: linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%);
+    border: none;}
+
+/* ================================================= */
+/* OBJECT STATUS */
+/* ================================================= */
+
+.adminDashboardPage .sapMObjStatus {
+    border-radius: 12px;
+    padding: 0.25rem 0.75rem;
+}
+
+.adminDashboardPage .sapMObjStatusSuccess {
+    background: #DEF7EC;
+    color: #03543F;
+}
+
+.adminDashboardPage .sapMObjStatusError {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+.adminDashboardPage .sapMObjStatusWarning {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.adminDashboardPage .sapMObjStatusInformation {
+    background: #DBEAFE;
+    color: #1E3A8A;
+}
+
+/* ================================================= */
+/* ICON TAB BAR */
+/* ================================================= */
+
+.adminIconTabBar {
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.adminIconTabBar .sapMITBFilter {
+    color: #6B7280;
+    transition: all 0.3s ease;
+}
+
+.adminIconTabBar .sapMITBFilter:hover {
+    color: #1F2937;
+    background: #F9FAFB;
+}
+
+.adminIconTabBar .sapMITBFilter.sapMITBSelected {
+    color: #6C63FF;
+    border-bottom-color: #6C63FF;
+}
+
+/* ================================================= */
+/* RESPONSIVE */
+/* ================================================= */
+
+@media (max-width: 1024px) {
+    .dashboardContent {
+        padding: 1rem;
+}
+    
+    .kpiNumber {
+        font-size: 2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .kpiNumber {
+        font-size: 1.75rem !important;
+    }
+    
+    .kpiCard {
+        min-height: 160px;
+    }}
+
+/* ================================================= */
+/* ANIMATIONS */
+/* ================================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.kpiCard {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* ================================================= */
+/* SCROLL STYLING */
+/* ================================================= */
+
+.activityPanel .sapMList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-track {
+    background: #F3F4F6;
+    border-radius: 10px;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;}
+
+/* ================================================= */
+/* ETKİNLİK KPI KARTLARI                            */
+/* ================================================= */
+
+.eventKpiRow {
+    gap: 1rem;
+    padding: 0 0.25rem 0.5rem 0.25rem;
+}
+
+.eventKpiCard {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 1rem 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    gap: 0.35rem;
+    text-align: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.eventKpiCard:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.eventKpiBlue  { border-top: 3px solid #0070F2; }
+.eventKpiGreen { border-top: 3px solid #10B981; }
+.eventKpiOrange{ border-top: 3px solid #F59E0B; }
+.eventKpiPurple{ border-top: 3px solid #8B5CF6; }
+
+.eventKpiNumber {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: #1F2937 !important;
+    margin: 0 !important;
+}
+
+.eventKpiLabel {
+    font-size: 0.78rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+/* ================================================= */
+/* ETKİNLİK LİSTESİ                                 */
+/* ================================================= */
+
+.eventsList .sapMListItems {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+}
+
+.eventsList .sapMLIB {
+    border-radius: 10px !important;
+    border: 1px solid #F3F4F6 !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+    background: white !important;
+    margin-bottom: 0.6rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.eventsList .sapMLIB:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08) !important;
+    border-color: #E0E7FF !important;
+}
+
+/* ================================================= */
+/* ETKİNLİK KART İÇERİĞİ                            */
+/* ================================================= */
+
+.eventCard {
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+    width: 100%;
+}
+
+.eventCardIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    background: #F9FAFB;
+    flex-shrink: 0;
+}
+
+.eventCardBody {
+    flex: 1;
+    min-width: 0;
+    gap: 0.35rem;
+}
+
+.eventCardTitle {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #1F2937 !important;
+    margin: 0 !important;
+    margin-right: 0.75rem !important;
+}
+
+.eventStatusBadge {
+    border-radius: 20px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem !important;
+}
+
+.eventCardMeta {
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.eventMetaText {
+    font-size: 0.8rem;
+    color: #6B7280;
+    margin-right: 0.5rem;
+}
+
+.eventCardActions {
+    flex-shrink: 0;
+    gap: 0.35rem;
+    min-width: 120px;
+}
+
+/* ================================================= */
+/* MOBİL                                             */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    .eventKpiRow {
+        flex-wrap: wrap;
+    }
+    .eventKpiCard {
+        min-width: calc(50% - 0.5rem);
+    }
+    .eventCardActions {
+        min-width: auto;
+    }
+}    
+    

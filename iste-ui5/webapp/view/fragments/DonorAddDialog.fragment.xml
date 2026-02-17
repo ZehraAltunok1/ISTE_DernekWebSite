@@ -1,0 +1,174 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    
+    <Dialog
+        id="donorAddDialog"
+        title="Yeni Bağışçı Ekle"
+        contentWidth="600px"
+        type="Message"
+        draggable="true"
+        resizable="true"
+        afterClose="onDonorDialogClose">
+        
+        <content>
+            <VBox class="sapUiSmallMargin">
+                
+                <!-- BAŞLIK -->
+                <MessageStrip
+                    text="Bağışçı bilgilerini ekledikten sonra, sistem otomatik olarak bir şifre oluşturacak ve email gönderecektir."
+                    type="Information"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom"/>
+                
+                <!-- FORM -->
+                <f:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="4"
+                    labelSpanM="12"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="0"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false">
+                    
+                    <f:content>
+                        
+                        <!-- KİŞİSEL BİLGİLER -->
+                        <core:Title text="Kişisel Bilgiler"/>
+                        
+                        <Label text="Ad" required="true"/>
+                        <Input
+                            id="donorFirstName"
+                            placeholder="Örn: Ahmet"
+                            value="{donorModel>/first_name}"
+                            required="true"/>
+                        
+                        <Label text="Soyad" required="true"/>
+                        <Input
+                            id="donorLastName"
+                            placeholder="Örn: Yılmaz"
+                            value="{donorModel>/last_name}"
+                            required="true"/>
+                        
+                        <Label text="TC Kimlik No"/>
+                        <MaskInput
+                            id="donorTcNo"
+                            placeholder="___________"
+                            mask="99999999999"
+                            value="{donorModel>/tc_no}"/>
+                        
+                        <Label text="Doğum Tarihi"/>
+                        <DatePicker
+                            id="donorBirthDate"
+                            placeholder="GG/AA/YYYY"
+                            displayFormat="dd/MM/yyyy"
+                            valueFormat="yyyy-MM-dd"
+                            value="{donorModel>/birth_date}"/>
+                        
+                        <!-- İLETİŞİM BİLGİLERİ -->
+                        <core:Title text="İletişim Bilgileri"/>
+                        
+                        <Label text="Email" required="true"/>
+                        <Input
+                            id="donorEmail"
+                            type="Email"
+                            placeholder="ornek@email.com"
+                            value="{donorModel>/email}"
+                            required="true"/>
+                        
+                        <Label text="Telefon" required="true"/>
+                        <MaskInput
+                            id="donorPhone"
+                            placeholder="(___) ___ __ __"
+                            mask="(999) 999 99 99"
+                            value="{donorModel>/phone}"
+                            required="true"/>
+                        
+                        <!-- ADRES BİLGİLERİ -->
+                        <core:Title text="Adres Bilgileri"/>
+                        
+                        <Label text="İl"/>
+                        <Input
+                            id="donorCity"
+                            placeholder="Örn: İstanbul"
+                            value="{donorModel>/city}"/>
+                        
+                        <Label text="İlçe"/>
+                        <Input
+                            id="donorDistrict"
+                            placeholder="Örn: Kadıköy"
+                            value="{donorModel>/district}"/>
+                        
+                        <Label text="Adres"/>
+                        <TextArea
+                            id="donorAddress"
+                            placeholder="Tam adres..."
+                            value="{donorModel>/address}"
+                            rows="3"/>
+                        
+                        <!-- BAĞIŞ TERCİHLERİ -->
+                        <core:Title text="Bağış Tercihleri"/>
+                        
+                        <Label text="Bağış Türü"/>
+                        <Select
+                            id="donorDonationType"
+                            selectedKey="{donorModel>/donation_type}">
+                            <items>
+                                <core:Item key="monthly" text="Aylık"/>
+                                <core:Item key="yearly" text="Yıllık"/>
+                                <core:Item key="onetime" text="Tek Seferlik"/>
+                            </items>
+                        </Select>
+                        
+                        <Label text="Bağış Miktarı (₺)"/>
+                        <StepInput
+                            id="donorAmount"
+                            value="{donorModel>/donation_amount}"
+                            min="0"
+                            step="100"
+                            displayValuePrecision="0"
+                            textAlign="Right"/>
+                        
+                        <!-- NOTLAR -->
+                        <core:Title text="Ek Bilgiler"/>
+                        
+                        <Label text="Notlar"/>
+                        <TextArea
+                            id="donorNotes"
+                            placeholder="Ek notlar..."
+                            value="{donorModel>/notes}"
+                            rows="3"/>
+                        
+                    </f:content>
+                </f:SimpleForm>
+                
+            </VBox>
+        </content>
+        
+        <beginButton>
+            <Button
+                text="Kaydet"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press="onSaveDonor"/>
+        </beginButton>
+        
+        <endButton>
+            <Button
+                text="İptal"
+                type="Transparent"
+                icon="sap-icon://decline"
+                press="onCloseDonorDialog"/>
+        </endButton>
+        
+    </Dialog>
+</core:FragmentDefinition>

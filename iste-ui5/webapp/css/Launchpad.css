@@ -1,0 +1,167 @@
+/* ============================================
+   FIORI LAUNCHPAD STYLES
+   ============================================ */
+
+/* Shell Bar Customization */
+.sapUiSizeCompact .sapMShellBar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Launchpad Container */
+.launchpadContainer {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+/* Welcome Section */
+.welcomeSection {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.welcomeTitle {
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem !important;
+}
+
+.welcomeSubtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Tile Container */
+.tileContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Generic Tile Styling */
+.sapMGT {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer;
+}
+
+.sapMGT:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.sapMGT:active {
+    transform: translateY(-2px);
+}
+
+/* Tile Colors */
+.tileDonate {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.tileProfile {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+}
+
+.tileAdmin {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+.tileMyDonations {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+}
+
+.tileMyStudents {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+}
+
+.tileApplications {
+    background: linear-gradient(135deg, #30cfd0 0%, #330867 100%) !important;
+}
+
+.tileApply {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%) !important;
+}
+
+/* Tile Content */
+.sapMGT .sapMGTHdrTxt {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 1.2rem !important;
+}
+
+.sapMGT .sapMGTSubHdrTxt {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.sapMGT .sapMGTLineMode .sapMGTHdrContent {
+    color: white !important;
+}
+
+/* Section Headers */
+.sectionHeader {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: #1a1a1a;
+    margin: 2rem 0 1rem 0 !important;
+    padding-left: 0.5rem;
+    border-left: 4px solid #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .launchpadContainer {
+        padding: 1rem;
+    }
+    
+    .tileContainer {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .welcomeSection {
+        padding: 1.5rem;
+    }
+    
+    .welcomeTitle {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Menu Popup */
+.sapMPopup .sapMMenu {
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading State */
+.launchpadLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.emptyStateIcon {
+    font-size: 4rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+}
+
+.emptyStateText {
+    font-size: 1.2rem;
+    color: #999;
+}

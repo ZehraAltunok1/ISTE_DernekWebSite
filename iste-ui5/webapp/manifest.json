@@ -1,0 +1,151 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "edusupport.platform",
+    "type": "application",
+    "title": "İSTE Dernek",
+    "description": "Eğitim Bağış ve Burs Yönetim Sistemi",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "edusupport.platform.view.App",
+      "type": "XML",
+      "id": "app",
+      "async": true
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {},
+        "sap.f": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "edusupport.platform.i18n.i18n"
+        }
+      },
+      "appData": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        },
+        {
+          "uri": "css/launchpad.css"
+        },
+        {
+          "uri": "css/dashboard.css"
+        },
+        {
+          "uri": "css/profile.css"
+        },
+        {
+          "uri": "css/login.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "edusupport.platform.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "transition": "slide",
+        "bypassed": {
+          "target": "notFound"
+        },
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "home",
+          "target": "home"
+        },
+        {
+          "pattern": "login",
+          "name": "login",
+          "target": "login"
+        },
+        {
+          "pattern": "user/launchpad",
+          "name": "launchpad",
+          "target": "launchpad"
+        },
+        {
+          "pattern": "admin/dashboard",
+          "name": "adminDashboard",
+          "target": "adminDashboard"
+        },
+        {
+          "pattern": "admin/profile",
+          "name": "profile",
+          "target": "profile"
+        }
+      ],
+      "targets": {
+        "login": {
+          "viewType": "XML",
+          "viewName": "auth.Login",
+          "viewId": "login",
+          "viewLevel": 1
+        },
+        "home": {
+          "viewType": "XML",
+          "viewName": "public.Home",
+          "viewId": "home",
+          "viewLevel": 2
+        },
+        "launchpad": {
+          "viewType": "XML",
+          "viewName": "user.Launchpad",
+          "viewId": "launchpad",
+          "viewLevel": 3
+        },
+        "adminDashboard": {
+          "viewType": "XML",
+          "viewName": "admin.Dashboard",
+          "viewId": "adminDashboard",
+          "viewLevel": 4
+        },
+        "profile": {
+          "viewType": "XML",
+          "viewName": "admin.Profile",
+          "viewId": "profile",
+          "viewLevel": 5
+        },
+        "notFound": {
+          "viewType": "XML",
+          "viewName": "public.NotFound",
+          "viewId": "notFound",
+          "viewLevel": 6
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  }
+}

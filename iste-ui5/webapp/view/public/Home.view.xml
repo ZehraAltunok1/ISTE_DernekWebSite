@@ -1,0 +1,407 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.Home"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:uxap="sap.uxap">
+    
+    <!-- SAP Fiori Object Page Layout -->
+    <uxap:ObjectPageLayout
+        showTitleInHeaderContent="true"
+        upperCaseAnchorBar="false"
+        showFooter="true">
+        
+        <!-- Header Title -->
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                
+                <uxap:expandedHeading>
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://education" size="2.5rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
+                        <Title text="EduSupport Platform" level="H1"/>
+                    </HBox>
+                </uxap:expandedHeading>
+                
+                <uxap:snappedHeading>
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://education" size="2rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
+                        <Title text="EduSupport" level="H3"/>
+                    </HBox>
+                </uxap:snappedHeading>
+                
+                <uxap:actions>
+                    <Button text="Bağış Yap" type="Emphasized" icon="sap-icon://heart"/>
+                    <Button 
+                        text="Giriş Yap" 
+                        icon="sap-icon://customer"
+                        type="Emphasized"
+                        press="onLoginPress"
+                        visible="{= !${appData>/isAuthenticated} }"/>
+                    <Button 
+                        text="Panel"
+                        icon="sap-icon://home"
+                        type="Emphasized"
+                        press="onNavToLaunchpad"
+                        visible="{= ${appData>/isAuthenticated} &amp;&amp; ${appData>/currentUser/role} !== 'admin' }"/>
+                    <Button 
+                        text="Yönetim"
+                        icon="sap-icon://business-objects-experience"
+                        type="Emphasized"
+                        press="onNavToDashboard"
+                        visible="{= ${appData>/isAuthenticated} &amp;&amp; ${appData>/currentUser/role} === 'admin' }"/>
+                        <!-- YENİ -->
+                        <MenuButton
+                            icon="sap-icon://employee"
+                            text="{appData>/currentUser/first_name}"
+                            type="Transparent"
+                            visible="{appData>/isAuthenticated}"
+                            menuPosition="BeginBottom">
+                            <menu>
+                                <Menu>
+                                    <items>
+                                        <MenuItem
+                                            text="Profilim"
+                                            icon="sap-icon://person-placeholder"
+                                            press="onViewProfile"/>
+                                        <MenuItem
+                                            text="Çıkış Yap"
+                                            icon="sap-icon://log"
+                                            press="onLogout"/>
+                                    </items>
+                                </Menu>
+                            </menu>
+                        </MenuButton>
+                </uxap:actions>
+                
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+        
+        <!-- Header Content -->
+        <uxap:headerContent>
+            <l:VerticalLayout class="sapUiSmallMargin">
+                <Title text="Eğitime Destek, Geleceğe Yatırım 🎓" level="H2" class="sapUiSmallMarginBottom"/>
+                <Text text="Her bağış bir öğrencinin hayatında gerçek bir fark yaratır. Desteğinizle yarınların güçlü bireylerini yetiştirelim." class="sapUiSmallMarginBottom"/>
+                <HBox>
+                    <Button text="Hemen Bağış Yap" type="Emphasized" icon="sap-icon://heart-2" class="sapUiTinyMarginEnd"/>
+                    <Button text="Burs Başvurusu" icon="sap-icon://documents"/>
+                </HBox>
+            </l:VerticalLayout>
+        </uxap:headerContent>
+        
+        <!-- Sections -->
+        <uxap:sections>
+            
+            <!-- İstatistikler -->
+            <uxap:ObjectPageSection title="Başarılarımız" id="statsSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL3 L3 M6 S12" class="sapUiResponsiveMargin">
+                                <GenericTile header="Bağışçı" class="sapUiTinyMargin">
+                                    <tileContent>
+                                        <TileContent>
+                                            <content>
+                                                <NumericContent value="245+" icon="sap-icon://group" valueColor="Good"/>
+                                            </content>
+                                        </TileContent>
+                                    </tileContent>
+                                </GenericTile>
+                                <GenericTile header="Burslu Öğrenci" class="sapUiTinyMargin">
+                                    <tileContent>
+                                        <TileContent>
+                                            <content>
+                                                <NumericContent value="158" icon="sap-icon://study-leave" valueColor="Good"/>
+                                            </content>
+                                        </TileContent>
+                                    </tileContent>
+                                </GenericTile>
+                                <GenericTile header="Toplam Bağış" class="sapUiTinyMargin">
+                                    <tileContent>
+                                        <TileContent>
+                                            <content>
+                                                <NumericContent value="1.2M" scale="₺" icon="sap-icon://money-bills" valueColor="Good"/>
+                                            </content>
+                                        </TileContent>
+                                    </tileContent>
+                                </GenericTile>
+                                <GenericTile header="Aktif Kampanya" class="sapUiTinyMargin">
+                                    <tileContent>
+                                        <TileContent>
+                                            <content>
+                                                <NumericContent value="3" icon="sap-icon://flag" valueColor="Good"/>
+                                            </content>
+                                        </TileContent>
+                                    </tileContent>
+                                </GenericTile>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- Hakkımızda -->
+            <uxap:ObjectPageSection title="Hakkımızda" id="aboutSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="Biz Kimiz?">
+                        <uxap:blocks>
+                            <l:BlockLayout>
+                                <l:BlockLayoutRow>
+                                    <l:BlockLayoutCell>
+                                        <Text text="EduSupport, eğitim hayallerini gerçekleştirmek isteyen ancak maddi imkansızlıklar yaşayan öğrencilerle, hayırsever bağışçıları bir araya getiren dijital bir burs platformudur." class="sapUiSmallMarginBottom"/>
+                                        <Text text="Misyonumuz, her yetenekli öğrencinin ekonomik koşullarından bağımsız olarak eğitim alma hakkını desteklemek ve toplumsal eşitsizlikleri azaltmaktır."/>
+                                    </l:BlockLayoutCell>
+                                </l:BlockLayoutRow>
+                            </l:BlockLayout>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                    
+                    <uxap:ObjectPageSubSection title="Değerlerimiz">
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL4 L4 M6 S12" class="sapUiResponsiveMargin">
+                                <ObjectStatus
+                                    title="Vizyonumuz"
+                                    text="Türkiye'de eğitimde fırsat eşitliğini sağlayan öncü platform"
+                                    icon="sap-icon://target-group"
+                                    state="Information"
+                                    class="sapUiSmallMargin"/>
+                                <ObjectStatus
+                                    title="Misyonumuz"
+                                    text="Her öğrencinin potansiyelini gerçekleştirmesine katkıda bulunmak"
+                                    icon="sap-icon://lightbulb"
+                                    state="Success"
+                                    class="sapUiSmallMargin"/>
+                                <ObjectStatus
+                                    title="Değerlerimiz"
+                                    text="Şeffaflık, güvenilirlik, sosyal sorumluluk ve eşitlik"
+                                    icon="sap-icon://sys-help"
+                                    state="Warning"
+                                    class="sapUiSmallMargin"/>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- Burs Programları -->
+            <uxap:ObjectPageSection title="Burs Programları" id="scholarshipsSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL4 L4 M6 S12" class="sapUiResponsiveMargin">
+                                <Panel headerText="Üniversite Bursu" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <core:Icon src="sap-icon://study-leave" size="2.5rem" color="#1873B4" class="sapUiSmallMarginBottom"/>
+                                            <Text text="Üniversite öğrencilerine yönelik tam veya kısmi eğitim desteği" class="sapUiSmallMarginBottom"/>
+                                            <Button text="Detaylı Bilgi" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="Lise Bursu" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <core:Icon src="sap-icon://learning-assistant" size="2.5rem" color="#FF6B9D" class="sapUiSmallMarginBottom"/>
+                                            <Text text="Lise öğrencilerine eğitim materyali ve harçlık desteği" class="sapUiSmallMarginBottom"/>
+                                            <Button text="Detaylı Bilgi" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="Teknoloji Bursu" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <core:Icon src="sap-icon://laptop" size="2.5rem" color="#10B981" class="sapUiSmallMarginBottom"/>
+                                            <Text text="Teknoloji eğitimi alan öğrencilere özel destek programı" class="sapUiSmallMarginBottom"/>
+                                            <Button text="Detaylı Bilgi" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- Blog -->
+            <uxap:ObjectPageSection title="Blog" id="blogSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL4 L4 M6 S12" class="sapUiResponsiveMargin">
+                                <Panel headerText="Eğitimde Fırsat Eşitliği" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox class="sapUiTinyMarginBottom">
+                                                <core:Icon src="sap-icon://newspaper" size="1.5rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
+                                                <Text text="15 Şubat 2026"/>
+                                            </HBox>
+                                            <Text text="Türkiye'de eğitimde fırsat eşitliğinin önemi..." class="sapUiSmallMarginBottom"/>
+                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="Burs Başvuru Rehberi" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox class="sapUiTinyMarginBottom">
+                                                <core:Icon src="sap-icon://document" size="1.5rem" color="#FF6B9D" class="sapUiTinyMarginEnd"/>
+                                                <Text text="10 Şubat 2026"/>
+                                            </HBox>
+                                            <Text text="Burs başvurusu yaparken dikkat edilmesi gereken noktalar..." class="sapUiSmallMarginBottom"/>
+                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="Başarı Hikayeleri" class="sapUiTinyMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox class="sapUiTinyMarginBottom">
+                                                <core:Icon src="sap-icon://leads" size="1.5rem" color="#10B981" class="sapUiTinyMarginEnd"/>
+                                                <Text text="5 Şubat 2026"/>
+                                            </HBox>
+                                            <Text text="EduSupport bursuyla hayallerine kavuşan öğrenciler..." class="sapUiSmallMarginBottom"/>
+                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- Duyurular -->
+            <uxap:ObjectPageSection title="Duyurular">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <VBox>
+                                <MessageStrip
+                                    text="2026 Bahar Dönemi Burs Başvuruları Başladı!"
+                                    type="Information"
+                                    showIcon="true"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom">
+                                    <link><Link text="Başvuru Yap" emphasized="true"/></link>
+                                </MessageStrip>
+                                <MessageStrip
+                                    text="Online Seminer: Burs Başvuru Süreçleri - 20 Şubat 2026"
+                                    type="Success"
+                                    showIcon="true"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom">
+                                    <link><Link text="Katıl" emphasized="true"/></link>
+                                </MessageStrip>
+                                <MessageStrip
+                                    text="Yeni Teknoloji Bursu Programı Açıldı!"
+                                    type="Warning"
+                                    showIcon="true"
+                                    showCloseButton="false">
+                                    <link><Link text="Detaylı Bilgi" emphasized="true"/></link>
+                                </MessageStrip>
+                            </VBox>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- Nasıl Çalışır -->
+            <uxap:ObjectPageSection title="Nasıl Çalışır?" id="howItWorksSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL4 L4 M6 S12" class="sapUiResponsiveMargin">
+                                <VBox alignItems="Center" class="sapUiSmallMargin">
+                                    <Avatar src="sap-icon://edit" displaySize="L" backgroundColor="Accent1" class="sapUiSmallMarginBottom"/>
+                                    <Title text="1. Başvuru" level="H4" class="sapUiTinyMarginBottom"/>
+                                    <Text text="Online başvuru formunu doldurun" textAlign="Center"/>
+                                </VBox>
+                                <VBox alignItems="Center" class="sapUiSmallMargin">
+                                    <Avatar src="sap-icon://decision" displaySize="L" backgroundColor="Accent2" class="sapUiSmallMarginBottom"/>
+                                    <Title text="2. Değerlendirme" level="H4" class="sapUiTinyMarginBottom"/>
+                                    <Text text="Başvurular incelenir" textAlign="Center"/>
+                                </VBox>
+                                <VBox alignItems="Center" class="sapUiSmallMargin">
+                                    <Avatar src="sap-icon://money-bills" displaySize="L" backgroundColor="Accent3" class="sapUiSmallMarginBottom"/>
+                                    <Title text="3. Destek" level="H4" class="sapUiTinyMarginBottom"/>
+                                    <Text text="Burs sağlanır" textAlign="Center"/>
+                                </VBox>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <!-- İletişim -->
+            <uxap:ObjectPageSection title="İletişim" id="contactSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <l:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiResponsiveMargin">
+                                <Panel headerText="Bize Ulaşın">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                                                <core:Icon src="sap-icon://phone" size="1.5rem" color="#1873B4" class="sapUiSmallMarginEnd"/>
+                                                <VBox>
+                                                    <Label text="Telefon" design="Bold"/>
+                                                    <Link text="0 (850) 311 51 42" href="tel:08503115142"/>
+                                                </VBox>
+                                            </HBox>
+                                            <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                                                <core:Icon src="sap-icon://email" size="1.5rem" color="#1873B4" class="sapUiSmallMarginEnd"/>
+                                                <VBox>
+                                                    <Label text="E-posta" design="Bold"/>
+                                                    <Link text="info@edusupport.com" href="mailto:info@edusupport.com"/>
+                                                </VBox>
+                                            </HBox>
+                                            <HBox alignItems="Center">
+                                                <core:Icon src="sap-icon://locate-me" size="1.5rem" color="#1873B4" class="sapUiSmallMarginEnd"/>
+                                                <VBox>
+                                                    <Label text="Adres" design="Bold"/>
+                                                    <Text text="İstanbul, Türkiye"/>
+                                                </VBox>
+                                            </HBox>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="Mesaj Gönderin">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="Ad Soyad" required="true"/>
+                                            <Input placeholder="Adınızı girin" class="sapUiTinyMarginBottom"/>
+                                            <Label text="E-posta" required="true"/>
+                                            <Input placeholder="E-posta adresiniz" type="Email" class="sapUiTinyMarginBottom"/>
+                                            <Label text="Mesajınız" required="true"/>
+                                            <TextArea placeholder="Mesajınızı yazın..." rows="5" class="sapUiTinyMarginBottom"/>
+                                            <Button text="Gönder" type="Emphasized" icon="sap-icon://paper-plane" width="100%"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+        </uxap:sections>
+        
+        <!-- Footer -->
+        <uxap:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Text text="© 2026 EduSupport Platform"/>
+                <ToolbarSpacer/>
+                <Link text="Gizlilik Politikası"/>
+                <ToolbarSeparator/>
+                <Link text="Kullanım Koşulları"/>
+                <ToolbarSeparator/>
+                <Link text="İletişim" press="onScrollToContact"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </uxap:footer>
+        
+    </uxap:ObjectPageLayout>
+
+</mvc:View>

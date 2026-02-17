@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <Dialog
+        title="Giriş Yap"
+        contentWidth="500px"
+        class="loginDialog">
+        
+        <content>
+            <VBox class="sapUiMediumMargin">
+                
+                <!-- Header -->
+                <VBox alignItems="Center" class="sapUiSmallMarginBottom">
+                    <core:Icon 
+                        src="sap-icon://education" 
+                        size="3.5rem" 
+                        color="#6C63FF"
+                        class="sapUiSmallMarginBottom"/>
+                    
+                    <Title text="Hoş Geldiniz 👋" level="H3" class="sapUiTinyMarginBottom"/>
+                    <Text text="Giriş yapmak için kullanıcı tipinizi seçin" class="sapUiTinyMarginBottom"/>
+                </VBox>
+                
+                <!-- Kullanıcı Tipi Seçimi -->
+                <SegmentedButton 
+                    selectedKey="{loginModel>/loginType}"
+                    width="100%"
+                    class="sapUiSmallMarginBottom">
+                    <items>
+                        <SegmentedButtonItem 
+                            key="user" 
+                            icon="sap-icon://customer" 
+                            text="Kullanıcı"/>
+                        <SegmentedButtonItem 
+                            key="admin" 
+                            icon="sap-icon://manager" 
+                            text="Yönetici"/>
+                    </items>
+                </SegmentedButton>
+                
+                <!-- Login Form -->
+                <VBox width="100%">
+                    <Label text="E-posta" required="true" class="sapUiTinyMarginTop"/>
+                    <Input
+                        id="loginEmail"
+                        type="Email"
+                        placeholder="ornek@email.com"
+                        value="{loginModel>/email}"
+                        class="sapUiTinyMarginBottom"/>
+                    
+                    <Label text="Şifre" required="true"/>
+                    <Input
+                        id="loginPassword"
+                        type="Password"
+                        placeholder="••••••••"
+                        value="{loginModel>/password}"
+                        submit="onLoginSubmit"
+                        class="sapUiSmallMarginBottom"/>
+                    
+                    <CheckBox 
+                        text="Beni Hatırla"
+                        selected="{loginModel>/rememberMe}"
+                        class="sapUiTinyMarginBottom"/>
+                    
+                    <!-- Hata Mesajı -->
+                    <MessageStrip
+                        text="{loginModel>/errorMessage}"
+                        type="Error"
+                        showIcon="true"
+                        visible="{= ${loginModel>/errorMessage} !== '' }"
+                        class="sapUiSmallMarginBottom"/>
+                    
+                    <Button
+                        text="Giriş Yap"
+                        type="Emphasized"
+                        width="100%"
+                        press="onLoginSubmit"
+                        icon="sap-icon://log"
+                        class="sapUiTinyMarginTop"/>
+                </VBox>
+                
+                <!-- Test Kullanıcıları -->
+                <VBox width="100%" class="sapUiMediumMarginTop">
+                    <MessageStrip
+                        text="Test Kullanıcıları"
+                        type="Information"
+                        showIcon="true"
+                        class="sapUiTinyMarginBottom"/>
+                    <VBox class="sapUiTinyMarginTop">
+                        <Text text="👤 Kullanıcı: donor@test.com / 123456" class="sapUiTinyMarginBottom"/>
+                        <Text text="🔑 Yönetici: admin@test.com / 123456"/>
+                    </VBox>
+                </VBox>
+                
+                <!-- Quick Links -->
+                <HBox 
+                    justifyContent="Center"
+                    class="sapUiSmallMarginTop">
+                    <Link text="Şifremi Unuttum" class="sapUiTinyMarginEnd"/>
+                    <Text text="•" class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
+                    <Link text="Kayıt Ol" class="sapUiTinyMarginBegin"/>
+                </HBox>
+
+            </VBox>
+        </content>
+        
+        <endButton>
+            <Button text="Kapat" press="onCloseLoginDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

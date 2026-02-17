@@ -1,0 +1,205 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="studentAddDialog"
+        title="Yeni Öğrenci Ekle"
+        contentWidth="600px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <ScrollContainer height="500px" vertical="true">
+                <VBox class="sapUiSmallMargin">
+
+                    <MessageStrip
+                        text="Kayıt sonrası sistem otomatik giriş bilgilerini email ile gönderecektir."
+                        type="Information"
+                        showIcon="true"
+                        class="sapUiSmallMarginBottom"/>
+
+                    <f:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1">
+
+                        <f:content>
+
+                            <!-- KİŞİSEL BİLGİLER -->
+                            <core:Title text="Kişisel Bilgiler"/>
+
+                            <Label text="Ad" required="true"/>
+                            <Input
+                                id="studentFirstName"
+                                placeholder="Örn: Ayşe"
+                                value="{studentModel>/first_name}"/>
+
+                            <Label text="Soyad" required="true"/>
+                            <Input
+                                id="studentLastName"
+                                placeholder="Örn: Demir"
+                                value="{studentModel>/last_name}"/>
+
+                            <Label text="TC Kimlik No"/>
+                            <Input
+                                id="studentTcNo"
+                                placeholder="11 haneli TC No"
+                                maxLength="11"
+                                value="{studentModel>/tc_no}"/>
+
+                            <Label text="Doğum Tarihi"/>
+                            <DatePicker
+                                id="studentBirthDate"
+                                placeholder="GG/AA/YYYY"
+                                displayFormat="dd/MM/yyyy"
+                                valueFormat="yyyy-MM-dd"
+                                value="{studentModel>/birth_date}"/>
+
+                            <!-- İLETİŞİM BİLGİLERİ -->
+                            <core:Title text="İletişim Bilgileri"/>
+
+                            <Label text="Email" required="true"/>
+                            <Input
+                                id="studentEmail"
+                                type="Email"
+                                placeholder="ornek@email.com"
+                                value="{studentModel>/email}"/>
+
+                            <Label text="Telefon"/>
+                            <Input
+                                id="studentPhone"
+                                placeholder="05XX XXX XX XX"
+                                maxLength="11"
+                                value="{studentModel>/phone}"/>
+
+                            <Label text="İl"/>
+                            <Input
+                                id="studentCity"
+                                placeholder="Örn: Hatay"
+                                value="{studentModel>/city}"/>
+
+                            <Label text="Adres"/>
+                            <TextArea
+                                id="studentAddress"
+                                placeholder="Tam adres..."
+                                value="{studentModel>/address}"
+                                rows="2"/>
+
+                            <!-- EĞİTİM BİLGİLERİ -->
+                            <core:Title text="Eğitim Bilgileri"/>
+
+                            <Label text="Okul Türü"/>
+                            <Select
+                                id="studentSchoolType"
+                                selectedKey="{studentModel>/school_type}">
+                                <items>
+                                    <core:Item key="primary"    text="İlkokul"/>
+                                    <core:Item key="middle"     text="Ortaokul"/>
+                                    <core:Item key="high"       text="Lise"/>
+                                    <core:Item key="university" text="Üniversite"/>
+                                </items>
+                            </Select>
+
+                            <Label text="Okul Adı" required="true"/>
+                            <Input
+                                id="studentSchoolName"
+                                placeholder="Örn: İskenderun Teknik Üniversitesi"
+                                value="{studentModel>/school_name}"/>
+
+                            <Label text="Bölüm"/>
+                            <Input
+                                id="studentDepartment"
+                                placeholder="Örn: Bilgisayar Mühendisliği"
+                                value="{studentModel>/department}"/>
+
+                            <Label text="Sınıf/Yıl"/>
+                            <StepInput
+                                id="studentGrade"
+                                value="{studentModel>/grade}"
+                                min="1"
+                                max="12"
+                                step="1"
+                                displayValuePrecision="0"/>
+
+                            <Label text="Not Ortalaması"/>
+                            <StepInput
+                                id="studentGpa"
+                                value="{studentModel>/gpa}"
+                                min="0"
+                                max="4"
+                                step="0.1"
+                                displayValuePrecision="2"/>
+
+                            <!-- BURS BİLGİLERİ -->
+                            <core:Title text="Burs Bilgileri"/>
+
+                            <Label text="Burs Türü"/>
+                            <Select
+                                id="studentScholarshipType"
+                                selectedKey="{studentModel>/scholarship_type}">
+                                <items>
+                                    <core:Item key="full"           text="Tam Burs"/>
+                                    <core:Item key="partial"        text="Kısmi Burs"/>
+                                    <core:Item key="book"           text="Kitap Yardımı"/>
+                                    <core:Item key="transportation" text="Ulaşım Desteği"/>
+                                </items>
+                            </Select>
+
+                            <Label text="Aylık Burs Miktarı (₺)"/>
+                            <StepInput
+                                id="studentScholarshipAmount"
+                                value="{studentModel>/scholarship_amount}"
+                                min="0"
+                                step="500"
+                                displayValuePrecision="0"/>
+
+                            <!-- EK BİLGİLER -->
+                            <core:Title text="Ek Bilgiler"/>
+
+                            <Label text="Başvuru Nedeni"/>
+                            <TextArea
+                                id="studentApplicationReason"
+                                placeholder="Burs başvuru nedeni..."
+                                value="{studentModel>/application_reason}"
+                                rows="3"/>
+
+                            <Label text="Notlar"/>
+                            <TextArea
+                                id="studentNotes"
+                                placeholder="Ek notlar..."
+                                value="{studentModel>/notes}"
+                                rows="2"/>
+
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+            </ScrollContainer>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Kaydet"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press="onSaveStudent"/>
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="İptal"
+                type="Transparent"
+                icon="sap-icon://decline"
+                press="onCloseStudentDialog"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,72 @@
+# Node
+node_modules/
+package-lock.json
+npm-debug.log
+.env
+
+# Build / UI5
+dist/
+webapp/resources/
+ui5-deploy/
+
+# Editor
+.vscode/
+.DS_Store
+
+# OS
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Optional
+.idea/
+git init
+```
+
+Çıktı:
+```
+Initialized empty Git repository in ...
+```
+
+---
+
+### **📝 6. .gitignore Dosyası Oluştur**
+
+Proje klasöründe `.gitignore` dosyası oluştur ve şunu ekle:
+```
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+.tmp/
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+
+# SAP UI5
+.che/
+.fioritools/
+*.db
+

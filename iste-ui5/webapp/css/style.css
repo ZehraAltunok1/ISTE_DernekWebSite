@@ -1,0 +1,49 @@
+/* ============================================= */
+/* EDUSUPPORT - SAP UI5 DEMO KIT COMPLIANT     */
+/* ============================================= */
+
+/* Tam Ekran */
+html, body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ObjectPage sections için scroll offset */
+#aboutSection,
+#scholarshipsSection,
+#blogSection,
+#howItWorksSection,
+#contactSection {
+    scroll-margin-top: 3rem;
+}
+
+/* Tile hover effect */
+.sapMGT {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.sapMGT:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Panel hover effect */
+.sapMPanel {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.sapMPanel:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+.sapMShellCentralContext {
+    width: 100% !important;
+    max-width: 100% !important;
+}

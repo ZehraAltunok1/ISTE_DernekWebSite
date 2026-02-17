@@ -1,0 +1,146 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="eventAddDialog"
+        title="{eventModel>/dialogTitle}"
+        contentWidth="580px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <ScrollContainer height="480px" vertical="true">
+                <VBox class="sapUiSmallMargin">
+
+                    <f:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1">
+
+                        <f:content>
+
+                            <!-- TEMEL BİLGİLER -->
+                            <core:Title text="Etkinlik Bilgileri"/>
+
+                            <Label text="Etkinlik Adı" required="true"/>
+                            <Input
+                                id="eventTitle"
+                                placeholder="Örn: Yıllık Genel Kurul"
+                                value="{eventModel>/title}"/>
+
+                            <Label text="Kategori"/>
+                            <Select id="eventCategory" selectedKey="{eventModel>/category}">
+                                <items>
+                                    <core:Item key="toplanti"  text="🏛️ Toplantı"/>
+                                    <core:Item key="egitim"    text="📚 Eğitim"/>
+                                    <core:Item key="sosyal"    text="🎉 Sosyal"/>
+                                    <core:Item key="bagis"     text="💰 Bağış Kampanyası"/>
+                                    <core:Item key="diger"     text="📌 Diğer"/>
+                                </items>
+                            </Select>
+
+                            <Label text="Açıklama"/>
+                            <TextArea
+                                id="eventDescription"
+                                placeholder="Etkinlik detayları..."
+                                value="{eventModel>/description}"
+                                rows="3"/>
+
+                            <!-- TARİH & SAAT -->
+                            <core:Title text="Tarih ve Saat"/>
+
+                            <Label text="Başlangıç Tarihi" required="true"/>
+                            <DatePicker
+                                id="eventDate"
+                                placeholder="GG/AA/YYYY"
+                                displayFormat="dd/MM/yyyy"
+                                valueFormat="yyyy-MM-dd"
+                                value="{eventModel>/event_date}"/>
+
+                            <Label text="Başlangıç Saati"/>
+                            <TimePicker
+                                id="eventTime"
+                                placeholder="SS:DD"
+                                displayFormat="HH:mm"
+                                valueFormat="HH:mm"
+                                value="{eventModel>/event_time}"/>
+
+                            <Label text="Bitiş Tarihi"/>
+                            <DatePicker
+                                id="eventEndDate"
+                                placeholder="GG/AA/YYYY"
+                                displayFormat="dd/MM/yyyy"
+                                valueFormat="yyyy-MM-dd"
+                                value="{eventModel>/end_date}"/>
+
+                            <Label text="Bitiş Saati"/>
+                            <TimePicker
+                                id="eventEndTime"
+                                placeholder="SS:DD"
+                                displayFormat="HH:mm"
+                                valueFormat="HH:mm"
+                                value="{eventModel>/end_time}"/>
+
+                            <!-- KONUM & KAPASİTE -->
+                            <core:Title text="Konum ve Kapasite"/>
+
+                            <Label text="Konum"/>
+                            <Input
+                                id="eventLocation"
+                                placeholder="Örn: İskenderun Kültür Merkezi"
+                                value="{eventModel>/location}"/>
+
+                            <Label text="Kapasite"/>
+                            <StepInput
+                                id="eventCapacity"
+                                value="{eventModel>/capacity}"
+                                min="0"
+                                max="10000"
+                                step="10"
+                                displayValuePrecision="0"
+                                description="kişi (0 = sınırsız)"/>
+
+                            <!-- DURUM -->
+                            <core:Title text="Durum"/>
+
+                            <Label text="Etkinlik Durumu"/>
+                            <Select id="eventStatus" selectedKey="{eventModel>/status}">
+                                <items>
+                                    <core:Item key="planned"   text="📅 Planlandı"/>
+                                    <core:Item key="active"    text="✅ Aktif"/>
+                                    <core:Item key="completed" text="🏁 Tamamlandı"/>
+                                    <core:Item key="cancelled" text="❌ İptal Edildi"/>
+                                </items>
+                            </Select>
+
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+            </ScrollContainer>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Kaydet"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press="onSaveEvent"/>
+        </beginButton>
+        <endButton>
+            <Button
+                text="İptal"
+                type="Transparent"
+                icon="sap-icon://decline"
+                press="onCloseEventDialog"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

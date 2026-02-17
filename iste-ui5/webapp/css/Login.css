@@ -1,0 +1,319 @@
+/* ===================================
+   LOGIN PAGE STYLES
+   =================================== */
+
+.loginPage {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.loginContainer {
+    min-height: 100vh;
+}
+
+.loginWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Left Section - Branding */
+.loginLeftSection {
+    background: linear-gradient(135deg, #6C63FF 0%, #5848E8 100%);
+    color: white;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.loginLeftSection::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.brandContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+}
+
+.brandTitleLarge {
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.brandSubtitle {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+}
+
+/* Right Section - Login Cards */
+.loginRightSection {
+    background: white;
+    padding: 3rem;
+}
+
+.loginFormContainer {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.loginSubtext {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Login Type Cards */
+.loginTypeCard {
+    background: #F8F9FA;
+    border: 2px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.loginTypeCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.userCard {
+    border-color: #E0E0E0;
+}
+
+.userCard:hover {
+    border-color: #6C63FF;
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, rgba(108, 99, 255, 0.02) 100%);
+}
+
+.adminCard {
+    border-color: #E0E0E0;
+}
+
+.adminCard:hover {
+    border-color: #FF6B9D;
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(255, 107, 157, 0.02) 100%);
+}
+
+.cardTitle {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.cardSubtext {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* Login Type Buttons */
+.loginTypeButton {
+    height: 48px !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.userButton {
+    background: linear-gradient(135deg, #6C63FF 0%, #5848E8 100%) !important;
+}
+
+.userButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4) !important;
+}
+
+.adminButton {
+    background: linear-gradient(135deg, #FF6B9D 0%, #F06292 100%) !important;
+}
+
+.adminButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4) !important;
+}
+
+/* Quick Access Buttons */
+.quickAccessButton {
+    height: 44px !important;
+    border-radius: 8px !important;
+    border: 1px solid #E0E0E0 !important;
+    background: white !important;
+    color: #333 !important;
+    transition: all 0.2s ease !important;
+}
+
+.quickAccessButton:hover {
+    background: #F5F5F5 !important;
+    border-color: #6C63FF !important;
+}
+
+/* Dialog Input Fields */
+.sapMDialog .sapMInputBaseInner {
+    border-radius: 8px !important;
+    border: 1px solid #E0E0E0 !important;
+    padding: 12px 16px !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.sapMDialog .sapMInputBaseInner:focus {
+    border-color: #6C63FF !important;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1) !important;
+}
+
+/* Divider */
+.login-divider {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #E0E0E0;
+    line-height: 0.1em;
+    margin: 20px 0;
+}
+
+.login-divider span {
+    background: white;
+    padding: 0 15px;
+    color: #999;
+    font-size: 0.875rem;
+}
+
+/* Dialog Styling */
+.sapMDialog {
+    border-radius: 12px !important;
+}
+
+.sapMDialogTitle {
+    font-weight: 600 !important;
+}
+
+/* Message Strips */
+.sapMMessageStrip {
+    border-radius: 8px !important;
+}
+
+/* Icons in Cards */
+.loginTypeCard .sapUiIcon {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .loginWrapper {
+        flex-direction: column;
+    }
+    
+    .loginLeftSection,
+    .loginRightSection {
+        width: 100% !important;
+        min-height: auto;
+    }
+    
+    .loginLeftSection {
+        padding: 2rem;
+        min-height: 300px;
+    }
+    
+    .brandTitleLarge {
+        font-size: 2rem !important;
+    }
+    
+    .loginFormContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .loginFormContainer {
+        padding: 1rem;
+    }
+    
+    .brandTitleLarge {
+        font-size: 1.75rem !important;
+    }
+    
+    .loginTypeCard {
+        padding: 1rem;
+    }
+    
+    .cardTitle {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loginFormContainer {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.loginTypeCard {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.loginTypeCard:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* Icons in left section */
+.loginLeftSection .sapUiIcon {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Links */
+.loginFormContainer .sapMLnk {
+    color: #6C63FF;
+    font-weight: 500;
+}
+
+.loginFormContainer .sapMLnk:hover {
+    color: #5848E8;
+    text-decoration: underline;
+}
+
+/* Checkbox */
+.sapMDialog .sapMCb {
+    font-size: 0.875rem;
+}
+
+/* Button hover effects */
+.loginTypeButton:active {
+    transform: scale(0.98);
+}
+
+/* Loading state */
+.loginTypeButton[aria-busy="true"] {
+    opacity: 0.7;
+    pointer-events: none;
+}

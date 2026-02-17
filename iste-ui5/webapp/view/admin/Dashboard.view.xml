@@ -1,0 +1,386 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.admin.Dashboard"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.f"
+    displayBlock="true"
+    height="100%">
+
+    <Page
+        showHeader="true"
+        title="Yönetim Paneli"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+        class="adminDashboardPage">
+
+        <headerContent>
+            <Button icon="sap-icon://refresh"         tooltip="Yenile"  press="onRefresh"/>
+            <Button icon="sap-icon://action-settings" tooltip="Ayarlar" press="onSettings"/>
+        </headerContent>
+
+        <content>
+            <IconTabBar
+                id="adminIconTabBar"
+                select="onTabSelect"
+                class="adminIconTabBar"
+                expandable="false"
+                stretchContentHeight="true"
+                applyContentPadding="false">
+
+                <items>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 1: DASHBOARD                           -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://business-objects-experience"
+                        text="Dashboard"
+                        key="dashboard">
+
+                        <ScrollContainer height="100%" vertical="true" class="dashboardScrollContainer">
+                            <VBox class="dashboardContent">
+
+                                <!-- Hoş Geldin Banner -->
+                                <HBox
+                                    justifyContent="SpaceBetween"
+                                    alignItems="Center"
+                                    class="welcomeBanner sapUiResponsiveMargin">
+                                    <VBox>
+                                        <Title
+                                            text="Hoş geldiniz, {appData>/currentUser/first_name} {appData>/currentUser/last_name}!"
+                                            level="H2"
+                                            class="welcomeTitle"/>
+                                        <Text
+                                            text="Son güncelleme: {dashboardData>/lastUpdate}"
+                                            class="welcomeSubtitle"/>
+                                    </VBox>
+                                    <core:Icon
+                                        src="sap-icon://hello-world"
+                                        size="4rem"
+                                        color="#FFFFFF"
+                                        class="welcomeIcon"/>
+                                </HBox>
+
+                                <!-- KPI Kartları -->
+                                <Panel headerText="Platform İstatistikleri" class="sapUiResponsiveMargin">
+                                    <layout:Grid defaultSpan="XL3 L3 M6 S12" class="kpiGrid">
+
+                                        <VBox class="kpiCard kpiBlue">
+                                            <VBox alignItems="Center" class="kpiCardContent">
+                                                <core:Icon src="sap-icon://group"       size="2.5rem" color="#0070F2" class="kpiIcon"/>
+                                                <Title text="{dashboardData>/stats/totalDonors}" level="H1" class="kpiNumber"/>
+                                                <Text  text="Toplam Bağışçı" class="kpiLabel"/>
+                                                <ObjectStatus text="+{dashboardData>/stats/newDonorsThisMonth} bu ay" state="Success" class="kpiTrend"/>
+                                            </VBox>
+                                        </VBox>
+
+                                        <VBox class="kpiCard kpiGreen">
+                                            <VBox alignItems="Center" class="kpiCardContent">
+                                                <core:Icon src="sap-icon://study-leave" size="2.5rem" color="#10B981" class="kpiIcon"/>
+                                                <Title text="{dashboardData>/stats/totalStudents}" level="H1" class="kpiNumber"/>
+                                                <Text  text="Burslu Öğrenci" class="kpiLabel"/>
+                                                <ObjectStatus text="+{dashboardData>/stats/newStudentsThisMonth} bu ay" state="Success" class="kpiTrend"/>
+                                            </VBox>
+                                        </VBox>
+
+                                        <VBox class="kpiCard kpiOrange">
+                                            <VBox alignItems="Center" class="kpiCardContent">
+                                                <core:Icon src="sap-icon://money-bills" size="2.5rem" color="#F59E0B" class="kpiIcon"/>
+                                                <Title text="{dashboardData>/stats/totalDonationAmount}" level="H1" class="kpiNumber"/>
+                                                <Text  text="Toplam Bağış (₺)" class="kpiLabel"/>
+                                                <ObjectStatus text="+{dashboardData>/stats/donationGrowth}% artış" state="Success" class="kpiTrend"/>
+                                            </VBox>
+                                        </VBox>
+
+                                        <VBox class="kpiCard kpiPurple">
+                                            <VBox alignItems="Center" class="kpiCardContent">
+                                                <core:Icon src="sap-icon://business-card" size="2.5rem" color="#8B5CF6" class="kpiIcon"/>
+                                                <Title text="{dashboardData>/stats/activeProjects}" level="H1" class="kpiNumber"/>
+                                                <Text  text="Aktif Proje" class="kpiLabel"/>
+                                                <ObjectStatus text="{dashboardData>/stats/completedProjects} tamamlandı" state="Information" class="kpiTrend"/>
+                                            </VBox>
+                                        </VBox>
+
+                                    </layout:Grid>
+                                </Panel>
+
+                                <!-- Son Aktiviteler + Hızlı İşlemler -->
+                                <layout:Grid defaultSpan="XL6 L6 M12 S12" class="sapUiResponsiveMargin">
+
+                                    <Panel headerText="Son Aktiviteler" class="activityPanel">
+                                        <List
+                                            items="{dashboardData>/recentActivities}"
+                                            noDataText="Henüz aktivite yok">
+                                            <FeedListItem
+                                                sender="{dashboardData>sender}"
+                                                icon="{dashboardData>icon}"
+                                                text="{dashboardData>text}"
+                                                timestamp="{dashboardData>timestamp}"
+                                                info="{dashboardData>info}"/>
+                                        </List>
+                                    </Panel>
+
+                                    <Panel headerText="Hızlı İşlemler" class="quickActionsPanel">
+                                        <VBox class="sapUiSmallMargin">
+                                            <Button text="Yeni Bağışçı Ekle"  icon="sap-icon://add-employee"   width="100%" press="onAddDonor"      class="sapUiTinyMarginBottom"/>
+                                            <Button text="Yeni Öğrenci Ekle"  icon="sap-icon://add-coursebook" width="100%" press="onAddStudent"    class="sapUiTinyMarginBottom"/>
+                                            <Button text="Yeni Etkinlik Ekle" icon="sap-icon://appointment-2"  width="100%" press="onAddEvent"      class="sapUiTinyMarginBottom"/>
+                                            <Button text="Bağış Kaydet"       icon="sap-icon://receipt"        width="100%" press="onAddDonation"   class="sapUiTinyMarginBottom"/>
+                                            <Button text="Rapor Oluştur"      icon="sap-icon://bar-chart"      width="100%" press="onGenerateReport"/>
+                                        </VBox>
+                                    </Panel>
+
+                                </layout:Grid>
+
+                            </VBox>
+                        </ScrollContainer>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 2: ÜYELER                              -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://group"
+                        text="Üyeler"
+                        count="{dashboardData>/stats/totalMembers}"
+                        key="members">
+
+                        <VBox class="tabContent">
+
+                            <OverflowToolbar class="sapUiTinyMarginBottom">
+                                <Title text="Üye Yönetimi" level="H3"/>
+                                <ToolbarSpacer/>
+                                <SearchField
+                                    width="300px"
+                                    placeholder="Ad, soyad, email veya telefon ara..."
+                                    search="onSearchMembers"
+                                    liveChange="onSearchMembers"/>
+                                <Button
+                                    text="Yeni Üye"
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddMember"/>
+                            </OverflowToolbar>
+
+                            <Table
+                                id="membersTable"
+                                items="{dashboardData>/members}"
+                                noDataText="Kayıt bulunamadı"
+                                growing="true"
+                                growingThreshold="20"
+                                growingScrollToLoad="true"
+                                class="membersTable">
+
+                                <columns>
+                                    <Column width="4rem"><Text text="ID"/></Column>
+                                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Ad Soyad"/></Column>
+                                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Email"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Telefon"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Üye Tipi"/></Column>
+                                    <Column><Text text="Durum"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Kayıt Tarihi"/></Column>
+                                    <Column width="7rem" hAlign="Center"><Text text="İşlemler"/></Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{dashboardData>id}"/>
+                                            <ObjectIdentifier title="{dashboardData>first_name} {dashboardData>last_name}"/>
+                                            <Text text="{dashboardData>email}"/>
+                                            <Text text="{dashboardData>phone}"/>
+                                            <ObjectStatus
+                                                text="{= ${dashboardData>user_type} === 'donor' ? 'Bağışçı' : 'Öğrenci' }"
+                                                state="{= ${dashboardData>user_type} === 'donor' ? 'Success' : 'Information' }"/>
+                                            <ObjectStatus
+                                                text="{= ${dashboardData>status} === 'active' ? 'Aktif' : 'Pasif' }"
+                                                state="{= ${dashboardData>status} === 'active' ? 'Success' : 'Error' }"/>
+                                            <Text text="{dashboardData>created_at}"/>
+                                            <HBox justifyContent="Center">
+                                                <Button icon="sap-icon://edit"   type="Transparent" tooltip="Düzenle" press="onEditMember"/>
+                                                <Button icon="sap-icon://delete" type="Transparent" tooltip="Sil"     press="onDeleteMember"/>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 3: ETKİNLİKLER                         -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://appointment-2"
+                        text="Etkinlikler"
+                        count="{dashboardData>/stats/totalEvents}"
+                        key="events">
+
+                        <VBox class="tabContent">
+
+                            <!-- Toolbar -->
+                            <OverflowToolbar class="sapUiTinyMarginBottom">
+                                <Title text="Etkinlik Yönetimi" level="H3"/>
+                                <ToolbarSpacer/>
+                                <Select id="eventFilterStatus" change="onFilterEvents" width="140px">
+                                    <items>
+                                        <core:Item key=""          text="Tüm Durumlar"/>
+                                        <core:Item key="planned"   text="Planlandı"/>
+                                        <core:Item key="active"    text="Aktif"/>
+                                        <core:Item key="completed" text="Tamamlandı"/>
+                                        <core:Item key="cancelled" text="İptal"/>
+                                    </items>
+                                </Select>
+                                <Select id="eventFilterCategory" change="onFilterEvents" width="160px">
+                                    <items>
+                                        <core:Item key=""         text="Tüm Kategoriler"/>
+                                        <core:Item key="toplanti" text="Toplantı"/>
+                                        <core:Item key="egitim"   text="Eğitim"/>
+                                        <core:Item key="sosyal"   text="Sosyal"/>
+                                        <core:Item key="bagis"    text="Bağış"/>
+                                        <core:Item key="diger"    text="Diğer"/>
+                                    </items>
+                                </Select>
+                                <Button
+                                    text="Yeni Etkinlik"
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddEvent"/>
+                            </OverflowToolbar>
+
+                            <!-- KPI Özet Satırı -->
+                            <HBox class="eventKpiRow sapUiSmallMarginBottom" justifyContent="SpaceBetween">
+                                <VBox class="eventKpiCard eventKpiBlue" alignItems="Center">
+                                    <core:Icon src="sap-icon://appointment-2" size="1.5rem" color="#0070F2"/>
+                                    <Title text="{dashboardData>/eventStats/total}"             level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Toplam" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiGreen" alignItems="Center">
+                                    <core:Icon src="sap-icon://future" size="1.5rem" color="#10B981"/>
+                                    <Title text="{dashboardData>/eventStats/planned}"           level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Planlandı" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiOrange" alignItems="Center">
+                                    <core:Icon src="sap-icon://complete" size="1.5rem" color="#F59E0B"/>
+                                    <Title text="{dashboardData>/eventStats/completed}"         level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Tamamlandı" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiPurple" alignItems="Center">
+                                    <core:Icon src="sap-icon://group" size="1.5rem" color="#8B5CF6"/>
+                                    <Title text="{dashboardData>/eventStats/totalParticipants}" level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Toplam Katılımcı" class="eventKpiLabel"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Etkinlik Listesi -->
+                            <List
+                                id="eventsList"
+                                items="{dashboardData>/events}"
+                                noDataText="Etkinlik bulunamadı"
+                                class="eventsList">
+
+                                <CustomListItem>
+                                    <HBox class="eventCard" alignItems="Center">
+
+                                        <!-- Kategori İkonu -->
+                                        <VBox class="eventCardIcon" alignItems="Center" justifyContent="Center">
+                                            <core:Icon
+                                                src="{= ${dashboardData>category} === 'toplanti' ? 'sap-icon://it-instance'  :
+                                                         ${dashboardData>category} === 'egitim'   ? 'sap-icon://study-leave' :
+                                                         ${dashboardData>category} === 'sosyal'   ? 'sap-icon://family-care' :
+                                                         ${dashboardData>category} === 'bagis'    ? 'sap-icon://money-bills' :
+                                                         'sap-icon://appointment-2' }"
+                                                size="1.75rem"
+                                                color="{= ${dashboardData>category} === 'toplanti' ? '#0070F2' :
+                                                          ${dashboardData>category} === 'egitim'   ? '#10B981' :
+                                                          ${dashboardData>category} === 'sosyal'   ? '#8B5CF6' :
+                                                          ${dashboardData>category} === 'bagis'    ? '#F59E0B' :
+                                                          '#6B7280' }"/>
+                                        </VBox>
+
+                                        <!-- Bilgiler -->
+                                        <VBox class="eventCardBody" justifyContent="Center">
+                                            <HBox alignItems="Center">
+                                                <Title text="{dashboardData>title}" level="H4" class="eventCardTitle"/>
+                                                <ObjectStatus
+                                                    text="{= ${dashboardData>status} === 'planned'   ? 'Planlandı'  :
+                                                              ${dashboardData>status} === 'active'    ? 'Aktif'      :
+                                                              ${dashboardData>status} === 'completed' ? 'Tamamlandı' : 'İptal' }"
+                                                    state="{= ${dashboardData>status} === 'planned'   ? 'Information' :
+                                                               ${dashboardData>status} === 'active'    ? 'Success'     :
+                                                               ${dashboardData>status} === 'completed' ? 'None'        : 'Error' }"
+                                                    class="eventStatusBadge"/>
+                                            </HBox>
+                                            <HBox class="eventCardMeta" alignItems="Center">
+                                                <core:Icon src="sap-icon://calendar"            size="0.875rem" color="#9CA3AF"/>
+                                                <Text text="{dashboardData>event_date_tr}"      class="eventMetaText"/>
+                                                <core:Icon src="sap-icon://time-entry-request"  size="0.875rem" color="#9CA3AF" class="sapUiTinyMarginBegin"/>
+                                                <Text text="{dashboardData>event_time}"         class="eventMetaText"/>
+                                                <core:Icon src="sap-icon://map"                 size="0.875rem" color="#9CA3AF" class="sapUiTinyMarginBegin"/>
+                                                <Text text="{dashboardData>location}"           class="eventMetaText"/>
+                                            </HBox>
+                                            <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                                                <core:Icon src="sap-icon://group" size="0.8rem" color="#9CA3AF"/>
+                                                <Text
+                                                    text="{dashboardData>registered_count} / {= ${dashboardData>capacity} === 0 ? '∞' : ${dashboardData>capacity} } katılımcı"
+                                                    class="eventMetaText"/>
+                                            </HBox>
+                                        </VBox>
+
+                                        <!-- Butonlar -->
+                                        <VBox justifyContent="Center" alignItems="End" class="eventCardActions">
+                                            <Button
+                                                icon="sap-icon://group"
+                                                text="Katılımcılar"
+                                                type="Transparent"
+                                                press="onViewParticipants"
+                                                class="sapUiTinyMarginBottom"/>
+                                            <HBox>
+                                                <Button icon="sap-icon://edit"   type="Transparent" tooltip="Düzenle" press="onEditEvent"/>
+                                                <Button icon="sap-icon://delete" type="Transparent" tooltip="Sil"     press="onDeleteEvent"/>
+                                            </HBox>
+                                        </VBox>
+
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 4: MUHASEBE (placeholder)              -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://wallet"
+                        text="Muhasebe"
+                        key="accounting">
+                        <VBox class="tabContent" alignItems="Center" justifyContent="Center" height="400px">
+                            <core:Icon src="sap-icon://wallet"   size="5rem" color="#6C63FF"/>
+                            <Title text="Muhasebe Modülü"        level="H2" class="sapUiSmallMarginTop"/>
+                            <Text  text="Yakında aktif olacak!"              class="sapUiTinyMarginTop"/>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 5: RAPORLAR (placeholder)              -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://bar-chart"
+                        text="Raporlar"
+                        key="reports">
+                        <VBox class="tabContent" alignItems="Center" justifyContent="Center" height="400px">
+                            <core:Icon src="sap-icon://bar-chart" size="5rem" color="#6C63FF"/>
+                            <Title text="Raporlar Modülü"         level="H2" class="sapUiSmallMarginTop"/>
+                            <Text  text="Yakında aktif olacak!"               class="sapUiTinyMarginTop"/>
+                        </VBox>
+                    </IconTabFilter>
+
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
