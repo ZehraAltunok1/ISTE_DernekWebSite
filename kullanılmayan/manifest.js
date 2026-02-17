@@ -31,7 +31,8 @@ sap.ui.require.preload({
           "sap.ui.core": {},
           "sap.m": {},
           "sap.ui.layout": {},
-          "sap.f": {}
+          "sap.f": {},      
+          "sap.f.cards": {}
         }
       },
       "models": {

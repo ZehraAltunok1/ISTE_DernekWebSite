@@ -1,0 +1,68 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <Dialog
+        title="Giriş Yap"
+        contentWidth="450px"
+        class="loginDialog">
+        
+        <content>
+            <VBox class="sapUiMediumMargin">
+                
+                <!-- TEK BASİT GİRİŞ FORMU -->
+                <VBox alignItems="Center">
+                    <core:Icon 
+                        src="sap-icon://education" 
+                        size="4rem" 
+                        color="#6C63FF"
+                        class="sapUiMediumMarginBottom"/>
+                    
+                    <Title text="EduSupport'a Giriş Yap" level="H3" class="sapUiSmallMarginBottom"/>
+                    
+                    <VBox width="100%" class="sapUiMediumMarginTop">
+                        <Label text="Email" class="sapUiTinyMarginTop"/>
+                        <Input
+                            id="loginEmail"
+                            type="Email"
+                            placeholder="email@ornek.com"
+                            value="admin@test.com"
+                            class="sapUiTinyMarginBottom"/>
+                        
+                        <Label text="Şifre"/>
+                        <Input
+                            id="loginPassword"
+                            type="Password"
+                            placeholder="Şifrenizi girin"
+                            value="123456"
+                            submit="onLogin"
+                            class="sapUiTinyMarginBottom"/>
+                        
+                        <Button
+                            text="Giriş Yap"
+                            type="Emphasized"
+                            width="100%"
+                            press="onLogin"
+                            icon="sap-icon://log"
+                            class="sapUiSmallMarginTop"/>
+                    </VBox>
+                    
+                    <VBox width="100%" class="sapUiSmallMarginTop">
+                        <MessageStrip
+                            text="Test Kullanıcıları:"
+                            type="Information"
+                            showIcon="true"/>
+                        <Text text="• Admin: admin@test.com / 123456" class="sapUiTinyMarginTop"/>
+                        <Text text="• Bağışçı: donor@test.com / 123456"/>
+                        <Text text="• Öğrenci: student@test.com / 123456"/>
+                    </VBox>
+                </VBox>
+
+            </VBox>
+        </content>
+        
+        <beginButton>
+            <Button text="Kapat" press="onCloseDialog"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>
