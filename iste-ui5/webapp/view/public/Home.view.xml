@@ -11,7 +11,8 @@
     <uxap:ObjectPageLayout
         showTitleInHeaderContent="true"
         upperCaseAnchorBar="false"
-        showFooter="true">
+        showFooter="true"
+        enableLazyLoading="true">
         
         <!-- Header Title -->
         <uxap:headerTitle>
@@ -19,15 +20,16 @@
                 
                 <uxap:expandedHeading>
                     <HBox alignItems="Center">
-                        <core:Icon src="sap-icon://education" size="2.5rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
-                        <Title text="EduSupport Platform" level="H1"/>
+
+                        <Image src="images/11.png" width="70px" class="headerLogo sapUiTinyMarginEnd"/>
+                        <Title text="İSTE Eğitime Destek Derneği" level="H1"/>
                     </HBox>
                 </uxap:expandedHeading>
                 
                 <uxap:snappedHeading>
                     <HBox alignItems="Center">
-                        <core:Icon src="sap-icon://education" size="2rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
-                        <Title text="EduSupport" level="H3"/>
+                        <Image src="images/11.png" width="70px" class="headerLogo sapUiTinyMarginEnd"/>
+                        <Title text="İSTE Eğitime Destek Derneği" level="H3"/>
                     </HBox>
                 </uxap:snappedHeading>
                 
@@ -51,7 +53,6 @@
                         type="Emphasized"
                         press="onNavToDashboard"
                         visible="{= ${appData>/isAuthenticated} &amp;&amp; ${appData>/currentUser/role} === 'admin' }"/>
-                        <!-- YENİ -->
                         <MenuButton
                             icon="sap-icon://employee"
                             text="{appData>/currentUser/first_name}"
@@ -77,20 +78,24 @@
                 
             </uxap:ObjectPageDynamicHeaderTitle>
         </uxap:headerTitle>
-        
-        <!-- Header Content -->
         <uxap:headerContent>
-            <l:VerticalLayout class="sapUiSmallMargin">
+            <Image
+                src="images/12.png"
+                width="100%"
+                height="400px"
+                mode="Background"
+                class="heroImage"
+                alt="EduSupport Hero"/>
+            
+            <l:VerticalLayout class="sapUiSmallMargin heroTextOverlay">
                 <Title text="Eğitime Destek, Geleceğe Yatırım 🎓" level="H2" class="sapUiSmallMarginBottom"/>
-                <Text text="Her bağış bir öğrencinin hayatında gerçek bir fark yaratır. Desteğinizle yarınların güçlü bireylerini yetiştirelim." class="sapUiSmallMarginBottom"/>
+                <Text text="Her bağış bir öğrencinin hayatında gerçek bir fark yaratır..." class="sapUiSmallMarginBottom"/>
                 <HBox>
                     <Button text="Hemen Bağış Yap" type="Emphasized" icon="sap-icon://heart-2" class="sapUiTinyMarginEnd"/>
                     <Button text="Burs Başvurusu" icon="sap-icon://documents"/>
                 </HBox>
             </l:VerticalLayout>
         </uxap:headerContent>
-        
-        <!-- Sections -->
         <uxap:sections>
             
             <!-- İstatistikler -->
@@ -149,8 +154,9 @@
                             <l:BlockLayout>
                                 <l:BlockLayoutRow>
                                     <l:BlockLayoutCell>
-                                        <Text text="EduSupport, eğitim hayallerini gerçekleştirmek isteyen ancak maddi imkansızlıklar yaşayan öğrencilerle, hayırsever bağışçıları bir araya getiren dijital bir burs platformudur." class="sapUiSmallMarginBottom"/>
-                                        <Text text="Misyonumuz, her yetenekli öğrencinin ekonomik koşullarından bağımsız olarak eğitim alma hakkını desteklemek ve toplumsal eşitsizlikleri azaltmaktır."/>
+                                        <Text text=" Hatay bölgesinde eğitim hayallerini gerçekleştirmek isteyen ancak ekonomik imkansızlıklar yaşayan yetenekli öğrencilerle, toplumsal sorumluluk bilinciyle hareket eden hayırsever bağışçıları bir araya getiren dijital bir burs platformudur.
+                                        2020 yılında İskenderun'da eğitim gönüllüleri tarafından kurulan derneğimiz, bölgedeki eğitim fırsat eşitsizliğini azaltmak ve her yetenekli gencin potansiyelini gerçekleştirmesine katkıda bulunmak amacıyla faaliyet göstermektedir." class="sapUiSmallMarginBottom"/>
+                                        <Text text="Maddi durumu ne olursa olsun, her başarılı ve azimli öğrencinin kaliteli eğitim alma hakkını desteklemek, eğitim yoluyla toplumsal eşitsizlikleri azaltmak ve İskenderun başta olmak üzere Hatay bölgesinin gelecek nesilleri için sürdürülebilir bir destek ağı oluşturmaktır. Derneğimiz, sadece maddi destek sağlamakla kalmayıp, aynı zamanda öğrencilere mentorluk, kariyer danışmanlığı ve kişisel gelişim olanakları sunarak onların hem akademik hem de sosyal açıdan güçlenmelerine katkı sağlamaktadır."/>
                                     </l:BlockLayoutCell>
                                 </l:BlockLayoutRow>
                             </l:BlockLayout>
@@ -229,21 +235,29 @@
                     <uxap:ObjectPageSubSection>
                         <uxap:blocks>
                             <l:Grid defaultSpan="XL4 L4 M6 S12" class="sapUiResponsiveMargin">
-                                <Panel headerText="Eğitimde Fırsat Eşitliği" class="sapUiTinyMarginBottom">
-                                    <content>
-                                        <VBox class="sapUiSmallMargin">
-                                            <HBox class="sapUiTinyMarginBottom">
-                                                <core:Icon src="sap-icon://newspaper" size="1.5rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
-                                                <Text text="15 Şubat 2026"/>
-                                            </HBox>
-                                            <Text text="Türkiye'de eğitimde fırsat eşitliğinin önemi..." class="sapUiSmallMarginBottom"/>
-                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-                                <Panel headerText="Burs Başvuru Rehberi" class="sapUiTinyMarginBottom">
-                                    <content>
-                                        <VBox class="sapUiSmallMargin">
+                    <Panel headerText="Eğitimde Fırsat Eşitliği" class="sapUiTinyMarginBottom">
+                        <content>
+                            <VBox class="sapUiSmallMargin">
+                                <Image
+                                    src="images/3.jpg"
+                                    width="100%"
+                                    height="200px"
+                                    mode="Image"
+                                    class="blogThumbnail sapUiSmallMarginBottom"/>
+                                
+                                <HBox class="sapUiTinyMarginBottom">
+                                    <core:Icon src="sap-icon://newspaper" size="1.5rem" color="#1873B4" class="sapUiTinyMarginEnd"/>
+                                    <Text text="15 Şubat 2026"/>
+                                </HBox>
+                                <Text text="Türkiye'de eğitimde fırsat eşitliğinin önemi..." class="sapUiSmallMarginBottom"/>
+                                <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
+                            </VBox>
+                        </content>
+                    </Panel>
+                        <Panel headerText="Burs Başvuru Rehberi" class="sapUiTinyMarginBottom">
+                            <content>
+                                <VBox class="sapUiSmallMargin">
+                                    <Image src="images/4.jpg" width="100%" height="200px" mode="Image" class="blogThumbnail sapUiSmallMarginBottom"/>
                                             <HBox class="sapUiTinyMarginBottom">
                                                 <core:Icon src="sap-icon://document" size="1.5rem" color="#FF6B9D" class="sapUiTinyMarginEnd"/>
                                                 <Text text="10 Şubat 2026"/>
@@ -253,9 +267,10 @@
                                         </VBox>
                                     </content>
                                 </Panel>
-                                <Panel headerText="Başarı Hikayeleri" class="sapUiTinyMarginBottom">
-                                    <content>
-                                        <VBox class="sapUiSmallMargin">
+                            <Panel headerText="Başarı Hikayeleri" class="sapUiTinyMarginBottom">
+                                <content>
+                                    <VBox class="sapUiSmallMargin">
+                                        <Image src="images/1.jpg" width="100%" height="200px" mode="Image" class="blogThumbnail sapUiSmallMarginBottom"/>
                                             <HBox class="sapUiTinyMarginBottom">
                                                 <core:Icon src="sap-icon://leads" size="1.5rem" color="#10B981" class="sapUiTinyMarginEnd"/>
                                                 <Text text="5 Şubat 2026"/>
@@ -391,7 +406,7 @@
         <uxap:footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
-                <Text text="© 2026 EduSupport Platform"/>
+                <Text text="© 2026 İSTE Eğitime Destek Derneği"/>
                 <ToolbarSpacer/>
                 <Link text="Gizlilik Politikası"/>
                 <ToolbarSeparator/>

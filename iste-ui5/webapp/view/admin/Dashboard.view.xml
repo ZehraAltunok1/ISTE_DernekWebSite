@@ -352,32 +352,372 @@
                     </IconTabFilter>
 
                     <!-- ========================================== -->
-                    <!-- TAB 4: MUHASEBE (placeholder)              -->
+                    <!-- TAB 4: MUHASEBE                            -->
                     <!-- ========================================== -->
                     <IconTabFilter
                         icon="sap-icon://wallet"
                         text="Muhasebe"
                         key="accounting">
-                        <VBox class="tabContent" alignItems="Center" justifyContent="Center" height="400px">
-                            <core:Icon src="sap-icon://wallet"   size="5rem" color="#6C63FF"/>
-                            <Title text="Muhasebe Modülü"        level="H2" class="sapUiSmallMarginTop"/>
-                            <Text  text="Yakında aktif olacak!"              class="sapUiTinyMarginTop"/>
+
+                        <ScrollContainer height="100%" vertical="true">
+                            <VBox class="tabContent">
+
+                            <!-- Toolbar -->
+                            <OverflowToolbar class="sapUiTinyMarginBottom">
+                                <Title text="Finansal Yönetim" level="H3"/>
+                                <ToolbarSpacer/>
+                                <Select id="paymentFilterStatus" change="onFilterPayments" width="150px">
+                                    <items>
+                                        <core:Item key=""         text="Tüm Durumlar"/>
+                                        <core:Item key="odendi"   text="Ödendi"/>
+                                        <core:Item key="bekliyor" text="Bekliyor"/>
+                                        <core:Item key="gecikmis" text="Gecikmiş"/>
+                                    </items>
+                                </Select>
+                                <Button
+                                    text="Yeni Ödeme"
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddPayment"/>
+                            </OverflowToolbar>
+
+                            <!-- KPI Kartları -->
+                            <HBox class="paymentKpiRow sapUiSmallMarginBottom" justifyContent="SpaceBetween">
+                                <VBox class="paymentKpiCard paymentKpiGreen" alignItems="Center">
+                                    <core:Icon src="sap-icon://wallet" size="1.5rem" color="#10B981"/>
+                                    <Title text="{dashboardData>/paymentStats/totalIncome}" level="H3" class="paymentKpiNumber"/>
+                                    <Text text="Toplam Gelir (₺)" class="paymentKpiLabel"/>
+                                </VBox>
+                                <VBox class="paymentKpiCard paymentKpiBlue" alignItems="Center">
+                                    <core:Icon src="sap-icon://calendar" size="1.5rem" color="#0070F2"/>
+                                    <Title text="{dashboardData>/paymentStats/monthlyIncome}" level="H3" class="paymentKpiNumber"/>
+                                    <Text text="Bu Ay (₺)" class="paymentKpiLabel"/>
+                                </VBox>
+                                <VBox class="paymentKpiCard paymentKpiOrange" alignItems="Center">
+                                    <core:Icon src="sap-icon://alert" size="1.5rem" color="#F59E0B"/>
+                                    <Title text="{dashboardData>/paymentStats/pendingAmount}" level="H3" class="paymentKpiNumber"/>
+                                    <Text text="Bekleyen (₺)" class="paymentKpiLabel"/>
+                                </VBox>
+                                <VBox class="paymentKpiCard paymentKpiPurple" alignItems="Center">
+                                    <core:Icon src="sap-icon://donut-chart" size="1.5rem" color="#8B5CF6"/>
+                                    <Title text="{dashboardData>/paymentStats/collectionRate}%" level="H3" class="paymentKpiNumber"/>
+                                    <Text text="Tahsilat Oranı" class="paymentKpiLabel"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Ödeme Tablosu -->
+                            <Table
+                                id="paymentsTable"
+                                items="{dashboardData>/payments}"
+                                noDataText="Ödeme kaydı bulunamadı"
+                                growing="true"
+                                growingThreshold="20"
+                                class="paymentsTable">
+
+                                <columns>
+                                    <Column width="4rem"><Text text="ID"/></Column>
+                                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Üye"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Ödeme Tipi"/></Column>
+                                    <Column><Text text="Tutar (₺)"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Tarih"/></Column>
+                                    <Column><Text text="Durum"/></Column>
+                                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Yöntem"/></Column>
+                                    <Column width="6rem" hAlign="Center"><Text text="İşlem"/></Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{dashboardData>id}"/>
+                                            <ObjectIdentifier title="{dashboardData>first_name} {dashboardData>last_name}"/>
+                                            <ObjectStatus
+                                                text="{= ${dashboardData>payment_type} === 'aidat' ? 'Aidat' : 'Bağış' }"
+                                                state="{= ${dashboardData>payment_type} === 'aidat' ? 'Information' : 'Success' }"/>
+                                            <Text text="{dashboardData>amount}"/>
+                                            <Text text="{= ${dashboardData>payment_date} || ${dashboardData>due_date} || '-' }"/>
+                                            <ObjectStatus
+                                                text="{= ${dashboardData>status} === 'odendi'   ? 'Ödendi'  :
+                                                          ${dashboardData>status} === 'bekliyor' ? 'Bekliyor' : 'Gecikmiş' }"
+                                                state="{= ${dashboardData>status} === 'odendi'   ? 'Success' :
+                                                           ${dashboardData>status} === 'bekliyor' ? 'Warning' : 'Error' }"/>
+                                            <Text text="{= ${dashboardData>payment_method} === 'nakit'       ? 'Nakit'       :
+                                                            ${dashboardData>payment_method} === 'banka'       ? 'Banka'       :
+                                                            ${dashboardData>payment_method} === 'kredi_karti' ? 'Kredi Kartı' : '-' }"/>
+                                            <HBox justifyContent="Center">
+                                                <Button icon="sap-icon://delete" type="Transparent" tooltip="Sil" press="onDeletePayment"/>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+
                         </VBox>
+                        </ScrollContainer>
                     </IconTabFilter>
 
-                    <!-- ========================================== -->
-                    <!-- TAB 5: RAPORLAR (placeholder)              -->
-                    <!-- ========================================== -->
-                    <IconTabFilter
-                        icon="sap-icon://bar-chart"
-                        text="Raporlar"
-                        key="reports">
-                        <VBox class="tabContent" alignItems="Center" justifyContent="Center" height="400px">
-                            <core:Icon src="sap-icon://bar-chart" size="5rem" color="#6C63FF"/>
-                            <Title text="Raporlar Modülü"         level="H2" class="sapUiSmallMarginTop"/>
-                            <Text  text="Yakında aktif olacak!"               class="sapUiTinyMarginTop"/>
-                        </VBox>
-                    </IconTabFilter>
+<!-- TAB: RAPORLAR - DETAYLI İÇERİK           -->
+<IconTabFilter
+    icon="sap-icon://bar-chart"
+    text="Raporlar"
+    key="reports">
+
+    <VBox class="tabContent">
+
+
+        <OverflowToolbar class="sapUiTinyMarginBottom">
+            <Title text="Raporlar ve Analizler" level="H3"/>
+            <ToolbarSpacer/>
+            <Label text="Dönem:" class="sapUiTinyMarginEnd"/>
+            <Select id="reportPeriodSelect" selectedKey="6months" change="onChangePeriod" width="140px">
+                <items>
+                    <core:Item key="1month"  text="Son 1 Ay"/>
+                    <core:Item key="3months" text="Son 3 Ay"/>
+                    <core:Item key="6months" text="Son 6 Ay"/>
+                    <core:Item key="1year"   text="Son 1 Yıl"/>
+                    <core:Item key="all"     text="Tüm Zamanlar"/>
+                </items>
+            </Select>
+            <Button
+                icon="sap-icon://refresh"
+                tooltip="Raporları Yenile"
+                press="onRefreshReports"
+                class="sapUiTinyMarginBegin"/>
+        </OverflowToolbar>
+
+  
+        <Panel headerText="Özet İstatistikler" class="sapUiResponsiveMargin">
+            <layout:Grid defaultSpan="XL3 L3 M6 S12" class="kpiGrid">
+                
+                <VBox class="kpiCard kpiBlue">
+                    <VBox alignItems="Center" class="kpiCardContent">
+                        <core:Icon src="sap-icon://money-bills" size="2rem" color="#0070F2" class="kpiIcon"/>
+                        <Title text="{reportData>/summary/totalDonations}" level="H2" class="kpiNumber"/>
+                        <Text text="Toplam Bağış (₺)" class="kpiLabel"/>
+                        <ObjectStatus 
+                            text="{reportData>/summary/donationChange}" 
+                            state="{= ${reportData>/summary/donationChangePositive} ? 'Success' : 'Error' }" 
+                            class="kpiTrend"/>
+                    </VBox>
+                </VBox>
+
+                <VBox class="kpiCard kpiGreen">
+                    <VBox alignItems="Center" class="kpiCardContent">
+                        <core:Icon src="sap-icon://group" size="2rem" color="#10B981" class="kpiIcon"/>
+                        <Title text="{reportData>/summary/newMembers}" level="H2" class="kpiNumber"/>
+                        <Text text="Yeni Üye" class="kpiLabel"/>
+                        <ObjectStatus 
+                            text="Seçilen dönemde" 
+                            state="Information" 
+                            class="kpiTrend"/>
+                    </VBox>
+                </VBox>
+
+                <VBox class="kpiCard kpiOrange">
+                    <VBox alignItems="Center" class="kpiCardContent">
+                        <core:Icon src="sap-icon://calendar" size="2rem" color="#F59E0B" class="kpiIcon"/>
+                        <Title text="{reportData>/summary/completedEvents}" level="H2" class="kpiNumber"/>
+                        <Text text="Tamamlanan Etkinlik" class="kpiLabel"/>
+                        <ObjectStatus 
+                            text="{reportData>/summary/totalParticipants} katılımcı" 
+                            state="Success" 
+                            class="kpiTrend"/>
+                    </VBox>
+                </VBox>
+
+                <VBox class="kpiCard kpiPurple">
+                    <VBox alignItems="Center" class="kpiCardContent">
+                        <core:Icon src="sap-icon://activity-individual" size="2rem" color="#8B5CF6" class="kpiIcon"/>
+                        <Title text="{reportData>/summary/activeRate}" level="H2" class="kpiNumber"/>
+                        <Text text="Aktivite Oranı" class="kpiLabel"/>
+                        <ObjectStatus 
+                            text="Üye bazlı" 
+                            state="Success" 
+                            class="kpiTrend"/>
+                    </VBox>
+                </VBox>
+
+            </layout:Grid>
+        </Panel>
+
+   
+        <layout:Grid defaultSpan="XL6 L6 M12 S12" class="sapUiResponsiveMargin">
+
+   
+            <Panel headerText="📈 Aylık Bağış Trendi" class="chartPanel">
+                <VBox alignItems="Center" justifyContent="Center" class="chartContainer">
+                    <core:HTML 
+                        id="donationTrendChart" 
+                        content="&lt;canvas id='donationChart' width='100%' height='300'&gt;&lt;/canvas&gt;" 
+                        class="chartCanvas"/>
+                </VBox>
+                <Toolbar>
+                    <ToolbarSpacer/>
+                    <Button 
+                        text="Excel'e Aktar" 
+                        icon="sap-icon://excel-attachment" 
+                        press="onExportDonationTrend"
+                        type="Transparent"/>
+                </Toolbar>
+            </Panel>
+
+    
+            <Panel headerText="👥 Üye Artış Trendi" class="chartPanel">
+                <VBox alignItems="Center" justifyContent="Center" class="chartContainer">
+                    <core:HTML 
+                        id="memberGrowthChart" 
+                        content="&lt;canvas id='memberChart' width='100%' height='300'&gt;&lt;/canvas&gt;" 
+                        class="chartCanvas"/>
+                </VBox>
+                <Toolbar>
+                    <ToolbarSpacer/>
+                    <Button 
+                        text="Excel'e Aktar" 
+                        icon="sap-icon://excel-attachment" 
+                        press="onExportMemberGrowth"
+                        type="Transparent"/>
+                </Toolbar>
+            </Panel>
+
+        </layout:Grid>
+
+        <Panel headerText="📋 Detaylı Raporlar" class="sapUiResponsiveMargin">
+            <VBox class="sapUiSmallMargin">
+                
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="reportRow sapUiTinyMarginBottom">
+                    <VBox>
+                        <Title text="Bağışçı Listesi Raporu" level="H5"/>
+                        <Text text="Tüm bağışçılar, iletişim bilgileri ve toplam bağış miktarları"/>
+                    </VBox>
+                    <HBox>
+                        <Button 
+                            text="Excel" 
+                            icon="sap-icon://excel-attachment" 
+                            press="onExportDonorList"
+                            type="Emphasized"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="PDF" 
+                            icon="sap-icon://pdf-attachment" 
+                            press="onExportDonorListPDF"
+                            type="Ghost"/>
+                    </HBox>
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="reportRow sapUiTinyMarginBottom">
+                    <VBox>
+                        <Title text="Öğrenci Listesi Raporu" level="H5"/>
+                        <Text text="Burslu öğrenciler, eğitim durumları ve bağış eşleşmeleri"/>
+                    </VBox>
+                    <HBox>
+                        <Button 
+                            text="Excel" 
+                            icon="sap-icon://excel-attachment" 
+                            press="onExportStudentList"
+                            type="Emphasized"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="PDF" 
+                            icon="sap-icon://pdf-attachment" 
+                            press="onExportStudentListPDF"
+                            type="Ghost"/>
+                    </HBox>
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="reportRow sapUiTinyMarginBottom">
+                    <VBox>
+                        <Title text="Etkinlik Katılım Raporu" level="H5"/>
+                        <Text text="Tüm etkinlikler, katılımcı sayıları ve katılım oranları"/>
+                    </VBox>
+                    <HBox>
+                        <Button 
+                            text="Excel" 
+                            icon="sap-icon://excel-attachment" 
+                            press="onExportEventReport"
+                            type="Emphasized"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="PDF" 
+                            icon="sap-icon://pdf-attachment" 
+                            press="onExportEventReportPDF"
+                            type="Ghost"/>
+                    </HBox>
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="reportRow sapUiTinyMarginBottom">
+                    <VBox>
+                        <Title text="Mali Durum Raporu" level="H5"/>
+                        <Text text="Gelir-gider dağılımı, bağış detayları ve finansal özet"/>
+                    </VBox>
+                    <HBox>
+                        <Button 
+                            text="Excel" 
+                            icon="sap-icon://excel-attachment" 
+                            press="onExportFinancialReport"
+                            type="Emphasized"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="PDF" 
+                            icon="sap-icon://pdf-attachment" 
+                            press="onExportFinancialReportPDF"
+                            type="Ghost"/>
+                    </HBox>
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="reportRow">
+                    <VBox>
+                        <Title text="Yönetim Kurulu Özet Raporu" level="H5"/>
+                        <Text text="Üst yönetim için özet istatistikler ve grafikler"/>
+                    </VBox>
+                    <HBox>
+                        <Button 
+                            text="Excel" 
+                            icon="sap-icon://excel-attachment" 
+                            press="onExportExecutiveSummary"
+                            type="Emphasized"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button 
+                            text="PDF" 
+                            icon="sap-icon://pdf-attachment" 
+                            press="onExportExecutiveSummaryPDF"
+                            type="Ghost"/>
+                    </HBox>
+                </HBox>
+
+            </VBox>
+        </Panel>
+
+        <Panel headerText="📊 Kategori Bazlı Analiz" class="sapUiResponsiveMargin">
+            <Table
+                id="categoryAnalysisTable"
+                items="{reportData>/categoryStats}"
+                noDataText="Veri bulunamadı">
+                <columns>
+                    <Column><Text text="Kategori"/></Column>
+                    <Column hAlign="End"><Text text="Bağışçı Sayısı"/></Column>
+                    <Column hAlign="End"><Text text="Öğrenci Sayısı"/></Column>
+                    <Column hAlign="End"><Text text="Toplam Bağış (₺)"/></Column>
+                    <Column hAlign="End"><Text text="Ort. Bağış (₺)"/></Column>
+                    <Column><Text text="Durum"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{reportData>category}"/>
+                            <Text text="{reportData>donorCount}"/>
+                            <Text text="{reportData>studentCount}"/>
+                            <Text text="{reportData>totalDonation}"/>
+                            <Text text="{reportData>avgDonation}"/>
+                            <ObjectStatus 
+                                text="{reportData>trend}" 
+                                state="{= ${reportData>trendPositive} ? 'Success' : 'Error' }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </Panel>
+
+    </VBox>
+</IconTabFilter>
 
                 </items>
             </IconTabBar>

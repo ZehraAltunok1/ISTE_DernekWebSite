@@ -1,0 +1,122 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="paymentAddDialog"
+        title="Yeni Ödeme Kaydet"
+        contentWidth="500px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <f:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="4"
+                    labelSpanM="12"
+                    labelSpanS="12"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1">
+
+                    <f:content>
+
+                        <core:Title text="Ödeme Bilgileri"/>
+
+                        <Label text="Üye Seçin" required="true"/>
+                        <Select
+                            id="paymentUserId"
+                            selectedKey="{paymentModel>/user_id}"
+                            items="{dashboardData>/members}">
+                            <items>
+                                <core:Item
+                                    key="{dashboardData>id}"
+                                    text="{dashboardData>first_name} {dashboardData>last_name} ({= ${dashboardData>user_type} === 'donor' ? 'Bağışçı' : 'Öğrenci' })"/>
+                            </items>
+                        </Select>
+
+                        <Label text="Ödeme Tipi" required="true"/>
+                        <Select id="paymentType" selectedKey="{paymentModel>/payment_type}">
+                            <items>
+                                <core:Item key="aidat" text="💳 Aidat"/>
+                                <core:Item key="bagis" text="🎁 Bağış"/>
+                            </items>
+                        </Select>
+
+                        <Label text="Tutar (₺)" required="true"/>
+                        <StepInput
+                            id="paymentAmount"
+                            value="{paymentModel>/amount}"
+                            min="0"
+                            step="50"
+                            displayValuePrecision="2"/>
+
+                        <Label text="Durum"/>
+                        <Select id="paymentStatus" selectedKey="{paymentModel>/status}">
+                            <items>
+                                <core:Item key="odendi"   text="✅ Ödendi"/>
+                                <core:Item key="bekliyor" text="⏳ Bekliyor"/>
+                                <core:Item key="gecikmis" text="❌ Gecikmiş"/>
+                            </items>
+                        </Select>
+
+                        <Label text="Ödeme Tarihi"/>
+                        <DatePicker
+                            id="paymentDate"
+                            placeholder="GG/AA/YYYY"
+                            displayFormat="dd/MM/yyyy"
+                            valueFormat="yyyy-MM-dd"
+                            value="{paymentModel>/payment_date}"/>
+
+                        <Label text="Vade Tarihi"/>
+                        <DatePicker
+                            id="paymentDueDate"
+                            placeholder="GG/AA/YYYY"
+                            displayFormat="dd/MM/yyyy"
+                            valueFormat="yyyy-MM-dd"
+                            value="{paymentModel>/due_date}"/>
+
+                        <Label text="Ödeme Yöntemi"/>
+                        <Select id="paymentMethod" selectedKey="{paymentModel>/payment_method}">
+                            <items>
+                                <core:Item key=""            text="Seçiniz"/>
+                                <core:Item key="nakit"       text="💵 Nakit"/>
+                                <core:Item key="banka"       text="🏦 Banka Havalesi"/>
+                                <core:Item key="kredi_karti" text="💳 Kredi Kartı"/>
+                            </items>
+                        </Select>
+
+                        <Label text="Notlar"/>
+                        <TextArea
+                            id="paymentNotes"
+                            placeholder="Ek bilgiler..."
+                            value="{paymentModel>/notes}"
+                            rows="2"/>
+
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Kaydet"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press="onSavePayment"/>
+        </beginButton>
+        <endButton>
+            <Button
+                text="İptal"
+                type="Transparent"
+                icon="sap-icon://decline"
+                press="onClosePaymentDialog"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

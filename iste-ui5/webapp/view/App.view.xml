@@ -3,10 +3,6 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
-    
-    <Shell id="shell">
-        <App id="app">
-            <!-- Pages will be loaded here dynamically -->
-        </App>
-    </Shell>
+
+    <App id="app"/>
 </mvc:View>

@@ -6,10 +6,7 @@ const dbPath = path.join(__dirname, '../database/edusupport.db');
 const db = new Database(dbPath);
 
 console.log('📁 Database path:', dbPath);
-
-// ==========================================
 // TABLO OLUŞTURMA
-// ==========================================
 db.exec(`
     CREATE TABLE IF NOT EXISTS admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,10 +87,7 @@ db.exec(`
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 `);
-
-// ==========================================
 // ADMIN KULLANICI
-// ==========================================
 const checkAdmin = db.prepare('SELECT * FROM admins WHERE username = ?').get('admin');
 if (!checkAdmin) {
     const hashedPassword = bcrypt.hashSync('admin123', 10);
@@ -148,10 +142,7 @@ for (const donor of seedDonors) {
     }
 }
 console.log('✅ Bağışçı seed data hazır (15 kayıt)');
-
-// ==========================================
 // SEED DATA - ÖĞRENCİLER (10 kişi)
-// ==========================================
 const seedStudents = [
     { first_name: 'Berk',    last_name: 'Güneş',     email: 'berk.gunes@iste.edu.tr',     phone: '05401234501', university: 'İskenderun Teknik Üniversitesi', department: 'Bilgisayar Mühendisliği', grade_level: 2, gpa: 3.45 },
     { first_name: 'Cansu',   last_name: 'Ateş',      email: 'cansu.ates@iste.edu.tr',     phone: '05401234502', university: 'İskenderun Teknik Üniversitesi', department: 'Elektrik-Elektronik Mühendisliği', grade_level: 3, gpa: 3.20 },

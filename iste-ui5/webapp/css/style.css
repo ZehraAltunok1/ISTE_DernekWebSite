@@ -1,49 +1,562 @@
-/* ============================================= */
-/* EDUSUPPORT - SAP UI5 DEMO KIT COMPLIANT     */
-/* ============================================= */
 
-/* Tam Ekran */
-html, body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
+.adminDashboardPage {
+    background: #F5F6F8;
+}
+
+.dashboardScrollContainer {
+    background: #F5F6F8;
+}
+
+.dashboardContent {
+    padding: 1.5rem;
+    max-width: 100%;
+}
+/* WELCOME BANNER */
+.welcomeBanner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 0.5rem; /* Fiori standard */
+    padding: 2rem;
+    color: #FFFFFF;
+    margin-bottom: 1.5rem;
+}
+.adminDashboardPage .welcomeBanner .sapMTitle {
+    color: #FFFFFF;
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.welcomeSubtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+}
+/* KPI CARDS */
+.kpiGrid {
+    padding: 1rem 0;
+}
+
+.kpiCard {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s ease;
+    min-height: 180px;
+}
+
+.kpiCard:hover {
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Border indicators */
+.kpiBlue   { border-top: 3px solid #0070F2; }
+.kpiGreen  { border-top: 3px solid #10B981; }
+.kpiOrange { border-top: 3px solid #F59E0B; }
+.kpiPurple { border-top: 3px solid #8B5CF6; }
+
+.kpiCardContent {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.kpiIcon {
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0.5rem 0;
+}
+
+.kpiLabel {
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+.adminDashboardPage .sapMPanel {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.adminDashboardPage .sapMPanel .sapMPanelHdr {
+    background: transparent;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 1rem 1.5rem;
+}
+
+
+.adminDashboardPage .sapMPanel > .sapMPanelContent {
+    padding: 1.5rem !important;
+}
+
+.adminDashboardPage .activityPanel > .sapMPanel > .sapMPanelContent,
+.adminDashboardPage .quickActionsPanel > .sapMPanel > .sapMPanelContent {
     padding: 0 !important;
 }
-
-/* Smooth Scroll */
-html {
-    scroll-behavior: smooth;
+/* ACTIVITY LIST */
+.activityPanel .sapMList {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-/* ObjectPage sections için scroll offset */
-#aboutSection,
-#scholarshipsSection,
-#blogSection,
-#howItWorksSection,
-#contactSection {
-    scroll-margin-top: 3rem;
+.activityPanel .sapMFeedListItem {
+    border-bottom: 1px solid #F3F4F6;
+    padding: 1rem 1.5rem;
 }
 
-/* Tile hover effect */
-.sapMGT {
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+.activityPanel .sapMFeedListItem:last-child {
+    border-bottom: none;
 }
 
-.sapMGT:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+.activityPanel .sapMListNoData {
+    padding: 3rem;
+    text-align: center;
+    color: #9CA3AF;
+}
+/* QUICK ACTIONS */
+.quickActionsPanel .sapMVBox {
+    padding: 1rem 1.5rem;
 }
 
-/* Panel hover effect */
-.sapMPanel {
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+.quickActionsPanel .sapMBtn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    text-align: left;
 }
 
-.sapMPanel:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+.quickActionsPanel .sapMBtn:last-child {
+    margin-bottom: 0;
 }
-.sapMShellCentralContext {
+/* TABLES */
+.membersTable,
+.paymentsTable,
+.reportsTable {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.membersTable .sapMListTblHeaderCell,
+.paymentsTable .sapMListTblHeaderCell,
+.reportsTable .sapMListTblHeaderCell {
+    background: #F9FAFB;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.membersTable .sapMListTblRow:hover,
+.paymentsTable .sapMListTblRow:hover,
+.reportsTable .sapMListTblRow:hover {
+    background: #F9FAFB;
+}
+.adminDashboardPage .sapMBtn {
+    border-radius: 0.25rem; 
+    transition: background-color 0.2s ease;
+}
+
+.adminDashboardPage .sapMBtn:hover {
+
+    opacity: 0.9;
+}
+
+
+.adminDashboardPage .sapMBtnEmphasized {
+    background: #0070F2;
+    border-color: #0070F2;
+}
+
+.adminDashboardPage .sapMBtnEmphasized:hover {
+    background: #005BBF;
+    border-color: #005BBF;
+}
+
+
+
+.adminDashboardPage .sapMObjStatus {
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+
+.adminDashboardPage .sapMObjStatusSuccess {
+    background: #E5F3EC;
+    color: #0F8140;
+}
+
+.adminDashboardPage .sapMObjStatusError {
+    background: #FCE9E9;
+    color: #BB0000;
+}
+
+.adminDashboardPage .sapMObjStatusWarning {
+    background: #FEF3D0;
+    color: #8D6708;
+}
+
+.adminDashboardPage .sapMObjStatusInformation {
+    background: #D3EFFF;
+    color: #005BA8;
+}
+
+
+.adminIconTabBar {
+    background: #FFFFFF;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+
+.adminIconTabBar .sapMITBFilter {
+    color: #6B7280;
+    transition: color 0.2s ease;
+}
+
+.adminIconTabBar .sapMITBFilter:hover {
+    color: #1F2937;
+}
+
+.adminIconTabBar .sapMITBFilter.sapMITBSelected {
+    color: #0070F2;
+}
+.eventKpiRow,
+.paymentKpiRow {
+    display: flex;
+    gap: 1rem;
+    padding: 0 0.25rem 1rem 0.25rem;
+}
+
+.eventKpiCard,
+.paymentKpiCard {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.eventKpiCard:hover,
+.paymentKpiCard:hover {
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+.eventKpiBlue, .paymentKpiBlue     { border-top: 3px solid #0070F2; }
+.eventKpiGreen, .paymentKpiGreen   { border-top: 3px solid #10B981; }
+.eventKpiOrange, .paymentKpiOrange { border-top: 3px solid #F59E0B; }
+.eventKpiPurple, .paymentKpiPurple { border-top: 3px solid #8B5CF6; }
+
+
+.adminDashboardPage .eventKpiCard .sapMTitle,
+.adminDashboardPage .paymentKpiCard .sapMTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0.25rem 0;
+}
+
+.eventKpiLabel,
+.paymentKpiLabel {
+    font-size: 0.75rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+
+
+.eventsList .sapMListItems {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+}
+
+.eventsList .sapMCustomListItem {
+    border-radius: 0.5rem !important;
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    margin-bottom: 0.5rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.eventsList .sapMCustomListItem:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    border-color: #0070F2 !important;
+}
+
+/* EVENT CARD CONTENT */
+
+.eventCard {
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.eventCardIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: #F9FAFB;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventCardBody {
+    flex: 1;
+    min-width: 0;
+}
+
+.adminDashboardPage .eventCard .sapMTitle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0.75rem 0.25rem 0;
+}
+
+.eventStatusBadge {
+    border-radius: 1rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.eventCardMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+}
+
+.eventMetaText {
+    font-size: 0.8rem;
+    color: #6B7280;
+}
+
+.eventCardActions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+
+
+.adminDashboardPage .reportBigNumber {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0.25rem 0;
+}
+
+.reportGreen  { color: #10B981; }
+.reportOrange { color: #F59E0B; }
+.reportRed    { color: #EF4444; }
+.reportBlue   { color: #0070F2; }
+.reportGray   { color: #9CA3AF; }
+
+.reportLabel {
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+    .dashboardContent {
+        padding: 1rem;
+    }
+    
+    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
+        font-size: 1.75rem;
+    }
+    
+    .kpiCard {
+        min-height: 160px;
+    }
+    
+    .eventKpiRow,
+    .paymentKpiRow {
+        flex-wrap: wrap;
+    }
+    
+    .eventKpiCard,
+    .paymentKpiCard {
+        min-width: calc(50% - 0.5rem);
+    }
+    
+    .eventCardActions {
+        flex-direction: row;
+    }
+}
+
+
+
+.activityPanel .sapMList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-track {
+    background: #F3F4F6;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 3px;
+}
+
+.activityPanel .sapMList::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}
+
+
+.adminDashboardPage .sapMTitle,
+.adminDashboardPage .sapMText {
+    line-height: 1.5 !important;
+    white-space: normal !important;
+}
+
+.heroImage {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.heroTextOverlay {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.95);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+}
+
+
+.blogThumbnail {
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.blogThumbnail:hover {
+    transform: scale(1.05);
+}
+
+
+.aboutImage {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+.scholarshipImage {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+
+.statsBar {
+    position: sticky !important;
+    top: 48px !important; 
+    z-index: 100 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    padding: 1rem 2rem !important;
+}
+
+.statsBar .sapMBarChild {
     width: 100% !important;
-    max-width: 100% !important;
 }
+
+.statItem {
+    flex: 1;
+    gap: 0.25rem;
+    padding: 0 1rem;
+}
+
+.statNumber {
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    line-height: 1.2 !important;
+}
+
+.statLabel {
+    font-size: 0.85rem !important;
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: 500 !important;
+}
+
+.statItem .sapUiIcon {
+    color: white !important;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.statItem:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .statsBar {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    .statNumber {
+        font-size: 1.25rem !important;
+    }
+    
+    .statLabel {
+        font-size: 0.7rem !important;
+    }
+    
+    .statItem {
+        padding: 0 0.5rem;
+    }
+}
+.headerLogo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+.sapFDynamicPageTitle {
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    margin: 16px !important;
+    padding: 16px 24px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12) !important;
+    border: 1px solid #d1d5db !important;
+}
+.sapFDynamicPageTitle {
+    background: rgba(255, 255, 255, 0.6) !important; /* yarı şeffaf */
+    backdrop-filter: blur(10px); /* cam efekti */
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.buttonArea {
+    display: flex;
+    gap: 10px;
+    justify-content: center; 
+    align-items: center;       
+}
+.sapFDynamicPageTitle:active,
+.sapFDynamicPageTitle:focus {
+    background: rgba(255,255,255,0.6) !important;
+    outline: none !important;
+}
+
+
+

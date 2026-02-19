@@ -182,11 +182,7 @@ sap.ui.define([
             
             this.getView().getModel("profileData").setProperty("/activeSessions", aSessions);
         },
-
-        // ==========================================
         // NAVIGATION
-        // ==========================================
-
         onNavBack: function () {
             var oHistory = History.getInstance();
             var sPreviousHash = oHistory.getPreviousHash();
@@ -197,44 +193,41 @@ sap.ui.define([
                 this.getOwnerComponent().getRouter().navTo("adminDashboard", {}, true);
             }
         },
-
-        // ==========================================
         // PROFILE ACTIONS
-        // ==========================================
 
         onEditProfile: function() {
             MessageToast.show("Profil düzenleme sayfası açılıyor...");
-            // TODO: Open edit dialog or navigate to edit page
+         
         },
 
         onChangeAvatar: function() {
             MessageToast.show("Fotoğraf değiştirme özelliği yakında aktif olacak!");
-            // TODO: File upload dialog
+           
         },
 
         onChangePassword: function() {
             MessageBox.information("Şifre değiştirme formu yakında aktif olacak!");
-            // TODO: Password change dialog
+            
         },
 
         onChangeEmail: function() {
             MessageBox.information("Email değiştirme formu yakında aktif olacak!");
-            // TODO: Email change dialog with verification
+     
         },
 
         onSetup2FA: function() {
             MessageBox.information("İki faktörlü doğrulama kurulumu yakında aktif olacak!");
-            // TODO: 2FA setup wizard
+           
         },
 
         onNotificationSettings: function() {
             MessageToast.show("Bildirim ayarları sayfası açılıyor...");
-            // TODO: Notification preferences dialog
+            
         },
 
         onViewSessions: function() {
             MessageToast.show("Oturum geçmişi görüntüleniyor...");
-            // TODO: Full session history page
+     
         },
 
         onTerminateSession: function(oEvent) {

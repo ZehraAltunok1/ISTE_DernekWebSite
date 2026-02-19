@@ -13,7 +13,6 @@ sap.ui.define([
             console.log("🏠 Home page initialized");
             this._checkLoginStatus();
             
-            // Login model oluştur
             var oLoginModel = new JSONModel({
                 loginType: "user",
                 email: "",
@@ -52,11 +51,7 @@ sap.ui.define([
                 oAppData.setProperty("/currentUser", null);
             }
         },
-
-        // ==========================================
         // SCROLL NAVIGATION
-        // ==========================================
-
         onScrollToSection: function(sectionId) {
             var oSection = this.getView().byId(sectionId);
             if (oSection) {
@@ -82,11 +77,7 @@ sap.ui.define([
         onScrollToContact: function() {
             this.onScrollToSection("contactSection");
         },
-
-        // ==========================================
         // NAVIGATION
-        // ==========================================
-
         onNavToHome: function() {
             this.getOwnerComponent().getRouter().navTo("home");
         },
@@ -107,10 +98,7 @@ sap.ui.define([
             MessageToast.show("Ayarlar yakında aktif olacak!");
         },
 
-        // ==========================================
         // LOGIN DIALOG (FRAGMENT)
-        // ==========================================
-
         onLoginPress: function () {
             console.log("🔑 Opening login dialog...");
             
@@ -212,7 +200,7 @@ sap.ui.define([
                 
                 console.log("✅ Login successful!");
                 
-                // Token oluştur
+              
                 var sToken = "test-token-" + Date.now();
                 localStorage.setItem("authToken", sToken);
                 localStorage.setItem("userData", JSON.stringify(oTestUser.user));
@@ -221,20 +209,20 @@ sap.ui.define([
                     localStorage.setItem("rememberMe", "true");
                 }
 
-                // App Data güncelle
+              
                 var oAppData = this.getOwnerComponent().getModel("appData");
                 oAppData.setProperty("/isAuthenticated", true);
                 oAppData.setProperty("/currentUser", oTestUser.user);
                 oAppData.setProperty("/authToken", sToken);
 
-                // Dialog kapat
+            
                 this._pLoginDialog.then(function(oDialog) {
                     oDialog.close();
                 });
 
                 MessageToast.show("Hoş geldiniz, " + oTestUser.user.first_name + "!");
 
-                // Yönlendir
+            
                 setTimeout(function() {
                     if (oTestUser.user.type === "admin") {
                         this.getOwnerComponent().getRouter().navTo("adminDashboard");
@@ -253,10 +241,6 @@ sap.ui.define([
                 oDialog.close();
             });
         },
-
-        // ==========================================
-        // LOGOUT
-        // ==========================================
 
         onLogout: function() {
             
@@ -280,6 +264,51 @@ sap.ui.define([
                     }
                 }.bind(this)
             });
-        }
+        },
+
+
+            onDonatePress: function () {
+                var that = this;
+                
+                MessageBox.information(
+                    "Bağış sayfası yakında aktif olacak!\n\nŞu an için lütfen bize info@edusupport.com adresinden ulaşabilirsiniz.",
+                    {
+                        title: "Bağış Yap",
+                        actions: [MessageBox.Action.OK],
+                        onClose: function () {
+
+                        }
+                    }
+                );
+            },
+
+            // Burs başvurusu butonu
+            onScholarshipApply: function () {
+                var that = this;
+                
+                MessageBox.confirm(
+                    "Burs başvurusu yapmak için giriş yapmanız gerekmektedir.\n\nGiriş yapmak ister misiniz?",
+                    {
+                        title: "Burs Başvurusu",
+                        actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                        emphasizedAction: MessageBox.Action.YES,
+                        onClose: function (oAction) {
+                            if (oAction === MessageBox.Action.YES) {
+                                that.onLoginPress();
+                            }
+                        }
+                    }
+                );
+            },
+
+            // İletişim bölümüne scroll
+            onScrollToContact: function () {
+                var oPage = this.byId("contactSection");
+    if (oPage) {
+        oPage.scrollIntoView({ behavior: "smooth" });
+    }
+    },
+    
     });
+
 });

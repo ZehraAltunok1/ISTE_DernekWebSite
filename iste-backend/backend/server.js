@@ -30,6 +30,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api',      require('./routes/api'));   // donors, students, activities, stats
 app.use('/api/events', require('./routes/events'));
+app.use('/api/payments', require('./routes/payments'));
+app.use('/api/reports', require('./routes/reports'));
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({

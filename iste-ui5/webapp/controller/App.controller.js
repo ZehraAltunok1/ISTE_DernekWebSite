@@ -7,9 +7,6 @@ sap.ui.define([
 
         onInit: function () {
             console.log("📱 App Controller initialized");
-            
-            // Router initialize Component.js'te yapılıyor, burada TEKRAR yapma!
-            // this.getOwnerComponent().getRouter().initialize(); ❌ KALDIR
         }
     });
 });
