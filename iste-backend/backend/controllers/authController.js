@@ -21,7 +21,7 @@ class AuthController {
                 });
             }
             
-            // Users tablosundan kullanıcıyı bul
+           
             const [users] = await db.query(
                 'SELECT * FROM users WHERE email = ?',
                 [email]
@@ -37,7 +37,7 @@ class AuthController {
             
             const user = users[0];
             
-            // Şifre kontrolü (password_hash sütunu)
+           
             const isPasswordValid = await bcrypt.compare(password, user.password_hash);
             
             if (!isPasswordValid) {
@@ -48,7 +48,7 @@ class AuthController {
                 });
             }
             
-            // JWT Token oluştur
+         
             const JWT_SECRET = process.env.JWT_SECRET || 'gizli-anahtar-2024-edusupport';
             const token = jwt.sign(
                 {
@@ -98,7 +98,7 @@ class AuthController {
             
             console.log('📝 Register attempt for:', email);
             
-            // Validasyon
+            
             if (!email || !password || !first_name || !last_name) {
                 return res.status(400).json({
                     success: false,

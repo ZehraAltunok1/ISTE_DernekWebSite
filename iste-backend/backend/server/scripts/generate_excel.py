@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Excel Report Generator for Dernek Platform
 Uses openpyxl to create formatted Excel files
@@ -22,7 +22,7 @@ def create_excel_report(data, output_path):
     ws = wb.active
     ws.title = "Rapor"
     
-    # Style definitions
+
     header_font = Font(name='Arial', size=11, bold=True, color='FFFFFF')
     header_fill = PatternFill(start_color='0070F2', end_color='0070F2', fill_type='solid')
     header_alignment = Alignment(horizontal='center', vertical='center')
@@ -37,12 +37,12 @@ def create_excel_report(data, output_path):
         bottom=Side(style='thin', color='D3D3D3')
     )
     
-    # Write data
+
     for row_idx, row_data in enumerate(data, start=1):
         for col_idx, cell_value in enumerate(row_data, start=1):
             cell = ws.cell(row=row_idx, column=col_idx, value=cell_value)
             
-            # Apply header style to first row
+        
             if row_idx == 1:
                 cell.font = header_font
                 cell.fill = header_fill
@@ -53,7 +53,7 @@ def create_excel_report(data, output_path):
                 cell.alignment = data_alignment
                 cell.border = border_thin
     
-    # Auto-adjust column widths
+
     for col_idx in range(1, len(data[0]) + 1):
         column_letter = get_column_letter(col_idx)
         max_length = 0
@@ -63,14 +63,14 @@ def create_excel_report(data, output_path):
             if cell_value:
                 max_length = max(max_length, len(str(cell_value)))
         
-        # Set width with some padding
+   
         adjusted_width = min(max_length + 2, 50)
         ws.column_dimensions[column_letter].width = adjusted_width
     
-    # Freeze first row
+ 
     ws.freeze_panes = 'A2'
     
-    # Save file
+
     wb.save(output_path)
     print(f"Excel file created: {output_path}")
 
@@ -80,17 +80,17 @@ def main():
         sys.exit(1)
     
     try:
-        # Parse input
+   
         json_data = sys.argv[1]
         output_path = sys.argv[2]
         
-        # Load data
+     
         data = json.loads(json_data)
         
         if not isinstance(data, list):
             raise ValueError("Data must be a list of lists")
         
-        # Create Excel
+        
         create_excel_report(data, output_path)
         sys.exit(0)
         

@@ -46,22 +46,14 @@
     },
     "resources": {
       "css": [
-        {
-          "uri": "css/style.css"
-        },
-        {
-          "uri": "css/launchpad.css"
-        },
-        {
-          "uri": "css/dashboard.css"
-        },
-        {
-          "uri": "css/profile.css"
-        },
-        {
-          "uri": "css/login.css"
-        }
-        
+        { "uri": "css/style.css"      },
+        { "uri": "css/launchpad.css"  },
+        { "uri": "css/dashboard.css"  },
+        { "uri": "css/profile.css"    },
+        { "uri": "css/login.css"      },
+        { "uri": "css/mediaCards.css" },
+        { "uri": "css/navbar.css"     },
+        { "uri": "css/donate.css"     }
       ]
     },
     "routing": {
@@ -79,31 +71,12 @@
         "async": true
       },
       "routes": [
-        {
-          "pattern": "",
-          "name": "home",
-          "target": "home"
-        },
-        {
-          "pattern": "login",
-          "name": "login",
-          "target": "login"
-        },
-        {
-          "pattern": "user/launchpad",
-          "name": "launchpad",
-          "target": "launchpad"
-        },
-        {
-          "pattern": "admin/dashboard",
-          "name": "adminDashboard",
-          "target": "adminDashboard"
-        },
-        {
-          "pattern": "admin/profile",
-          "name": "profile",
-          "target": "profile"
-        }
+        { "pattern": "",               "name": "home",           "target": "home"           },
+        { "pattern": "login",          "name": "login",          "target": "login"          },
+        { "pattern": "user/launchpad", "name": "launchpad",      "target": "launchpad"      },
+        { "pattern": "admin/dashboard","name": "adminDashboard", "target": "adminDashboard" },
+        { "pattern": "admin/profile",  "name": "profile",        "target": "profile"        },
+        { "pattern": "bagis",          "name": "donate",         "target": "donate"         }
       ],
       "targets": {
         "login": {
@@ -141,6 +114,12 @@
           "viewName": "public.NotFound",
           "viewId": "notFound",
           "viewLevel": 6
+        },
+        "donate": {
+          "viewType": "XML",
+          "viewName": "public.Donate",
+          "viewId": "donate",
+          "viewLevel": 2
         }
       }
     },

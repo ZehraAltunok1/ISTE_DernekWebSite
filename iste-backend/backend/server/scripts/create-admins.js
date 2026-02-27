@@ -2,7 +2,6 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
 const path = require('path');
 
-// Database yolunu ayarlayın
 const DB_PATH = path.join(__dirname, '../database.sqlite'); 
 
 const db = new sqlite3.Database(DB_PATH, (err) => {
@@ -13,7 +12,7 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
   console.log('✅ Connected to SQLite database');
 });
 
-// Test kullanıcıları
+
 const TEST_USERS = [
   {
     email: 'admin@test.com',

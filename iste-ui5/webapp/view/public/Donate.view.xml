@@ -1,0 +1,185 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.Donate"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form">
+
+    <Page
+        showHeader="false"
+        class="donatePage">
+
+        <content>
+            <ScrollContainer height="100%" vertical="true">
+
+                <!-- ── HERO ── -->
+                <core:HTML content="
+                    &lt;div class='donate-hero'&gt;
+                        &lt;div class='donate-hero-bg'&gt;&lt;/div&gt;
+                        &lt;div class='donate-hero-content'&gt;
+                            &lt;a href='index.html' class='donate-back-btn'&gt;← Anasayfa&lt;/a&gt;
+                            &lt;div class='donate-hero-paws'&gt;🐾&lt;/div&gt;
+                            &lt;h1 class='donate-hero-title'&gt;Bir Hayat&lt;br&gt;&lt;span&gt;Değiştir&lt;/span&gt;&lt;/h1&gt;
+                            &lt;p class='donate-hero-sub'&gt;Her bağışınız bir hayvanın karnını doyurur, bir öğrencinin geleceğini aydınlatır.&lt;/p&gt;
+                            &lt;div class='donate-hero-stats'&gt;
+                                &lt;div class='donate-stat'&gt;&lt;span class='donate-stat-num'&gt;1500+&lt;/span&gt;&lt;span class='donate-stat-lbl'&gt;Beslenen Hayvan&lt;/span&gt;&lt;/div&gt;
+                                &lt;div class='donate-stat-divider'&gt;&lt;/div&gt;
+                                &lt;div class='donate-stat'&gt;&lt;span class='donate-stat-num'&gt;250+&lt;/span&gt;&lt;span class='donate-stat-lbl'&gt;Burslu Öğrenci&lt;/span&gt;&lt;/div&gt;
+                                &lt;div class='donate-stat-divider'&gt;&lt;/div&gt;
+                                &lt;div class='donate-stat'&gt;&lt;span class='donate-stat-num'&gt;400+&lt;/span&gt;&lt;span class='donate-stat-lbl'&gt;Tedavi Edilen&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                "/>
+
+                <!-- ── KATEGORİLER ── -->
+                <VBox id="donateStepCategories" class="donate-section">
+                    <core:HTML content="&lt;div class='donate-step-header'&gt;&lt;span class='donate-step-num'&gt;1&lt;/span&gt;&lt;h2&gt;Bağış Kategorisi Seçin&lt;/h2&gt;&lt;/div&gt;"/>
+
+                    <l:Grid defaultSpan="XL3 L3 M6 S12" class="donate-categories-grid">
+
+                        <VBox id="catMama" class="donate-cat-card" press="onSelectCategory">
+                            <core:HTML content="
+                                &lt;div class='donate-cat-inner' data-cat='mama' onclick='selectCategory(this)'&gt;
+                                    &lt;div class='donate-cat-icon'&gt;🍖&lt;/div&gt;
+                                    &lt;h3&gt;Hayvan Maması&lt;/h3&gt;
+                                    &lt;p&gt;Sokak hayvanlarına mama ve su desteği sağlayın&lt;/p&gt;
+                                    &lt;div class='donate-cat-impact'&gt;50₺ = 1 haftalık mama&lt;/div&gt;
+                                &lt;/div&gt;
+                            "/>
+                        </VBox>
+
+                        <VBox id="catVet" class="donate-cat-card">
+                            <core:HTML content="
+                                &lt;div class='donate-cat-inner' data-cat='veteriner' onclick='selectCategory(this)'&gt;
+                                    &lt;div class='donate-cat-icon'&gt;🏥&lt;/div&gt;
+                                    &lt;h3&gt;Veteriner Tedavisi&lt;/h3&gt;
+                                    &lt;p&gt;Yaralı ve hasta hayvanlara tedavi imkânı sunun&lt;/p&gt;
+                                    &lt;div class='donate-cat-impact'&gt;200₺ = 1 temel tedavi&lt;/div&gt;
+                                &lt;/div&gt;
+                            "/>
+                        </VBox>
+
+                        <VBox id="catBurs" class="donate-cat-card">
+                            <core:HTML content="
+                                &lt;div class='donate-cat-inner' data-cat='burs' onclick='selectCategory(this)'&gt;
+                                    &lt;div class='donate-cat-icon'&gt;🎓&lt;/div&gt;
+                                    &lt;h3&gt;Burs Bağışı&lt;/h3&gt;
+                                    &lt;p&gt;Ekonomik engeli olan öğrencilere eğitim desteği verin&lt;/p&gt;
+                                    &lt;div class='donate-cat-impact'&gt;500₺ = 1 aylık burs&lt;/div&gt;
+                                &lt;/div&gt;
+                            "/>
+                        </VBox>
+
+                        <VBox id="catBarinak" class="donate-cat-card">
+                            <core:HTML content="
+                                &lt;div class='donate-cat-inner' data-cat='barinak' onclick='selectCategory(this)'&gt;
+                                    &lt;div class='donate-cat-icon'&gt;🏠&lt;/div&gt;
+                                    &lt;h3&gt;Barınak Desteği&lt;/h3&gt;
+                                    &lt;p&gt;Barınak altyapısının iyileştirilmesine katkı sağlayın&lt;/p&gt;
+                                    &lt;div class='donate-cat-impact'&gt;1000₺ = 1 barınak bölmesi&lt;/div&gt;
+                                &lt;/div&gt;
+                            "/>
+                        </VBox>
+
+                    </l:Grid>
+                </VBox>
+
+                <!-- ── TUTAR ── -->
+                <VBox id="donateStepAmount" class="donate-section donate-step-hidden">
+                    <core:HTML content="&lt;div class='donate-step-header'&gt;&lt;span class='donate-step-num'&gt;2&lt;/span&gt;&lt;h2&gt;Bağış Tutarı Belirleyin&lt;/h2&gt;&lt;/div&gt;"/>
+
+                    <core:HTML id="donateAmountSection" content="
+                        &lt;div class='donate-amount-wrap'&gt;
+                            &lt;div class='donate-selected-cat'&gt;Seçilen: &lt;span id='selectedCatLabel'&gt;-&lt;/span&gt;&lt;/div&gt;
+                            &lt;div class='donate-preset-grid'&gt;
+                                &lt;button class='donate-preset-btn' onclick='setAmount(50)'&gt;50 ₺&lt;/button&gt;
+                                &lt;button class='donate-preset-btn' onclick='setAmount(100)'&gt;100 ₺&lt;/button&gt;
+                                &lt;button class='donate-preset-btn' onclick='setAmount(250)'&gt;250 ₺&lt;/button&gt;
+                                &lt;button class='donate-preset-btn' onclick='setAmount(500)'&gt;500 ₺&lt;/button&gt;
+                                &lt;button class='donate-preset-btn' onclick='setAmount(1000)'&gt;1.000 ₺&lt;/button&gt;
+                                &lt;button class='donate-preset-btn donate-preset-custom' onclick='focusCustom()'&gt;Özel Tutar&lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;div class='donate-custom-input-wrap'&gt;
+                                &lt;span class='donate-currency'&gt;₺&lt;/span&gt;
+                                &lt;input id='donateCustomAmount' class='donate-custom-input' type='number' min='10' placeholder='veya tutar girin...' oninput='onCustomAmount(this)'/&gt;
+                            &lt;/div&gt;
+                            &lt;div id='donateImpactMsg' class='donate-impact-msg'&gt;&lt;/div&gt;
+                            &lt;button class='donate-next-btn' onclick='goToPayment()'&gt;Ödeme Adımına Geç →&lt;/button&gt;
+                        &lt;/div&gt;
+                    "/>
+                </VBox>
+
+                <!-- ── ÖDEME ── -->
+                <VBox id="donateStepPayment" class="donate-section donate-step-hidden">
+                    <core:HTML content="&lt;div class='donate-step-header'&gt;&lt;span class='donate-step-num'&gt;3&lt;/span&gt;&lt;h2&gt;Ödeme Yöntemi&lt;/h2&gt;&lt;/div&gt;"/>
+
+                    <core:HTML id="donatePaymentSection" content="
+                        &lt;div class='donate-payment-wrap'&gt;
+
+                            &lt;div class='donate-summary-bar'&gt;
+                                &lt;span&gt;📌 &lt;strong id='summCat'&gt;-&lt;/strong&gt;&lt;/span&gt;
+                                &lt;span class='donate-summary-amount'&gt;&lt;strong id='summAmount'&gt;0&lt;/strong&gt; ₺&lt;/span&gt;
+                            &lt;/div&gt;
+
+                            &lt;div class='donate-method-tabs'&gt;
+                                &lt;button class='donate-method-tab active' id='tabIban' onclick='switchMethod(&quot;iban&quot;)'&gt;🏦 IBAN / Havale&lt;/button&gt;
+                                &lt;button class='donate-method-tab' id='tabCard' onclick='switchMethod(&quot;card&quot;)'&gt;💳 Kredi Kartı&lt;/button&gt;
+                            &lt;/div&gt;
+
+                            &lt;div id='ibanSection'&gt;
+                                &lt;div class='donate-iban-box'&gt;
+                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;Banka&lt;/span&gt;&lt;strong&gt;Ziraat Bankası&lt;/strong&gt;&lt;/div&gt;
+                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;Hesap Sahibi&lt;/span&gt;&lt;strong&gt;Pati ve Gelecek Derneği&lt;/strong&gt;&lt;/div&gt;
+                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;IBAN&lt;/span&gt;&lt;strong class='donate-iban-num'&gt;TR00 0000 0000 0000 0000 0000 00&lt;/strong&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;p class='donate-iban-note'&gt;⚠️ Formu gönderdikten sonra size bir referans kodu verilecektir. Havale açıklamasına bu kodu yazmayı unutmayın.&lt;/p&gt;
+                            &lt;/div&gt;
+
+                            &lt;div id='cardSection' style='display:none'&gt;
+                                &lt;div class='donate-card-form'&gt;
+                                    &lt;div class='donate-test-badge'&gt;🧪 Test Modu — Kart: 5528790000000008 · SKT: 12/2030 · CVV: 123&lt;/div&gt;
+                                    &lt;div class='donate-field'&gt;&lt;label&gt;Kart Üzerindeki Ad&lt;/label&gt;&lt;input id='cHolder' placeholder='AD SOYAD'/&gt;&lt;/div&gt;
+                                    &lt;div class='donate-field'&gt;&lt;label&gt;Kart Numarası&lt;/label&gt;&lt;input id='cNumber' placeholder='5528 7900 0000 0008' maxlength='16'/&gt;&lt;/div&gt;
+                                    &lt;div class='donate-field-row'&gt;
+                                        &lt;div class='donate-field'&gt;&lt;label&gt;Ay&lt;/label&gt;&lt;input id='cMonth' placeholder='12' maxlength='2'/&gt;&lt;/div&gt;
+                                        &lt;div class='donate-field'&gt;&lt;label&gt;Yıl&lt;/label&gt;&lt;input id='cYear' placeholder='2030' maxlength='4'/&gt;&lt;/div&gt;
+                                        &lt;div class='donate-field'&gt;&lt;label&gt;CVV&lt;/label&gt;&lt;input id='cCvc' placeholder='123' maxlength='3' type='password'/&gt;&lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;div class='donate-personal-form'&gt;
+                                &lt;h4&gt;Kişisel Bilgiler&lt;/h4&gt;
+                                &lt;div class='donate-field'&gt;&lt;label&gt;Ad Soyad *&lt;/label&gt;&lt;input id='pName' placeholder='Adınız Soyadınız'/&gt;&lt;/div&gt;
+                                &lt;div class='donate-field'&gt;&lt;label&gt;E-posta *&lt;/label&gt;&lt;input id='pEmail' placeholder='ornek@email.com' type='email'/&gt;&lt;/div&gt;
+                                &lt;div class='donate-field'&gt;&lt;label&gt;Telefon&lt;/label&gt;&lt;input id='pPhone' placeholder='05XX XXX XX XX'/&gt;&lt;/div&gt;
+                                &lt;div class='donate-field'&gt;&lt;label&gt;Mesaj (isteğe bağlı)&lt;/label&gt;&lt;textarea id='pNote' placeholder='Bir mesaj bırakın...' rows='2'&gt;&lt;/textarea&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;div id='donateSpinner' style='display:none;text-align:center;padding:20px'&gt;⏳ İşleniyor...&lt;/div&gt;
+                            &lt;button class='donate-submit-btn' id='donateSubmitBtn' onclick='submitDonate()'&gt;❤️ Bağışı Tamamla&lt;/button&gt;
+                            &lt;div class='donate-secure-note'&gt;🔒 Güvenli ödeme · SSL şifreli · Verileriniz korunur&lt;/div&gt;
+
+                        &lt;/div&gt;
+                    "/>
+                </VBox>
+
+                <!-- ── TEŞEKKÜR ── -->
+                <VBox id="donateStepSuccess" class="donate-section donate-step-hidden">
+                    <core:HTML content="
+                        &lt;div class='donate-success-wrap'&gt;
+                            &lt;div class='donate-success-icon'&gt;🎉&lt;/div&gt;
+                            &lt;h2&gt;Teşekkürler!&lt;/h2&gt;
+                            &lt;p id='successMsg'&gt;Bağışınız alındı.&lt;/p&gt;
+                            &lt;div id='ibanResultBox' class='donate-iban-result' style='display:none'&gt;&lt;/div&gt;
+                            &lt;a href='index.html' class='donate-home-btn'&gt;← Anasayfaya Dön&lt;/a&gt;
+                        &lt;/div&gt;
+                    "/>
+                </VBox>
+
+            </ScrollContainer>
+        </content>
+    </Page>
+</mvc:View>

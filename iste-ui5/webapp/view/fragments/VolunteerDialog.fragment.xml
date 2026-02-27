@@ -1,0 +1,134 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="volunteerDialog"
+        title="Gönüllü Ol"
+        contentWidth="540px"
+        draggable="true"
+        resizable="true"
+        class="volunteerDialog">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- Üst bilgi bandı -->
+                <core:HTML content="&lt;div style='
+                    background: linear-gradient(135deg, #4CAF50, #388E3C);
+                    border-radius: 12px;
+                    padding: 16px 20px;
+                    margin-bottom: 16px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                '&gt;
+                    &lt;div style='font-size:2rem;'&gt;🤝&lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;div style='color:#fff;font-weight:700;font-size:1rem;'&gt;Gönüllü Başvurusu&lt;/div&gt;
+                        &lt;div style='color:rgba(255,255,255,0.85);font-size:0.82rem;'&gt;Başvurunuz yönetici onayına gönderilecektir.&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;"/>
+
+                <!-- Hata mesajı -->
+                <MessageStrip
+                    id="volunteerError"
+                    text=""
+                    type="Error"
+                    showIcon="true"
+                    visible="false"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- Ad - Soyad -->
+                <l:Grid defaultSpan="L6 M6 S12" class="sapUiSmallMarginBottom">
+                    <l:content>
+                        <VBox>
+                            <Label text="Ad *" required="true" class="sapUiTinyMarginBottom"/>
+                            <Input id="volFirstName" placeholder="Adınız" width="100%"/>
+                        </VBox>
+                        <VBox>
+                            <Label text="Soyad *" required="true" class="sapUiTinyMarginBottom"/>
+                            <Input id="volLastName" placeholder="Soyadınız" width="100%"/>
+                        </VBox>
+                    </l:content>
+                </l:Grid>
+
+                <!-- E-posta -->
+                <Label text="E-posta *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="volEmail"
+                    placeholder="ornek@email.com"
+                    type="Email"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- Telefon -->
+                <Label text="Telefon *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="volPhone"
+                    placeholder="05XX XXX XX XX"
+                    type="Tel"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- Alan seçimi -->
+                <Label text="Hangi alanda yardım etmek istersiniz? *" required="true" class="sapUiTinyMarginBottom"/>
+                <Select id="volArea" width="100%" class="sapUiSmallMarginBottom">
+                    <items>
+                        <core:Item key="" text="-- Seçiniz --"/>
+                        <core:Item key="egitim" text="Eğitim Desteği"/>
+                        <core:Item key="etkinlik" text="Etkinlik Organizasyonu"/>
+                        <core:Item key="sosyal_medya" text="Sosyal Medya ve İletişim"/>
+                        <core:Item key="bagis" text="Bağış ve Kaynak Geliştirme"/>
+                        <core:Item key="diger" text="Diğer"/>
+                    </items>
+                </Select>
+
+                <!-- Neden gönüllü -->
+                <Label text="Neden gönüllü olmak istiyorsunuz? *" required="true" class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="volReason"
+                    placeholder="Motivasyonunuzu kısaca anlatın..."
+                    rows="4"
+                    width="100%"
+                    maxLength="500"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- Karakter sayacı -->
+                <Text id="volReasonCount" text="0 / 500" textAlign="End" class="sapUiTinyMarginBottom"
+                    style="font-size:0.75rem;color:#9CA3AF;"/>
+
+                <!-- KVKK notu -->
+                <core:HTML content="&lt;div style='
+                    background:#F9FAFB;
+                    border:1px solid #E5E7EB;
+                    border-radius:8px;
+                    padding:10px 14px;
+                    font-size:0.78rem;
+                    color:#6B7280;
+                    line-height:1.5;
+                '&gt;
+                    🔒 Kişisel verileriniz KVKK kapsamında korunmakta ve yalnızca gönüllülük süreci için kullanılmaktadır.
+                &lt;/div&gt;"/>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                id="volSubmitBtn"
+                text="Başvuru Gönder"
+                type="Accept"
+                icon="sap-icon://paper-plane"
+                press="onVolunteerSubmit"/>
+            <Button
+                text="İptal"
+                type="Transparent"
+                icon="sap-icon://decline"
+                press="onCloseVolunteerDialog"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -1,14 +1,7 @@
-// ==========================================
-// routes/events.js - Etkinlik Yönetimi
-// ==========================================
-
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 
-// ==========================================
-// TABLO OLUŞTURMA (ilk çalışmada)
-// ==========================================
 db.exec(`
     CREATE TABLE IF NOT EXISTS events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -137,9 +130,7 @@ if (checkEvents.count === 0) {
     console.log('✅ Etkinlik seed data hazır (6 kayıt)');
 }
 
-// ==========================================
-// GET /api/events — Tüm etkinlikleri getir
-// ==========================================
+// GET  — Tüm etkinlikleri getir
 router.get('/', (req, res) => {
     try {
         const { status, category, month, year } = req.query;
@@ -163,9 +154,7 @@ router.get('/', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/events/:id — Tek etkinlik
-// ==========================================
+// GET — Tek etkinlik
 router.get('/:id', (req, res) => {
     try {
         const event = db.prepare('SELECT * FROM events WHERE id = ?').get(req.params.id);
@@ -181,9 +170,7 @@ router.get('/:id', (req, res) => {
     }
 });
 
-// ==========================================
-// POST /api/events — Yeni etkinlik ekle
-// ==========================================
+// POST  — Yeni etkinlik ekle
 router.post('/', (req, res) => {
     try {
         const { title, description, event_date, event_time, end_date, end_time, location, category, capacity } = req.body;
@@ -212,9 +199,8 @@ router.post('/', (req, res) => {
     }
 });
 
-// ==========================================
-// PUT /api/events/:id — Etkinlik güncelle
-// ==========================================
+// PUT — Etkinlik güncelle
+
 router.put('/:id', (req, res) => {
     try {
         const { title, description, event_date, event_time, end_date, end_time, location, category, capacity, status } = req.body;
@@ -238,9 +224,8 @@ router.put('/:id', (req, res) => {
     }
 });
 
-// ==========================================
-// DELETE /api/events/:id — Etkinlik sil
-// ==========================================
+// DELETE  — Etkinlik sil
+
 router.delete('/:id', (req, res) => {
     try {
         const event = db.prepare('SELECT title FROM events WHERE id = ?').get(req.params.id);
@@ -260,9 +245,7 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-// ==========================================
 // GET /api/events/:id/participants — Katılımcılar
-// ==========================================
 router.get('/:id/participants', (req, res) => {
     try {
         const participants = db.prepare(`

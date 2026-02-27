@@ -1,0 +1,83 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="announcementAddDialog"
+        title="{announcementModel>/dialogTitle}"
+        contentWidth="520px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <ScrollContainer height="400px" vertical="true">
+                <VBox class="sapUiSmallMargin">
+                    <f:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+                        columnsXL="1"   columnsL="1"   columnsM="1">
+                        <f:content>
+
+                            <core:Title text="Duyuru Bilgileri"/>
+
+                            <Label text="Başlık" required="true"/>
+                            <Input id="annTitle"
+                                placeholder="Örn: 2026 Burs Başvuruları Başladı"
+                                value="{announcementModel>/title}"
+                                maxLength="100"/>
+
+                            <Label text="Mesaj" required="true"/>
+                            <TextArea id="annMessage"
+                                placeholder="Duyuru detayları..."
+                                value="{announcementModel>/message}"
+                                rows="4" maxLength="500"/>
+
+                            <Label text="Tür"/>
+                            <Select id="annType" selectedKey="{announcementModel>/type}">
+                                <items>
+                                    <core:Item key="Information" text="📘 Bilgi"/>
+                                    <core:Item key="Success"     text="✅ Başarı"/>
+                                    <core:Item key="Warning"     text="⚠️ Uyarı"/>
+                                    <core:Item key="Error"       text="❌ Kritik"/>
+                                </items>
+                            </Select>
+
+                            <core:Title text="Bağlantı (İsteğe Bağlı)"/>
+
+                            <Label text="Link Metni"/>
+                            <Input id="annLinkText"
+                                placeholder="Örn: Başvuru Yap"
+                                value="{announcementModel>/link_text}"/>
+
+                            <Label text="Link URL"/>
+                            <Input id="annLinkUrl"
+                                placeholder="Örn: #scholarshipsSection"
+                                value="{announcementModel>/link_url}"/>
+
+                            <core:Title text="Yayın Durumu"/>
+
+                            <Label text="Durum"/>
+                            <Select id="annStatus" selectedKey="{announcementModel>/status}">
+                                <items>
+                                    <core:Item key="active"  text="✅ Aktif (Hemen Yayınla)"/>
+                                    <core:Item key="passive" text="⏸️ Pasif"/>
+                                </items>
+                            </Select>
+
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+            </ScrollContainer>
+        </content>
+
+        <beginButton>
+            <Button text="Kaydet" type="Emphasized" icon="sap-icon://save" press="onSaveAnnouncement"/>
+        </beginButton>
+        <endButton>
+            <Button text="İptal" type="Transparent" icon="sap-icon://decline" press="onCloseAnnouncementDialog"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

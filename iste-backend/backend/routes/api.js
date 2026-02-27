@@ -1,16 +1,9 @@
-// ==========================================
-// routes/api.js - Donors, Students, Activities
-// ==========================================
 
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 
-// ==========================================
-// DONORS ENDPOINTS
-// ==========================================
 
-// GET /api/donors
 router.get('/donors', (req, res) => {
     try {
         const donors = db.prepare(`
@@ -39,7 +32,7 @@ router.get('/donors', (req, res) => {
     }
 });
 
-// POST /api/donors
+
 router.post('/donors', async (req, res) => {
     try {
         const { first_name, last_name, email, phone, city } = req.body;
@@ -68,7 +61,7 @@ router.post('/donors', async (req, res) => {
             INSERT INTO donor_profiles (user_id, donor_type) VALUES (?, 'individual')
         `).run(userId);
 
-        // ✅ Aktivite kaydı oluştur
+     
         db.prepare(`
             INSERT INTO activities (admin_name, action_type, action_description, related_user_id)
             VALUES ('Admin', 'create_donor', ?, ?)
@@ -96,7 +89,7 @@ router.post('/donors', async (req, res) => {
     }
 });
 
-// PUT /api/donors/:id - Bağışçı güncelle
+// PUT Bağışçı güncelle
 router.put('/donors/:id', (req, res) => {
     try {
         const { id } = req.params;
@@ -119,7 +112,7 @@ router.put('/donors/:id', (req, res) => {
     }
 });
 
-// DELETE /api/donors/:id - Bağışçı sil (soft delete)
+// DELETE  Bağışçı sil (soft delete)
 router.delete('/donors/:id', (req, res) => {
     try {
         const { id } = req.params;
@@ -142,9 +135,6 @@ router.delete('/donors/:id', (req, res) => {
     }
 });
 
-// ==========================================
-// STUDENTS ENDPOINTS
-// ==========================================
 
 // GET /api/students
 router.get('/students', (req, res) => {
@@ -234,7 +224,7 @@ router.post('/students', async (req, res) => {
     }
 });
 
-// PUT /api/students/:id - Öğrenci güncelle
+// PUT  - Öğrenci güncelle
 router.put('/students/:id', (req, res) => {
     try {
         const { id } = req.params;
@@ -262,7 +252,7 @@ router.put('/students/:id', (req, res) => {
     }
 });
 
-// DELETE /api/students/:id - Öğrenci sil (soft delete)
+// DELETE - Öğrenci sil (soft delete)
 router.delete('/students/:id', (req, res) => {
     try {
         const { id } = req.params;
@@ -285,9 +275,6 @@ router.delete('/students/:id', (req, res) => {
     }
 });
 
-// ==========================================
-// ACTIVITIES ENDPOINT - Gerçek Veriler
-// ==========================================
 
 router.get('/activities', (req, res) => {
     try {
@@ -306,9 +293,6 @@ router.get('/activities', (req, res) => {
     }
 });
 
-// ==========================================
-// STATS ENDPOINT - Dashboard özet
-// ==========================================
 
 router.get('/stats', (req, res) => {
     try {

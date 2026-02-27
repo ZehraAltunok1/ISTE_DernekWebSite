@@ -718,7 +718,291 @@
 
     </VBox>
 </IconTabFilter>
+                <IconTabFilter icon="sap-icon://picture" text="Medya" key="media">
+                    <ScrollContainer height="100%" vertical="true">
+                        <VBox class="tabContent">
 
+                            <OverflowToolbar class="sapUiTinyMarginBottom">
+                                <Title text="Faaliyetler — Medya Yönetimi" level="H3"/>
+                                <ToolbarSpacer/>
+                                <Button
+                                    text="Fotoğraf Yükle"
+                                    icon="sap-icon://upload"
+                                    type="Emphasized"
+                                    press="onAddPhoto"
+                                    class="sapUiTinyMarginEnd"/>
+                                <Button
+                                    text="YouTube Video Ekle"
+                                    icon="sap-icon://video"
+                                    type="Default"
+                                    press="onAddVideo"/>
+                            </OverflowToolbar>
+
+                            <MessageStrip
+                                text="Buraya eklediğiniz içerikler anasayfada 'Faaliyetlerimiz' bölümünde otomatik görünür."
+                                type="Information"
+                                showIcon="true"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Table
+                                id="mediaTable"
+                                items="{dashboardData>/mediaItems}"
+                                noDataText="Henüz medya eklenmedi."
+                                growing="true"
+                                growingThreshold="20">
+                                <columns>
+                                    <Column width="90px"><Text text="Önizleme"/></Column>
+                                    <Column><Text text="Başlık / Açıklama"/></Column>
+                                    <Column width="110px" minScreenWidth="Tablet" demandPopin="true"><Text text="Tür"/></Column>
+                                    <Column width="130px" minScreenWidth="Desktop" demandPopin="true"><Text text="Tarih"/></Column>
+                                    <Column width="60px" hAlign="Center"><Text text="Sil"/></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem vAlign="Middle">
+                                        <cells>
+                                            <core:HTML content="{= ${dashboardData>type} === 'video'
+                                                ? '&lt;img src=&quot;' + ${dashboardData>thumbnail_url} + '&quot; style=&quot;width:80px;height:52px;object-fit:cover;border-radius:6px;&quot;/&gt;'
+                                                : '&lt;img src=&quot;http://localhost:3000' + ${dashboardData>url} + '&quot; style=&quot;width:80px;height:52px;object-fit:cover;border-radius:6px;&quot;/&gt;'
+                                            }"/>
+                                            <ObjectIdentifier
+                                                title="{dashboardData>title}"
+                                                text="{dashboardData>description}"/>
+                                            <ObjectStatus
+                                                text="{= ${dashboardData>type} === 'photo' ? '📷 Fotoğraf' : '▶ Video' }"
+                                                state="{= ${dashboardData>type} === 'photo' ? 'Success' : 'Information' }"/>
+                                            <Text text="{dashboardData>created_at_tr}"/>
+                                            <Button
+                                                icon="sap-icon://delete"
+                                                type="Transparent"
+                                                tooltip="Sil"
+                                                press="onDeleteMedia"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+
+                        </VBox>
+                    </ScrollContainer>
+                </IconTabFilter>
+                    <IconTabFilter
+                        id="volunteersTab"
+                        text="Gönüllüler"
+                        icon="sap-icon://collaborate"
+                        key="volunteers">
+                        <content>
+
+                            <!-- KPI satırı -->
+                            <HBox class="paymentKpiRow sapUiSmallMarginBottom">
+                                <VBox class="paymentKpiCard paymentKpiOrange" id="volKpiPending">
+                                    <Title text="0" level="H3" id="volKpiPendingNum"/>
+                                    <Text text="Bekleyen" class="paymentKpiLabel"/>
+                                </VBox>
+                                <VBox class="paymentKpiCard paymentKpiGreen" id="volKpiApproved">
+                                    <Title text="0" level="H3" id="volKpiApprovedNum"/>
+                                    <Text text="Onaylanan" class="paymentKpiLabel"/>
+                                </VBox>
+                                <VBox class="paymentKpiCard paymentKpiBlue" id="volKpiTotal">
+                                    <Title text="0" level="H3" id="volKpiTotalNum"/>
+                                    <Text text="Toplam" class="paymentKpiLabel"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Filtre toolbar -->
+                            <Toolbar class="sapUiSmallMarginBottom">
+                                <SegmentedButton
+                                    id="volStatusFilter"
+                                    selectionChange="onVolStatusFilter">
+                                    <items>
+                                        <SegmentedButtonItem key="all"      text="Tümü"     />
+                                        <SegmentedButtonItem key="pending"  text="⏳ Bekleyen"/>
+                                        <SegmentedButtonItem key="approved" text="✅ Onaylı" />
+                                        <SegmentedButtonItem key="rejected" text="❌ Reddedilen"/>
+                                    </items>
+                                </SegmentedButton>
+                                <ToolbarSpacer/>
+                                <Button
+                                    text="Yenile"
+                                    icon="sap-icon://refresh"
+                                    press="onLoadVolunteers"/>
+                            </Toolbar>
+
+                            <!-- Tablo -->
+                            <Table
+                                id="volunteersTable"
+                                class="volunteersTable"
+                                items="{adminData>/volunteers}"
+                                noDataText="Başvuru bulunamadı.">
+                                <columns>
+                                    <Column><Text text="Ad Soyad"/></Column>
+                                    <Column><Text text="E-posta"/></Column>
+                                    <Column><Text text="Telefon"/></Column>
+                                    <Column><Text text="Alan"/></Column>
+                                    <Column><Text text="Tarih"/></Column>
+                                    <Column><Text text="Durum"/></Column>
+                                    <Column><Text text="İşlem"/></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{adminData>first_name} {adminData>last_name}"/>
+                                            <Text text="{adminData>email}"/>
+                                            <Text text="{adminData>phone}"/>
+                                            <Text text="{adminData>area_label}"/>
+                                            <Text text="{adminData>created_at_tr}"/>
+                                            <ObjectStatus
+                                                text="{adminData>status_label}"
+                                                state="{adminData>status_state}"/>
+                                            <HBox>
+                                                <Button
+                                                    text="Onayla"
+                                                    type="Accept"
+                                                    icon="sap-icon://accept"
+                                                    visible="{= ${adminData>status} === 'pending' }"
+                                                    press="onApproveVolunteer"
+                                                    class="sapUiTinyMarginEnd"/>
+                                                <Button
+                                                    text="Reddet"
+                                                    type="Reject"
+                                                    icon="sap-icon://decline"
+                                                    visible="{= ${adminData>status} === 'pending' }"
+                                                    press="onRejectVolunteer"
+                                                    class="sapUiTinyMarginEnd"/>
+                                                <Button
+                                                    icon="sap-icon://detail-view"
+                                                    type="Transparent"
+                                                    tooltip="Detay"
+                                                    press="onVolunteerDetail"/>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+
+                        </content>
+                    </IconTabFilter>
+                    <!-- ========================================== -->
+                    <!-- TAB 8: DUYURULAR ← YENİ                   -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        icon="sap-icon://bell"
+                        text="Duyurular"
+                        count="{dashboardData>/annStats/active}"
+                        key="announcements">
+
+                        <VBox class="tabContent">
+
+                            <!-- Toolbar -->
+                            <OverflowToolbar class="sapUiTinyMarginBottom">
+                                <Title text="Duyuru Yönetimi" level="H3"/>
+                                <ToolbarSpacer/>
+                                <Select id="annFilterType" change="onFilterAnnouncements" width="150px">
+                                    <items>
+                                        <core:Item key="all"         text="Tüm Türler"/>
+                                        <core:Item key="Information" text="📘 Bilgi"/>
+                                        <core:Item key="Success"     text="✅ Başarı"/>
+                                        <core:Item key="Warning"     text="⚠️ Uyarı"/>
+                                        <core:Item key="Error"       text="❌ Kritik"/>
+                                    </items>
+                                </Select>
+                                <Select id="annFilterStatus" change="onFilterAnnouncements" width="150px" class="sapUiTinyMarginBegin">
+                                    <items>
+                                        <core:Item key="all"     text="Tüm Durumlar"/>
+                                        <core:Item key="active"  text="✅ Aktif"/>
+                                        <core:Item key="passive" text="⏸️ Pasif"/>
+                                    </items>
+                                </Select>
+                                <Button
+                                    text="+ Yeni Duyuru"
+                                    icon="sap-icon://add"
+                                    type="Emphasized"
+                                    press="onAddAnnouncement"
+                                    class="sapUiTinyMarginBegin"/>
+                            </OverflowToolbar>
+
+                            <!-- KPI Satırı -->
+                            <HBox class="eventKpiRow sapUiSmallMarginBottom" justifyContent="SpaceBetween">
+                                <VBox class="eventKpiCard eventKpiBlue" alignItems="Center">
+                                    <core:Icon src="sap-icon://bell"   size="1.5rem" color="#0070F2"/>
+                                    <Title text="{dashboardData>/annStats/total}"   level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Toplam" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiGreen" alignItems="Center">
+                                    <core:Icon src="sap-icon://accept" size="1.5rem" color="#10B981"/>
+                                    <Title text="{dashboardData>/annStats/active}"  level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Aktif" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiOrange" alignItems="Center">
+                                    <core:Icon src="sap-icon://pause"  size="1.5rem" color="#F59E0B"/>
+                                    <Title text="{dashboardData>/annStats/passive}" level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Pasif" class="eventKpiLabel"/>
+                                </VBox>
+                                <VBox class="eventKpiCard eventKpiPurple" alignItems="Center">
+                                    <core:Icon src="sap-icon://calendar" size="1.5rem" color="#8B5CF6"/>
+                                    <Title text="{dashboardData>/annStats/today}"  level="H3" class="eventKpiNumber"/>
+                                    <Text  text="Bugün Eklenen" class="eventKpiLabel"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Duyuru Listesi -->
+                            <List
+                                id="announcementsList"
+                                items="{dashboardData>/announcements}"
+                                noDataText="Duyuru bulunamadı">
+
+                                <CustomListItem>
+                                    <HBox class="eventCard" alignItems="Center">
+
+                                        <!-- Tür ikonu -->
+                                        <VBox class="eventCardIcon" alignItems="Center" justifyContent="Center">
+                                            <core:Icon
+                                                src="{= ${dashboardData>type} === 'Information' ? 'sap-icon://information' :
+                                                         ${dashboardData>type} === 'Success'     ? 'sap-icon://accept'      :
+                                                         ${dashboardData>type} === 'Warning'     ? 'sap-icon://warning'     :
+                                                                                                    'sap-icon://error' }"
+                                                size="1.75rem"
+                                                color="{= ${dashboardData>type} === 'Information' ? '#0070F2' :
+                                                          ${dashboardData>type} === 'Success'      ? '#10B981' :
+                                                          ${dashboardData>type} === 'Warning'      ? '#F59E0B' : '#EF4444' }"/>
+                                        </VBox>
+
+                                        <!-- İçerik -->
+                                        <VBox class="eventCardBody" justifyContent="Center">
+                                            <HBox alignItems="Center">
+                                                <Title text="{dashboardData>title}" level="H4" class="eventCardTitle"/>
+                                                <ObjectStatus
+                                                    text="{= ${dashboardData>status} === 'active' ? 'Aktif' : 'Pasif' }"
+                                                    state="{= ${dashboardData>status} === 'active' ? 'Success' : 'None' }"
+                                                    inverted="true"
+                                                    class="sapUiTinyMarginBegin"/>
+                                            </HBox>
+                                            <Text text="{dashboardData>message}" maxLines="2" class="sapUiTinyMarginTop"/>
+                                            <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                                                <core:Icon src="sap-icon://calendar" size="0.75rem" color="#9CA3AF"/>
+                                                <Text text="{dashboardData>created_at}" class="eventMetaText"/>
+                                                <Text text=" · " class="eventMetaText"/>
+                                                <Text text="{dashboardData>type}"       class="eventMetaText"/>
+                                            </HBox>
+                                        </VBox>
+
+                                        <!-- Aksiyonlar -->
+                                        <VBox justifyContent="Center" alignItems="End" class="eventCardActions">
+                                            <Button
+                                                text="{= ${dashboardData>status} === 'active' ? 'Pasife Al' : 'Aktif Et' }"
+                                                type="{= ${dashboardData>status} === 'active' ? 'Default'   : 'Accept'   }"
+                                                press="onToggleAnnouncementStatus"
+                                                class="sapUiTinyMarginBottom"/>
+                                            <HBox>
+                                                <Button icon="sap-icon://edit"   type="Transparent" tooltip="Düzenle" press="onEditAnnouncement"/>
+                                                <Button icon="sap-icon://delete" type="Transparent" tooltip="Sil"     press="onDeleteAnnouncement"/>
+                                            </HBox>
+                                        </VBox>
+
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+
+                        </VBox>
+                    </IconTabFilter>
                 </items>
             </IconTabBar>
         </content>

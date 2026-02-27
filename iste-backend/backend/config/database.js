@@ -98,9 +98,7 @@ if (!checkAdmin) {
     console.log('✅ Admin oluşturuldu → admin / admin123');
 }
 
-// ==========================================
-// SEED DATA - BAĞIŞÇILAR (15 kişi)
-// ==========================================
+//  BAĞIŞÇILAR (15 kişi)
 const seedDonors = [
     { first_name: 'Ahmet',   last_name: 'Yılmaz',    email: 'ahmet.yilmaz@gmail.com',    phone: '05321234501', total_donated: 5000  },
     { first_name: 'Mehmet',  last_name: 'Kaya',       email: 'mehmet.kaya@hotmail.com',    phone: '05321234502', total_donated: 12000 },
@@ -142,7 +140,7 @@ for (const donor of seedDonors) {
     }
 }
 console.log('✅ Bağışçı seed data hazır (15 kayıt)');
-// SEED DATA - ÖĞRENCİLER (10 kişi)
+// ÖĞRENCİLER (10 kişi)
 const seedStudents = [
     { first_name: 'Berk',    last_name: 'Güneş',     email: 'berk.gunes@iste.edu.tr',     phone: '05401234501', university: 'İskenderun Teknik Üniversitesi', department: 'Bilgisayar Mühendisliği', grade_level: 2, gpa: 3.45 },
     { first_name: 'Cansu',   last_name: 'Ateş',      email: 'cansu.ates@iste.edu.tr',     phone: '05401234502', university: 'İskenderun Teknik Üniversitesi', department: 'Elektrik-Elektronik Mühendisliği', grade_level: 3, gpa: 3.20 },
@@ -169,7 +167,7 @@ for (const student of seedStudents) {
             VALUES (?, ?, ?, ?, ?)
         `).run(result.lastInsertRowid, student.university, student.department, student.grade_level, student.gpa);
 
-        // Aktivite kaydet
+       
         db.prepare(`
             INSERT INTO activities (admin_name, action_type, action_description, related_user_id)
             VALUES ('Sistem', 'create_student', ?, ?)

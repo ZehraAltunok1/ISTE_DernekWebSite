@@ -6,10 +6,8 @@ const db = require('../config/database');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'edusupport-secret-key-2026';
 
-// ==========================================
-// BİRLEŞİK LOGIN (Admin + User)
-// ==========================================
 
+// BİRLEŞİK LOGIN (Admin + User)
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -23,13 +21,13 @@ router.post('/login', async (req, res) => {
             });
         }
         
-        // Önce admin tablosunda ara
+       
         const admin = db.prepare(
             'SELECT * FROM admins WHERE (username = ? OR email = ?) AND status = ?'
         ).get(email, email, 'active');
         
         if (admin) {
-            // Admin kullanıcı
+           
             const isValidPassword = await bcrypt.compare(password, admin.password_hash);
             
             if (!isValidPassword) {
@@ -146,9 +144,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// ==========================================
-// REGISTER
-// ==========================================
 
 router.post('/register', async (req, res) => {
     try {

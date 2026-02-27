@@ -1,14 +1,11 @@
-// ==========================================
-// routes/reports.js - Raporlar ve İstatistikler
-// ==========================================
 
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 
-// ==========================================
-// GET /api/reports/members-growth - Üye artış trendi
-// ==========================================
+
+// GET - Üye artış trendi
+
 router.get('/members-growth', (req, res) => {
     try {
         const { months = 6 } = req.query;
@@ -38,9 +35,7 @@ router.get('/members-growth', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/reports/income-trend - Gelir trendi
-// ==========================================
+// GET- Gelir trendi
 router.get('/income-trend', (req, res) => {
     try {
         const { months = 6 } = req.query;
@@ -63,9 +58,9 @@ router.get('/income-trend', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/reports/payment-status - Ödeme durum dağılımı
-// ==========================================
+
+// GET  - Ödeme durum dağılımı
+
 router.get('/payment-status', (req, res) => {
     try {
         const stats = db.prepare(`
@@ -83,9 +78,7 @@ router.get('/payment-status', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/reports/member-status - Aktif/pasif üye
-// ==========================================
+// GET - Aktif/pasif üye
 router.get('/member-status', (req, res) => {
     try {
         const stats = db.prepare(`
@@ -104,9 +97,7 @@ router.get('/member-status', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/reports/event-participation - Etkinlik katılım
-// ==========================================
+// GET - Etkinlik katılım
 router.get('/event-participation', (req, res) => {
     try {
         const events = db.prepare(`

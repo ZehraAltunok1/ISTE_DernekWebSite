@@ -1,0 +1,89 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="videoAddDialog"
+        title="▶ YouTube Video Ekle"
+        contentWidth="520px"
+        draggable="true"
+        resizable="true"
+        class="videoAddDialog">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- ── Başlık ── -->
+                <Label text="Başlık *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="videoTitle"
+                    placeholder="Video başlığı (ör: Burs Ödül Töreni 2024)"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Açıklama ── -->
+                <Label text="Açıklama" class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="videoDescription"
+                    placeholder="Kısa bir açıklama yazabilirsiniz..."
+                    rows="2"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── URL ── -->
+                <Label text="YouTube URL *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="videoYoutubeUrl"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    width="100%"
+                    liveChange="onVideoUrlChange"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Canlı önizleme alanı ── -->
+                <core:HTML
+                    id="videoPreviewHtml"
+                    content="&lt;div id='videoPreviewArea' style='display:none; border-radius:12px; overflow:hidden; background:#000; margin-bottom:12px;'&gt;
+                        &lt;div style='position:relative; padding-bottom:56.25%; height:0;'&gt;
+                            &lt;iframe id='videoPreviewFrame'
+                                style='position:absolute;top:0;left:0;width:100%;height:100%;border:none;'
+                                frameborder='0' allowfullscreen&gt;
+                            &lt;/iframe&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;"/>
+
+                <!-- ── Bilgi kartları ── -->
+                <HBox wrap="Wrap" class="sapUiTinyMarginBottom">
+                    <core:HTML content="&lt;div style='
+                        display:flex; gap:8px; flex-wrap:wrap; width:100%;
+                    '&gt;
+                        &lt;div style='flex:1; min-width:140px; background:#F0F7FF; border-radius:8px; padding:10px 14px;'&gt;
+                            &lt;div style='font-size:0.75rem; color:#6B7280; margin-bottom:2px;'&gt;Desteklenen formatlar&lt;/div&gt;
+                            &lt;div style='font-size:0.82rem; font-weight:600; color:#0070F2;'&gt;youtube.com/watch&lt;/div&gt;
+                            &lt;div style='font-size:0.82rem; font-weight:600; color:#0070F2;'&gt;youtu.be/ · Shorts&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div style='flex:1; min-width:140px; background:#F0FDF4; border-radius:8px; padding:10px 14px;'&gt;
+                            &lt;div style='font-size:0.75rem; color:#6B7280; margin-bottom:2px;'&gt;Gösterim&lt;/div&gt;
+                            &lt;div style='font-size:0.82rem; font-weight:600; color:#059669;'&gt;Anasayfada&lt;/div&gt;
+                            &lt;div style='font-size:0.82rem; color:#6B7280;'&gt;otomatik görünür&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;"/>
+                </HBox>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                text="Ekle"
+                type="Emphasized"
+                icon="sap-icon://add"
+                press="onSaveVideo"/>
+            <Button
+                text="İptal"
+                type="Transparent"
+                press="onCloseVideoDialog"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

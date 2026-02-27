@@ -1,0 +1,110 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+
+    <Dialog
+        id="photoUploadDialog"
+        title="📷 Fotoğraf Yükle"
+        contentWidth="560px"
+        draggable="true"
+        resizable="true"
+        class="photoUploadDialog">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- ── Başlık ── -->
+                <Label text="Başlık *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="photoTitle"
+                    placeholder="Fotoğraf başlığı (ör: Mezuniyet Töreni 2024)"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Açıklama ── -->
+                <Label text="Açıklama" class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="photoDescription"
+                    placeholder="Kısa bir açıklama yazabilirsiniz..."
+                    rows="2"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Drag & Drop Alan ── -->
+                <Label text="Fotoğraflar *" required="true" class="sapUiTinyMarginBottom"/>
+
+                <core:HTML
+                    id="dropZoneHtml"
+                    content="&lt;div id='photoDropZone'
+                        style='
+                            border: 2px dashed #0070F2;
+                            border-radius: 12px;
+                            padding: 28px 16px;
+                            text-align: center;
+                            background: #F0F7FF;
+                            cursor: pointer;
+                            transition: background 0.2s ease;
+                            margin-bottom: 12px;
+                        '
+                        ondragover=&quot;event.preventDefault(); this.style.background=&apos;#DBEAFE&apos;;&quot;
+                        ondragleave=&quot;this.style.background=&apos;#F0F7FF&apos;;&quot;
+                        ondrop=&quot;sap.ui.getCore().byId(&apos;__dialog0&apos;); window._handlePhotoDrop(event);&quot;
+                        onclick=&quot;document.getElementById(&apos;hiddenPhotoInput&apos;).click();&quot;
+                    &gt;
+                        &lt;div style='font-size:2.5rem; margin-bottom:8px;'&gt;📁&lt;/div&gt;
+                        &lt;div style='font-size:0.95rem; font-weight:600; color:#0070F2; margin-bottom:4px;'&gt;Dosyaları buraya sürükleyin&lt;/div&gt;
+                        &lt;div style='font-size:0.8rem; color:#6B7280;'&gt;veya tıklayıp seçin &amp;nbsp;·&amp;nbsp; JPG, PNG, GIF, WEBP &amp;nbsp;·&amp;nbsp; Maks. 20 MB / dosya&lt;/div&gt;
+                        &lt;input
+                            type='file'
+                            id='hiddenPhotoInput'
+                            multiple
+                            accept='image/jpeg,image/png,image/gif,image/webp'
+                            style='display:none'
+                            onchange='window._handlePhotoSelect(event)'
+                        /&gt;
+                    &lt;/div&gt;"/>
+
+                <!-- ── Önizleme Grid ── -->
+                <core:HTML
+                    id="photoPreviewGrid"
+                    content="&lt;div id='photoPreviewContainer' style='
+                        display:flex;
+                        flex-wrap:wrap;
+                        gap:10px;
+                        margin-bottom:12px;
+                        min-height:0;
+                    '&gt;&lt;/div&gt;"/>
+
+                <!-- ── Seçili dosya sayısı ── -->
+                <Text
+                    id="photoFileCount"
+                    text=""
+                    class="sapUiTinyMarginBottom"
+                    visible="false"/>
+
+                <MessageStrip
+                    text="Birden fazla fotoğraf aynı anda seçilebilir. Her dosya için aynı başlık ve açıklama kullanılır."
+                    type="Information"
+                    showIcon="true"/>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                id="photoUploadBtn"
+                text="Yükle"
+                type="Emphasized"
+                icon="sap-icon://upload"
+                press="onSavePhoto"
+                enabled="false"/>
+            <Button
+                text="İptal"
+                type="Transparent"
+                press="onClosePhotoDialog"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

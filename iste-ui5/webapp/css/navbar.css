@@ -1,0 +1,53 @@
+/* Şimdi Bağış Yap — turuncu */
+.btnHeroPrimary .sapMBtnInner {
+    background: #FF6B35 !important;
+    border-color: #FF6B35 !important;
+    color: #FFFFFF !important;
+    border-radius: 28px !important;
+    font-weight: 700 !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+    box-shadow: 0 4px 18px rgba(255,107,53,0.45) !important;
+    transition: all .2s !important;
+}
+.btnHeroPrimary .sapMBtnInner:hover {
+    background: #E55A2A !important;
+    border-color: #E55A2A !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Gönüllü Ol — açık yeşil */
+.btnHeroOutline .sapMBtnInner {
+    background: #279b2d !important;
+    border-color: #279b2d !important;
+    color: #FFFFFF !important;
+    border-radius: 28px !important;
+    font-weight: 700 !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+    box-shadow: 0 4px 18px rgba(170,209,87,0.40) !important;
+    transition: all .2s !important;
+}
+.btnHeroOutline .sapMBtnInner:hover {
+    background: #8AB02A !important;
+    border-color: #8AB02A !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Burs Başvurusu — mavi */
+.btnHeroGhost .sapMBtnInner {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #FFFFFF !important;
+    border-radius: 28px !important;
+    font-weight: 500 !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+    box-shadow: 0 4px 18px rgba(59,130,246,0.35) !important;
+    transition: all .2s !important;
+}
+.btnHeroGhost .sapMBtnInner:hover {
+    background: #2563EB !important;
+    border-color: #2563EB !important;
+    transform: translateY(-2px) !important;
+}

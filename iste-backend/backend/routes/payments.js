@@ -1,14 +1,8 @@
-// ==========================================
-// routes/payments.js - Aidat ve Bağış Yönetimi
-// ==========================================
-
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 
-// ==========================================
-// TABLO OLUŞTURMA
-// ==========================================
+
 db.exec(`
     CREATE TABLE IF NOT EXISTS payments (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,9 +43,7 @@ if (checkPayments.count === 0) {
     console.log('✅ Ödeme seed data hazır (6 kayıt)');
 }
 
-// ==========================================
-// GET /api/payments - Tüm ödemeleri getir
-// ==========================================
+// GET - Tüm ödemeleri getir
 router.get('/', (req, res) => {
     try {
         const { status, payment_type, user_id } = req.query;
@@ -83,9 +75,7 @@ router.get('/', (req, res) => {
     }
 });
 
-// ==========================================
-// GET /api/payments/stats - Özet istatistikler
-// ==========================================
+// GET  - Özet istatistikler
 router.get('/stats', (req, res) => {
     try {
         const totalIncome = db.prepare(`
@@ -126,9 +116,7 @@ router.get('/stats', (req, res) => {
     }
 });
 
-// ==========================================
-// POST /api/payments - Yeni ödeme ekle
-// ==========================================
+// POST  - Yeni ödeme ekle
 router.post('/', (req, res) => {
     try {
         const { user_id, payment_type, amount, payment_date, due_date, status, payment_method, notes } = req.body;
@@ -159,9 +147,7 @@ router.post('/', (req, res) => {
     }
 });
 
-// ==========================================
-// PUT /api/payments/:id - Ödeme güncelle
-// ==========================================
+// PUT - Ödeme güncelle
 router.put('/:id', (req, res) => {
     try {
         const { payment_date, status, payment_method, notes } = req.body;
@@ -178,9 +164,8 @@ router.put('/:id', (req, res) => {
     }
 });
 
-// ==========================================
-// DELETE /api/payments/:id - Ödeme sil
-// ==========================================
+
+// DELETE - Ödeme sil
 router.delete('/:id', (req, res) => {
     try {
         db.prepare('DELETE FROM payments WHERE id = ?').run(req.params.id);
