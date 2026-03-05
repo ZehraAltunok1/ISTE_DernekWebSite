@@ -46,14 +46,16 @@
     },
     "resources": {
       "css": [
-        { "uri": "css/style.css"      },
-        { "uri": "css/launchpad.css"  },
-        { "uri": "css/dashboard.css"  },
-        { "uri": "css/profile.css"    },
-        { "uri": "css/login.css"      },
-        { "uri": "css/mediaCards.css" },
-        { "uri": "css/navbar.css"     },
-        { "uri": "css/donate.css"     }
+        { "uri": "css/designsystem.css" },
+        { "uri": "css/launchpad.css"      },
+        { "uri": "css/dashboard.css"      },
+        { "uri": "css/profile.css"        },
+        { "uri": "css/login.css"          },
+        { "uri": "css/mediaCards.css"     },
+        { "uri": "css/navbar.css"         },
+        { "uri": "css/Campaigndetail.css" },
+        { "uri": "css/mediaDetail.css"    },
+        { "uri": "css/stats.css"          }
       ]
     },
     "routing": {
@@ -71,12 +73,14 @@
         "async": true
       },
       "routes": [
-        { "pattern": "",               "name": "home",           "target": "home"           },
-        { "pattern": "login",          "name": "login",          "target": "login"          },
-        { "pattern": "user/launchpad", "name": "launchpad",      "target": "launchpad"      },
-        { "pattern": "admin/dashboard","name": "adminDashboard", "target": "adminDashboard" },
-        { "pattern": "admin/profile",  "name": "profile",        "target": "profile"        },
-        { "pattern": "bagis",          "name": "donate",         "target": "donate"         }
+        { "pattern": "",                    "name": "home",           "target": "home"           },
+        { "pattern": "login",               "name": "login",          "target": "login"          },
+        { "pattern": "user/launchpad",      "name": "launchpad",      "target": "launchpad"      },
+        { "pattern": "admin/dashboard",     "name": "adminDashboard", "target": "adminDashboard" },
+        { "pattern": "admin/profile",       "name": "profile",        "target": "profile"        },
+        { "pattern": "bagis",               "name": "donate",         "target": "donate"         },
+        { "pattern": "campaign",            "name": "campaignDetail", "target": "campaignDetail" },
+        { "pattern": "media/{type}/{id}",   "name": "mediaDetail",    "target": "mediaDetail"    }
       ],
       "targets": {
         "login": {
@@ -119,6 +123,18 @@
           "viewType": "XML",
           "viewName": "public.Donate",
           "viewId": "donate",
+          "viewLevel": 2
+        },
+        "campaignDetail": {
+          "viewType": "XML",
+          "viewId": "Campaigndetail",
+          "viewName": "public.Campaigndetail",
+          "viewLevel": 2
+        },
+        "mediaDetail": {
+          "viewType": "XML",
+          "viewName": "public.MediaDetail",
+          "viewId": "mediaDetail",
           "viewLevel": 2
         }
       }

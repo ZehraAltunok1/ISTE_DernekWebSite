@@ -4,11 +4,30 @@ sap.ui.define([], function () {
     return {
 
         _AREA_LABELS: {
-            egitim:       "Eğitim Desteği",
-            etkinlik:     "Etkinlik Organizasyonu",
-            sosyal_medya: "Sosyal Medya ve İletişim",
-            bagis:        "Bağış ve Kaynak Geliştirme",
-            diger:        "Diğer"
+            besleme:       "Sokak Hayvanlarını Besleme",
+            barinak:       "Barınak Ziyareti ve Temizlik",
+            sahiplendirme: "Sahiplendirme Etkinliği",
+            tedavi:        "Tedavi ve İlaç Desteği",
+           
+        },
+        onAreaSelectChange: function (oEvent) {
+            var sSelectedKey = oEvent.getSource().getSelectedKey();
+            var bIsOther = (sSelectedKey === "diger");
+            
+            // oView.byId yerine parent üzerinden bul
+            var oSelect = oEvent.getSource();
+            var oVBox   = oSelect.getParent();
+
+            oVBox.getItems().forEach(function (oItem) {
+                var sId = oItem.getId ? oItem.getId() : "";
+                if (sId.indexOf("digerAciklama") > -1) {
+                    oItem.setVisible(bIsOther);
+                    if (!bIsOther && oItem.setValue) oItem.setValue("");
+                }
+                if (sId.indexOf("otherAreaLabel") > -1) {
+                    oItem.setVisible(bIsOther);
+                }
+            });
         },
 
         onLoadVolunteers: function () {
@@ -133,19 +152,87 @@ sap.ui.define([], function () {
             });
         },
 
-        onVolunteerDetail: function(oEvent) {
-
-            var oSource = oEvent.getSource();
-            var oContext = oSource.getBindingContext();
+        onVolunteerDetail: function (oEvent) {
+            var oSource  = oEvent.getSource();
+            // Önce adminData'ya bak, yoksa default modele bak
+            var oContext = oSource.getBindingContext("adminData") 
+                        || oSource.getBindingContext();
 
             if (!oContext) {
-                console.error("Binding context yok");
+                sap.m.MessageToast.show("Bağlam bulunamadı.");
                 return;
             }
 
             var oObject = oContext.getObject();
-            console.log(oObject);
+            console.log("Gönüllü detayı:", oObject);
+        },
+        onShowReason: function (oEvent) {
+        var oSource  = oEvent.getSource();
+        var oContext = oSource.getBindingContext("adminData");
+        var oVol     = oContext.getObject();
+
+        if (!this._oReasonPopover) {
+            this._oReasonPopover = new sap.m.Popover({
+                title:        "Açıklama",
+                placement:    "Auto",
+                contentWidth: "320px",
+                content: [
+                    new sap.m.VBox({
+                        class: "sapUiSmallMargin",
+                        items: [
+                            new sap.m.Text({ id: "reasonPopoverName", text: "" }),
+                            new sap.m.Text({ id: "reasonPopoverText", text: "", wrapping: true })
+                        ]
+                    })
+                ]
+            });
+            this.getView().addDependent(this._oReasonPopover);
         }
+
+        sap.ui.getCore().byId("reasonPopoverName").setText(
+            oVol.first_name + " " + oVol.last_name
+        );
+        sap.ui.getCore().byId("reasonPopoverText").setText(
+            oVol.reason || "Açıklama girilmemiş."
+        );
+
+        this._oReasonPopover.openBy(oSource);
+    },
+        onDeleteVolunteer: function (oEvent) {
+        var that     = this;
+        var oContext = oEvent.getSource().getBindingContext("adminData");
+        var oVol     = oContext.getObject();
+
+        sap.m.MessageBox.confirm(
+            oVol.first_name + " " + oVol.last_name + " adlı kişiyi silmek istiyor musunuz?",
+            {
+                title: "Gönüllü Sil",
+                emphasizedAction: sap.m.MessageBox.Action.OK,
+                onClose: function (oAction) {
+                    if (oAction !== sap.m.MessageBox.Action.OK) return;
+
+                    fetch("http://localhost:3000/api/volunteers/" + oVol.id, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("authToken")
+                        }
+                    })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            sap.m.MessageToast.show("Gönüllü silindi.");
+                            that.onLoadVolunteers();
+                        } else {
+                            sap.m.MessageBox.error("Silinemedi!");
+                        }
+                    })
+                    .catch(function () {
+                        sap.m.MessageBox.error("Sunucuya bağlanılamadı!");
+                    });
+                }
+            }
+        );
+    },
 
     };
 });

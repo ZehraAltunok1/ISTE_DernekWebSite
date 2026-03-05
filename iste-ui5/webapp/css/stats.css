@@ -1,0 +1,101 @@
+.animStatsRow {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 16px 0 8px;
+}
+
+.animStatCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 32px;
+    min-width: 160px;
+    flex: 1;
+    max-width: 220px;
+    box-shadow: 0 8px 32px rgba(45,106,79,0.10);
+    border: 1px solid #E8F5EE;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.animStatCard::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 20px 20px 0 0;
+}
+
+.animStatCard1::before { background: linear-gradient(90deg, #F4A261, #E07A3A); }
+.animStatCard2::before { background: linear-gradient(90deg, #2D6A4F, #40916C); }
+.animStatCard3::before { background: linear-gradient(90deg, #8B5CF6, #6D28D9); }
+.animStatCard4::before { background: linear-gradient(90deg, #0EA5E9, #0284C7); }
+
+.animStatCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(45,106,79,0.18);
+}
+
+.animStatIcon {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: block;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+.animStatCard1 .animStatIcon { animation-delay: 0s;   }
+.animStatCard2 .animStatIcon { animation-delay: 0.3s; }
+.animStatCard3 .animStatIcon { animation-delay: 0.6s; }
+.animStatCard4 .animStatIcon { animation-delay: 0.9s; }
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0);    }
+    50%      { transform: translateY(-6px); }
+}
+
+.animStatNum {
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1;
+    font-family: 'Playfair Display', serif;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.animStatCard1 .animStatNum { color: #F4A261; animation-delay: 0.1s; }
+.animStatCard2 .animStatNum { color: #2D6A4F; animation-delay: 0.2s; }
+.animStatCard3 .animStatNum { color: #8B5CF6; animation-delay: 0.3s; }
+.animStatCard4 .animStatNum { color: #0EA5E9; animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animStatPlus {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    margin-top: -4px;
+}
+
+.animStatLabel {
+    font-size: 0.85rem;
+    color: #6B7C75;
+    font-weight: 500;
+    margin-top: 6px;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+}
+
+@media (max-width: 600px) {
+    .animStatsRow { gap: 12px; }
+    .animStatCard { min-width: 130px; padding: 20px 16px; }
+    .animStatNum  { font-size: 2rem; }
+}

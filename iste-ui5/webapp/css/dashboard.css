@@ -1,10 +1,65 @@
+/* ══════════════════════════════════════════════════════════
+   ADMIN DASHBOARD CSS
+   Pati ve Gelecek Derneği — Design System ile Uyumlu
+   Font: Playfair Display (başlıklar) + DM Sans (gövde)
+   Renkler: Ana site design token'larıyla senkronize
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Font Import (ana site ile aynı) ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── Design Tokens (ana siteden miras) ── */
+.adminDashboardPage {
+    --clr-primary:        #2D6A4F;
+    --clr-primary-dark:   #1B3A2D;
+    --clr-primary-mid:    #40916C;
+    --clr-primary-light:  #74C69D;
+    --clr-accent:         #F4A261;
+    --clr-accent-hover:   #E07A3A;
+
+    --clr-bg:             #F0FAF5;
+    --clr-surface:        #FFFFFF;
+    --clr-green-light:    #F0FAF5;
+    --clr-green-soft:     #E8F5EE;
+
+    --clr-text:           #2C3E35;
+    --clr-muted:          #6B7C75;
+
+    --clr-border:         #D1E9DC;
+    --clr-border-soft:    #E8F0EB;
+
+    --clr-success:        #40916C;
+    --clr-success-bg:     #F0FAF5;
+    --clr-warning:        #8A6200;
+    --clr-warning-bg:     #FFF8E8;
+    --clr-error:          #B23A2F;
+    --clr-error-bg:       #FDF0F0;
+
+    --radius-sm:          8px;
+    --radius:             14px;
+    --radius-lg:          20px;
+    --radius-pill:        50px;
+
+    --shadow-sm:          0 2px 12px rgba(45,106,79,0.08);
+    --shadow:             0 4px 24px rgba(45,106,79,0.10);
+    --shadow-lg:          0 8px 32px rgba(45,106,79,0.15);
+
+    --font-display:       'Playfair Display', serif;
+    --font-body:          'DM Sans', sans-serif;
+    --transition:         0.2s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SAYFA ALTYAPI
+   ══════════════════════════════════════════════════════════ */
 
 .adminDashboardPage {
-    background: #F5F6F8;
+    background: var(--clr-bg);
+    font-family: var(--font-body);
 }
 
 .dashboardScrollContainer {
-    background: #F5F6F8;
+    background: var(--clr-bg);
 }
 
 .dashboardContent {
@@ -12,48 +67,82 @@
     max-width: 100%;
 }
 
-/* WELCOME BANNER */
+/* SAP UI5 global font override — dashboard içinde */
+.adminDashboardPage .sapMText,
+.adminDashboardPage .sapMLabel,
+.adminDashboardPage .sapMLnk,
+.adminDashboardPage .sapMListTblCell {
+    font-family: var(--font-body) !important;
+    color: var(--clr-text) !important;
+}
+
+.adminDashboardPage .sapMTitle {
+    font-family: var(--font-display) !important;
+    color: var(--clr-primary-dark) !important;
+    line-height: 1.5 !important;
+    white-space: normal !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   WELCOME BANNER
+   ══════════════════════════════════════════════════════════ */
 
 .welcomeBanner {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 0.5rem; /* Fiori standard */
-    padding: 2rem;
+    background: linear-gradient(135deg, var(--clr-primary-dark) 0%, var(--clr-primary) 60%, var(--clr-primary-mid) 100%);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem;
     color: #FFFFFF;
     margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcomeBanner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 85% 50%, rgba(244,162,97,0.15) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .adminDashboardPage .welcomeBanner .sapMTitle {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-size: 1.75rem;
     margin: 0;
 }
 
 .welcomeSubtitle {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 0.875rem;
+    font-family: var(--font-body);
 }
 
-/* KPI CARDS */
+/* ══════════════════════════════════════════════════════════
+   KPI KARTLARI
+   ══════════════════════════════════════════════════════════ */
 
 .kpiGrid {
     padding: 1rem 0;
 }
 
 .kpiCard {
-    background: #FFFFFF;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s ease;
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--clr-border);
+    transition: box-shadow var(--transition), transform var(--transition);
     min-height: 180px;
 }
 
 .kpiCard:hover {
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
 }
 
-.kpiBlue   { border-top: 3px solid #0070F2; }
-.kpiGreen  { border-top: 3px solid #10B981; }
-.kpiOrange { border-top: 3px solid #F59E0B; }
+.kpiBlue   { border-top: 3px solid var(--clr-primary-mid); }
+.kpiGreen  { border-top: 3px solid var(--clr-success); }
+.kpiOrange { border-top: 3px solid var(--clr-accent); }
 .kpiPurple { border-top: 3px solid #8B5CF6; }
 
 .kpiCardContent {
@@ -63,58 +152,70 @@
 
 .kpiIcon {
     margin-bottom: 1rem;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
-    font-size: 2.5rem;
+    font-size: 2.5rem !important;
     font-weight: 700;
-    color: #1F2937;
+    color: var(--clr-primary-dark) !important;
     margin: 0.5rem 0;
 }
 
 .kpiLabel {
     font-size: 0.875rem;
-    color: #6B7280;
+    color: var(--clr-muted);
     font-weight: 500;
+    font-family: var(--font-body);
     margin-top: 0.5rem;
 }
 
-
-/* PANELS - SAP UI5 OVERRIDE */
+/* ══════════════════════════════════════════════════════════
+   PANELS
+   ══════════════════════════════════════════════════════════ */
 
 .adminDashboardPage .sapMPanel {
-    background: #FFFFFF;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    background: var(--clr-surface);
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--clr-border) !important;
+    overflow: hidden;
 }
 
 .adminDashboardPage .sapMPanel .sapMPanelHdr {
-    background: transparent;
-    border-bottom: 1px solid #E5E7EB;
+    background: linear-gradient(135deg, var(--clr-green-light), var(--clr-green-soft)) !important;
+    border-bottom: 2px solid var(--clr-border);
     padding: 1rem 1.5rem;
+    font-family: var(--font-display) !important;
 }
 
-/* CRITICAL: SAP UI5 inline styles override için !important gerekli */
+.adminDashboardPage .sapMPanel .sapMPanelHdr .sapMTitle {
+    color: var(--clr-primary-dark) !important;
+    font-size: 0.95rem !important;
+}
+
 .adminDashboardPage .sapMPanel > .sapMPanelContent {
     padding: 1.5rem !important;
 }
 
-/* Special cases - Liste ve button panelleri için padding 0 */
 .adminDashboardPage .activityPanel > .sapMPanel > .sapMPanelContent,
 .adminDashboardPage .quickActionsPanel > .sapMPanel > .sapMPanelContent {
     padding: 0 !important;
 }
 
-/* ACTIVITY LIST */
+/* ══════════════════════════════════════════════════════════
+   AKTİVİTE LİSTESİ
+   ══════════════════════════════════════════════════════════ */
+
 .activityPanel .sapMList {
     max-height: 400px;
     overflow-y: auto;
 }
 
 .activityPanel .sapMFeedListItem {
-    border-bottom: 1px solid #F3F4F6;
+    border-bottom: 1px solid var(--clr-border-soft);
     padding: 1rem 1.5rem;
+    font-family: var(--font-body);
 }
 
 .activityPanel .sapMFeedListItem:last-child {
@@ -124,10 +225,14 @@
 .activityPanel .sapMListNoData {
     padding: 3rem;
     text-align: center;
-    color: #9CA3AF;
+    color: var(--clr-muted);
+    font-family: var(--font-body);
 }
 
-/* QUICK ACTIONS */
+/* ══════════════════════════════════════════════════════════
+   HIZLI İŞLEMLER
+   ══════════════════════════════════════════════════════════ */
+
 .quickActionsPanel .sapMVBox {
     padding: 1rem 1.5rem;
 }
@@ -141,92 +246,123 @@
 .quickActionsPanel .sapMBtn:last-child {
     margin-bottom: 0;
 }
-/* TABLES */
+
+/* ══════════════════════════════════════════════════════════
+   TABLOLAR
+   ══════════════════════════════════════════════════════════ */
+
 .membersTable,
 .paymentsTable,
 .reportsTable {
-    background: #FFFFFF;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--clr-border);
+    font-family: var(--font-body);
 }
 
 .membersTable .sapMListTblHeaderCell,
 .paymentsTable .sapMListTblHeaderCell,
 .reportsTable .sapMListTblHeaderCell {
-    background: #F9FAFB;
+    background: var(--clr-green-soft);
     font-weight: 600;
-    color: #1F2937;
+    color: var(--clr-primary-dark);
+    font-family: var(--font-body);
 }
 
 .membersTable .sapMListTblRow:hover,
 .paymentsTable .sapMListTblRow:hover,
 .reportsTable .sapMListTblRow:hover {
-    background: #F9FAFB;
+    background: var(--clr-green-light);
 }
+
+/* ══════════════════════════════════════════════════════════
+   BUTONLAR
+   ══════════════════════════════════════════════════════════ */
 
 .adminDashboardPage .sapMBtn {
-    border-radius: 0.25rem;
-    transition: background-color 0.2s ease;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-body) !important;
+    transition: all var(--transition) !important;
 }
 
-.adminDashboardPage .sapMBtn:hover {
-    opacity: 0.9;
+.adminDashboardPage .sapMBtnInner {
+    font-family: var(--font-body) !important;
 }
 
-.adminDashboardPage .sapMBtnEmphasized {
-    background: #0070F2;
-    border-color: #0070F2;
+.adminDashboardPage .sapMBtnEmphasized .sapMBtnInner {
+    background: var(--clr-primary) !important;
+    border-color: var(--clr-primary) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
 }
 
-.adminDashboardPage .sapMBtnEmphasized:hover {
-    background: #005BBF;
-    border-color: #005BBF;
+.adminDashboardPage .sapMBtnEmphasized:hover .sapMBtnInner {
+    background: var(--clr-primary-dark) !important;
+    border-color: var(--clr-primary-dark) !important;
+    box-shadow: 0 4px 14px rgba(45,106,79,0.30) !important;
 }
+
+/* ══════════════════════════════════════════════════════════
+   OBJECT STATUS (badge'ler)
+   ══════════════════════════════════════════════════════════ */
 
 .adminDashboardPage .sapMObjStatus {
-    border-radius: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    border-radius: var(--radius-pill);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.8rem;
+    font-family: var(--font-body) !important;
+    font-weight: 500;
 }
 
 .adminDashboardPage .sapMObjStatusSuccess {
-    background: #E5F3EC;
-    color: #0F8140;
+    background: var(--clr-success-bg);
+    color: var(--clr-success);
 }
 
 .adminDashboardPage .sapMObjStatusError {
-    background: #FCE9E9;
-    color: #BB0000;
+    background: var(--clr-error-bg);
+    color: var(--clr-error);
 }
 
 .adminDashboardPage .sapMObjStatusWarning {
-    background: #FEF3D0;
-    color: #8D6708;
+    background: var(--clr-warning-bg);
+    color: var(--clr-warning);
 }
 
 .adminDashboardPage .sapMObjStatusInformation {
-    background: #D3EFFF;
-    color: #005BA8;
+    background: var(--clr-green-light);
+    color: var(--clr-primary);
 }
 
-/* ICON TAB BAR */
+/* ══════════════════════════════════════════════════════════
+   ICON TAB BAR
+   ══════════════════════════════════════════════════════════ */
+
 .adminIconTabBar {
-    background: #FFFFFF;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    background: var(--clr-surface);
+    box-shadow: 0 1px 0 var(--clr-border);
+    font-family: var(--font-body);
 }
 
 .adminIconTabBar .sapMITBFilter {
-    color: #6B7280;
-    transition: color 0.2s ease;
+    color: var(--clr-muted);
+    font-family: var(--font-body) !important;
+    transition: color var(--transition);
 }
 
 .adminIconTabBar .sapMITBFilter:hover {
-    color: #1F2937;
+    color: var(--clr-primary);
 }
 
 .adminIconTabBar .sapMITBFilter.sapMITBSelected {
-    color: #0070F2;
+    color: var(--clr-primary);
 }
+
+/* ══════════════════════════════════════════════════════════
+   ETKİNLİK & ÖDEME KPI SATIRI
+   ══════════════════════════════════════════════════════════ */
+
 .eventKpiRow,
 .paymentKpiRow {
     display: flex;
@@ -237,42 +373,46 @@
 .eventKpiCard,
 .paymentKpiCard {
     flex: 1;
-    background: #FFFFFF;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    padding: 1.25rem 1rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--clr-border);
     text-align: center;
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow var(--transition), transform var(--transition);
 }
 
 .eventKpiCard:hover,
 .paymentKpiCard:hover {
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
-/* Border colors */
-.eventKpiBlue, .paymentKpiBlue     { border-top: 3px solid #0070F2; }
-.eventKpiGreen, .paymentKpiGreen   { border-top: 3px solid #10B981; }
-.eventKpiOrange, .paymentKpiOrange { border-top: 3px solid #F59E0B; }
-.eventKpiPurple, .paymentKpiPurple { border-top: 3px solid #8B5CF6; }
+.eventKpiBlue,  .paymentKpiBlue   { border-top: 3px solid var(--clr-primary-mid); }
+.eventKpiGreen, .paymentKpiGreen  { border-top: 3px solid var(--clr-success); }
+.eventKpiOrange,.paymentKpiOrange { border-top: 3px solid var(--clr-accent); }
+.eventKpiPurple,.paymentKpiPurple { border-top: 3px solid #8B5CF6; }
 
-/* Numbers - Specificity yeterli */
 .adminDashboardPage .eventKpiCard .sapMTitle,
 .adminDashboardPage .paymentKpiCard .sapMTitle {
-    font-size: 1.75rem;
+    font-size: 1.75rem !important;
     font-weight: 700;
-    color: #1F2937;
+    color: var(--clr-primary-dark) !important;
     margin: 0.25rem 0;
 }
 
 .eventKpiLabel,
 .paymentKpiLabel {
     font-size: 0.75rem;
-    color: #6B7280;
+    color: var(--clr-muted);
     font-weight: 500;
+    font-family: var(--font-body);
 }
 
-/* EVENT LIST - SAP UI5 Override gerekli */
+/* ══════════════════════════════════════════════════════════
+   ETKİNLİK LİSTESİ KARTLARI
+   ══════════════════════════════════════════════════════════ */
+
 .eventsList .sapMListItems {
     display: flex;
     flex-direction: column;
@@ -280,21 +420,19 @@
     padding: 0.25rem 0;
 }
 
-/* CRITICAL: SAP UI5 list item styles override */
 .eventsList .sapMCustomListItem {
-    border-radius: 0.5rem !important;
-    border: 1px solid #E5E7EB !important;
-    background: #FFFFFF !important;
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--clr-border) !important;
+    background: var(--clr-surface) !important;
     margin-bottom: 0.5rem;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow var(--transition), border-color var(--transition);
 }
 
 .eventsList .sapMCustomListItem:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
-    border-color: #0070F2 !important;
+    box-shadow: var(--shadow) !important;
+    border-color: var(--clr-primary) !important;
 }
 
-/* EVENT CARD CONTENT */
 .eventCard {
     padding: 1rem 1.25rem;
     display: flex;
@@ -306,8 +444,9 @@
 .eventCardIcon {
     width: 3rem;
     height: 3rem;
-    border-radius: 0.5rem;
-    background: #F9FAFB;
+    border-radius: var(--radius-sm);
+    background: var(--clr-green-light);
+    border: 1px solid var(--clr-border);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -320,14 +459,14 @@
 }
 
 .adminDashboardPage .eventCard .sapMTitle {
-    font-size: 0.95rem;
+    font-size: 0.95rem !important;
     font-weight: 600;
-    color: #1F2937;
+    color: var(--clr-primary-dark) !important;
     margin: 0 0.75rem 0.25rem 0;
 }
 
 .eventStatusBadge {
-    border-radius: 1rem;
+    border-radius: var(--radius-pill);
     padding: 0.125rem 0.5rem;
     font-size: 0.75rem;
 }
@@ -342,7 +481,8 @@
 
 .eventMetaText {
     font-size: 0.8rem;
-    color: #6B7280;
+    color: var(--clr-muted);
+    font-family: var(--font-body);
 }
 
 .eventCardActions {
@@ -351,79 +491,126 @@
     gap: 0.5rem;
     flex-shrink: 0;
 }
-/* REPORTS */
+
+/* ══════════════════════════════════════════════════════════
+   RAPORLAR
+   ══════════════════════════════════════════════════════════ */
+
 .adminDashboardPage .reportBigNumber {
     font-size: 2rem;
     font-weight: 700;
+    font-family: var(--font-display);
     margin: 0.25rem 0;
 }
 
-/* Semantic colors */
-.reportGreen  { color: #10B981; }
-.reportOrange { color: #F59E0B; }
-.reportRed    { color: #EF4444; }
-.reportBlue   { color: #0070F2; }
-.reportGray   { color: #9CA3AF; }
+.reportGreen  { color: var(--clr-success); }
+.reportOrange { color: var(--clr-accent); }
+.reportRed    { color: var(--clr-error); }
+.reportBlue   { color: var(--clr-primary-mid); }
+.reportGray   { color: var(--clr-muted); }
 
 .reportLabel {
     font-size: 0.875rem;
-    color: #6B7280;
+    color: var(--clr-muted);
     font-weight: 500;
-}
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .dashboardContent {
-        padding: 1rem;
-    }
-    
-    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
-        font-size: 2rem;
-    }
+    font-family: var(--font-body);
 }
 
-@media (max-width: 768px) {
-    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber {
-        font-size: 1.75rem;
-    }
-    
-    .kpiCard {
-        min-height: 160px;
-    }
-    
-    .eventKpiRow,
-    .paymentKpiRow {
-        flex-wrap: wrap;
-    }
-    
-    .eventKpiCard,
-    .paymentKpiCard {
-        min-width: calc(50% - 0.5rem);
-    }
-    
-    .eventCardActions {
-        flex-direction: row;
-    }
+/* Rapor satır hover */
+.reportRow {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--clr-border-soft);
+    transition: background var(--transition);
+    border-radius: var(--radius-sm);
 }
-/* SCROLL STYLING */
+.reportRow:last-child { border-bottom: none; }
+.reportRow:hover { background: var(--clr-green-light); }
+
+/* Chart panel */
+.chartPanel .sapMPanelContent { min-height: 340px; }
+.chartContainer { padding: 1rem; }
+
+/* ══════════════════════════════════════════════════════════
+   DUYURU LİSTESİ
+   ══════════════════════════════════════════════════════════ */
+
+.announcementsList .sapMCustomListItem {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--clr-border) !important;
+    background: var(--clr-surface) !important;
+    margin-bottom: 0.5rem;
+    transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.announcementsList .sapMCustomListItem:hover {
+    box-shadow: var(--shadow) !important;
+    border-color: var(--clr-primary) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   TAB İÇERİĞİ
+   ══════════════════════════════════════════════════════════ */
+
+.tabContent {
+    padding: 1.25rem;
+}
+
+/* OverflowToolbar başlıkları */
+.adminDashboardPage .sapMOTB .sapMTitle {
+    font-family: var(--font-display) !important;
+    color: var(--clr-primary-dark) !important;
+}
+
+/* SearchField */
+.adminDashboardPage .sapMSF .sapMSFB,
+.adminDashboardPage .sapMSFF {
+    border-color: var(--clr-border) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-body) !important;
+}
+
+/* Select */
+.adminDashboardPage .sapMSlt {
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-body) !important;
+    border-color: var(--clr-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════════ */
+
 .activityPanel .sapMList::-webkit-scrollbar {
     width: 6px;
 }
 
 .activityPanel .sapMList::-webkit-scrollbar-track {
-    background: #F3F4F6;
+    background: var(--clr-green-light);
 }
 
 .activityPanel .sapMList::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: var(--clr-primary-light);
     border-radius: 3px;
 }
 
 .activityPanel .sapMList::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: var(--clr-primary-mid);
 }
-/* GLOBAL SAP UI5 OVERRIDES (Gerekli !important)    */
-.adminDashboardPage .sapMTitle,
-.adminDashboardPage .sapMText {
-    line-height: 1.5 !important;
-    white-space: normal !important;
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+    .dashboardContent { padding: 1rem; }
+    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber { font-size: 2rem !important; }
+}
+
+@media (max-width: 768px) {
+    .adminDashboardPage .kpiCard .sapMTitle.kpiNumber { font-size: 1.75rem !important; }
+    .kpiCard { min-height: 160px; }
+    .eventKpiRow, .paymentKpiRow { flex-wrap: wrap; }
+    .eventKpiCard, .paymentKpiCard { min-width: calc(50% - 0.5rem); }
+    .eventCardActions { flex-direction: row; }
+    .tabContent { padding: 0.75rem; }
 }

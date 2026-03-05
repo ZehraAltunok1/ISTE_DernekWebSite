@@ -836,6 +836,7 @@
                                     <Column><Text text="Ad Soyad"/></Column>
                                     <Column><Text text="E-posta"/></Column>
                                     <Column><Text text="Telefon"/></Column>
+                                    <Column><Text text="Neden Gönüllü?"/></Column>
                                     <Column><Text text="Alan"/></Column>
                                     <Column><Text text="Tarih"/></Column>
                                     <Column><Text text="Durum"/></Column>
@@ -847,32 +848,35 @@
                                             <Text text="{adminData>first_name} {adminData>last_name}"/>
                                             <Text text="{adminData>email}"/>
                                             <Text text="{adminData>phone}"/>
+                                            <Link text="📋 Açıklamayı Gör" press="onShowReason"/> 
                                             <Text text="{adminData>area_label}"/>
                                             <Text text="{adminData>created_at_tr}"/>
                                             <ObjectStatus
                                                 text="{adminData>status_label}"
                                                 state="{adminData>status_state}"/>
-                                            <HBox>
-                                                <Button
-                                                    text="Onayla"
-                                                    type="Accept"
-                                                    icon="sap-icon://accept"
-                                                    visible="{= ${adminData>status} === 'pending' }"
-                                                    press="onApproveVolunteer"
-                                                    class="sapUiTinyMarginEnd"/>
-                                                <Button
-                                                    text="Reddet"
-                                                    type="Reject"
-                                                    icon="sap-icon://decline"
-                                                    visible="{= ${adminData>status} === 'pending' }"
-                                                    press="onRejectVolunteer"
-                                                    class="sapUiTinyMarginEnd"/>
-                                                <Button
-                                                    icon="sap-icon://detail-view"
-                                                    type="Transparent"
-                                                    tooltip="Detay"
-                                                    press="onVolunteerDetail"/>
-                                            </HBox>
+                            <HBox>
+                                <Button
+                                    text="Onayla"
+                                    type="Accept"
+                                    icon="sap-icon://accept"
+                                    visible="{= ${adminData>status} === 'pending' }"
+                                    press="onApproveVolunteer"
+                                    class="sapUiTinyMarginEnd"/>
+                                <Button
+                                    text="Reddet"
+                                    type="Reject"
+                                    icon="sap-icon://decline"
+                                    visible="{= ${adminData>status} === 'pending' }"
+                                    press="onRejectVolunteer"
+                                    class="sapUiTinyMarginEnd"/>
+                                <!-- Onaylı veya reddedilince sadece sil butonu görünsün -->
+                                <Button
+                                    icon="sap-icon://delete"
+                                    type="Transparent"
+                                    tooltip="Sil"
+                                    visible="{= ${adminData>status} !== 'pending' }"
+                                    press="onDeleteVolunteer"/>
+                            </HBox>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

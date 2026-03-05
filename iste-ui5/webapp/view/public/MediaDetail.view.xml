@@ -1,0 +1,52 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.MediaDetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+
+    <Page
+        id="mediaDetailPage"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+        title="{detailModel>/title}"
+        titleAlignment="Center">
+
+        <content>
+            <VBox class="mediaDetailBox" alignItems="Center">
+
+                <!-- Yükleniyor -->
+                <VBox id="detailLoadingBox" alignItems="Center" class="mediaDetailLoading">
+                    <BusyIndicator/>
+                    <Text text="Yükleniyor..." class="sapUiSmallMarginTop"/>
+                </VBox>
+
+                <!-- İçerik -->
+                <VBox id="detailContentBox" visible="false" class="mediaDetailContent">
+
+                    <core:HTML id="photoDetailArea" content=""/>
+                    <core:HTML id="videoDetailArea" content=""/>
+
+                    <VBox class="mediaDetailInfo">
+                        <Title text="{detailModel>/title}"       level="H2" class="mediaDetailTitle"/>
+                        <Text  text="{detailModel>/description}" class="mediaDetailDesc"/>
+                        <Text  text="{detailModel>/date}"        class="mediaDetailDate"/>
+                    </VBox>
+
+                    <Button
+                        text="← Faaliyetlere Dön"
+                        type="Transparent"
+                        press="onNavBack"
+                        class="mediaDetailBackBtn sapUiMediumMarginTop"/>
+                </VBox>
+
+                <!-- Bulunamadı -->
+                <VBox id="detailEmptyBox" visible="false" alignItems="Center" class="mediaDetailEmpty">
+                    <core:Icon src="sap-icon://document" size="3rem" color="#74C69D"/>
+                    <Title text="İçerik Bulunamadı" level="H3" class="sapUiSmallMarginTop"/>
+                    <Button text="Geri Dön" press="onNavBack" class="sapUiSmallMarginTop"/>
+                </VBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

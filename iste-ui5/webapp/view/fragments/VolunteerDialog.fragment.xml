@@ -24,7 +24,7 @@
                     align-items: center;
                     gap: 12px;
                 '&gt;
-                    &lt;div style='font-size:2rem;'&gt;🤝&lt;/div&gt;
+                    &lt;div style='font-size:2rem;'&gt;🐾&lt;/div&gt;
                     &lt;div&gt;
                         &lt;div style='color:#fff;font-weight:700;font-size:1rem;'&gt;Gönüllü Başvurusu&lt;/div&gt;
                         &lt;div style='color:rgba(255,255,255,0.85);font-size:0.82rem;'&gt;Başvurunuz yönetici onayına gönderilecektir.&lt;/div&gt;
@@ -74,16 +74,34 @@
 
                 <!-- Alan seçimi -->
                 <Label text="Hangi alanda yardım etmek istersiniz? *" required="true" class="sapUiTinyMarginBottom"/>
-                <Select id="volArea" width="100%" class="sapUiSmallMarginBottom">
+                <Select
+                    id="volArea"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"
+                    change="onAreaSelectChange">
                     <items>
-                        <core:Item key="" text="-- Seçiniz --"/>
-                        <core:Item key="egitim" text="Eğitim Desteği"/>
-                        <core:Item key="etkinlik" text="Etkinlik Organizasyonu"/>
-                        <core:Item key="sosyal_medya" text="Sosyal Medya ve İletişim"/>
-                        <core:Item key="bagis" text="Bağış ve Kaynak Geliştirme"/>
-                        <core:Item key="diger" text="Diğer"/>
+                        <core:Item key="besleme"       text="Sokak Hayvanlarını Besleme"/>
+                        <core:Item key="barinak"       text="Barınak Ziyareti ve Temizlik"/>
+                        <core:Item key="sahiplendirme" text="Sahiplendirme Etkinliği"/>
+                        <core:Item key="tedavi"        text="Tedavi ve İlaç Desteği"/>
+                        
                     </items>
                 </Select>
+
+                <!-- "Diğer" seçilince açılır — başta gizli -->
+                <Label
+                    id="otherAreaLabel"
+                    text="Lütfen belirtiniz *"
+                    required="true"
+                    visible="false"
+                    class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="digerAciklama"
+                    placeholder="Yapmak istediğiniz gönüllü faaliyeti açıklayın..."
+                    rows="3"
+                    visible="false"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
 
                 <!-- Neden gönüllü -->
                 <Label text="Neden gönüllü olmak istiyorsunuz? *" required="true" class="sapUiTinyMarginBottom"/>
@@ -96,8 +114,8 @@
                     class="sapUiSmallMarginBottom"/>
 
                 <!-- Karakter sayacı -->
-                <Text id="volReasonCount" text="0 / 500" textAlign="End" class="sapUiTinyMarginBottom"
-                    style="font-size:0.75rem;color:#9CA3AF;"/>
+                <Text id="volReasonCount" text="0 / 500" textAlign="End"
+                    class="volReasonCountText"/>
 
                 <!-- KVKK notu -->
                 <core:HTML content="&lt;div style='

@@ -1,0 +1,51 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.Campaigndetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:uxap="sap.uxap">
+
+    <uxap:ObjectPageLayout
+        id="cdPage"
+        showAnchorBar="false"
+        showFooter="false"
+        enableLazyLoading="false">
+
+        <!-- ══ HEADER ══ -->
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:expandedHeading>
+                    <HBox alignItems="Center">
+                        <Button
+                            icon="sap-icon://nav-back"
+                            type="Transparent"
+                            press="onNavBack"/>
+                        <Title text="Kampanya Detayı" level="H4"/>
+                    </HBox>
+                </uxap:expandedHeading>
+                <uxap:actions>
+                    <Button
+                        text="Bağış Yap"
+                        icon="sap-icon://favorite"
+                        type="Emphasized"
+                        press="onDonatePress"/>
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <!-- ══ CONTENT — controller tarafından dinamik render edilir ══ -->
+        <uxap:sections>
+            <uxap:ObjectPageSection showTitle="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <core:HTML id="cdHTML" content="&lt;span&gt;&lt;/span&gt;"/>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+
+    </uxap:ObjectPageLayout>
+
+</mvc:View>
