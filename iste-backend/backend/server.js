@@ -10,7 +10,8 @@ const path = require('path'); // ← ekle
 const volunteersRouter = require("./routes/volunteers");
 const announcementsRouter = require('./routes/announcements');
 require('./config/database');
-
+const db = require('./config/database');
+app.locals.db = db; // ← bunu ekleyin
 app.use(cors({
     origin: 'http://localhost:8080',
     credentials: true,
@@ -32,6 +33,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/volunteers", volunteersRouter);
 app.use('/api/announcements', announcementsRouter);
 app.use('/api/donate', require('./routes/donate'));
+app.use('/api/profile', require('./routes/profile'));
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({

@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page showHeader="false" backgroundDesign="Standard">
+        <content>
+            <VBox
+                alignItems="Center"
+                justifyContent="Center"
+                class="sapUiLargeMarginTop">
+
+                <core:Icon
+                    src="sap-icon://question-mark"
+                    size="5rem"
+                    color="#6C63FF"
+                    class="sapUiMediumMarginBottom"/>
+
+                <Title
+                    text="404"
+                    level="H1"
+                    class="sapUiTinyMarginBottom"/>
+
+                <Title
+                    text="Sayfa Bulunamadı"
+                    level="H3"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Text
+                    text="Aradığınız sayfa mevcut değil veya taşınmış olabilir."
+                    textAlign="Center"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Button
+                    text="Ana Sayfaya Dön"
+                    type="Emphasized"
+                    icon="sap-icon://home"
+                    press="onNavToHome"
+                    class="sapUiSmallMarginTop"/>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

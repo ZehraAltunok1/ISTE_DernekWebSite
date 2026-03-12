@@ -94,12 +94,13 @@
                 </VBox>
                 
                 <!-- Quick Links -->
+
                 <HBox 
                     justifyContent="Center"
                     class="sapUiSmallMarginTop">
-                    <Link text="Şifremi Unuttum" class="sapUiTinyMarginEnd"/>
+                    <Link text="Şifremi Unuttum" press="onForgotPassword" class="sapUiTinyMarginEnd"/>
                     <Text text="•" class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
-                    <Link text="Kayıt Ol" class="sapUiTinyMarginBegin"/>
+                    <Link text="Kayıt Ol" press="onRegister" class="sapUiTinyMarginBegin"/>
                 </HBox>
 
             </VBox>

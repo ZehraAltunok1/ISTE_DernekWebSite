@@ -1,0 +1,147 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="registerDialog"
+        title="Hesap Oluştur"
+        contentWidth="480px"
+        class="registerDialog">
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <!-- Header -->
+                <VBox alignItems="Center" class="sapUiSmallMarginBottom">
+                    <core:Icon
+                        src="sap-icon://person-placeholder"
+                        size="3rem"
+                        color="#6C63FF"
+                        class="sapUiSmallMarginBottom"/>
+                    <Title text="Yeni Hesap Oluştur" level="H3" class="sapUiTinyMarginBottom"/>
+                    <Text
+                        text="Bilgilerinizi girerek üye olun"
+                        class="sapUiTinyMarginBottom registerSubtext"/>
+                </VBox>
+
+                <!-- Form -->
+                <VBox width="100%" class="registerForm">
+
+                    <!-- Ad Soyad -->
+                    <HBox width="100%" class="sapUiTinyMarginBottom nameRow">
+                        <VBox width="49%" class="sapUiTinyMarginEnd">
+                            <Label text="Ad" required="true"/>
+                            <Input
+                                id="regFirstName"
+                                placeholder="Adınız"
+                                value="{registerModel>/first_name}"
+                                liveChange="onRegisterFieldChange"/>
+                        </VBox>
+                        <VBox width="49%">
+                            <Label text="Soyad" required="true"/>
+                            <Input
+                                id="regLastName"
+                                placeholder="Soyadınız"
+                                value="{registerModel>/last_name}"
+                                liveChange="onRegisterFieldChange"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Email -->
+                    <Label text="E-posta" required="true" class="sapUiTinyMarginTop"/>
+                    <Input
+                        id="regEmail"
+                        type="Email"
+                        placeholder="ornek@email.com"
+                        value="{registerModel>/email}"
+                        liveChange="onRegisterFieldChange"/>
+
+                    <!-- Şifre -->
+                    <Label text="Şifre" required="true" class="sapUiTinyMarginTop"/>
+                    <Input
+                        id="regPassword"
+                        type="Password"
+                        placeholder="En az 8 karakter"
+                        value="{registerModel>/password}"
+                        liveChange="onRegisterPasswordChange"/>
+
+                    <!-- Şifre Güç Göstergesi -->
+                    <VBox
+                        visible="{= ${registerModel>/password}.length > 0 }"
+                        class="sapUiTinyMarginTop">
+                        <HBox alignItems="Center">
+                            <VBox width="70%">
+                                <ProgressIndicator
+                                    percentValue="{registerModel>/passwordStrength}"
+                                    state="{registerModel>/passwordStrengthState}"
+                                    showValue="false"
+                                    height="6px"/>
+                            </VBox>
+                            <Text
+                                text="{registerModel>/passwordStrengthText}"
+                                class="sapUiTinyMarginBegin passwordStrengthLabel"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Şifre Tekrar -->
+                    <Label text="Şifre Tekrar" required="true" class="sapUiTinyMarginTop"/>
+                    <Input
+                        id="regPasswordConfirm"
+                        type="Password"
+                        placeholder="Şifrenizi tekrar girin"
+                        value="{registerModel>/password_confirm}"
+                        liveChange="onRegisterFieldChange"
+                        submit="onRegisterSubmit"/>
+
+                    <!-- Şifre eşleşme uyarısı -->
+                    <MessageStrip
+                        text="Şifreler eşleşmiyor!"
+                        type="Error"
+                        showIcon="true"
+                        visible="{= ${registerModel>/password}.length > 0
+                               &amp;&amp; ${registerModel>/password_confirm}.length > 0
+                               &amp;&amp; ${registerModel>/password} !== ${registerModel>/password_confirm} }"
+                        class="sapUiTinyMarginTop"/>
+
+                    <!-- Hata mesajı -->
+                    <MessageStrip
+                        text="{registerModel>/errorMessage}"
+                        type="Error"
+                        showIcon="true"
+                        visible="{= ${registerModel>/errorMessage} !== '' }"
+                        class="sapUiTinyMarginTop"/>
+
+                    <!-- Başarı mesajı -->
+                    <MessageStrip
+                        text="{registerModel>/successMessage}"
+                        type="Success"
+                        showIcon="true"
+                        visible="{= ${registerModel>/successMessage} !== '' }"
+                        class="sapUiTinyMarginTop"/>
+
+                    <!-- Kayıt Ol Butonu -->
+                    <Button
+                        text="Hesap Oluştur"
+                        type="Emphasized"
+                        width="100%"
+                        press="onRegisterSubmit"
+                        icon="sap-icon://add-employee"
+                        enabled="{= !${registerModel>/isLoading} }"
+                        class="sapUiSmallMarginTop registerBtn"/>
+
+                    <!-- Divider -->
+                    <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMarginTop">
+                        <Text text="Zaten hesabınız var mı?" class="sapUiTinyMarginEnd registerSubtext"/>
+                        <Link text="Giriş Yap" press="onSwitchToLogin"/>
+                    </HBox>
+
+                </VBox>
+            </VBox>
+        </content>
+
+        <endButton>
+            <Button text="Kapat" press="onCloseRegisterDialog"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

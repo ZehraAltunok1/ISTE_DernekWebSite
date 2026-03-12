@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment"
+], function (Controller, JSONModel, MessageBox, MessageToast, Fragment) {
     "use strict";
 
     return Controller.extend("edusupport.platform.controller.auth.Login", {
@@ -11,7 +12,6 @@ sap.ui.define([
         onInit: function () {
             console.log("🔐 Login Controller initialized");
 
-            // Login model
             var oLoginModel = new JSONModel({
                 userEmail: "",
                 userPassword: "",
@@ -25,15 +25,13 @@ sap.ui.define([
             });
             this.getView().setModel(oLoginModel, "loginModel");
 
-            // Check if already authenticated
             this._checkIfAlreadyLoggedIn();
         },
 
         _checkIfAlreadyLoggedIn: function () {
             var oAppData = this.getOwnerComponent().getModel("appData");
-            
             if (oAppData && oAppData.getProperty("/isAuthenticated")) {
-                console.log("✅ User already authenticated, redirecting...");
+                console.log("✅ Kullanıcı zaten giriş yapmış, yönlendiriliyor...");
                 this._redirectToUserPanel();
             }
         },
@@ -43,43 +41,32 @@ sap.ui.define([
            ========================================== */
 
         onUserLoginPress: function () {
-            console.log("👤 Opening User Login Dialog");
-            
-            // Clear previous data
             var oLoginModel = this.getView().getModel("loginModel");
             oLoginModel.setProperty("/userEmail", "");
             oLoginModel.setProperty("/userPassword", "");
             oLoginModel.setProperty("/errorMessage", "");
-            
-            // Open dialog with UNIQUE ID
             this.byId("isteUserLoginDialog").open();
         },
 
         onUserLogin: function () {
             var oLoginModel = this.getView().getModel("loginModel");
-            var sEmail = oLoginModel.getProperty("/userEmail");
+            var sEmail    = oLoginModel.getProperty("/userEmail");
             var sPassword = oLoginModel.getProperty("/userPassword");
-            var bRememberMe = oLoginModel.getProperty("/rememberMe");
+            var bRemember = oLoginModel.getProperty("/rememberMe");
 
-            // Validation
             if (!sEmail || !sPassword) {
                 oLoginModel.setProperty("/errorMessage", "Lütfen e-posta ve şifrenizi girin.");
                 return;
             }
-
-            // Email format check
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(sEmail)) {
                 oLoginModel.setProperty("/errorMessage", "Geçerli bir e-posta adresi girin.");
                 return;
             }
 
-            // Set loading
             oLoginModel.setProperty("/isLoading", true);
             oLoginModel.setProperty("/errorMessage", "");
-
-            // API Call
-            this._performLogin(sEmail, sPassword, bRememberMe, "user");
+            this._performLogin(sEmail, sPassword, bRemember, "user");
         },
 
         onCloseUserDialog: function () {
@@ -91,43 +78,32 @@ sap.ui.define([
            ========================================== */
 
         onAdminLoginPress: function () {
-            console.log("🔑 Opening Admin Login Dialog");
-            
-            // Clear previous data
             var oLoginModel = this.getView().getModel("loginModel");
             oLoginModel.setProperty("/adminEmail", "");
             oLoginModel.setProperty("/adminPassword", "");
             oLoginModel.setProperty("/errorMessageAdmin", "");
-            
-            // Open dialog with UNIQUE ID
             this.byId("isteAdminLoginDialog").open();
         },
 
         onAdminLogin: function () {
             var oLoginModel = this.getView().getModel("loginModel");
-            var sEmail = oLoginModel.getProperty("/adminEmail");
+            var sEmail    = oLoginModel.getProperty("/adminEmail");
             var sPassword = oLoginModel.getProperty("/adminPassword");
-            var bRememberMe = oLoginModel.getProperty("/rememberMeAdmin");
+            var bRemember = oLoginModel.getProperty("/rememberMeAdmin");
 
-            // Validation
             if (!sEmail || !sPassword) {
                 oLoginModel.setProperty("/errorMessageAdmin", "Lütfen e-posta ve şifrenizi girin.");
                 return;
             }
-
-            // Email format check
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(sEmail)) {
                 oLoginModel.setProperty("/errorMessageAdmin", "Geçerli bir e-posta adresi girin.");
                 return;
             }
 
-            // Set loading
             oLoginModel.setProperty("/isLoading", true);
             oLoginModel.setProperty("/errorMessageAdmin", "");
-
-            // API Call
-            this._performLogin(sEmail, sPassword, bRememberMe, "admin");
+            this._performLogin(sEmail, sPassword, bRemember, "admin");
         },
 
         onCloseAdminDialog: function () {
@@ -135,71 +111,57 @@ sap.ui.define([
         },
 
         /* ==========================================
-           COMMON LOGIN LOGIC
+           ORTAK GİRİŞ MANTIĞI
            ========================================== */
 
         _performLogin: function (sEmail, sPassword, bRememberMe, sLoginType) {
             var that = this;
 
-            // API endpoint
-            var sUrl = "/api/auth/login";
-
-            // Request
-            fetch(sUrl, {
+            fetch("/api/auth/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: sEmail,
                     password: sPassword,
-                    loginType: sLoginType  // "user" or "admin"
+                    loginType: sLoginType
                 })
             })
             .then(function (response) {
-                if (!response.ok) {
-                    throw new Error("Login failed");
-                }
                 return response.json();
             })
             .then(function (data) {
-                console.log("✅ Login successful:", data);
-                
-                // Verify role matches login type
-                var sUserRole = data.user.role || data.user.type;
-                
-                if (sLoginType === "admin" && sUserRole !== "admin") {
+                console.log("✅ LOGIN RESPONSE:", JSON.stringify(data));
+
+                if (!data.success) {
+                    throw new Error(data.message || "Giriş başarısız");
+                }
+
+                // ✅ Backend { success, data: { token, user } } formatında dönüyor
+                var sToken = data.data.token;
+                var oUser  = data.data.user;
+
+                if (!sToken) {
+                    throw new Error("Token alınamadı, lütfen tekrar deneyin.");
+                }
+
+                var sUserRole = (oUser.role || oUser.type || oUser.user_type || "").toLowerCase();
+                if (sLoginType === "admin" && sUserRole !== "admin" && sUserRole !== "super_admin") {
                     throw new Error("Unauthorized: Not an admin user");
                 }
-                
-                if (sLoginType === "user" && sUserRole === "admin") {
-                    // Admin kullanıcı girişi yaptıysa yönlendir
-                    MessageBox.information(
-                        "Yönetici hesabınızla giriş yapıyorsunuz. Yönetici paneline yönlendirileceksiniz.",
-                        {
-                            title: "Bilgi",
-                            onClose: function() {
-                                that._completeLogin(data, bRememberMe);
-                            }
-                        }
-                    );
-                    return;
-                }
-                
-                // Complete login
-                that._completeLogin(data, bRememberMe);
+
+                that._completeLogin(sToken, oUser, bRememberMe);
             })
             .catch(function (error) {
                 console.error("❌ Login error:", error);
-                
-                var sErrorMessage = "Giriş başarısız. Lütfen e-posta ve şifrenizi kontrol edin.";
-                
+
+                var sErrorMessage = "Giriş başarısız. E-posta veya şifre hatalı.";
                 if (error.message === "Unauthorized: Not an admin user") {
-                    sErrorMessage = "Bu hesap yönetici yetkisine sahip değil. Lütfen kullanıcı girişi yapın.";
+                    sErrorMessage = "Bu hesap yönetici yetkisine sahip değil.";
+                } else if (error.message) {
+                    sErrorMessage = error.message;
                 }
-                
+
                 var oLoginModel = that.getView().getModel("loginModel");
-                
                 if (sLoginType === "admin") {
                     oLoginModel.setProperty("/errorMessageAdmin", sErrorMessage);
                 } else {
@@ -207,134 +169,234 @@ sap.ui.define([
                 }
             })
             .finally(function () {
-                var oLoginModel = that.getView().getModel("loginModel");
-                oLoginModel.setProperty("/isLoading", false);
+                that.getView().getModel("loginModel").setProperty("/isLoading", false);
             });
         },
 
-        _completeLogin: function (data, bRememberMe) {
-            // Save to localStorage
-            localStorage.setItem("authToken", data.token);
-            localStorage.setItem("userData", JSON.stringify(data.user));
+        _completeLogin: function (sToken, oUser, bRememberMe) {
+            // ✅ localStorage'a kaydet
+            localStorage.setItem("authToken", sToken);
+            localStorage.setItem("userData", JSON.stringify(oUser));
+            if (bRememberMe) localStorage.setItem("rememberMe", "true");
 
-            if (bRememberMe) {
-                localStorage.setItem("rememberMe", "true");
-            }
-
-            // Update app model
+            // ✅ appData modelini güncelle
             var oAppData = this.getOwnerComponent().getModel("appData");
             oAppData.setProperty("/isAuthenticated", true);
-            oAppData.setProperty("/currentUser", data.user);
-            oAppData.setProperty("/authToken", data.token);
+            oAppData.setProperty("/authToken", sToken);
+            oAppData.setProperty("/currentUser", oUser);
 
-            // Set OData auth header
-            this._setODataAuthHeader(data.token);
+            console.log("✅ Token kaydedildi:", sToken);
 
-            // Close dialogs with UNIQUE IDs
-            var oUserDialog = this.byId("isteUserLoginDialog");
+            // Tüm açık dialog'ları kapat
+            var oUserDialog  = this.byId("isteUserLoginDialog");
             var oAdminDialog = this.byId("isteAdminLoginDialog");
-            
-            if (oUserDialog && oUserDialog.isOpen()) {
-                oUserDialog.close();
-            }
-            
-            if (oAdminDialog && oAdminDialog.isOpen()) {
-                oAdminDialog.close();
-            }
+            if (oUserDialog  && oUserDialog.isOpen())  oUserDialog.close();
+            if (oAdminDialog && oAdminDialog.isOpen()) oAdminDialog.close();
 
-            // Success message
-            MessageToast.show("Giriş başarılı! Hoş geldiniz " + data.user.first_name);
-
-            // Redirect
+            MessageToast.show("Hoş geldiniz, " + oUser.first_name + "!");
             this._redirectToUserPanel();
-        },
-
-        _setODataAuthHeader: function (sToken) {
-            var oODataModel = this.getOwnerComponent().getModel();
-            
-            if (oODataModel && oODataModel.setHeaders) {
-                oODataModel.setHeaders({
-                    "Authorization": "Bearer " + sToken
-                });
-                console.log("✅ OData Authorization header set");
-            }
         },
 
         _redirectToUserPanel: function () {
             var oAppData = this.getOwnerComponent().getModel("appData");
-            var oUser = oAppData.getProperty("/currentUser");
-            var oRouter = this.getOwnerComponent().getRouter();
+            var oUser    = oAppData.getProperty("/currentUser");
+            if (!oUser) return;
 
-            if (!oUser) {
-                console.error("❌ User data not found");
-                return;
-            }
+            var sRole  = (oUser.role || oUser.type || oUser.user_type || "").toLowerCase();
+            var sRoute = (sRole === "admin" || sRole === "super_admin") ? "adminDashboard" : "home";
 
-            // Check user role/type
-            var sRole = oUser.role || oUser.type;
-
-            if (sRole === "admin") {
-                console.log("🔑 Redirecting to admin dashboard");
-                oRouter.navTo("adminDashboard");
-            } else {
-                console.log("👤 Redirecting to user launchpad");
-                oRouter.navTo("launchpad");
-            }
+            console.log("🔀 Yönlendiriliyor:", sRoute, "| Rol:", sRole);
+            this.getOwnerComponent().getRouter().navTo(sRoute);
         },
 
         /* ==========================================
-           DIALOG EVENTS
+           KAYIT (REGISTER) — Dialog
+           ========================================== */
+
+        onRegister: function () {
+            var that = this;
+
+            // Açık login dialog'larını kapat
+            var oUserDialog  = this.byId("isteUserLoginDialog");
+            var oAdminDialog = this.byId("isteAdminLoginDialog");
+            if (oUserDialog  && oUserDialog.isOpen())  oUserDialog.close();
+            if (oAdminDialog && oAdminDialog.isOpen()) oAdminDialog.close();
+
+            // Register modelini sıfırla
+            var oRegisterModel = new JSONModel({
+                first_name: "",
+                last_name: "",
+                email: "",
+                password: "",
+                password_confirm: "",
+                errorMessage: "",
+                successMessage: "",
+                isLoading: false,
+                passwordStrength: 0,
+                passwordStrengthState: "None",
+                passwordStrengthText: ""
+            });
+            this.getView().setModel(oRegisterModel, "registerModel");
+
+            // Fragment'i yükle ve dialog'u aç
+            if (!this._oRegisterDialog) {
+                Fragment.load({
+                    id: this.getView().getId(),
+                    name: "edusupport.platform.view.fragments.Register",
+                    controller: this
+                }).then(function (oDialog) {
+                    that._oRegisterDialog = oDialog;
+                    that.getView().addDependent(oDialog);
+                    oDialog.open();
+                });
+            } else {
+                this._oRegisterDialog.open();
+            }
+        },
+
+        onCloseRegisterDialog: function () {
+            if (this._oRegisterDialog) this._oRegisterDialog.close();
+        },
+
+        // Register dialog'daki "Giriş Yap" linkine basınca
+        onSwitchToLogin: function () {
+            if (this._oRegisterDialog) this._oRegisterDialog.close();
+            var oUserDialog = this.byId("isteUserLoginDialog");
+            if (oUserDialog) {
+                this.getView().getModel("loginModel").setProperty("/errorMessage", "");
+                oUserDialog.open();
+            }
+        },
+
+        // Şifre yazarken güç göstergesi
+        onRegisterPasswordChange: function () {
+            var oModel    = this.getView().getModel("registerModel");
+            var sPassword = oModel.getProperty("/password");
+
+            var iStrength = 0;
+            if (sPassword.length >= 8)           iStrength += 25;
+            if (/[A-Z]/.test(sPassword))         iStrength += 25;
+            if (/[0-9]/.test(sPassword))         iStrength += 25;
+            if (/[^A-Za-z0-9]/.test(sPassword))  iStrength += 25;
+
+            var sState, sText;
+            if      (iStrength >= 75) { sState = "Success"; sText = "Güçlü";     }
+            else if (iStrength >= 50) { sState = "Warning"; sText = "Orta";      }
+            else if (iStrength >= 25) { sState = "Error";   sText = "Zayıf";     }
+            else                      { sState = "None";    sText = "Çok zayıf"; }
+
+            oModel.setProperty("/passwordStrength",      iStrength);
+            oModel.setProperty("/passwordStrengthState", sState);
+            oModel.setProperty("/passwordStrengthText",  sText);
+        },
+
+        onRegisterFieldChange: function () {
+            this.getView().getModel("registerModel").setProperty("/errorMessage", "");
+        },
+
+        onRegisterSubmit: function () {
+            var that   = this;
+            var oModel = this.getView().getModel("registerModel");
+
+            var sFirst    = oModel.getProperty("/first_name").trim();
+            var sLast     = oModel.getProperty("/last_name").trim();
+            var sEmail    = oModel.getProperty("/email").trim();
+            var sPassword = oModel.getProperty("/password");
+            var sConfirm  = oModel.getProperty("/password_confirm");
+
+            // Validasyon
+            if (!sFirst || !sLast) {
+                oModel.setProperty("/errorMessage", "Ad ve soyad zorunludur.");
+                return;
+            }
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!sEmail || !emailRegex.test(sEmail)) {
+                oModel.setProperty("/errorMessage", "Geçerli bir e-posta adresi girin.");
+                return;
+            }
+            if (!sPassword || sPassword.length < 8) {
+                oModel.setProperty("/errorMessage", "Şifre en az 8 karakter olmalıdır.");
+                return;
+            }
+            if (sPassword !== sConfirm) {
+                oModel.setProperty("/errorMessage", "Şifreler eşleşmiyor.");
+                return;
+            }
+
+            oModel.setProperty("/isLoading", true);
+            oModel.setProperty("/errorMessage", "");
+            oModel.setProperty("/successMessage", "");
+
+            fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    first_name: sFirst,
+                    last_name:  sLast,
+                    email:      sEmail,
+                    password:   sPassword
+                })
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log("✅ REGISTER RESPONSE:", JSON.stringify(data));
+
+                if (!data.success) {
+                    throw new Error(data.message || "Kayıt başarısız");
+                }
+
+                // ✅ Kayıt başarılı → otomatik giriş yap
+                var sToken = data.data.token;
+                var oUser  = data.data.user;
+
+                oModel.setProperty("/successMessage", "Hesabınız oluşturuldu! Giriş yapılıyor...");
+
+                setTimeout(function () {
+                    if (that._oRegisterDialog) that._oRegisterDialog.close();
+                    that._completeLogin(sToken, oUser, false);
+                }, 1500);
+            })
+            .catch(function (error) {
+                console.error("❌ Register error:", error);
+                oModel.setProperty("/errorMessage", error.message || "Kayıt sırasında hata oluştu.");
+            })
+            .finally(function () {
+                oModel.setProperty("/isLoading", false);
+            });
+        },
+
+        /* ==========================================
+           DİĞER AKSIYONLAR
            ========================================== */
 
         onDialogClose: function () {
-            // Clear error messages when dialog closes
             var oLoginModel = this.getView().getModel("loginModel");
             oLoginModel.setProperty("/errorMessage", "");
             oLoginModel.setProperty("/errorMessageAdmin", "");
         },
 
-        /* ==========================================
-           OTHER ACTIONS
-           ========================================== */
-
         onForgotPassword: function () {
             MessageBox.information(
                 "Şifre sıfırlama bağlantısı e-posta adresinize gönderilecektir.",
-                {
-                    title: "Şifremi Unuttum",
-                    actions: [MessageBox.Action.OK]
-                }
-            );
-        },
-
-        onRegister: function () {
-            MessageBox.information(
-                "Kayıt sayfası yakında aktif olacaktır.",
-                {
-                    title: "Kayıt Ol",
-                    actions: [MessageBox.Action.OK]
-                }
+                { title: "Şifremi Unuttum", actions: [MessageBox.Action.OK] }
             );
         },
 
         onGoToHome: function () {
-            var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("home");
+            this.getOwnerComponent().getRouter().navTo("home");
         },
 
         onHelp: function () {
             MessageBox.information(
                 "Yardım için:\n\nE-posta: info@istedernek.com\nTelefon: +90 (212) 555 66 77\n\nÇalışma Saatleri: Hafta içi 09:00 - 18:00",
-                {
-                    title: "Yardım ve Destek",
-                    actions: [MessageBox.Action.OK]
-                }
+                { title: "Yardım ve Destek", actions: [MessageBox.Action.OK] }
             );
         },
 
         onContact: function () {
             this.onGoToHome();
         }
-
     });
 });

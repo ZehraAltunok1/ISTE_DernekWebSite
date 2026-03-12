@@ -47,7 +47,6 @@
     "resources": {
       "css": [
         { "uri": "css/designsystem.css" },
-        { "uri": "css/launchpad.css"      },
         { "uri": "css/dashboard.css"      },
         { "uri": "css/profile.css"        },
         { "uri": "css/login.css"          },
@@ -75,7 +74,7 @@
       "routes": [
         { "pattern": "",                    "name": "home",           "target": "home"           },
         { "pattern": "login",               "name": "login",          "target": "login"          },
-        { "pattern": "user/launchpad",      "name": "launchpad",      "target": "launchpad"      },
+        { "pattern": "register",            "name": "register",       "target": "register"       },
         { "pattern": "admin/dashboard",     "name": "adminDashboard", "target": "adminDashboard" },
         { "pattern": "admin/profile",       "name": "profile",        "target": "profile"        },
         { "pattern": "bagis",               "name": "donate",         "target": "donate"         },
@@ -89,35 +88,35 @@
           "viewId": "login",
           "viewLevel": 1
         },
+        "register": {
+          "viewType": "XML",
+          "viewName": "auth.Register",
+          "viewId": "register",
+          "viewLevel": 1
+        },
         "home": {
           "viewType": "XML",
           "viewName": "public.Home",
           "viewId": "home",
           "viewLevel": 2
         },
-        "launchpad": {
-          "viewType": "XML",
-          "viewName": "user.Launchpad",
-          "viewId": "launchpad",
-          "viewLevel": 3
-        },
         "adminDashboard": {
           "viewType": "XML",
           "viewName": "admin.Dashboard",
           "viewId": "adminDashboard",
-          "viewLevel": 4
+          "viewLevel": 3
         },
         "profile": {
           "viewType": "XML",
           "viewName": "admin.Profile",
           "viewId": "profile",
-          "viewLevel": 5
+          "viewLevel": 4
         },
         "notFound": {
           "viewType": "XML",
           "viewName": "public.NotFound",
           "viewId": "notFound",
-          "viewLevel": 6
+          "viewLevel": 5
         },
         "donate": {
           "viewType": "XML",
