@@ -1343,3 +1343,218 @@
 .sapUxAPObjectPageSectionContainer {
     padding: 2rem 3rem;
 }
+/* ── Nasıl Çalışır ── */
+.hiwTabBar { display:flex; gap:10px; margin-bottom:24px; }
+.hiwTabBtn { padding:8px 22px; border-radius:20px; border:1px solid #ddd; background:transparent; color:#666; font-size:14px; cursor:pointer; transition:all .2s; }
+.hiwTabBtn.hiwTabActive { background:#e8f4fd; color:#1565c0; border-color:transparent; font-weight:600; }
+.hiwPanel { display:none; }
+.hiwPanel.hiwPanelActive { display:block; }
+.hiwSteps { display:flex; align-items:flex-start; gap:0; }
+.hiwStep { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.hiwStep:not(:last-child)::after { content:''; position:absolute; top:22px; left:calc(50% + 24px); right:calc(-50% + 24px); height:2px; background:#e0e0e0; }
+.hiwCircle { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; position:relative; z-index:1; margin-bottom:10px; border:1.5px solid #ddd; background:#f5f5f5; }
+.hiwCircle.hiwDone { background:#e8f5e9; border-color:#a5d6a7; }
+.hiwCircle.hiwActive { background:#e3f2fd; border-color:#90caf9; }
+.hiwStepTitle { font-size:13px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:4px; }
+.hiwStepDesc { font-size:12px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
+
+/* ── SSS ── */
+.faqWrap { max-width:720px; }
+.faqCategory { font-size:11px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:.06em; margin:20px 0 8px 4px; }
+.faqItem { border:1px solid #e8e8e8; border-radius:10px; margin-bottom:6px; overflow:hidden; cursor:pointer; transition:box-shadow .2s; }
+.faqItem:hover { box-shadow:0 2px 8px rgba(0,0,0,.07); }
+.faqQ { display:flex; justify-content:space-between; align-items:center; padding:13px 16px; font-size:14px; font-weight:600; color:#1a1a1a; }
+.faqIcon { font-size:18px; color:#999; transition:transform .2s; }
+.faqA { display:none; padding:0 16px 13px; font-size:13px; color:#555; line-height:1.65; border-top:1px solid #f0f0f0; padding-top:10px; }
+.faqItem.faqOpen .faqA { display:block; }
+.faqItem.faqOpen .faqIcon { transform:rotate(45deg); }
+/* header avatar */
+.sapUxAPObjectPageHeaderContent .headerAvatar,
+.sapUxAPObjectPageDynamicHeaderContent .headerAvatar {
+    border: 2px solid rgba(255,255,255,0.5);
+}
+/* ═══════════════════════════════════════════════════════════
+   ANASAYFA BUTON DÜZELTMELERİ
+   design-system.css dosyasının EN SONUNA ekleyin
+   ═══════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────
+   1. KAMPANYA KARTI — "Detaylar" butonu
+      Bağış Yap butonu gibi turuncu gradient
+   ──────────────────────────────────────────────── */
+.campaignCard .sapMBtn .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 24px !important;
+    height:        42px !important;
+    box-shadow:    0 4px 16px rgba(244,162,97,0.45) !important;
+    transition:    all 0.22s ease !important;
+    width:         100% !important;
+}
+.campaignCard .sapMBtn .sapMBtnInner:hover {
+    transform:  translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(244,162,97,0.55) !important;
+    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+}
+
+/* ────────────────────────────────────────────────
+   2. HERO — "Bağış Yap" butonu (zaten var, güçlendir)
+   ──────────────────────────────────────────────── */
+.btnHeroPrimary .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 32px !important;
+    height:        48px !important;
+    box-shadow:    0 6px 24px rgba(244,162,97,0.50) !important;
+    transition:    all 0.22s ease !important;
+}
+.btnHeroPrimary .sapMBtnInner:hover {
+    transform:  translateY(-3px) !important;
+    box-shadow: 0 10px 32px rgba(244,162,97,0.60) !important;
+    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+}
+
+/* ────────────────────────────────────────────────
+   3. HERO — "Gönüllü Ol" butonu
+      Yeşil outline → hover'da dolu yeşil
+   ──────────────────────────────────────────────── */
+.btnHeroOutline .sapMBtnInner {
+    background:    rgba(255,255,255,0.12) !important;
+    border:        2px solid rgba(255,255,255,0.70) !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 32px !important;
+    height:        48px !important;
+    backdrop-filter: blur(6px) !important;
+    transition:    all 0.22s ease !important;
+}
+.btnHeroOutline .sapMBtnInner:hover {
+    background:    rgba(255,255,255,0.25) !important;
+    border-color:  #fff !important;
+    transform:     translateY(-3px) !important;
+    box-shadow:    0 8px 24px rgba(255,255,255,0.15) !important;
+}
+
+/* ────────────────────────────────────────────────
+   4. NAVBAR — "Giriş Yap" butonu
+      Navbar yeşil arka planda beyaz outline
+   ──────────────────────────────────────────────── */
+.btnLogin .sapMBtnInner,
+.sapFDynamicPageTitle .sapMBtnEmphasized .sapMBtnInner {
+    background:    rgba(255,255,255,0.12) !important;
+    border:        2px solid rgba(255,255,255,0.60) !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   600 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 20px !important;
+    height:        40px !important;
+    transition:    all 0.22s ease !important;
+}
+.btnLogin .sapMBtnInner:hover,
+.sapFDynamicPageTitle .sapMBtnEmphasized .sapMBtnInner:hover {
+    background:   rgba(255,255,255,0.22) !important;
+    border-color: #fff !important;
+    transform:    translateY(-1px) !important;
+}
+
+/* ────────────────────────────────────────────────
+   5. NAVBAR — "Panel" / "Yönetim" butonları
+   ──────────────────────────────────────────────── */
+.sapFDynamicPageTitle .sapMBtn:not(.btnHeroPrimary):not(.btnHeroOutline) .sapMBtnInner {
+    background:    rgba(255,255,255,0.10) !important;
+    border:        1px solid rgba(255,255,255,0.30) !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   600 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    transition:    all 0.22s ease !important;
+}
+.sapFDynamicPageTitle .sapMBtn:not(.btnHeroPrimary):not(.btnHeroOutline) .sapMBtnInner:hover {
+    background:   rgba(255,255,255,0.20) !important;
+    border-color: rgba(255,255,255,0.60) !important;
+}
+
+/* ────────────────────────────────────────────────
+   6. MENÜ BUTONU (kullanıcı adı) navbar'da
+   ──────────────────────────────────────────────── */
+.sapFDynamicPageTitle .sapMMenuBtn .sapMBtnInner {
+    background:    rgba(255,255,255,0.10) !important;
+    border:        1px solid rgba(255,255,255,0.30) !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   600 !important;
+    transition:    all 0.22s ease !important;
+}
+.sapFDynamicPageTitle .sapMMenuBtn .sapMBtnInner:hover {
+    background: rgba(255,255,255,0.20) !important;
+}
+
+/* ────────────────────────────────────────────────
+   7. HAKKIMIZDA — "Hikayemizi Okuyun →" butonu
+   ──────────────────────────────────────────────── */
+#aboutSection .sapMBtnEmphasized .sapMBtnInner {
+    background:    linear-gradient(135deg, #2D6A4F, #40916C) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 24px !important;
+    height:        42px !important;
+    box-shadow:    0 4px 16px rgba(45,106,79,0.35) !important;
+    transition:    all 0.22s ease !important;
+}
+#aboutSection .sapMBtnEmphasized .sapMBtnInner:hover {
+    transform:  translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(45,106,79,0.45) !important;
+}
+
+/* ────────────────────────────────────────────────
+   8. KAMPANYA DETAY SAYFASI — Header "Bağış Yap"
+   ──────────────────────────────────────────────── */
+#cdPage .sapMBtnEmphasized .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    padding:       0 24px !important;
+    height:        40px !important;
+    box-shadow:    0 4px 16px rgba(244,162,97,0.45) !important;
+    transition:    all 0.22s ease !important;
+}
+#cdPage .sapMBtnEmphasized .sapMBtnInner:hover {
+    transform:  translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(244,162,97,0.55) !important;
+}
+
+/* ────────────────────────────────────────────────
+   9. SAP varsayılan Emphasized (mavi) rengi ezme
+      Tüm Emphasized butonlara turuncu gradient
+   ──────────────────────────────────────────────── */
+.sapMBtnEmphasized .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    box-shadow:    0 4px 16px rgba(244,162,97,0.40) !important;
+    transition:    all 0.22s ease !important;
+}
+.sapMBtnEmphasized .sapMBtnInner:hover {
+    background:    linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform:     translateY(-2px) !important;
+    box-shadow:    0 8px 24px rgba(244,162,97,0.50) !important;
+}

@@ -27,7 +27,7 @@ router.get('/donors', (req, res) => {
 
         res.json({ success: true, donors: donors || [] });
     } catch (error) {
-        console.error('❌ Donors fetch error:', error);
+        console.error(' Donors fetch error:', error);
         res.status(500).json({ success: false, message: 'Bağışçılar yüklenemedi', error: error.message });
     }
 });
@@ -67,7 +67,7 @@ router.post('/donors', async (req, res) => {
             VALUES ('Admin', 'create_donor', ?, ?)
         `).run(`${first_name} ${last_name} bağışçı olarak eklendi`, userId);
 
-        console.log('✅ Donor added:', email);
+        console.log(' Donor added:', email);
 
         res.json({
             success: true,
@@ -84,7 +84,7 @@ router.post('/donors', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('❌ Donor insert error:', error);
+        console.error(' Donor insert error:', error);
         res.status(500).json({ success: false, message: 'Bağışçı eklenemedi', error: error.message });
     }
 });
@@ -107,7 +107,7 @@ router.put('/donors/:id', (req, res) => {
 
         res.json({ success: true, message: 'Bağışçı güncellendi' });
     } catch (error) {
-        console.error('❌ Donor update error:', error);
+        console.error(' Donor update error:', error);
         res.status(500).json({ success: false, message: 'Güncellenemedi', error: error.message });
     }
 });
@@ -130,7 +130,7 @@ router.delete('/donors/:id', (req, res) => {
 
         res.json({ success: true, message: 'Bağışçı silindi' });
     } catch (error) {
-        console.error('❌ Donor delete error:', error);
+        console.error(' Donor delete error:', error);
         res.status(500).json({ success: false, message: 'Silinemedi', error: error.message });
     }
 });
@@ -162,7 +162,7 @@ router.get('/students', (req, res) => {
 
         res.json({ success: true, students: students || [] });
     } catch (error) {
-        console.error('❌ Students fetch error:', error);
+        console.error(' Students fetch error:', error);
         res.status(500).json({ success: false, message: 'Öğrenciler yüklenemedi', error: error.message });
     }
 });
@@ -196,13 +196,13 @@ router.post('/students', async (req, res) => {
             INSERT INTO student_profiles (user_id, university) VALUES (?, ?)
         `).run(userId, school_name || null);
 
-        // ✅ Aktivite kaydı oluştur
+        //  Aktivite kaydı oluştur
         db.prepare(`
             INSERT INTO activities (admin_name, action_type, action_description, related_user_id)
             VALUES ('Admin', 'create_student', ?, ?)
         `).run(`${first_name} ${last_name} burslu öğrenci olarak eklendi`, userId);
 
-        console.log('✅ Student added:', email);
+        console.log('Student added:', email);
 
         res.json({
             success: true,
@@ -219,7 +219,7 @@ router.post('/students', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('❌ Student insert error:', error);
+        console.error(' Student insert error:', error);
         res.status(500).json({ success: false, message: 'Öğrenci eklenemedi', error: error.message });
     }
 });
@@ -247,7 +247,7 @@ router.put('/students/:id', (req, res) => {
 
         res.json({ success: true, message: 'Öğrenci güncellendi' });
     } catch (error) {
-        console.error('❌ Student update error:', error);
+        console.error(' Student update error:', error);
         res.status(500).json({ success: false, message: 'Güncellenemedi', error: error.message });
     }
 });
@@ -270,7 +270,7 @@ router.delete('/students/:id', (req, res) => {
 
         res.json({ success: true, message: 'Öğrenci silindi' });
     } catch (error) {
-        console.error('❌ Student delete error:', error);
+        console.error(' Student delete error:', error);
         res.status(500).json({ success: false, message: 'Silinemedi', error: error.message });
     }
 });
@@ -288,7 +288,7 @@ router.get('/activities', (req, res) => {
 
         res.json({ success: true, activities: activities || [] });
     } catch (error) {
-        console.error('❌ Activities fetch error:', error);
+        console.error(' Activities fetch error:', error);
         res.status(500).json({ success: false, message: 'Aktiviteler yüklenemedi' });
     }
 });
@@ -332,7 +332,7 @@ router.get('/stats', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('❌ Stats fetch error:', error);
+        console.error(' Stats fetch error:', error);
         res.status(500).json({ success: false, message: 'İstatistikler yüklenemedi' });
     }
 });

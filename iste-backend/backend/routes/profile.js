@@ -36,6 +36,36 @@ const upload = multer({
             ? cb(null, true) : cb(new Error('Sadece görsel yüklenebilir.'))
 });
 
+// ── Multer hata yakalayıcı wrapper ───────────────────────────────
+// Multer kendi hatasını fırlatırsa Express'e düzgün iletmek için
+function uploadSingle(fieldName) {
+    return (req, res, next) => {
+        upload.single(fieldName)(req, res, (err) => {
+            if (err instanceof multer.MulterError) {
+                if (err.code === 'LIMIT_FILE_SIZE')
+                    return res.status(400).json({ success: false, message: 'Dosya boyutu 5MB\'dan küçük olmalıdır.' });
+                return res.status(400).json({ success: false, message: 'Dosya yükleme hatası: ' + err.message });
+            }
+            if (err) {
+                return res.status(400).json({ success: false, message: err.message });
+            }
+            next();
+        });
+    };
+}
+
+// ── Kullanıcı tablosunda avatar kolonu var mı? ────────────────────
+function getAvatarColumn(db) {
+    try {
+        const cols = db.prepare("PRAGMA table_info(users)").all().map(c => c.name);
+        if (cols.includes('avatar_url')) return 'avatar_url';
+        if (cols.includes('avatar'))     return 'avatar';
+        return null;
+    } catch {
+        return null;
+    }
+}
+
 const toDate = v => v ? new Date(v).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
 const userTypeMap = {
@@ -96,29 +126,25 @@ router.get('/stats', authenticateToken, (req, res) => {
         const uid = req.user.id;
         const stats = { donationCount: 0, donationTotal: 0, eventCount: 0, volunteerStatus: null };
 
-        // Bağış istatistikleri
         try {
             const r = db.prepare(`
                 SELECT COUNT(*) AS count, COALESCE(SUM(amount), 0) AS total
-                FROM   donations
-                WHERE  user_id = ?`).get(uid);
+                FROM   donations WHERE user_id = ?`).get(uid);
             stats.donationCount = r?.count || 0;
             stats.donationTotal = r?.total || 0;
-        } catch { /* donations tablosu yoksa sessizce geç */ }
+        } catch {}
 
-        // Etkinlik sayısı
         try {
             const r = db.prepare(`SELECT COUNT(*) AS count FROM event_registrations WHERE user_id = ?`).get(uid);
             stats.eventCount = r?.count || 0;
-        } catch { /* event_registrations tablosu yoksa geç */ }
+        } catch {}
 
-        // Gönüllü başvuru durumu
         try {
             const r = db.prepare(`
                 SELECT status FROM volunteers
                 WHERE  email = (SELECT email FROM users WHERE id = ?) LIMIT 1`).get(uid);
             stats.volunteerStatus = r?.status || null;
-        } catch { /* volunteers tablosu yoksa geç */ }
+        } catch {}
 
         res.json({ success: true, stats });
     } catch (err) {
@@ -137,23 +163,20 @@ router.get('/donations', authenticateToken, (req, res) => {
                 SELECT id, amount, status,
                        COALESCE(campaign_title, campaign_name, 'Genel Bağış') AS campaign_title,
                        message, created_at
-                FROM   donations
-                WHERE  user_id = ?
+                FROM   donations WHERE user_id = ?
                 ORDER  BY created_at DESC`).all(req.user.id);
         } catch {
             try {
                 rows = db.prepare(`
-                    SELECT id, amount, status,
-                           'Genel Bağış' AS campaign_title,
+                    SELECT id, amount, status, 'Genel Bağış' AS campaign_title,
                            '' AS message, created_at
-                    FROM   donations
-                    WHERE  user_id = ?
+                    FROM   donations WHERE user_id = ?
                     ORDER  BY created_at DESC`).all(req.user.id);
             } catch { rows = []; }
         }
 
-        const statusMap   = { approved: 'Onaylandı', completed: 'Tamamlandı', paid: 'Ödendi', pending: 'Beklemede', rejected: 'Reddedildi' };
-        const statusState = { approved: 'Success',   completed: 'Success',    paid: 'Success', pending: 'Warning',  rejected: 'Error' };
+        const statusMap   = { approved:'Onaylandı', completed:'Tamamlandı', paid:'Ödendi', pending:'Beklemede', rejected:'Reddedildi' };
+        const statusState = { approved:'Success',   completed:'Success',    paid:'Success', pending:'Warning',  rejected:'Error' };
 
         const donations = rows.map(d => ({
             id:             d.id,
@@ -216,7 +239,7 @@ router.put('/', authenticateToken, (req, res) => {
         if (!first_name || !last_name)
             return res.status(400).json({ success: false, message: 'Ad ve soyad zorunludur' });
 
-        db.prepare(`UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE id = ?`)
+        db.prepare('UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE id = ?')
           .run(first_name.trim(), last_name.trim(), phone || null, req.user.id);
 
         res.json({ success: true, message: 'Profil başarıyla güncellendi' });
@@ -260,26 +283,51 @@ router.put('/password', authenticateToken, async (req, res) => {
 });
 
 // ── POST /api/profile/avatar ──────────────────────────────────────
-router.post('/avatar', authenticateToken, upload.single('avatar'), (req, res) => {
+router.post('/avatar', authenticateToken, uploadSingle('avatar'), (req, res) => {
     try {
         const db = req.app.locals.db;
-        if (!req.file) return res.json({ success: false, message: 'Dosya bulunamadı!' });
 
-        const avatarUrl = '/uploads/avatars/' + req.file.filename;
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Dosya bulunamadı.' });
+        }
 
+        const avatarUrl    = '/uploads/avatars/' + req.file.filename;
+        const avatarColumn = getAvatarColumn(db);
+
+        // Eski fotoğrafı sil
         try {
-            const old = db.prepare(`SELECT COALESCE(avatar_url, avatar, '') AS av FROM users WHERE id = ?`).get(req.user.id);
-            if (old?.av && !old.av.startsWith('data:')) {
-                const p = path.join(__dirname, '../', old.av);
-                if (fs.existsSync(p)) fs.unlinkSync(p);
+            const cols = db.prepare("PRAGMA table_info(users)").all().map(c => c.name);
+            let oldUrl = '';
+            if (cols.includes('avatar_url')) {
+                oldUrl = db.prepare('SELECT avatar_url FROM users WHERE id = ?').get(req.user.id)?.avatar_url || '';
+            } else if (cols.includes('avatar')) {
+                oldUrl = db.prepare('SELECT avatar FROM users WHERE id = ?').get(req.user.id)?.avatar || '';
             }
-        } catch {}
+            if (oldUrl && !oldUrl.startsWith('data:') && !oldUrl.startsWith('http')) {
+                const oldPath = path.join(__dirname, '../', oldUrl);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        } catch (delErr) {
+            console.warn('Eski avatar silinemedi:', delErr.message);
+        }
 
-        try { db.prepare('UPDATE users SET avatar_url = ? WHERE id = ?').run(avatarUrl, req.user.id); }
-        catch { db.prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatarUrl, req.user.id); }
+        // Yeni URL'yi kaydet
+        if (!avatarColumn) {
+            // Kolon yok — migration yap
+            try {
+                db.prepare('ALTER TABLE users ADD COLUMN avatar_url TEXT').run();
+                db.prepare('UPDATE users SET avatar_url = ? WHERE id = ?').run(avatarUrl, req.user.id);
+            } catch (altErr) {
+                console.error('Avatar kolonu eklenemedi:', altErr.message);
+                return res.status(500).json({ success: false, message: 'Veritabanında avatar kolonu bulunamadı: ' + altErr.message });
+            }
+        } else {
+            db.prepare(`UPDATE users SET ${avatarColumn} = ? WHERE id = ?`).run(avatarUrl, req.user.id);
+        }
 
         res.json({ success: true, avatarUrl });
     } catch (err) {
+        console.error('Avatar POST error:', err);
         res.status(500).json({ success: false, message: err.message });
     }
 });

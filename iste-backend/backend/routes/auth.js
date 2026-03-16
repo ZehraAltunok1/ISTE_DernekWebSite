@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
                 'UPDATE admins SET last_login = CURRENT_TIMESTAMP WHERE id = ?'
             ).run(admin.id);
             
-            console.log('✅ Admin login successful:', email);
+            console.log(' Admin login successful:', email);
             
             return res.json({
                 success: true,
@@ -136,7 +136,7 @@ router.post('/login', async (req, res) => {
         });
         
     } catch (error) {
-        console.error('❌ Login error:', error);
+        console.error(' Login error:', error);
         res.status(500).json({
             success: false,
             message: 'Sunucu hatası: ' + error.message

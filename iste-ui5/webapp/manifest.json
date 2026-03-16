@@ -54,7 +54,8 @@
         { "uri": "css/navbar.css"         },
         { "uri": "css/Campaigndetail.css" },
         { "uri": "css/mediaDetail.css"    },
-        { "uri": "css/stats.css"          }
+        { "uri": "css/stats.css"          },
+        { "uri": "css/about.css"          }
       ]
     },
     "routing": {
@@ -79,7 +80,8 @@
         { "pattern": "admin/profile",       "name": "profile",        "target": "profile"        },
         { "pattern": "bagis",               "name": "donate",         "target": "donate"         },
         { "pattern": "campaign",            "name": "campaignDetail", "target": "campaignDetail" },
-        { "pattern": "media/{type}/{id}",   "name": "mediaDetail",    "target": "mediaDetail"    }
+        { "pattern": "media/{type}/{id}",   "name": "mediaDetail",    "target": "mediaDetail"    },
+        {"pattern": "about",                "name": "about",          "target": "about"}
       ],
       "targets": {
         "login": {
@@ -135,7 +137,14 @@
           "viewName": "public.MediaDetail",
           "viewId": "mediaDetail",
           "viewLevel": 2
-        }
+        },
+        "about": {
+        "viewId": "about",
+        "viewName": "public.About",
+        "viewLevel": 1,
+        "title": "Hakkımızda"
+      }
+
       }
     },
     "contentDensities": {

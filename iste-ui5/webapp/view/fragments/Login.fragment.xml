@@ -89,7 +89,7 @@
                         class="sapUiTinyMarginBottom"/>
                     <VBox class="sapUiTinyMarginTop">
                         <Text text="👤 Kullanıcı: donor@test.com / 123456" class="sapUiTinyMarginBottom"/>
-                        <Text text="🔑 Yönetici: admin@test.com / 123456"/>
+                        <Text text="🔑 Yönetici: admin@edusupport.com / admin123"/>
                     </VBox>
                 </VBox>
                 

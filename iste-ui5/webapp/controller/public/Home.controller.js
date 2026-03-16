@@ -48,10 +48,7 @@ sap.ui.define([
                 if (oPage && oSection) oPage.scrollToSection(oSection.getId(), 500);
             };
         },
-
-        // ════════════════════════════════════════════════════════
-        // AUTH
-        // ════════════════════════════════════════════════════════
+        
         _checkLoginStatus: function () {
             var oAppData  = this.getOwnerComponent().getModel("appData");
             var sToken    = localStorage.getItem("authToken");
@@ -60,15 +57,41 @@ sap.ui.define([
                 try {
                     var oUser = JSON.parse(sUserData);
                     oAppData.setProperty("/isAuthenticated", true);
-                    oAppData.setProperty("/currentUser",     oUser);
+                    oAppData.setProperty("/currentUser", oUser);
+                    this._refreshAvatarFromServer(oAppData); // ← YENİ
                 } catch (e) {
                     oAppData.setProperty("/isAuthenticated", false);
-                    oAppData.setProperty("/currentUser",     null);
+                    oAppData.setProperty("/currentUser", null);
                 }
             } else {
                 oAppData.setProperty("/isAuthenticated", false);
-                oAppData.setProperty("/currentUser",     null);
+                oAppData.setProperty("/currentUser", null);
             }
+        },
+
+        _refreshAvatarFromServer: function (oAppData) {
+            var sToken = localStorage.getItem("authToken");
+            if (!sToken) return;
+            fetch("http://localhost:3000/api/profile", {
+                headers: { "Authorization": "Bearer " + sToken }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.success) return;
+                var d    = data.data;
+                var sUrl = d.avatar_url
+                    ? (d.avatar_url.startsWith("http") ? d.avatar_url : "http://localhost:3000" + d.avatar_url)
+                    : "";
+                var sInitials = (d.first_name && d.last_name)
+                    ? d.first_name.charAt(0).toUpperCase() + d.last_name.charAt(0).toUpperCase()
+                    : "";
+                var oUser = oAppData.getProperty("/currentUser") || {};
+                oUser.avatar_url = sUrl;
+                oUser.initials   = sInitials;
+                oAppData.setProperty("/currentUser", oUser);
+                localStorage.setItem("userData", JSON.stringify(oUser));
+            })
+            .catch(function () {});
         },
 
         // ════════════════════════════════════════════════════════
@@ -91,8 +114,20 @@ sap.ui.define([
         },
 
         onCampaignPress: function (oEvent) {
-            var sId = oEvent.getSource().data("campaignId");
-            this.getOwnerComponent().getRouter().navTo("campaignDetail", { id: sId });
+            // CustomData'dan kampanya ID'sini oku
+            var oBtn   = oEvent.getSource();
+            var sCampId = oBtn.data("campaignId") || "1";
+        
+            // appData modeline yaz (fallback olarak controller'da da kullanılıyor)
+            var oModel = this.getOwnerComponent().getModel("appData");
+            if (oModel) {
+                oModel.setProperty("/selectedCampaignId", sCampId);
+            }
+        
+            // Route'a ID parametresiyle git — manifest'te pattern "campaignDetail/{id}" olmalı
+            this.getOwnerComponent().getRouter().navTo("campaignDetail", {
+                id: sCampId
+            });
         },
 
         _renderCampaignCards: function (aCamps, oLoadBox, oEmptyBox, oCardsBox) {
@@ -416,6 +451,7 @@ sap.ui.define([
         onNavToHome:      function () { this.getOwnerComponent().getRouter().navTo("home");           },
         onNavToDashboard: function () { this.getOwnerComponent().getRouter().navTo("adminDashboard"); },
         onNavToLaunchpad: function () { this.getOwnerComponent().getRouter().navTo("launchpad");      },
+        onNavToAbout: function () {this.getOwnerComponent().getRouter().navTo("about");},
         onViewProfile:    function () { this.getOwnerComponent().getRouter().navTo("profile");        },
         onSettings:       function () { MessageToast.show("Ayarlar yakında aktif olacak!");           },
         onDonatePress:    function () { this.getOwnerComponent().getRouter().navTo("donate");         },

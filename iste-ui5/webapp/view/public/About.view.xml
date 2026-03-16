@@ -1,0 +1,156 @@
+<mvc:View
+    controllerName="edusupport.platform.controller.public.About"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Page showHeader="false" class="aboutPage">
+        <content>
+            <ScrollContainer height="100%" vertical="true">
+
+                <!-- ── HERO ── -->
+                <core:HTML content="
+                    &lt;div class='about-hero'&gt;
+                        &lt;div class='about-hero-overlay'&gt;&lt;/div&gt;
+                        &lt;div class='about-hero-content'&gt;
+                            &lt;a onclick='window._aboutNavBack()' class='about-back-btn'&gt;← Anasayfa&lt;/a&gt;
+                            &lt;div class='about-hero-badge'&gt;🐾 2020'den beri İskenderun, Hatay&lt;/div&gt;
+                            &lt;h1 class='about-hero-title'&gt;Biz Kimiz?&lt;/h1&gt;
+                            &lt;p class='about-hero-sub'&gt;Sokak hayvanları için ses olmak, onlara umut olmak için buradayız.&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                "/>
+
+                <!-- ── HİKAYE ── -->
+                <core:HTML content="
+                    &lt;section class='about-section'&gt;
+                        &lt;div class='about-section-inner'&gt;
+                            &lt;div class='about-story-grid'&gt;
+                                &lt;div class='about-story-text'&gt;
+                                    &lt;div class='about-label'&gt;Hikayemiz&lt;/div&gt;
+                                    &lt;h2 class='about-section-title'&gt;2020'de Küçük Bir Adımla Başladı&lt;/h2&gt;
+                                    &lt;p&gt;Pati ve Gelecek Derneği, 2020 yılında İskenderun sokaklarında aç ve yaralı hayvanlara yardım etmek isteyen bir grup gönüllünün bir araya gelmesiyle doğdu. İlk günler birkaç kişiyle mama dağıtmaktan ibaretti; ama bu küçük adım, büyük bir hareketin fitilini ateşledi.&lt;/p&gt;
+                                    &lt;p&gt;Zamanla veteriner destekleri, kısırlaştırma kampanyaları ve sahiplendirme etkinlikleriyle büyüyen derneğimiz, bugün 5.000'i aşkın gönüllüsü ve yüzlerce düzenli bağışçısıyla Hatay'ın dört bir yanında sokak hayvanlarına dokunmaya devam ediyor.&lt;/p&gt;
+                                    &lt;p&gt;Her beslenen hayvan, her tamamlanan tedavi, her yeni yuva bir umut kıvılcımıdır. Biz o kıvılcımı yakmaya devam ediyoruz — çünkü inanıyoruz ki onlar da bu dünyada sevgiye ve güvene layık.&lt;/p&gt;
+                                    &lt;div class='about-story-stats'&gt;
+                                        &lt;div class='about-mini-stat'&gt;&lt;span class='about-mini-num'&gt;2020&lt;/span&gt;&lt;span class='about-mini-lbl'&gt;Kuruluş Yılı&lt;/span&gt;&lt;/div&gt;
+                                        &lt;div class='about-mini-stat'&gt;&lt;span class='about-mini-num'&gt;1.500+&lt;/span&gt;&lt;span class='about-mini-lbl'&gt;Beslenen Hayvan&lt;/span&gt;&lt;/div&gt;
+                                        &lt;div class='about-mini-stat'&gt;&lt;span class='about-mini-num'&gt;400+&lt;/span&gt;&lt;span class='about-mini-lbl'&gt;Tedavi Edilen&lt;/span&gt;&lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-story-img'&gt;
+                                    &lt;img src='images/99.jpg' alt='Dernek hikayesi' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                "/>
+
+                <!-- ── MİSYON & VİZYON ── -->
+                <core:HTML content="
+                    &lt;section class='about-section about-section-green'&gt;
+                        &lt;div class='about-section-inner'&gt;
+                            &lt;div class='about-label' style='color:#74C69D'&gt;Ne İçin Varız?&lt;/div&gt;
+                            &lt;h2 class='about-section-title' style='color:#fff'&gt;Misyon &amp;amp; Vizyon&lt;/h2&gt;
+                            &lt;div class='about-mv-grid'&gt;
+                                &lt;div class='about-mv-card'&gt;
+                                    &lt;div class='about-mv-icon'&gt;🎯&lt;/div&gt;
+                                    &lt;h3&gt;Misyonumuz&lt;/h3&gt;
+                                    &lt;p&gt;İskenderun ve Hatay genelinde sokak hayvanlarının beslenmesini, sağlık hizmetlerine erişimini ve güvenli yuvalara kavuşmasını sağlamak; bu amaç doğrultusunda toplumsal farkındalığı artırmak ve gönüllü katılımını güçlendirmek.&lt;/p&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-mv-card'&gt;
+                                    &lt;div class='about-mv-icon'&gt;🌟&lt;/div&gt;
+                                    &lt;h3&gt;Vizyonumuz&lt;/h3&gt;
+                                    &lt;p&gt;Hiçbir sokak hayvanının aç, yaralı ya da yalnız kalmadığı; her insanın bir can dostuna sahip çıkabildiği, sevgi ve sorumluluk bilincinin toplumun tüm kesimlerine yayıldığı bir Hatay inşa etmek.&lt;/p&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-mv-card'&gt;
+                                    &lt;div class='about-mv-icon'&gt;💎&lt;/div&gt;
+                                    &lt;h3&gt;Değerlerimiz&lt;/h3&gt;
+                                    &lt;p&gt;Şefkat, şeffaflık ve sorumluluk. Her hayvanı eşit gözle görür, her bağışı hesap verebilirlikle kullanır, her gönüllüye saygıyla yaklaşırız. Hayvanlara karşı şiddet ve ihmalin karşısında, sevginin yanında dururuz.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                "/>
+
+                <!-- ── NE YAPIYORUZ ── -->
+                <core:HTML content="
+                    &lt;section class='about-section'&gt;
+                        &lt;div class='about-section-inner'&gt;
+                            &lt;div class='about-label'&gt;Faaliyetlerimiz&lt;/div&gt;
+                            &lt;h2 class='about-section-title'&gt;Sahada Ne Yapıyoruz?&lt;/h2&gt;
+                            &lt;div class='about-activities-grid'&gt;
+                                &lt;div class='about-activity-card'&gt;
+                                    &lt;div class='about-activity-icon'&gt;🍖&lt;/div&gt;
+                                    &lt;h3&gt;Düzenli Besleme&lt;/h3&gt;
+                                    &lt;p&gt;Her hafta belirlenen noktalarda gönüllülerimiz sokak hayvanlarına mama ve temiz su ulaştırıyor. Hiçbir hayvan aç kalmasın diye çalışıyoruz.&lt;/p&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-activity-card'&gt;
+                                    &lt;div class='about-activity-icon'&gt;💉&lt;/div&gt;
+                                    &lt;h3&gt;Veteriner Desteği&lt;/h3&gt;
+                                    &lt;p&gt;Yaralı, hasta veya kısırlaştırılmamış hayvanları tespit ederek veteriner kliniklerimize taşıyor, tedavi süreçlerini baştan sona takip ediyoruz.&lt;/p&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-activity-card'&gt;
+                                    &lt;div class='about-activity-icon'&gt;🏠&lt;/div&gt;
+                                    &lt;h3&gt;Sahiplendirme&lt;/h3&gt;
+                                    &lt;p&gt;Sosyal medya kampanyaları ve etkinliklerle hayvanlarımızı potansiyel sahipleriyle buluşturuyor, her sahiplendirme sonrası takip sürecini sürdürüyoruz.&lt;/p&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-activity-card'&gt;
+                                    &lt;div class='about-activity-icon'&gt;📢&lt;/div&gt;
+                                    &lt;h3&gt;Farkındalık&lt;/h3&gt;
+                                    &lt;p&gt;Okullarda, etkinliklerde ve sosyal medyada hayvan hakları ve sorumlu sahiplik konularında eğitim ve bilinçlendirme çalışmaları yürütüyoruz.&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                "/>
+
+                <!-- ── FOTOĞRAF GALERİSİ ── -->
+                <core:HTML content="
+                    &lt;section class='about-section about-section-gray'&gt;
+                        &lt;div class='about-section-inner'&gt;
+                            &lt;div class='about-label'&gt;Anlarımız&lt;/div&gt;
+                            &lt;h2 class='about-section-title'&gt;Sahadan Kareler&lt;/h2&gt;
+                            &lt;div class='about-gallery-grid'&gt;
+                                &lt;div class='about-gallery-item about-gallery-wide'&gt;
+                                    &lt;img src='images/33.jpg' alt='Galeri 1' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-gallery-item'&gt;
+                                    &lt;img src='images/44.jpg' alt='Galeri 2' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-gallery-item'&gt;
+                                    &lt;img src='images/55.jpg' alt='Galeri 3' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-gallery-item'&gt;
+                                    &lt;img src='images/66.jpg' alt='Galeri 4' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                                &lt;div class='about-gallery-item'&gt;
+                                    &lt;img src='images/88.jpg' alt='Galeri 5' onerror=&quot;this.src='images/placeholder.jpg'&quot;/&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                "/>
+
+                <!-- ── CTA ── -->
+                <core:HTML content="
+                    &lt;section class='about-section'&gt;
+                        &lt;div class='about-section-inner'&gt;
+                            &lt;div class='about-cta-box'&gt;
+                                &lt;div class='about-cta-paw'&gt;🐾&lt;/div&gt;
+                                &lt;h2&gt;Onlar İçin Bir Adım At&lt;/h2&gt;
+                                &lt;p&gt;Her bağış bir hayvanın karnını doyurur, her gönüllü bir canın hayatını değiştirir.&lt;/p&gt;
+                                &lt;div class='about-cta-btns'&gt;
+                                    &lt;a onclick='window._aboutNavDonate()' class='about-cta-primary'&gt;❤️ Bağış Yap&lt;/a&gt;
+                                    &lt;a onclick='window._aboutNavVolunteer()' class='about-cta-outline'&gt;🤝 Gönüllü Ol&lt;/a&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/section&gt;
+                "/>
+
+            </ScrollContainer>
+        </content>
+    </Page>
+</mvc:View>

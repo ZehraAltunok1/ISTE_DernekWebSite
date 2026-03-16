@@ -30,6 +30,7 @@ db.exec(`
         first_name TEXT,
         last_name TEXT,
         phone TEXT,
+        avatar_url TEXT,
         user_type TEXT CHECK(user_type IN ('donor', 'volunteer')) DEFAULT 'donor',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         last_login DATETIME,
@@ -80,6 +81,28 @@ db.exec(`
 `);
 
 // ════════════════════════════════════════
+// MİGRATION — mevcut tabloya avatar_url ekle
+// ════════════════════════════════════════
+try {
+    const cols = db.prepare("PRAGMA table_info(users)").all().map(c => c.name);
+    if (!cols.includes('avatar_url')) {
+        db.prepare("ALTER TABLE users ADD COLUMN avatar_url TEXT").run();
+        console.log(' Migration: users.avatar_url kolonu eklendi');
+    }
+} catch (e) {
+    console.warn('⚠️  Migration uyarısı (avatar_url):', e.message);
+}
+
+// admins tablosuna da avatar_url ekle (opsiyonel)
+try {
+    const cols = db.prepare("PRAGMA table_info(admins)").all().map(c => c.name);
+    if (!cols.includes('avatar_url')) {
+        db.prepare("ALTER TABLE admins ADD COLUMN avatar_url TEXT").run();
+        console.log(' Migration: admins.avatar_url kolonu eklendi');
+    }
+} catch (e) {}
+
+// ════════════════════════════════════════
 // ADMIN KULLANICI
 // ════════════════════════════════════════
 const checkAdmin = db.prepare('SELECT * FROM admins WHERE username = ?').get('admin');
@@ -89,7 +112,7 @@ if (!checkAdmin) {
         INSERT INTO admins (username, password_hash, email, full_name, role)
         VALUES (?, ?, ?, ?, ?)
     `).run('admin', hashedPassword, 'admin@edusupport.com', 'Admin User', 'admin');
-    console.log('✅ Admin oluşturuldu → admin@edusupport.com / admin123');
+    console.log(' Admin oluşturuldu → admin@edusupport.com / admin123');
 }
 
 // ════════════════════════════════════════
@@ -134,17 +157,17 @@ for (const donor of seedDonors) {
         `).run(`${donor.first_name} ${donor.last_name} bağışçı olarak eklendi`, result.lastInsertRowid);
     }
 }
-console.log('✅ Bağışçı seed data hazır (15 kayıt)');
+console.log(' Bağışçı seed data hazır (15 kayıt)');
 
 // ════════════════════════════════════════
 // GÖNÜLLÜLER — Örnek veri (5 kişi)
 // ════════════════════════════════════════
 const seedVolunteers = [
-    { first_name: 'Berk',  last_name: 'Güneş',    email: 'berk.gunes@gmail.com',    phone: '05401234501', area: 'Eğitim', reason: 'Eğitime destek olmak istiyorum.' },
-    { first_name: 'Cansu', last_name: 'Ateş',     email: 'cansu.ates@gmail.com',    phone: '05401234502', area: 'Etkinlik', reason: 'Etkinlik organizasyonlarında yer almak istiyorum.' },
-    { first_name: 'Deniz', last_name: 'Kara',     email: 'deniz.kara@gmail.com',    phone: '05401234503', area: 'İletişim', reason: 'Sosyal medya ve iletişimde destek verebilirim.' },
-    { first_name: 'Ece',   last_name: 'Bulut',    email: 'ece.bulut@gmail.com',     phone: '05401234504', area: 'Teknik', reason: 'Teknik konularda destek olmak istiyorum.' },
-    { first_name: 'Furkan',last_name: 'Tan',      email: 'furkan.tan@gmail.com',    phone: '05401234505', area: 'Bağış', reason: 'Bağış kampanyalarında aktif rol almak istiyorum.' },
+    { first_name: 'Berk',   last_name: 'Güneş',  email: 'berk.gunes@gmail.com',   phone: '05401234501', area: 'Eğitim',    reason: 'Eğitime destek olmak istiyorum.'                        },
+    { first_name: 'Cansu',  last_name: 'Ateş',   email: 'cansu.ates@gmail.com',   phone: '05401234502', area: 'Etkinlik',  reason: 'Etkinlik organizasyonlarında yer almak istiyorum.'       },
+    { first_name: 'Deniz',  last_name: 'Kara',   email: 'deniz.kara@gmail.com',   phone: '05401234503', area: 'İletişim', reason: 'Sosyal medya ve iletişimde destek verebilirim.'          },
+    { first_name: 'Ece',    last_name: 'Bulut',  email: 'ece.bulut@gmail.com',    phone: '05401234504', area: 'Teknik',    reason: 'Teknik konularda destek olmak istiyorum.'               },
+    { first_name: 'Furkan', last_name: 'Tan',    email: 'furkan.tan@gmail.com',   phone: '05401234505', area: 'Bağış',    reason: 'Bağış kampanyalarında aktif rol almak istiyorum.'        },
 ];
 
 for (const vol of seedVolunteers) {
@@ -166,9 +189,9 @@ for (const vol of seedVolunteers) {
         `).run(`${vol.first_name} ${vol.last_name} gönüllü olarak eklendi`, result.lastInsertRowid);
     }
 }
-console.log('✅ Gönüllü seed data hazır (5 kayıt)');
+console.log('Gönüllü seed data hazır (5 kayıt)');
 
-console.log('✅ SQLite Database initialized');
+console.log(' SQLite Database initialized');
 console.log('');
 console.log('📋 GİRİŞ BİLGİLERİ:');
 console.log('─────────────────────────────────────────────────');

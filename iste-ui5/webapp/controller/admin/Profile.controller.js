@@ -18,11 +18,12 @@ sap.ui.define([
                 email: "", phone: "", role: "", role_display: "",
                 avatar: "", initials: "", created_at: "", updated_at: "",
                 stats: {
-                    donationCount: 0, donationTotal: 0,
-                    eventCount: 0, volunteerStatus: null
+                    loginCount: 0, lastLogin: "-",
+                    approvedCount: 0, addedMembers: 0, activeDays: 0
                 },
                 donations: [],
                 events: [],
+                recentActivities: [],
                 activeSessions: [
                     {
                         device: "Chrome - Windows",
@@ -40,7 +41,7 @@ sap.ui.define([
             oRouter.getRoute("profile").attachPatternMatched(this._onRouteMatched, this);
         },
 
-        // ── Token & Header Helpers ────────────────────────────────────────
+        // ── Token & Header Helpers ──────────────────────────────────────
 
         _getToken: function () {
             var sToken = "";
@@ -50,7 +51,6 @@ sap.ui.define([
             if (!sToken) {
                 MessageBox.error("Oturum süresi dolmuş. Tekrar giriş yapın.");
                 this.getOwnerComponent().getRouter().navTo("login");
-                return "";
             }
             return sToken;
         },
@@ -72,7 +72,7 @@ sap.ui.define([
             return "?";
         },
 
-        // ── Route Matched ─────────────────────────────────────────────────
+        // ── Route Matched ───────────────────────────────────────────────
 
         _onRouteMatched: function () {
             this._loadProfileData();
@@ -81,16 +81,13 @@ sap.ui.define([
             this._loadEvents();
         },
 
-        // ── Veri Yükleme ──────────────────────────────────────────────────
+        // ── Veri Yükleme ────────────────────────────────────────────────
 
         _loadProfileData: function () {
             var that = this;
             fetch(API_BASE + "/profile", { headers: this._authHeaders() })
             .then(function (r) {
-                if (r.status === 401) {
-                    that._handleUnauthorized();
-                    return null;
-                }
+                if (r.status === 401) { that._handleUnauthorized(); return null; }
                 return r.json();
             })
             .then(function (oRes) {
@@ -100,18 +97,29 @@ sap.ui.define([
                 }
                 var d = oRes.data;
                 var m = that.getView().getModel("profileData");
-                m.setProperty("/full_name",    d.full_name    || "");
+
+                // Avatar URL'yi tam yap
+                var sAvatar = "";
+                if (d.avatar_url) {
+                    sAvatar = d.avatar_url.startsWith("http")
+                        ? d.avatar_url
+                        : "http://localhost:3000" + d.avatar_url;
+                }
+
+                m.setProperty("/full_name",    d.full_name    || (d.first_name + " " + d.last_name).trim());
                 m.setProperty("/first_name",   d.first_name   || "");
                 m.setProperty("/last_name",    d.last_name    || "");
                 m.setProperty("/email",        d.email        || "");
                 m.setProperty("/phone",        d.phone        || "-");
                 m.setProperty("/role",         d.user_type    || d.role || "");
                 m.setProperty("/role_display", d.role_display || "Üye");
-                m.setProperty("/avatar",       d.avatar_url   || "");
+                m.setProperty("/avatar",       sAvatar);
                 m.setProperty("/initials",     that._initials(d));
                 m.setProperty("/created_at",   d.created_at   || "");
                 m.setProperty("/updated_at",   d.updated_at   || "");
-                console.log("✅ Profil yüklendi:", d.full_name);
+
+                // appData + localStorage güncelle — sayfa yenilenince kaybolmasın
+                that._persistAvatar(sAvatar, that._initials(d));
             })
             .catch(function (err) {
                 MessageToast.show("Profil yüklenemedi: " + err.message);
@@ -154,7 +162,7 @@ sap.ui.define([
             .catch(function () {});
         },
 
-        // ── 401 Handler ───────────────────────────────────────────────────
+        // ── 401 Handler ─────────────────────────────────────────────────
 
         _handleUnauthorized: function () {
             localStorage.removeItem("authToken");
@@ -172,7 +180,7 @@ sap.ui.define([
             });
         },
 
-        // ── Navigasyon ────────────────────────────────────────────────────
+        // ── Navigasyon ──────────────────────────────────────────────────
 
         onNavBack: function () {
             var sPrev = History.getInstance().getPreviousHash();
@@ -180,46 +188,55 @@ sap.ui.define([
             else this.getOwnerComponent().getRouter().navTo("adminDashboard", {}, true);
         },
 
-        // ── Profil Düzenleme Dialog ───────────────────────────────────────
+        // ── Edit Dialog ─────────────────────────────────────────────────
 
-        onEditProfile: function () {
-            var that = this;
-            if (!this._oEditDialog) {
-                Fragment.load({
-                    id: this.getView().getId(),
-                    name: "edusupport.platform.view.fragments.ProfileEditDialog",
-                    controller: this
-                }).then(function (oDialog) {
-                    that._oEditDialog = oDialog;
-                    that.getView().addDependent(oDialog);
-                    that._fillEditForm();
-                    oDialog.open();
-                });
+        onOpenEditDialog: function () {
+            var oView  = this.getView();
+            var m      = oView.getModel("profileData");
+            var sPhone = m.getProperty("/phone");
+
+            oView.byId("editFirstName").setValue(m.getProperty("/first_name"));
+            oView.byId("editLastName").setValue(m.getProperty("/last_name"));
+            oView.byId("editPhone").setValue(sPhone === "-" ? "" : sPhone);
+
+            oView.byId("currentPassword").setValue("");
+            oView.byId("newPassword").setValue("");
+            oView.byId("confirmPassword").setValue("");
+
+            oView.byId("editTabBar").setSelectedKey("");
+            oView.byId("editProfileDialog").open();
+        },
+
+        onCloseEditDialog: function () {
+            this.getView().byId("editProfileDialog").close();
+        },
+
+        onSaveEditDialog: function () {
+            var oView    = this.getView();
+            var oItems   = oView.byId("editTabBar").getItems();
+            var sCurPass = oView.byId("currentPassword").getValue();
+            var sNewPass = oView.byId("newPassword").getValue();
+            var sConf    = oView.byId("confirmPassword").getValue();
+
+            if (sCurPass || sNewPass || sConf) {
+                this._savePassword(sCurPass, sNewPass, sConf);
             } else {
-                this._fillEditForm();
-                this._oEditDialog.open();
+                this._saveProfile();
             }
         },
 
-        _fillEditForm: function () {
-            var m = this.getView().getModel("profileData");
-            this.byId("editFirstName").setValue(m.getProperty("/first_name"));
-            this.byId("editLastName").setValue(m.getProperty("/last_name"));
-            var sPhone = m.getProperty("/phone");
-            this.byId("editPhone").setValue(sPhone === "-" ? "" : sPhone);
-        },
-
-        onSaveProfileEdit: function () {
-            var sFirst = this.byId("editFirstName").getValue().trim();
-            var sLast  = this.byId("editLastName").getValue().trim();
-            var sPhone = this.byId("editPhone").getValue().trim();
+        _saveProfile: function () {
+            var oView  = this.getView();
+            var sFirst = oView.byId("editFirstName").getValue().trim();
+            var sLast  = oView.byId("editLastName").getValue().trim();
+            var sPhone = oView.byId("editPhone").getValue().trim();
+            var that   = this;
 
             if (!sFirst || !sLast) {
                 MessageToast.show("Ad ve soyad zorunludur.");
                 return;
             }
 
-            var that = this;
             fetch(API_BASE + "/profile", {
                 method: "PUT",
                 headers: this._authHeaders(),
@@ -228,19 +245,23 @@ sap.ui.define([
             .then(function (r) { return r.json(); })
             .then(function (oRes) {
                 if (oRes.success) {
-                    MessageToast.show("Profil güncellendi ✓");
-                    that._oEditDialog.close();
-                    that._loadProfileData();
+                    var m = oView.getModel("profileData");
+                    m.setProperty("/first_name", sFirst);
+                    m.setProperty("/last_name",  sLast);
+                    m.setProperty("/full_name",  sFirst + " " + sLast);
+                    m.setProperty("/phone",      sPhone || "-");
 
-                    // appData'yı da güncelle
                     var oAppData = that.getOwnerComponent().getModel("appData");
-                    var oUser = oAppData.getProperty("/currentUser");
+                    var oUser    = oAppData.getProperty("/currentUser");
                     if (oUser) {
                         oUser.first_name = sFirst;
                         oUser.last_name  = sLast;
                         oAppData.setProperty("/currentUser", oUser);
                         localStorage.setItem("userData", JSON.stringify(oUser));
                     }
+
+                    oView.byId("editProfileDialog").close();
+                    MessageToast.show("Profil güncellendi ✓");
                 } else {
                     MessageBox.error(oRes.message || "Güncelleme başarısız.");
                 }
@@ -248,66 +269,32 @@ sap.ui.define([
             .catch(function (err) { MessageBox.error(err.message); });
         },
 
-        onCancelProfileEdit: function () {
-            if (this._oEditDialog) this._oEditDialog.close();
-        },
+        _savePassword: function (sCurPass, sNewPass, sConf) {
+            var oView = this.getView();
 
-        // ── Şifre Değiştirme Dialog ───────────────────────────────────────
-
-        onChangePassword: function () {
-            var that = this;
-            if (!this._oPassDialog) {
-                Fragment.load({
-                    id: this.getView().getId(),
-                    name: "edusupport.platform.view.fragments.PasswordChangeDialog",
-                    controller: this
-                }).then(function (oDialog) {
-                    that._oPassDialog = oDialog;
-                    that.getView().addDependent(oDialog);
-                    that._clearPasswordForm();
-                    oDialog.open();
-                });
-            } else {
-                this._clearPasswordForm();
-                this._oPassDialog.open();
-            }
-        },
-
-        _clearPasswordForm: function () {
-            this.byId("currentPassword").setValue("");
-            this.byId("newPassword").setValue("");
-            this.byId("confirmPassword").setValue("");
-        },
-
-        onSavePassword: function () {
-            var sCurrent = this.byId("currentPassword").getValue();
-            var sNew     = this.byId("newPassword").getValue();
-            var sConfirm = this.byId("confirmPassword").getValue();
-
-            if (!sCurrent || !sNew || !sConfirm) {
-                MessageToast.show("Tüm alanlar zorunludur.");
+            if (!sCurPass || !sNewPass || !sConf) {
+                MessageToast.show("Tüm şifre alanları zorunludur.");
                 return;
             }
-            if (sNew.length < 6) {
+            if (sNewPass.length < 6) {
                 MessageToast.show("Yeni şifre en az 6 karakter olmalıdır.");
                 return;
             }
-            if (sNew !== sConfirm) {
+            if (sNewPass !== sConf) {
                 MessageToast.show("Yeni şifreler eşleşmiyor.");
                 return;
             }
 
-            var that = this;
             fetch(API_BASE + "/profile/password", {
                 method: "PUT",
                 headers: this._authHeaders(),
-                body: JSON.stringify({ currentPassword: sCurrent, newPassword: sNew })
+                body: JSON.stringify({ currentPassword: sCurPass, newPassword: sNewPass })
             })
             .then(function (r) { return r.json(); })
             .then(function (oRes) {
                 if (oRes.success) {
+                    oView.byId("editProfileDialog").close();
                     MessageToast.show("Şifre başarıyla değiştirildi ✓");
-                    that._oPassDialog.close();
                 } else {
                     MessageBox.error(oRes.message || "Şifre değiştirilemedi.");
                 }
@@ -315,24 +302,25 @@ sap.ui.define([
             .catch(function (err) { MessageBox.error(err.message); });
         },
 
-        onCancelPasswordChange: function () {
-            if (this._oPassDialog) this._oPassDialog.close();
-        },
-
-        // ── Avatar Değiştirme ─────────────────────────────────────────────
+        // ── Avatar Yükleme ──────────────────────────────────────────────
 
         onChangeAvatar: function () {
-            // Gizli file input oluştur ve tıkla
+            var that   = this;
             var oInput = document.createElement("input");
-            oInput.type = "file";
+            oInput.type   = "file";
             oInput.accept = "image/jpeg,image/png,image/webp";
+
             oInput.onchange = function (e) {
                 var oFile = e.target.files[0];
                 if (!oFile) return;
+
                 if (oFile.size > 5 * 1024 * 1024) {
                     MessageToast.show("Dosya boyutu 5MB'dan küçük olmalıdır.");
                     return;
                 }
+
+                MessageToast.show("Fotoğraf yükleniyor...");
+
                 var oFormData = new FormData();
                 oFormData.append("avatar", oFile);
 
@@ -341,22 +329,68 @@ sap.ui.define([
                     headers: { "Authorization": "Bearer " + localStorage.getItem("authToken") },
                     body: oFormData
                 })
-                .then(function (r) { return r.json(); })
+                .then(function (r) {
+                    if (!r.ok) {
+                        return r.json().then(function (e) {
+                            throw new Error(e.message || "Sunucu hatası: " + r.status);
+                        }).catch(function () {
+                            throw new Error("Sunucu hatası: " + r.status);
+                        });
+                    }
+                    return r.json();
+                })
                 .then(function (oRes) {
                     if (oRes.success) {
+                        var sUrl = oRes.avatarUrl.startsWith("http")
+                            ? oRes.avatarUrl
+                            : "http://localhost:3000" + oRes.avatarUrl;
+
+                        // 1. Profil sayfasındaki avatar
+                        that.getView().getModel("profileData").setProperty("/avatar", sUrl);
+
+                        // 2. appData + localStorage — kalıcı sakla
+                        var sInitials = that.getView().getModel("profileData").getProperty("/initials");
+                        that._persistAvatar(sUrl, sInitials);
+
                         MessageToast.show("Fotoğraf güncellendi ✓");
-                        var sUrl = "http://localhost:3000" + oRes.avatarUrl;
-                        this.getView().getModel("profileData").setProperty("/avatar", sUrl);
                     } else {
-                        MessageBox.error(oRes.message);
+                        MessageBox.error(oRes.message || "Fotoğraf yüklenemedi.");
                     }
-                }.bind(this))
-                .catch(function () { MessageToast.show("Fotoğraf yüklenemedi."); });
-            }.bind(this);
+                })
+                .catch(function (err) {
+                    MessageBox.error("Fotoğraf yüklenemedi:\n" + err.message);
+                });
+            };
+
             oInput.click();
         },
 
-        // ── Oturum Sonlandır ──────────────────────────────────────────────
+        // ── Avatar Kalıcılığı — appData + localStorage ──────────────────
+
+        _persistAvatar: function (sAvatarUrl, sInitials) {
+            var oAppData = this.getOwnerComponent().getModel("appData");
+            if (oAppData) {
+                var oUser = oAppData.getProperty("/currentUser") || {};
+                oUser.avatar_url = sAvatarUrl;
+                if (sInitials) oUser.initials = sInitials;
+                oAppData.setProperty("/currentUser",            oUser);
+                oAppData.setProperty("/currentUser/avatar_url", sAvatarUrl);
+                if (sInitials) {
+                    oAppData.setProperty("/currentUser/initials", sInitials);
+                }
+            }
+
+            try {
+                var stored = JSON.parse(localStorage.getItem("userData") || "{}");
+                stored.avatar_url = sAvatarUrl;
+                if (sInitials) stored.initials = sInitials;
+                localStorage.setItem("userData", JSON.stringify(stored));
+            } catch (e) {
+                console.warn("localStorage yazılamadı:", e);
+            }
+        },
+
+        // ── Oturum Sonlandır ────────────────────────────────────────────
 
         onTerminateSession: function (oEvent) {
             var oCtx     = oEvent.getSource().getParent().getParent().getBindingContext("profileData");
@@ -373,37 +407,37 @@ sap.ui.define([
             );
         },
 
-        // ── Logout ────────────────────────────────────────────────────────
+        // ── Logout ──────────────────────────────────────────────────────
 
         onLogout: function () {
+            var that = this;
             MessageBox.confirm("Çıkış yapmak istediğinize emin misiniz?", {
                 title: "Çıkış Yap",
                 onClose: function (sAction) {
                     if (sAction === MessageBox.Action.OK) {
                         localStorage.removeItem("authToken");
                         localStorage.removeItem("userData");
-                        var oAppData = this.getOwnerComponent().getModel("appData");
+                        var oAppData = that.getOwnerComponent().getModel("appData");
                         oAppData.setProperty("/isAuthenticated", false);
                         oAppData.setProperty("/authToken", null);
                         oAppData.setProperty("/currentUser", null);
                         MessageToast.show("Çıkış yapıldı.");
-                        this.getOwnerComponent().getRouter().navTo("home");
+                        that.getOwnerComponent().getRouter().navTo("home");
                     }
-                }.bind(this)
+                }
             });
         },
 
-        // ── Placeholder'lar ───────────────────────────────────────────────
+        // ── Placeholder'lar ─────────────────────────────────────────────
 
         onChangeEmail: function () {
             MessageBox.information("Email değiştirme özelliği yakında aktif olacak.");
         },
-        onSetup2FA: function () {
-            MessageBox.information("İki faktörlü doğrulama kurulumu yakında aktif olacak.");
-        },
+
         onNotificationSettings: function () {
             MessageToast.show("Bildirim ayarları sayfası açılıyor...");
         },
+
         onViewSessions: function () {
             MessageToast.show("Tüm oturum geçmişi görüntüleniyor...");
         }

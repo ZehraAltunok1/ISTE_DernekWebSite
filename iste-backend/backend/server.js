@@ -6,12 +6,12 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const path = require('path'); // ← ekle
+const path = require('path'); 
 const volunteersRouter = require("./routes/volunteers");
 const announcementsRouter = require('./routes/announcements');
 require('./config/database');
 const db = require('./config/database');
-app.locals.db = db; // ← bunu ekleyin
+app.locals.db = db; 
 app.use(cors({
     origin: 'http://localhost:8080',
     credentials: true,
@@ -34,6 +34,7 @@ app.use("/api/volunteers", volunteersRouter);
 app.use('/api/announcements', announcementsRouter);
 app.use('/api/donate', require('./routes/donate'));
 app.use('/api/profile', require('./routes/profile'));
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({
@@ -54,19 +55,6 @@ app.use((err, req, res, next) => {
 
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server: http://localhost:${PORT}`);
-    console.log(`📋 Endpoints:`);
-    console.log(`   GET  /api/health`);
-    console.log(`   POST /api/auth/login`);
-    console.log(`   GET  /api/donors`);
-    console.log(`   POST /api/donors`);
-    console.log(`   PUT  /api/donors/:id`);
-    console.log(`   DELETE /api/donors/:id`);
-    console.log(`   GET  /api/students`);
-    console.log(`   POST /api/students`);
-    console.log(`   PUT  /api/students/:id`);
-    console.log(`   DELETE /api/students/:id`);
-    console.log(`   GET  /api/activities`);
-    console.log(`   GET  /api/stats`);
+    console.log(` Server: http://localhost:${PORT}`);
 });
 

@@ -20,7 +20,7 @@ sap.ui.define([
 
         _onRouteMatched: function (oEvent) {
             var oArgs    = oEvent.getParameter("arguments");
-            this._sType  = oArgs.type;   // "photo_group" | "video"
+            this._sType  = oArgs.type;
             this._sId    = oArgs.id;
             this._loadDetail(this._sType, this._sId);
         },
@@ -34,7 +34,6 @@ sap.ui.define([
             // ── FOTOĞRAF GRUBU ──
             if (sType === "photo_group") {
                 try {
-                    // id = encodeURIComponent(JSON.stringify(items[]))
                     var aItems = JSON.parse(decodeURIComponent(sId.replace(/%27/g, "'")));
                     if (aItems && aItems.length) {
                         that._renderPhotoGrid(aItems);
@@ -69,14 +68,13 @@ sap.ui.define([
                     { day: "numeric", month: "long", year: "numeric" })
                 : "";
 
-            // Model güncelle (başlık/tarih)
-            this.getView().getModel("detailModel").setData({
-                title:       sGroupTitle,
-                description: aItems.length + " fotoğraf",
-                date:        sDate,
-                type:        "photo_group",
-                url:         ""
-            });
+            // Model güncelle — setProperty ile binding anında tetiklenir
+            var oModel = this.getView().getModel("detailModel");
+            oModel.setProperty("/title",       sGroupTitle);
+            oModel.setProperty("/description", aItems[0].description || "");
+            oModel.setProperty("/date",        sDate);
+            oModel.setProperty("/type",        "photo_group");
+            oModel.setProperty("/url",         "");
 
             // Grid HTML üret
             var sGrid = "<div class='mediaDetailPhotoGrid'>" +
@@ -107,13 +105,13 @@ sap.ui.define([
                 ? new Date(oItem.created_at).toLocaleDateString("tr-TR",
                     { day: "numeric", month: "long", year: "numeric" })
                 : "";
-            oModel.setData({
-                title:       oItem.title       || "",
-                description: oItem.description || "",
-                date:        sDate,
-                type:        oItem.type,
-                url:         oItem.url
-            });
+
+            // Model güncelle — setProperty ile binding anında tetiklenir
+            oModel.setProperty("/title",       oItem.title       || "");
+            oModel.setProperty("/description", oItem.description || "");
+            oModel.setProperty("/date",        sDate);
+            oModel.setProperty("/type",        oItem.type        || "");
+            oModel.setProperty("/url",         oItem.url         || "");
 
             var oPhotoArea = this.getView().byId("photoDetailArea");
             var oVideoArea = this.getView().byId("videoDetailArea");

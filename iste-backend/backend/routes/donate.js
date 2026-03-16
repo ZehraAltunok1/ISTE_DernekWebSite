@@ -3,14 +3,14 @@ const router  = express.Router();
 const db      = require('../config/database');
 const Iyzipay = require('iyzipay'); // npm install iyzipay
 
-// ─── iyzico Sandbox Konfigürasyonu ───────────────────────────
+// ─── iyzico Sandbox Konfigürasyonu
 const iyzipay = new Iyzipay({
-    apiKey:    'sandbox-l3vOTPDF6LV064cuk0sh0ohKGThR5wDA',      // sandbox.iyzipay.com'dan alın
-    secretKey: 'sandbox-ut8SXIVXkNb6SDwt5jAqUszeCpQztbQM',   // sandbox.iyzipay.com'dan alın
+    apiKey:    'sandbox-l3vOTPDF6LV064cuk0sh0ohKGThR5wDA',      // sandbox.iyzipay.com
+    secretKey: 'sandbox-ut8SXIVXkNb6SDwt5jAqUszeCpQztbQM',   // sandbox.iyzipay.com
     uri:       'https://sandbox-api.iyzipay.com'
 });
 
-// ─── Tablo ───────────────────────────────────────────────────
+// ─── Tablo 
 db.exec(`
     CREATE TABLE IF NOT EXISTS donations (
         id              INTEGER PRIMARY KEY AUTOINCREMENT,

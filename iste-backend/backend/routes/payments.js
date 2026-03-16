@@ -40,7 +40,7 @@ if (checkPayments.count === 0) {
     for (const p of seedPayments) {
         insert.run(p.user_id, p.payment_type, p.amount, p.payment_date || null, p.due_date || null, p.status, p.payment_method || null);
     }
-    console.log('✅ Ödeme seed data hazır (6 kayıt)');
+    console.log('Ödeme seed data hazır (6 kayıt)');
 }
 
 // GET - Tüm ödemeleri getir
@@ -70,7 +70,7 @@ router.get('/', (req, res) => {
         const payments = db.prepare(query).all(...params);
         res.json({ success: true, payments: payments || [] });
     } catch (error) {
-        console.error('❌ Payments fetch error:', error);
+        console.error('Payments fetch error:', error);
         res.status(500).json({ success: false, message: 'Ödemeler yüklenemedi', error: error.message });
     }
 });
@@ -111,7 +111,7 @@ router.get('/stats', (req, res) => {
             }
         });
     } catch (error) {
-        console.error('❌ Payment stats error:', error);
+        console.error('Payment stats error:', error);
         res.status(500).json({ success: false, message: 'İstatistikler yüklenemedi' });
     }
 });
@@ -142,7 +142,7 @@ router.post('/', (req, res) => {
         const newPayment = db.prepare('SELECT * FROM payments WHERE id = ?').get(result.lastInsertRowid);
         res.json({ success: true, message: 'Ödeme kaydedildi', payment: newPayment });
     } catch (error) {
-        console.error('❌ Payment insert error:', error);
+        console.error('Payment insert error:', error);
         res.status(500).json({ success: false, message: 'Ödeme eklenemedi', error: error.message });
     }
 });

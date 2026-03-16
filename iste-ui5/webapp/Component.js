@@ -23,29 +23,52 @@ sap.ui.define([
             var oAppData = new JSONModel({
                 isAuthenticated: false,
                 currentUser: null,
-                authToken: null
+                authToken: null,
+                scrollToSection: null
             });
             this.setModel(oAppData, "appData");
 
-            // ✅ YENİ: localStorage'dan token oku (sayfa yenilenince kaybolmasın)
-            var sToken = localStorage.getItem("authToken");
+            // localStorage'dan token + kullanıcı bilgisi oku
+            var sToken    = localStorage.getItem("authToken");
             var sUserData = localStorage.getItem("userData");
 
             if (sToken) {
-                oAppData.setProperty("/authToken", sToken);
+                oAppData.setProperty("/authToken",       sToken);
                 oAppData.setProperty("/isAuthenticated", true);
 
                 if (sUserData) {
                     try {
-                        oAppData.setProperty("/currentUser", JSON.parse(sUserData));
-                    } catch(e) {
-                        console.warn("userData parse hatası", e);
+                        var oUser = JSON.parse(sUserData);
+
+                        // avatar_url: göreli path ise tam URL'ye çevir
+                        if (oUser.avatar_url && !oUser.avatar_url.startsWith("http")) {
+                            oUser.avatar_url = "http://localhost:3000" + oUser.avatar_url;
+                        }
+
+                        // initials yoksa hesapla
+                        if (!oUser.initials) {
+                            var sFirst = (oUser.first_name || "").charAt(0).toUpperCase();
+                            var sLast  = (oUser.last_name  || "").charAt(0).toUpperCase();
+                            if (sFirst || sLast) {
+                                oUser.initials = sFirst + sLast;
+                            }
+                        }
+
+                        oAppData.setProperty("/currentUser", oUser);
+
+                        // Düzeltilmiş veriyi localStorage'a geri yaz
+                        localStorage.setItem("userData", JSON.stringify(oUser));
+
+                    } catch (e) {
+                        console.warn("userData parse hatası:", e);
+                        localStorage.removeItem("userData");
                     }
                 }
+
                 console.log("✅ Token localStorage'dan yüklendi");
             }
 
-            // ✅ YENİ: Router Guard — korumalı sayfalara login olmadan girişi engelle
+            // Router Guard — korumalı sayfalara login olmadan girişi engelle
             var aProtectedRoutes = [
                 "profile",
                 "adminDashboard",
@@ -53,12 +76,11 @@ sap.ui.define([
                 "adminDonations",
                 "adminStudents",
                 "adminActivities"
-                // manifest.json'daki route isimlerini buraya ekle
             ];
 
             this.getRouter().attachBeforeRouteMatched(function (oEvent) {
                 var sRoute = oEvent.getParameter("name");
-                var bAuth = oAppData.getProperty("/isAuthenticated");
+                var bAuth  = oAppData.getProperty("/isAuthenticated");
 
                 if (!bAuth && aProtectedRoutes.includes(sRoute)) {
                     sap.m.MessageToast.show("Bu sayfaya erişmek için giriş yapmanız gerekiyor");
