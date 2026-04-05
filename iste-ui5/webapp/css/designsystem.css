@@ -1,38 +1,23 @@
-/* ══════════════════════════════════════════════════════════
-   DESIGN SYSTEM  —  Pati ve Gelecek Derneği
-   Kaynak: Bağış sayfası renk sistemi
-   Kapsam: Anasayfa + Bağış Sayfası
-   ══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 /* ══════════════════════════════════════════════════════════
-   1. DESIGN TOKENS  — tek kaynak gerçek
+   1. DESIGN TOKENS
    ══════════════════════════════════════════════════════════ */
 :root {
-    /* ── Renkler ── */
-    --clr-primary:        #2D6A4F;   /* Koyu yeşil — ana marka */
-    --clr-primary-dark:   #1B3A2D;   /* En koyu yeşil */
-    --clr-primary-mid:    #40916C;   /* Orta yeşil */
-    --clr-primary-light:  #74C69D;   /* Açık yeşil */
-    --clr-accent:         #F4A261;   /* Turuncu — CTA */
-    --clr-accent-hover:   #E07A3A;   /* Turuncu hover */
-
-    /* ── Yüzey & Arkaplan ── */
-    --clr-bg:             #F8F5F0;   /* Sayfa arkaplanı */
+    --clr-primary:        #2D6A4F;
+    --clr-primary-dark:   #1B3A2D;
+    --clr-primary-mid:    #40916C;
+    --clr-primary-light:  #74C69D;
+    --clr-accent:         #F4A261;
+    --clr-accent-hover:   #E07A3A;
+    --clr-bg:             #F8F5F0;
     --clr-surface:        #FFFFFF;
-    --clr-green-light:    #F0FAF5;   /* Hafif yeşil */
-    --clr-green-soft:     #E8F5EE;   /* Biraz dolu yeşil */
-
-    /* ── Metin ── */
+    --clr-green-light:    #F0FAF5;
+    --clr-green-soft:     #E8F5EE;
     --clr-text:           #2C3E35;
     --clr-muted:          #6B7C75;
-
-    /* ── Kenarlık ── */
     --clr-border:         #D1E9DC;
     --clr-border-soft:    #E8F0EB;
-
-    /* ── Durum ── */
     --clr-success:        #40916C;
     --clr-success-bg:     #F0FAF5;
     --clr-warning:        #8A6200;
@@ -41,41 +26,32 @@
     --clr-error:          #B23A2F;
     --clr-error-bg:       #FDF0F0;
     --clr-error-border:   #F5C5C2;
-
-    /* ── Şekil ── */
     --radius-sm:          8px;
     --radius:             14px;
     --radius-lg:          20px;
     --radius-pill:        50px;
-
-    /* ── Gölge ── */
     --shadow-sm:          0 2px 12px rgba(45,106,79,0.08);
     --shadow:             0 4px 24px rgba(45,106,79,0.10);
     --shadow-lg:          0 8px 32px rgba(45,106,79,0.15);
     --shadow-xl:          0 12px 40px rgba(45,106,79,0.20);
-
-    /* ── Tipografi ── */
     --font-display:       'Playfair Display', serif;
     --font-body:          'DM Sans', sans-serif;
-
-    /* ── Geçiş ── */
     --transition:         0.2s ease;
     --transition-bounce:  0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 
 /* ══════════════════════════════════════════════════════════
    2. SAP UI5 GLOBAL OVERRIDES
    ══════════════════════════════════════════════════════════ */
 
-/* Tüm SAP metin elementlerine body fontu */
+/* Genel metin fontu — navbar hariç */
 .sapMText, .sapMLabel, .sapMLnk,
 .sapMListTblCell, .sapMFeedListItemText {
     font-family: var(--font-body) !important;
     color: var(--clr-text) !important;
 }
 
-/* Tüm SAP başlıklarına display fontu */
+/* Genel başlık fontu — navbar hariç (navbar.css override eder) */
 .sapMTitle, .sapMPanelHdr .sapMTitle {
     font-family: var(--font-display) !important;
     color: var(--clr-primary-dark) !important;
@@ -93,26 +69,23 @@
     margin-bottom: 10px !important;
 }
 
-/* Tooltip & invisible text gizle */
+/* Tooltip gizle */
 .sapMTooltip, .sapUiInvisibleText { display: none !important; }
 
-/* Buton ripple efektini temizle */
+/* Buton ripple temizle */
 .sapMBtnHoverable.sapMBtnBase::after,
 .sapMBtnHoverable.sapMBtnBase::before { display: none !important; }
-
 
 /* ══════════════════════════════════════════════════════════
    3. SAYFA DÜZENİ
    ══════════════════════════════════════════════════════════ */
 
 .sapUxAPObjectPageContainer {
-    padding-left: 2.5rem !important;
-    padding-right: 2.5rem !important;
-    padding-bottom: 0 !important;
+    padding: 0 !important;
 }
 
 .sapUxAPObjectPageSection > .sapUxAPObjectPageSectionContainer {
-    padding: 24px 2.5rem !important;
+    padding: 2rem 3rem !important;
 }
 
 .sapUxAPObjectPageHeaderTitle .sapUxAPObjectPageHeaderTitleContent {
@@ -125,131 +98,21 @@
     padding-right: 2.5rem !important;
 }
 
-/* ObjectPage alt boşluk sıfırla */
 .sapUxAPObjectPage,
 .sapUxAPObjectPageContent,
 .sapUxAPObjectPageContentStickied,
 .sapUxAPObjectPageWrapper { padding-bottom: 0 !important; }
 
-/* Spacer gizle */
 [id*="mainPage-spacer"] { display: none !important; height: 0 !important; }
 
 @media (max-width: 768px) {
-    .sapUxAPObjectPageContainer,
     .sapUxAPObjectPageSection > .sapUxAPObjectPageSectionContainer {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        padding: 1rem !important;
     }
 }
 
-
 /* ══════════════════════════════════════════════════════════
-   4. FLOATING HEADER (navbar)
-   ══════════════════════════════════════════════════════════ */
-
-.headerLogo { width: 45px; height: 45px; object-fit: contain; }
-
-.sapFDynamicPageTitle {
-    background:          rgba(255,255,255,0.92) !important;
-    backdrop-filter:     blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border-radius:       var(--radius) !important;
-    margin:              8px 16px !important;
-    padding:             8px 16px !important;
-    box-shadow:          var(--shadow) !important;
-    border:              1px solid var(--clr-border) !important;
-}
-.sapFDynamicPageTitle:active,
-.sapFDynamicPageTitle:focus {
-    background: rgba(255,255,255,0.92) !important;
-    outline: none !important;
-}
-
-
-/* ══════════════════════════════════════════════════════════
-   5. NAVBAR BUTONLARI
-   ══════════════════════════════════════════════════════════ */
-
-/* Ortak pill şekli */
-.btnDonate .sapMBtnInner,
-.btnVolunteer .sapMBtnInner,
-.btnLogin .sapMBtnInner,
-.btnNav .sapMBtnInner,
-.btnUser .sapMMenuBtn .sapMBtnInner {
-    font-family: var(--font-body) !important;
-    transition: background var(--transition), color var(--transition),
-                box-shadow var(--transition), transform 0.15s ease !important;
-}
-
-/* Bağış Yap — aksent turuncu */
-.btnDonate .sapMBtnInner {
-    background:    var(--clr-accent) !important;
-    border-color:  var(--clr-accent) !important;
-    color:         #fff !important;
-    border-radius: var(--radius-pill) !important;
-    font-weight:   700 !important;
-    padding:       0 20px !important;
-    box-shadow:    0 3px 12px rgba(244,162,97,0.40) !important;
-}
-.btnDonate .sapMBtnInner:hover {
-    background:   var(--clr-accent-hover) !important;
-    border-color: var(--clr-accent-hover) !important;
-    box-shadow:   0 5px 18px rgba(244,162,97,0.50) !important;
-    transform:    translateY(-1px) !important;
-}
-
-/* Gönüllü Ol — outline yeşil */
-.btnVolunteer .sapMBtnInner {
-    background:    transparent !important;
-    border:        2px solid var(--clr-primary) !important;
-    color:         var(--clr-primary) !important;
-    border-radius: var(--radius-pill) !important;
-    font-weight:   600 !important;
-    padding:       0 18px !important;
-}
-.btnVolunteer .sapMBtnInner:hover {
-    background: var(--clr-primary) !important;
-    color:      #fff !important;
-    transform:  translateY(-1px) !important;
-}
-
-/* Giriş Yap — ghost */
-.btnLogin .sapMBtnInner {
-    background:    transparent !important;
-    border:        none !important;
-    color:         var(--clr-muted) !important;
-    font-weight:   500 !important;
-    border-radius: var(--radius-sm) !important;
-}
-.btnLogin .sapMBtnInner:hover {
-    color:      var(--clr-text) !important;
-    background: var(--clr-green-light) !important;
-}
-
-/* Nav butonları */
-.btnNav .sapMBtnInner {
-    background:    transparent !important;
-    border:        1px solid var(--clr-border) !important;
-    color:         var(--clr-text) !important;
-    border-radius: var(--radius-sm) !important;
-    font-weight:   500 !important;
-}
-.btnNav .sapMBtnInner:hover { background: var(--clr-green-light) !important; }
-
-/* Kullanıcı menü butonu */
-.btnUser .sapMMenuBtn .sapMBtnInner {
-    background:    transparent !important;
-    border:        1px solid var(--clr-border) !important;
-    border-radius: var(--radius-pill) !important;
-    color:         var(--clr-text) !important;
-    font-weight:   600 !important;
-    padding:       0 12px !important;
-}
-.btnUser .sapMMenuBtn .sapMBtnInner:hover { background: var(--clr-green-light) !important; }
-
-
-/* ══════════════════════════════════════════════════════════
-   6. HERO ALANI
+   4. HERO ALANI
    ══════════════════════════════════════════════════════════ */
 
 .heroImage {
@@ -270,122 +133,236 @@
 }
 
 .heroTextOverlay .sapMTitle {
-    color:       #fff !important;
-    font-size:   2.25rem !important;
-    font-weight: 900 !important;
-    line-height: 1.2 !important;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.65) !important;
-    font-family: var(--font-display) !important;
+    color:         #fff !important;
+    font-size:     clamp(2rem, 4vw, 3.2rem) !important;
+    font-weight:   900 !important;
+    line-height:   1.15 !important;
+    text-shadow:   0 2px 20px rgba(0,0,0,0.35) !important;
+    font-family:   var(--font-display) !important;
     margin-bottom: 0.75rem !important;
 }
 
 .heroTextOverlay .sapMText {
-    color:       rgba(255,255,255,0.95) !important;
-    font-size:   1rem !important;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.55) !important;
-    line-height: 1.6 !important;
-    font-family: var(--font-body) !important;
-    margin-bottom: 1.25rem !important;
-}
-
-/* Hero butonları */
-.btnHeroPrimary .sapMBtnInner,
-.btnHeroOutline .sapMBtnInner,
-.btnHeroGhost   .sapMBtnInner {
-    border-radius: var(--radius-pill) !important;
+    color:         rgba(255,255,255,0.95) !important;
+    font-size:     1.05rem !important;
+    text-shadow:   0 1px 8px rgba(0,0,0,0.55) !important;
+    line-height:   1.6 !important;
     font-family:   var(--font-body) !important;
-    font-weight:   700 !important;
-    padding:       0 28px !important;
-    height:        46px !important;
-    transition:    all var(--transition) !important;
+    margin-bottom: 1.25rem !important;
+    max-width:     500px !important;
 }
 
-/* Şimdi Bağış Yap — aksent turuncu */
+/* ══════════════════════════════════════════════════════════
+   5. HERO BUTONLARI
+   ══════════════════════════════════════════════════════════ */
+
 .btnHeroPrimary .sapMBtnInner {
-    background:  var(--clr-accent) !important;
-    border-color: var(--clr-accent) !important;
-    color:        #fff !important;
-    box-shadow:   0 4px 18px rgba(244,162,97,0.45) !important;
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 32px !important;
+    height:        48px !important;
+    box-shadow:    0 6px 24px rgba(244,162,97,0.50) !important;
+    transition:    all 0.22s ease !important;
 }
 .btnHeroPrimary .sapMBtnInner:hover {
-    background:   var(--clr-accent-hover) !important;
-    border-color: var(--clr-accent-hover) !important;
-    transform:    translateY(-2px) !important;
-    box-shadow:   0 6px 22px rgba(244,162,97,0.55) !important;
+    background:    linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform:     translateY(-3px) !important;
+    box-shadow:    0 10px 32px rgba(244,162,97,0.60) !important;
 }
 
-/* Gönüllü Ol — birincil yeşil */
 .btnHeroOutline .sapMBtnInner {
-    background:   var(--clr-primary) !important;
-    border-color: var(--clr-primary) !important;
-    color:        #fff !important;
-    box-shadow:   0 4px 18px rgba(45,106,79,0.35) !important;
+    background:      rgba(255,255,255,0.12) !important;
+    border:          2px solid rgba(255,255,255,0.70) !important;
+    color:           #fff !important;
+    border-radius:   50px !important;
+    font-weight:     700 !important;
+    font-family:     'DM Sans', sans-serif !important;
+    padding:         0 32px !important;
+    height:          48px !important;
+    backdrop-filter: blur(6px) !important;
+    transition:      all 0.22s ease !important;
 }
 .btnHeroOutline .sapMBtnInner:hover {
-    background:   var(--clr-primary-dark) !important;
-    border-color: var(--clr-primary-dark) !important;
-    transform:    translateY(-2px) !important;
+    background:   rgba(255,255,255,0.25) !important;
+    border-color: #fff !important;
+    transform:    translateY(-3px) !important;
 }
 
-/* Üçüncül aksiyon — orta yeşil */
-.btnHeroGhost .sapMBtnInner {
-    background:   var(--clr-primary-mid) !important;
-    border-color: var(--clr-primary-mid) !important;
-    color:        #fff !important;
-    font-weight:  500 !important;
-    box-shadow:   0 4px 18px rgba(64,145,108,0.30) !important;
+/* ══════════════════════════════════════════════════════════
+   BUTTON DESIGN SYSTEM
+   ══════════════════════════════════════════════════════════ */
+
+/* PRIMARY BUTTON */
+.btnPrimary .sapMBtnInner {
+    background: linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+    box-shadow: 0 4px 16px rgba(244,162,97,0.45) !important;
+    transition: all .22s ease !important;
 }
-.btnHeroGhost .sapMBtnInner:hover {
-    background:   var(--clr-primary) !important;
-    border-color: var(--clr-primary) !important;
-    transform:    translateY(-2px) !important;
+
+.btnPrimary .sapMBtnInner:hover {
+    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(244,162,97,0.55) !important;
 }
+
+
+/* OUTLINE BUTTON */
+.btnOutline .sapMBtnInner {
+    background: transparent !important;
+    border: 2px solid var(--clr-primary) !important;
+    color: var(--clr-primary) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+}
+
+.btnOutline .sapMBtnInner:hover {
+    background: var(--clr-green-light) !important;
+}
+
+
+/* SECONDARY BUTTON */
+.btnSecondary .sapMBtnInner {
+    background: var(--clr-primary) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    padding: 0 26px !important;
+    height: 44px !important;
+}
+
+.btnSecondary .sapMBtnInner:hover {
+    background: var(--clr-primary-dark) !important;
+}
+
+
+/* FULL WIDTH */
+.btnFullWidth .sapMBtnInner {
+    width: 100% !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   7. PANEL KARTLARI
+   ══════════════════════════════════════════════════════════ */
+
+:not(.adminDashboardPage) .sapMPanel {
+    border-radius: var(--radius) !important;
+    border:        1px solid var(--clr-border) !important;
+    box-shadow:    var(--shadow) !important;
+    overflow:      hidden !important;
+}
+
+:not(.adminDashboardPage) .sapMPanelHdr {
+    background:    linear-gradient(135deg, var(--clr-green-light), var(--clr-green-soft)) !important;
+    font-weight:   600 !important;
+    color:         var(--clr-primary-dark) !important;
+    border-bottom: 2px solid var(--clr-border) !important;
+    font-family:   var(--font-display) !important;
+    font-size:     0.95rem !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   8. KAMPANYA KARTLARI
+   ══════════════════════════════════════════════════════════ */
+
+.campaignCard { padding: 1rem; gap: 0.75rem; display: flex; flex-direction: column; }
+.campaignIcon { font-size: 2.5rem !important; margin-bottom: 0.5rem; }
+.campaignIconPrimary { color: var(--clr-primary) !important; }
+.campaignIconMid     { color: var(--clr-primary-mid) !important; }
+.campaignIconAccent  { color: var(--clr-accent) !important; }
+.campaignText        { color: var(--clr-muted); margin-bottom: 0.75rem; }
+
+.campaignCard .sapMBtn .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    padding:       0 24px !important;
+    height:        42px !important;
+    box-shadow:    0 4px 16px rgba(244,162,97,0.45) !important;
+    width:         100% !important;
+}
+.campaignCard .sapMBtn .sapMBtnInner:hover {
+    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform:  translateY(-2px) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   9. HAKKIMIZDA
+   ══════════════════════════════════════════════════════════ */
+
+.aboutText { line-height: 1.75 !important; color: var(--clr-text) !important; margin-bottom: 0.75rem !important; }
 
 
 /* ══════════════════════════════════════════════════════════
-   7. İSTATİSTİK KARTI
+   10. NASIL ÇALIŞIR
    ══════════════════════════════════════════════════════════ */
 
-#statsSection .sapUxAPObjectPageSectionContainer {
-    padding-top: 0.5rem !important;
-}
-
-.statsCard {
-    background:    var(--clr-green-light);
-    border-radius: var(--radius-lg);
-    padding:       2rem 1.5rem;
-    border:        1px solid var(--clr-border);
-    transition:    box-shadow var(--transition), transform var(--transition);
-    width:         100%;
-    box-sizing:    border-box;
-}
-.statsCard:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-
-.statsNumber .sapMTitle {
-    font-size:   2.5rem !important;
-    font-weight: 800 !important;
-    color:       var(--clr-accent) !important;
-    font-family: var(--font-display) !important;
-    line-height: 1.1 !important;
-}
-
-.statsCard .sapMText {
-    font-size:   0.95rem !important;
-    color:       var(--clr-text) !important;
-    font-weight: 500 !important;
-    margin-top:  0.25rem !important;
-}
-
+.hiwTabBar { display:flex; gap:10px; margin-bottom:24px; }
+.hiwTabBtn { padding:8px 22px; border-radius:20px; border:1px solid #ddd; background:transparent; color:#666; font-size:14px; cursor:pointer; transition:all .2s; }
+.hiwTabBtn.hiwTabActive { background:#e8f4fd; color:#1565c0; border-color:transparent; font-weight:600; }
+.hiwPanel { display:none; }
+.hiwPanel.hiwPanelActive { display:block; }
+.hiwSteps { display:flex; align-items:flex-start; gap:0; }
+.hiwStep { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.hiwStep:not(:last-child)::after { content:''; position:absolute; top:22px; left:calc(50% + 24px); right:calc(-50% + 24px); height:2px; background:#e0e0e0; }
+.hiwCircle { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; position:relative; z-index:1; margin-bottom:10px; border:1.5px solid #ddd; background:#f5f5f5; }
+.hiwCircle.hiwDone { background:#e8f5e9; border-color:#a5d6a7; }
+.hiwCircle.hiwActive { background:#e3f2fd; border-color:#90caf9; }
+.hiwStepTitle { font-size:13px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:4px; }
+.hiwStepDesc { font-size:12px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
 
 /* ══════════════════════════════════════════════════════════
-   8. FALİYETLER (medya kartları)
+   11. SSS
    ══════════════════════════════════════════════════════════ */
 
-#activitiesSection {
-    background:    linear-gradient(135deg, var(--clr-green-light) 0%, var(--clr-green-soft) 100%) !important;
-    border-radius: var(--radius-lg) !important;
-    padding:       8px !important;
+.faqWrap { max-width:720px; }
+.faqCategory { font-size:11px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:.06em; margin:20px 0 8px 4px; }
+.faqItem { border:1px solid #e8e8e8; border-radius:10px; margin-bottom:6px; overflow:hidden; cursor:pointer; transition:box-shadow .2s; }
+.faqItem:hover { box-shadow:0 2px 8px rgba(0,0,0,.07); }
+.faqQ { display:flex; justify-content:space-between; align-items:center; padding:13px 16px; font-size:14px; font-weight:600; color:#1a1a1a; }
+.faqIcon { font-size:18px; color:#999; transition:transform .2s; }
+.faqA { display:none; padding:10px 16px 13px; font-size:13px; color:#555; line-height:1.65; border-top:1px solid #f0f0f0; }
+.faqItem.faqOpen .faqA { display:block; }
+.faqItem.faqOpen .faqIcon { transform:rotate(45deg); }
+
+/* ══════════════════════════════════════════════════════════
+   12. FOOTER
+   ══════════════════════════════════════════════════════════ */
+
+.mainFooterBar.sapMBar,
+.mainFooterBar.sapMIBar {
+    background:  linear-gradient(135deg, #1B3A2D 0%, #0f2318 100%) !important;
+    border-top:  none !important;
+    height:      auto !important;
+    min-height:  52px !important;
+    padding:     12px 32px !important;
 }
+
+.mainFooterBar .sapMText,
+.mainFooterBar.sapMBar .sapMText {
+    color: rgba(255,255,255,0.65) !important;
+    font-size: 0.82rem !important;
+    font-family: var(--font-body) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   13. FALİYETLER (medya kartları)
+   ══════════════════════════════════════════════════════════ */
 
 .faaliyetIcon {
     color:        var(--clr-primary) !important;
@@ -406,1155 +383,165 @@
 .mediaCardPhoto:hover,
 .mediaCardVideo:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-.mediaCardBody { padding: 10px 14px 14px !important; }
-.mediaCardBody .sapMTitle {
-    font-size:     0.9rem !important;
-    font-weight:   600 !important;
-    white-space:   nowrap;
-    overflow:      hidden;
-    text-overflow: ellipsis;
-    color:         var(--clr-text) !important;
-    font-family:   var(--font-body) !important;
-}
-.mediaCardBody .sapMText {
-    font-size:           0.78rem !important;
-    color:               var(--clr-muted) !important;
-    display:             -webkit-box;
-    -webkit-line-clamp:  2;
-    -webkit-box-orient:  vertical;
-    overflow:            hidden;
-}
-
-.mediaScrollArrow {
-    width:         2.5rem !important;
-    height:        2.5rem !important;
-    min-width:     2.5rem !important;
-    border-radius: 50% !important;
-    box-shadow:    var(--shadow) !important;
-    background:    var(--clr-surface) !important;
-    border:        2px solid var(--clr-primary) !important;
-    align-self:    center !important;
-    flex-shrink:   0 !important;
-}
-.mediaScrollArrow:hover { box-shadow: var(--shadow-lg) !important; }
-
-
 /* ══════════════════════════════════════════════════════════
-   9. PANEL KARTLARI (Anasayfa genel)
+   14. BAĞIŞ SAYFASI
    ══════════════════════════════════════════════════════════ */
 
-:not(.adminDashboardPage) .sapMPanel {
-    border-radius: var(--radius) !important;
-    border:        1px solid var(--clr-border) !important;
-    box-shadow:    var(--shadow) !important;
-    overflow:      hidden !important;
-}
+.donatePage { background: var(--clr-bg); font-family: var(--font-body); }
 
-:not(.adminDashboardPage) .sapMPanelHdr {
-    background:    linear-gradient(135deg, var(--clr-green-light), var(--clr-green-soft)) !important;
-    font-weight:   600 !important;
-    color:         var(--clr-primary-dark) !important;
-    border-bottom: 2px solid var(--clr-border) !important;
-    font-family:   var(--font-display) !important;
-    font-size:     0.95rem !important;
-}
+.donate-hero { position:relative; min-height:420px; display:flex; align-items:center; overflow:hidden; }
+.donate-hero-bg { position:absolute; inset:0; background:linear-gradient(135deg, var(--clr-primary-dark) 0%, var(--clr-primary) 50%, var(--clr-primary-mid) 100%); }
+.donate-hero-content { position:relative; z-index:2; max-width:800px; margin:0 auto; padding:60px 40px; text-align:center; color:white; }
+.donate-hero-title { font-family:var(--font-display); font-size:clamp(3rem,6vw,5rem); font-weight:900; line-height:1.1; margin:0 0 16px; letter-spacing:-1px; }
+.donate-hero-title span { color:var(--clr-accent); }
+.donate-hero-sub { font-size:1.1rem; color:rgba(255,255,255,0.8); margin-bottom:40px; line-height:1.6; }
+.donate-hero-paws { font-size:3rem; margin-bottom:8px; animation:float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
 
-/* SAP butonlarına genel yuvarlaklık */
-.sapMBtn:not(.btnHeroPrimary):not(.btnHeroOutline):not(.btnHeroGhost) {
-    border-radius: var(--radius-sm) !important;
-}
+.donate-hero-stats { display:inline-flex; align-items:center; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:var(--radius-pill); padding:16px 32px; backdrop-filter:blur(10px); }
+.donate-stat { text-align:center; padding:0 24px; }
+.donate-stat-num { display:block; font-size:1.6rem; font-weight:700; color:var(--clr-accent); }
+.donate-stat-lbl { font-size:0.75rem; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:0.5px; }
+.donate-stat-divider { width:1px; height:40px; background:rgba(255,255,255,0.2); }
 
-/* Avatar Accent renkleri — marka yeşili/turuncusu */
-.sapFAvatar[data-background-color="Accent1"] {
-    background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-hover)) !important;
-}
-.sapFAvatar[data-background-color="Accent2"] {
-    background: linear-gradient(135deg, var(--clr-primary-mid), var(--clr-primary)) !important;
-}
-.sapFAvatar[data-background-color="Accent3"] {
-    background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-dark)) !important;
-}
-
-/* Kampanya ikonları */
-.campaignCard { padding: 1rem; gap: 0.75rem; display: flex; flex-direction: column; }
-.campaignIcon { font-size: 2.5rem !important; margin-bottom: 0.5rem; }
-.campaignIconPrimary { color: var(--clr-primary) !important; }
-.campaignIconMid     { color: var(--clr-primary-mid) !important; }
-.campaignIconAccent  { color: var(--clr-accent) !important; }
-.campaignText        { color: var(--clr-muted); margin-bottom: 0.75rem; }
-
-/* Blog */
-.blogCard    { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.blogMeta    { display: flex; align-items: center; gap: 0.5rem; }
-.blogMetaIcon { font-size: 1.25rem !important; color: var(--clr-primary) !important; }
-.blogExcerpt  { color: var(--clr-muted); font-size: 0.9rem; }
-.blogThumbnail { border-radius: var(--radius-sm) !important; overflow: hidden !important; }
-
-/* Hakkımızda */
-.aboutText { line-height: 1.75 !important; color: var(--clr-text) !important; margin-bottom: 0.75rem !important; }
-
-/* Nasıl Çalışır */
-.howItWorksStep {
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
-    gap:             0.5rem;
-    padding:         1.5rem 1rem;
-    text-align:      center;
-}
-.howItWorksStep .sapMTitle {
-    font-size:  1rem !important;
-    margin-top: 0.5rem !important;
-    color:      var(--clr-primary-dark) !important;
-}
-.howItWorksStep .sapMText { color: var(--clr-muted) !important; }
-
-
-/* ══════════════════════════════════════════════════════════
-   10. FOOTER
-   ══════════════════════════════════════════════════════════ */
-
-.mainFooter.sapMTB {
-    background:  transparent !important;
-    padding:     0 !important;
-    height:      auto !important;
-    min-height:  unset !important;
-    border-top:  none !important;
-}
-.mainFooter .sapMTBContent { width: 100% !important; padding: 0 !important; }
-
-#footerSection .sapUxAPObjectPageSectionContainer,
-#footerSection .sapUxAPObjectPageSubSection,
-#footerSection .sapUxAPObjectPageSubSectionBlocks,
-#footerSection .sapUxAPBlockBase {
-    padding: 0 !important;
-    margin:  0 !important;
-}
-#footerSection { margin-bottom: 0 !important; padding-bottom: 0 !important; }
-#footerSection > div { padding-bottom: 0 !important; margin-bottom: 0 !important; }
-
-.siteFooter {
-    width:       100%;
-    background:  linear-gradient(135deg, var(--clr-primary-dark) 0%, #0f2318 100%);
-    font-family: var(--font-body);
-    box-sizing:  border-box;
-    animation:   footerFadeIn 0.6s ease forwards;
-}
-@keyframes footerFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-.footerTop {
-    display:         flex;
-    justify-content: space-between;
-    align-items:     flex-start;
-    flex-wrap:       wrap;
-    gap:             32px;
-    padding:         48px 60px 36px;
-    border-bottom:   1px solid rgba(255,255,255,0.10);
-}
-.footerBrand { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 220px; }
-.footerLogo  { width: 52px; height: 52px; object-fit: contain; }
-.footerBrandName {
-    color:           #fff;
-    font-size:       1.05rem;
-    font-weight:     700;
-    font-family:     var(--font-display);
-    letter-spacing:  0.3px;
-    margin-bottom:   4px;
-}
-.footerBrandSlogan { color: rgba(255,255,255,0.5); font-size: 0.78rem; font-style: italic; }
-
-.footerCol       { display: flex; flex-direction: column; gap: 10px; min-width: 150px; }
-.footerColTitle  {
-    color:          var(--clr-primary-light);
-    font-size:      0.78rem;
-    font-weight:    700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom:  4px;
-}
-.footerLink {
-    color:          rgba(255,255,255,0.6);
-    font-size:      0.85rem;
-    text-decoration: none;
-    transition:     color var(--transition), transform var(--transition);
-    display:        inline-block;
-}
-.footerLink:hover { color: var(--clr-primary-light); transform: translateX(4px); }
-.footerContact    { color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.6; }
-
-.footerSocial    { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-.footerSocialBtn {
-    width:          34px; height: 34px;
-    border-radius:  50%;
-    background:     rgba(255,255,255,0.08);
-    border:         1px solid rgba(255,255,255,0.15);
-    display:        flex; align-items: center; justify-content: center;
-    color:          #fff; font-size: 0.8rem;
-    text-decoration: none;
-    transition:     background var(--transition), transform var(--transition), border-color var(--transition);
-}
-.footerSocialBtn:hover  { background: var(--clr-primary-mid); border-color: var(--clr-primary-mid); transform: translateY(-3px); }
-.footerSocialX:hover   { background: #000 !important; border-color: #000 !important; }
-.footerSocialYT:hover  { background: #FF0000 !important; border-color: #FF0000 !important; }
-.footerSocialLI:hover  { background: #0A66C2 !important; border-color: #0A66C2 !important; }
-
-.footerBottom {
-    display:         flex;
-    justify-content: space-between;
-    align-items:     center;
-    flex-wrap:       wrap;
-    gap:             12px;
-    padding:         18px 60px;
-    color:           rgba(255,255,255,0.3);
-    font-size:       0.78rem;
-}
-
-@media (max-width: 768px) {
-    .footerTop    { padding: 32px 20px 24px; flex-direction: column; }
-    .footerBottom { padding: 16px 20px; flex-direction: column; text-align: center; }
-    .footerBrand  { min-width: unset; }
-}
-
-
-/* ══════════════════════════════════════════════════════════
-   11. BAĞIŞ SAYFASI
-   ══════════════════════════════════════════════════════════ */
-
-.donatePage {
-    background:  var(--clr-bg);
-    font-family: var(--font-body);
-}
-
-/* Hero */
-.donate-hero {
-    position:   relative;
-    min-height: 420px;
-    display:    flex;
-    align-items: center;
-    overflow:   hidden;
-}
-.donate-hero-bg {
-    position:   absolute; inset: 0;
-    background: linear-gradient(135deg, var(--clr-primary-dark) 0%, var(--clr-primary) 50%, var(--clr-primary-mid) 100%);
-}
-.donate-hero-bg::after {
-    content:          '';
-    position:         absolute; inset: 0;
-    background-image: radial-gradient(circle at 20% 50%, rgba(244,162,97,0.15) 0%, transparent 60%),
-                      radial-gradient(circle at 80% 20%, rgba(64,145,108,0.20) 0%, transparent 50%);
-}
-.donate-hero-content {
-    position:   relative; z-index: 2;
-    max-width:  800px;
-    margin:     0 auto;
-    padding:    60px 40px;
-    text-align: center;
-    color:      white;
-}
-.donate-back-btn {
-    display:        inline-block;
-    color:          rgba(255,255,255,0.7);
-    text-decoration: none;
-    font-size:      0.875rem;
-    margin-bottom:  24px;
-    transition:     color var(--transition);
-}
-.donate-back-btn:hover { color: var(--clr-accent); }
-
-.donate-hero-paws { font-size: 3rem; margin-bottom: 8px; animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-10px) } }
-
-.donate-hero-title {
-    font-family:    var(--font-display);
-    font-size:      clamp(3rem, 6vw, 5rem);
-    font-weight:    900;
-    line-height:    1.1;
-    margin:         0 0 16px;
-    letter-spacing: -1px;
-}
-.donate-hero-title span { color: var(--clr-accent); }
-
-.donate-hero-sub {
-    font-size:     1.1rem;
-    color:         rgba(255,255,255,0.8);
-    margin-bottom: 40px;
-    line-height:   1.6;
-}
-
-.donate-hero-stats {
-    display:         inline-flex;
-    align-items:     center;
-    gap:             0;
-    background:      rgba(255,255,255,0.08);
-    border:          1px solid rgba(255,255,255,0.15);
-    border-radius:   var(--radius-pill);
-    padding:         16px 32px;
-    backdrop-filter: blur(10px);
-}
-.donate-stat         { text-align: center; padding: 0 24px; }
-.donate-stat-num     { display: block; font-size: 1.6rem; font-weight: 700; color: var(--clr-accent); }
-.donate-stat-lbl     { font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.5px; }
-.donate-stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
-
-/* Adım bölümleri */
-.donate-section {
-    max-width: 960px;
-    margin:    48px auto;
-    padding:   0 24px;
-    animation: slideUp 0.4s ease;
-}
-.donate-step-hidden { display: none !important; }
+.donate-section { max-width:960px; margin:48px auto; padding:0 24px; animation:slideUp 0.4s ease; }
+.donate-step-hidden { display:none !important; }
 @keyframes slideUp { from{ opacity:0; transform:translateY(20px) } to{ opacity:1; transform:translateY(0) } }
 
-.donate-step-header {
-    display:       flex;
-    align-items:   center;
-    gap:           16px;
-    margin-bottom: 32px;
-}
-.donate-step-num {
-    width:          44px; height: 44px;
-    background:     var(--clr-primary);
-    color:          white;
-    border-radius:  50%;
-    display:        flex; align-items: center; justify-content: center;
-    font-size:      1.2rem; font-weight: 700;
-    flex-shrink:    0;
-    font-family:    var(--font-display);
-}
-.donate-step-header h2 {
-    font-family: var(--font-display);
-    font-size:   1.8rem;
-    color:       var(--clr-primary-dark);
-    margin:      0;
-}
+.donate-step-header { display:flex; align-items:center; gap:16px; margin-bottom:32px; }
+.donate-step-num { width:44px; height:44px; background:var(--clr-primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:700; flex-shrink:0; font-family:var(--font-display); }
+.donate-step-header h2 { font-family:var(--font-display); font-size:1.8rem; color:var(--clr-primary-dark); margin:0; }
 
-/* Kategori kartları */
-.donate-categories-grid { padding: 0 !important; }
-.donate-cat-card        { cursor: pointer; }
-.donate-cat-inner {
-    background:    var(--clr-surface);
-    border-radius: var(--radius);
-    padding:       32px 24px;
-    text-align:    center;
-    border:        2px solid transparent;
-    transition:    all var(--transition-bounce);
-    box-shadow:    var(--shadow-sm);
-    cursor:        pointer;
-    height:        100%;
-}
-.donate-cat-inner:hover {
-    transform:    translateY(-6px);
-    box-shadow:   var(--shadow-lg);
-    border-color: var(--clr-primary);
-}
-.donate-cat-selected {
-    border-color: var(--clr-primary) !important;
-    background:   linear-gradient(135deg, var(--clr-green-light), var(--clr-green-soft)) !important;
-    transform:    translateY(-6px);
-    box-shadow:   var(--shadow-xl) !important;
-}
-.donate-cat-icon   { font-size: 3rem; margin-bottom: 16px; display: block; }
-.donate-cat-inner h3 {
-    font-family: var(--font-display);
-    font-size:   1.2rem;
-    color:       var(--clr-primary-dark);
-    margin:      0 0 8px;
-}
-.donate-cat-inner p {
-    font-size:  0.875rem;
-    color:      var(--clr-muted);
-    line-height: 1.5;
-    margin:     0 0 16px;
-}
-.donate-cat-impact {
-    display:       inline-block;
-    background:    rgba(45,106,79,0.08);
-    color:         var(--clr-primary);
-    font-size:     0.8rem;
-    font-weight:   600;
-    padding:       6px 14px;
-    border-radius: var(--radius-pill);
-}
+.donate-categories-grid { padding:0 !important; }
+.donate-cat-inner { background:var(--clr-surface); border-radius:var(--radius); padding:32px 24px; text-align:center; border:2px solid transparent; transition:all var(--transition-bounce); box-shadow:var(--shadow-sm); cursor:pointer; height:100%; }
+.donate-cat-inner:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:var(--clr-primary); }
+.donate-cat-selected { border-color:var(--clr-primary) !important; background:linear-gradient(135deg,var(--clr-green-light),var(--clr-green-soft)) !important; transform:translateY(-6px); box-shadow:var(--shadow-xl) !important; }
+.donate-cat-icon { font-size:3rem; margin-bottom:16px; display:block; }
+.donate-cat-inner h3 { font-family:var(--font-display); font-size:1.2rem; color:var(--clr-primary-dark); margin:0 0 8px; }
+.donate-cat-inner p { font-size:0.875rem; color:var(--clr-muted); line-height:1.5; margin:0 0 16px; }
+.donate-cat-impact { display:inline-block; background:rgba(45,106,79,0.08); color:var(--clr-primary); font-size:0.8rem; font-weight:600; padding:6px 14px; border-radius:var(--radius-pill); }
 
-/* Tutar */
-.donate-amount-wrap,
-.donate-payment-wrap {
-    background:    var(--clr-surface);
-    border-radius: var(--radius);
-    padding:       40px;
-    box-shadow:    var(--shadow-lg);
-}
-.donate-selected-cat {
-    font-size:     0.9rem;
-    color:         var(--clr-muted);
-    margin-bottom: 24px;
-    padding:       10px 16px;
-    background:    var(--clr-green-light);
-    border-radius: var(--radius-sm);
-    border-left:   3px solid var(--clr-primary);
-}
-.donate-selected-cat span { font-weight: 600; color: var(--clr-primary); }
+.donate-amount-wrap, .donate-payment-wrap { background:var(--clr-surface); border-radius:var(--radius); padding:40px; box-shadow:var(--shadow-lg); }
+.donate-preset-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+.donate-preset-btn { padding:16px; border:2px solid var(--clr-border); border-radius:var(--radius-sm); background:var(--clr-surface); font-family:var(--font-body); font-size:1rem; font-weight:600; color:var(--clr-text); cursor:pointer; transition:all var(--transition); }
+.donate-preset-btn:hover { border-color:var(--clr-primary); color:var(--clr-primary); background:var(--clr-green-light); }
+.donate-preset-btn.active { border-color:var(--clr-primary); background:var(--clr-primary); color:white; }
 
-.donate-preset-grid {
-    display:               grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:                   12px;
-    margin-bottom:         24px;
-}
-.donate-preset-btn {
-    padding:       16px;
-    border:        2px solid var(--clr-border);
-    border-radius: var(--radius-sm);
-    background:    var(--clr-surface);
-    font-family:   var(--font-body);
-    font-size:     1rem;
-    font-weight:   600;
-    color:         var(--clr-text);
-    cursor:        pointer;
-    transition:    all var(--transition);
-}
-.donate-preset-btn:hover {
-    border-color: var(--clr-primary);
-    color:        var(--clr-primary);
-    background:   var(--clr-green-light);
-}
-.donate-preset-btn.active {
-    border-color: var(--clr-primary);
-    background:   var(--clr-primary);
-    color:        white;
-}
-.donate-preset-custom { border-style: dashed; font-size: 0.875rem; }
+.donate-custom-input-wrap { display:flex; align-items:center; border:2px solid var(--clr-border); border-radius:var(--radius-sm); overflow:hidden; margin-bottom:16px; transition:border-color var(--transition); }
+.donate-custom-input-wrap:focus-within { border-color:var(--clr-primary); }
+.donate-currency { padding:0 16px; font-size:1.3rem; color:var(--clr-primary); font-weight:700; background:var(--clr-green-light); }
+.donate-custom-input { flex:1; border:none; outline:none; padding:14px 16px; font-family:var(--font-body); font-size:1rem; color:var(--clr-text); }
 
-.donate-custom-input-wrap {
-    display:       flex;
-    align-items:   center;
-    border:        2px solid var(--clr-border);
-    border-radius: var(--radius-sm);
-    overflow:      hidden;
-    margin-bottom: 16px;
-    transition:    border-color var(--transition);
-}
-.donate-custom-input-wrap:focus-within { border-color: var(--clr-primary); }
-.donate-currency {
-    padding:     0 16px;
-    font-size:   1.3rem;
-    color:       var(--clr-primary);
-    font-weight: 700;
-    background:  var(--clr-green-light);
-}
-.donate-custom-input {
-    flex:        1;
-    border:      none;
-    outline:     none;
-    padding:     14px 16px;
-    font-family: var(--font-body);
-    font-size:   1rem;
-    color:       var(--clr-text);
-}
-.donate-impact-msg {
-    min-height:    32px;
-    color:         var(--clr-primary);
-    font-weight:   600;
-    font-size:     0.95rem;
-    margin-bottom: 24px;
-    padding:       8px 12px;
-    background:    var(--clr-green-light);
-    border-radius: var(--radius-sm);
-    font-family:   var(--font-body);
-}
-.donate-next-btn {
-    width:          100%;
-    padding:        18px;
-    background:     var(--clr-primary);
-    color:          white;
-    border:         none;
-    border-radius:  var(--radius-sm);
-    font-family:    var(--font-body);
-    font-size:      1rem;
-    font-weight:    600;
-    cursor:         pointer;
-    transition:     all var(--transition);
-    letter-spacing: 0.3px;
-}
-.donate-next-btn:hover {
-    background:  var(--clr-primary-dark);
-    transform:   translateY(-2px);
-    box-shadow:  0 8px 24px rgba(45,106,79,0.30);
-}
+.donate-impact-msg { min-height:32px; color:var(--clr-primary); font-weight:600; font-size:0.95rem; margin-bottom:24px; padding:8px 12px; background:var(--clr-green-light); border-radius:var(--radius-sm); }
+.donate-next-btn { width:100%; padding:18px; background:var(--clr-primary); color:white; border:none; border-radius:var(--radius-sm); font-family:var(--font-body); font-size:1rem; font-weight:600; cursor:pointer; transition:all var(--transition); }
+.donate-next-btn:hover { background:var(--clr-primary-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,106,79,0.30); }
 
-/* Ödeme */
-.donate-summary-bar {
-    display:         flex;
-    justify-content: space-between;
-    align-items:     center;
-    padding:         14px 20px;
-    background:      var(--clr-green-light);
-    border-radius:   var(--radius-sm);
-    margin-bottom:   28px;
-    font-size:       0.95rem;
-    color:           var(--clr-text);
-    font-family:     var(--font-body);
-}
-.donate-summary-amount { font-size: 1.3rem; color: var(--clr-primary); font-weight: 700; }
+.donate-summary-bar { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:var(--clr-green-light); border-radius:var(--radius-sm); margin-bottom:28px; font-size:0.95rem; color:var(--clr-text); }
+.donate-summary-amount { font-size:1.3rem; color:var(--clr-primary); font-weight:700; }
 
-.donate-method-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
-.donate-method-tab {
-    flex:          1;
-    padding:       14px;
-    border:        2px solid var(--clr-border);
-    border-radius: var(--radius-sm);
-    background:    var(--clr-surface);
-    font-family:   var(--font-body);
-    font-size:     0.95rem;
-    font-weight:   500;
-    cursor:        pointer;
-    transition:    all var(--transition);
-    color:         var(--clr-muted);
-}
-.donate-method-tab.active {
-    border-color: var(--clr-primary);
-    color:        var(--clr-primary);
-    background:   var(--clr-green-light);
-    font-weight:  600;
-}
+.donate-method-tabs { display:flex; gap:8px; margin-bottom:28px; }
+.donate-method-tab { flex:1; padding:14px; border:2px solid var(--clr-border); border-radius:var(--radius-sm); background:var(--clr-surface); font-family:var(--font-body); font-size:0.95rem; font-weight:500; cursor:pointer; transition:all var(--transition); color:var(--clr-muted); }
+.donate-method-tab.active { border-color:var(--clr-primary); color:var(--clr-primary); background:var(--clr-green-light); font-weight:600; }
 
-.donate-iban-box {
-    background:    var(--clr-green-light);
-    border:        1px solid var(--clr-border);
-    border-radius: var(--radius-sm);
-    padding:       24px;
-    margin-bottom: 16px;
-}
-.donate-iban-row {
-    display:         flex;
-    justify-content: space-between;
-    padding:         8px 0;
-    border-bottom:   1px solid var(--clr-green-soft);
-    font-size:       0.9rem;
-    color:           var(--clr-text);
-    font-family:     var(--font-body);
-}
-.donate-iban-row:last-child { border-bottom: none; }
-.donate-iban-row span       { color: var(--clr-muted); }
-.donate-iban-num            { letter-spacing: 1px; color: var(--clr-primary); font-weight: 600; }
+.donate-iban-box { background:var(--clr-green-light); border:1px solid var(--clr-border); border-radius:var(--radius-sm); padding:24px; margin-bottom:16px; }
+.donate-iban-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--clr-green-soft); font-size:0.9rem; color:var(--clr-text); }
+.donate-iban-row:last-child { border-bottom:none; }
+.donate-iban-row span { color:var(--clr-muted); }
+.donate-iban-num { letter-spacing:1px; color:var(--clr-primary); font-weight:600; }
+.donate-iban-note { font-size:0.85rem; color:var(--clr-muted); padding:12px; background:#FFF8F0; border-radius:var(--radius-sm); border-left:3px solid var(--clr-accent); }
 
-.donate-iban-note {
-    font-size:   0.85rem;
-    color:       var(--clr-muted);
-    padding:     12px;
-    background:  #FFF8F0;
-    border-radius: var(--radius-sm);
-    border-left: 3px solid var(--clr-accent);
-    font-family: var(--font-body);
-}
-.donate-test-badge {
-    background:    #FFF8E1;
-    border:        1px solid #FFD54F;
-    border-radius: var(--radius-sm);
-    padding:       10px 14px;
-    font-size:     0.82rem;
-    color:         #795548;
-    margin-bottom: 20px;
-    font-family:   var(--font-body);
-}
+.donate-personal-form { margin-top:28px; border-top:1px solid var(--clr-border-soft); padding-top:24px; }
+.donate-personal-form h4 { font-family:var(--font-display); font-size:1.1rem; color:var(--clr-primary-dark); margin:0 0 16px; }
+.donate-field { margin-bottom:14px; }
+.donate-field label { display:block; font-size:0.85rem; font-weight:600; color:var(--clr-text); margin-bottom:6px; }
+.donate-field input, .donate-field textarea { width:100%; padding:12px 16px; border:2px solid var(--clr-border); border-radius:var(--radius-sm); font-family:var(--font-body); font-size:0.95rem; color:var(--clr-text); outline:none; transition:border-color var(--transition); box-sizing:border-box; }
+.donate-field input:focus, .donate-field textarea:focus { border-color:var(--clr-primary); }
+.donate-field-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
 
-.donate-personal-form {
-    margin-top:  28px;
-    border-top:  1px solid var(--clr-border-soft);
-    padding-top: 24px;
-}
-.donate-personal-form h4 {
-    font-family:   var(--font-display);
-    font-size:     1.1rem;
-    color:         var(--clr-primary-dark);
-    margin:        0 0 16px;
-}
-.donate-field          { margin-bottom: 14px; }
-.donate-field label {
-    display:     block;
-    font-size:   0.85rem;
-    font-weight: 600;
-    color:       var(--clr-text);
-    margin-bottom: 6px;
-    font-family: var(--font-body);
-}
-.donate-field input,
-.donate-field textarea {
-    width:          100%;
-    padding:        12px 16px;
-    border:         2px solid var(--clr-border);
-    border-radius:  var(--radius-sm);
-    font-family:    var(--font-body);
-    font-size:      0.95rem;
-    color:          var(--clr-text);
-    outline:        none;
-    transition:     border-color var(--transition);
-    box-sizing:     border-box;
-}
-.donate-field input:focus,
-.donate-field textarea:focus { border-color: var(--clr-primary); }
+.donate-submit-btn { width:100%; padding:20px; background:linear-gradient(135deg,var(--clr-primary),var(--clr-primary-mid)); color:white; border:none; border-radius:var(--radius-sm); font-family:var(--font-body); font-size:1.1rem; font-weight:700; cursor:pointer; transition:all var(--transition); margin-top:24px; }
+.donate-submit-btn:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(45,106,79,0.35); }
+.donate-secure-note { text-align:center; font-size:0.8rem; color:var(--clr-muted); margin-top:12px; }
 
-.donate-field-row {
-    display:               grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap:                   12px;
-}
-
-.donate-submit-btn {
-    width:          100%;
-    padding:        20px;
-    background:     linear-gradient(135deg, var(--clr-primary), var(--clr-primary-mid));
-    color:          white;
-    border:         none;
-    border-radius:  var(--radius-sm);
-    font-family:    var(--font-body);
-    font-size:      1.1rem;
-    font-weight:    700;
-    cursor:         pointer;
-    transition:     all var(--transition);
-    margin-top:     24px;
-    letter-spacing: 0.3px;
-}
-.donate-submit-btn:hover {
-    transform:  translateY(-2px);
-    box-shadow: 0 12px 32px rgba(45,106,79,0.35);
-}
-.donate-secure-note {
-    text-align:  center;
-    font-size:   0.8rem;
-    color:       var(--clr-muted);
-    margin-top:  12px;
-    font-family: var(--font-body);
-}
-
-/* Teşekkür */
-.donate-success-wrap {
-    text-align:    center;
-    padding:       80px 40px;
-    background:    var(--clr-surface);
-    border-radius: var(--radius);
-    box-shadow:    var(--shadow-lg);
-}
-.donate-success-icon { font-size: 5rem; margin-bottom: 16px; animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+.donate-success-wrap { text-align:center; padding:80px 40px; background:var(--clr-surface); border-radius:var(--radius); box-shadow:var(--shadow-lg); }
+.donate-success-icon { font-size:5rem; margin-bottom:16px; animation:pop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 @keyframes pop { from{ transform:scale(0) } to{ transform:scale(1) } }
-.donate-success-wrap h2 {
-    font-family: var(--font-display);
-    font-size:   2.5rem;
-    color:       var(--clr-primary-dark);
-    margin:      0 0 12px;
-}
-.donate-success-wrap p  { color: var(--clr-muted); font-size: 1rem; margin-bottom: 24px; font-family: var(--font-body); }
-.donate-iban-result {
-    background:    var(--clr-green-light);
-    border:        1px solid var(--clr-border);
-    border-radius: var(--radius-sm);
-    padding:       24px;
-    margin:        24px auto;
-    max-width:     480px;
-    text-align:    left;
-}
-.donate-iban-result-row {
-    display:         flex;
-    justify-content: space-between;
-    padding:         8px 0;
-    border-bottom:   1px solid var(--clr-green-soft);
-    font-size:       0.9rem;
-    font-family:     var(--font-body);
-}
-.donate-iban-result-row:last-child { border-bottom: none; }
-.donate-iban-result-row span       { color: var(--clr-muted); }
-.donate-ref strong                 { color: var(--clr-primary); font-size: 1.1rem; }
+.donate-success-wrap h2 { font-family:var(--font-display); font-size:2.5rem; color:var(--clr-primary-dark); margin:0 0 12px; }
+.donate-success-wrap p { color:var(--clr-muted); font-size:1rem; margin-bottom:24px; }
 
-.donate-home-btn {
-    display:        inline-block;
-    margin-top:     24px;
-    padding:        14px 32px;
-    background:     var(--clr-primary);
-    color:          white;
-    text-decoration: none;
-    border-radius:  var(--radius-pill);
-    font-family:    var(--font-body);
-    font-weight:    600;
-    transition:     all var(--transition);
-}
-.donate-home-btn:hover { background: var(--clr-primary-dark); transform: translateY(-2px); }
+.donate-iban-result { background:var(--clr-green-light); border:1px solid var(--clr-border); border-radius:var(--radius-sm); padding:24px; margin:24px auto; max-width:480px; text-align:left; }
+.donate-iban-result-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--clr-green-soft); font-size:0.9rem; }
+.donate-iban-result-row:last-child { border-bottom:none; }
+.donate-iban-result-row span { color:var(--clr-muted); }
+.donate-ref strong { color:var(--clr-primary); font-size:1.1rem; }
 
-/* Responsive */
-@media (max-width: 600px) {
-    .donate-hero-content { padding: 40px 20px; }
-    .donate-hero-stats   { flex-direction: column; border-radius: var(--radius); padding: 20px; }
-    .donate-stat-divider { width: 40px; height: 1px; }
-    .donate-preset-grid  { grid-template-columns: repeat(2, 1fr); }
-    .donate-field-row    { grid-template-columns: 1fr; }
-    .donate-amount-wrap,
-    .donate-payment-wrap { padding: 24px; }
-    .donate-section      { padding: 0 16px; margin: 32px auto; }
-}
-/* ═══════════════════════════════════════════════════════
-   Bu blokları design-system.css'e EKLEYIN
-   (mevcut stillerin üzerine yazacak şekilde sona yapıştırın)
-   ═══════════════════════════════════════════════════════ */
+.donate-home-btn { display:inline-block; margin-top:24px; padding:14px 32px; background:var(--clr-primary); color:white; text-decoration:none; border-radius:var(--radius-pill); font-family:var(--font-body); font-weight:600; transition:all var(--transition); }
+.donate-home-btn:hover { background:var(--clr-primary-dark); transform:translateY(-2px); }
 
-/* ── HERO — Gradient + Dalga ── */
-.heroSection {
-    position: relative;
-    overflow: hidden;
-}
-.heroSection::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0; right: 0;
-    height: 60px;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z' fill='%23F8F5F0'/%3E%3C/svg%3E") no-repeat bottom;
-    background-size: cover;
-    pointer-events: none;
-    z-index: 2;
+@media (max-width:600px) {
+    .donate-hero-content { padding:40px 20px; }
+    .donate-preset-grid { grid-template-columns:repeat(2,1fr); }
+    .donate-field-row { grid-template-columns:1fr; }
+    .donate-amount-wrap, .donate-payment-wrap { padding:24px; }
+    .donate-section { padding:0 16px; margin:32px auto; }
 }
 
-/* Header/DynamicPage arka planı — gradient */
-.sapFDynamicPageTitle {
-    background: linear-gradient(135deg,
-        rgba(27,58,45,0.97) 0%,
-        rgba(45,106,79,0.97) 50%,
-        rgba(64,145,108,0.95) 100%) !important;
-    border: none !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    box-shadow: 0 4px 24px rgba(27,58,45,0.25) !important;
+/* ══════════════════════════════════════════════════════════
+   15. ÇEŞITLI
+   ══════════════════════════════════════════════════════════ */
+
+.volReasonCountText { font-size:0.75rem !important; color:#9CA3AF !important; }
+
+.sapFAvatar[data-background-color="Accent1"] { background:linear-gradient(135deg,var(--clr-accent),var(--clr-accent-hover)) !important; }
+.sapFAvatar[data-background-color="Accent2"] { background:linear-gradient(135deg,var(--clr-primary-mid),var(--clr-primary)) !important; }
+.sapFAvatar[data-background-color="Accent3"] { background:linear-gradient(135deg,var(--clr-primary),var(--clr-primary-dark)) !important; }
+
+.ctaBox { background:linear-gradient(135deg,#2D6A4F 0%,#40916C 50%,#1B3A2D 100%); border-radius:24px; padding:48px 56px; position:relative; overflow:hidden; margin:8px 0; }
+.ctaTitle { font-family:var(--font-display) !important; font-size:1.9rem !important; font-weight:900 !important; color:#fff !important; line-height:1.2 !important; margin-bottom:10px !important; }
+.ctaSubtext { color:rgba(255,255,255,0.82) !important; font-size:0.95rem !important; line-height:1.6 !important; max-width:480px !important; }
+.btnCtaDonate .sapMBtnInner { background:linear-gradient(135deg,#F4A261,#E07A3A) !important; border-color:transparent !important; color:#fff !important; border-radius:var(--radius-pill) !important; font-weight:700 !important; padding:0 32px !important; height:50px !important; box-shadow:0 6px 20px rgba(244,162,97,0.45) !important; }
+.btnCtaDonate .sapMBtnInner:hover { transform:translateY(-2px) !important; box-shadow:0 10px 28px rgba(244,162,97,0.55) !important; }
+
+@media (max-width:768px) {
+    .ctaBox { padding:28px 20px; }
+    .ctaTitle { font-size:1.4rem !important; }
 }
-/* Header içindeki logo ve başlık rengi */
-.sapFDynamicPageTitle .sapMTitle {
-    color: #fff !important;
+/* navFullRow */
+.navFullRow {
+    flex-wrap:    nowrap !important;
+    align-items:  center !important;
+    height:       64px !important;
+    gap:          0 !important;
+    padding-left: 48px !important;
 }
 
-/* ── HERO METİN OVERLAY ── */
-.heroTextOverlay .sapMTitle {
-    font-size: clamp(2rem, 4vw, 3.2rem) !important;
-    font-weight: 900 !important;
-    line-height: 1.15 !important;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.35) !important;
-    color: #fff !important;
-}
-.heroTextOverlay .sapMText {
-    font-size: 1.05rem !important;
-    line-height: 1.7 !important;
-    color: rgba(255,255,255,0.88) !important;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.30) !important;
-    max-width: 500px !important;
-}
-
-/* Eyebrow chip — "🐾 Pati ve Gelecek Derneği" */
-.heroEyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(244,162,97,0.18);
-    border: 1px solid rgba(244,162,97,0.40);
-    border-radius: 50px;
-    padding: 5px 14px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #FBBF77;
-    margin-bottom: 12px;
-    font-family: var(--font-body, 'DM Sans', sans-serif);
-}
-
-/* ── HERO BUTONLARI ── */
-
-/* Bağış Yap — turuncu gradient + pulse */
-.btnHeroPrimary .sapMBtnInner {
-    background: linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color: transparent !important;
-    color: #fff !important;
-    border-radius: var(--radius-pill, 50px) !important;
-    font-weight: 700 !important;
-    padding: 0 28px !important;
-    height: 48px !important;
-    box-shadow: 0 6px 24px rgba(244,162,97,0.50) !important;
-    transition: all 0.22s !important;
-}
-.btnHeroPrimary .sapMBtnInner:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 10px 32px rgba(244,162,97,0.60) !important;
-}
-
-/* Gönüllü Ol — outline beyaz (hero içinde) */
-.btnHeroOutline .sapMBtnInner {
-    background: rgba(255,255,255,0.10) !important;
-    border: 2px solid rgba(255,255,255,0.60) !important;
-    color: #fff !important;
-    border-radius: var(--radius-pill, 50px) !important;
-    font-weight: 600 !important;
-    padding: 0 28px !important;
-    height: 48px !important;
-    backdrop-filter: blur(6px) !important;
-    transition: all 0.22s !important;
-}
-.btnHeroOutline .sapMBtnInner:hover {
-    background: rgba(255,255,255,0.20) !important;
-    border-color: #fff !important;
-    transform: translateY(-3px) !important;
-}
-
-/* Gönüllü Ol — navbar (yeşil outline) */
-.btnVolunteer .sapMBtnInner {
-    background: transparent !important;
-    border: 2px solid #fff !important;
-    color: #fff !important;
-    border-radius: var(--radius-pill, 50px) !important;
-    font-weight: 700 !important;
-    padding: 0 18px !important;
-    transition: all 0.22s !important;
-}
-.btnVolunteer .sapMBtnInner:hover {
-    background: rgba(255,255,255,0.18) !important;
-    transform: translateY(-1px) !important;
-}
-
-/* ── İSTATİSTİK KARTLARI — hayvan temalı ── */
-#statsSection .sapUxAPObjectPageSectionContainer {
-    padding-top: 0 !important;
-}
-.statsCard {
-    background: #fff !important;
-    border-radius: 18px !important;
-    padding: 28px 20px !important;
-    border: 1px solid var(--clr-border, #D1E9DC) !important;
-    box-shadow: 0 8px 32px rgba(45,106,79,0.10) !important;
-    transition: transform 0.2s, box-shadow 0.2s !important;
-    text-align: center !important;
-}
-.statsCard:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 14px 40px rgba(45,106,79,0.18) !important;
-}
-/* İkon */
-.statsEmoji {
-    font-size: 2rem !important;
-    display: block !important;
-    margin-bottom: 8px !important;
-}
-/* Sayı */
-.statsNumber .sapMTitle {
-    font-size: 2.2rem !important;
-    font-weight: 900 !important;
-    color: var(--clr-accent, #F4A261) !important;
-    font-family: var(--font-display, 'Playfair Display', serif) !important;
-    line-height: 1 !important;
-}
-/* Etiket */
-.statsCard .sapMText {
-    font-size: 0.85rem !important;
-    color: var(--clr-muted, #6B7C75) !important;
-    font-weight: 500 !important;
-    margin-top: 4px !important;
-}
-
-/* ── CTA BLOĞU ── */
-.ctaBox {
-    background: linear-gradient(135deg, #2D6A4F 0%, #40916C 50%, #1B3A2D 100%);
-    border-radius: 24px;
-    padding: 48px 56px;
-    position: relative;
-    overflow: hidden;
-    margin: 8px 0;
-}
-.ctaBox::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 220px; height: 220px;
-    border-radius: 50%;
-    background: rgba(244,162,97,0.15);
-    pointer-events: none;
-}
-.ctaBox::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; left: 30%;
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-    pointer-events: none;
-}
-.ctaTitle {
-    font-family: var(--font-display, 'Playfair Display', serif) !important;
-    font-size: 1.9rem !important;
-    font-weight: 900 !important;
-    color: #fff !important;
-    line-height: 1.2 !important;
-    margin-bottom: 10px !important;
-}
-.ctaSubtext {
-    color: rgba(255,255,255,0.82) !important;
-    font-size: 0.95rem !important;
-    line-height: 1.6 !important;
-    max-width: 480px !important;
-}
-
-/* CTA içindeki Bağış Yap butonu */
-.btnCtaDonate .sapMBtnInner {
-    background: linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color: transparent !important;
-    color: #fff !important;
-    border-radius: var(--radius-pill, 50px) !important;
-    font-weight: 700 !important;
-    font-size: 1rem !important;
-    padding: 0 32px !important;
-    height: 50px !important;
-    box-shadow: 0 6px 20px rgba(244,162,97,0.45) !important;
-    transition: all 0.22s !important;
-}
-.btnCtaDonate .sapMBtnInner:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 10px 28px rgba(244,162,97,0.55) !important;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .ctaBox { padding: 28px 20px; }
-    .ctaTitle { font-size: 1.4rem !important; }
-}
-.volReasonCountText {
-    font-size: 0.75rem !important;
-    color: #9CA3AF !important;
-}
-.sapUxAPObjectPageContainer {
+.mainNavBar .sapMBarLeft {
+    flex:         1 1 auto !important;
+    max-width:    none !important;
+    overflow:     visible !important;
     padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-.sapUxAPObjectPageSectionContainer {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-}
-.sapUxAPObjectPageContainer {
-    background: transparent !important;
-}
-.sapUxAPObjectPageContainer {
-    padding: 0 !important;
 }
 
-.sapUxAPObjectPageSectionContainer {
-    padding: 2rem 3rem;
+/* ObjectPage spacer gizle */
+[id$="mainPage-spacer"],
+[id*="-spacer"] {
+    display: none !important;
+    height:  0 !important;
 }
-/* ── Nasıl Çalışır ── */
-.hiwTabBar { display:flex; gap:10px; margin-bottom:24px; }
-.hiwTabBtn { padding:8px 22px; border-radius:20px; border:1px solid #ddd; background:transparent; color:#666; font-size:14px; cursor:pointer; transition:all .2s; }
-.hiwTabBtn.hiwTabActive { background:#e8f4fd; color:#1565c0; border-color:transparent; font-weight:600; }
-.hiwPanel { display:none; }
-.hiwPanel.hiwPanelActive { display:block; }
-.hiwSteps { display:flex; align-items:flex-start; gap:0; }
-.hiwStep { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
-.hiwStep:not(:last-child)::after { content:''; position:absolute; top:22px; left:calc(50% + 24px); right:calc(-50% + 24px); height:2px; background:#e0e0e0; }
-.hiwCircle { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; position:relative; z-index:1; margin-bottom:10px; border:1.5px solid #ddd; background:#f5f5f5; }
-.hiwCircle.hiwDone { background:#e8f5e9; border-color:#a5d6a7; }
-.hiwCircle.hiwActive { background:#e3f2fd; border-color:#90caf9; }
-.hiwStepTitle { font-size:13px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:4px; }
-.hiwStepDesc { font-size:12px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
-
-/* ── SSS ── */
-.faqWrap { max-width:720px; }
-.faqCategory { font-size:11px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:.06em; margin:20px 0 8px 4px; }
-.faqItem { border:1px solid #e8e8e8; border-radius:10px; margin-bottom:6px; overflow:hidden; cursor:pointer; transition:box-shadow .2s; }
-.faqItem:hover { box-shadow:0 2px 8px rgba(0,0,0,.07); }
-.faqQ { display:flex; justify-content:space-between; align-items:center; padding:13px 16px; font-size:14px; font-weight:600; color:#1a1a1a; }
-.faqIcon { font-size:18px; color:#999; transition:transform .2s; }
-.faqA { display:none; padding:0 16px 13px; font-size:13px; color:#555; line-height:1.65; border-top:1px solid #f0f0f0; padding-top:10px; }
-.faqItem.faqOpen .faqA { display:block; }
-.faqItem.faqOpen .faqIcon { transform:rotate(45deg); }
-/* header avatar */
-.sapUxAPObjectPageHeaderContent .headerAvatar,
-.sapUxAPObjectPageDynamicHeaderContent .headerAvatar {
-    border: 2px solid rgba(255,255,255,0.5);
-}
-/* ═══════════════════════════════════════════════════════════
-   ANASAYFA BUTON DÜZELTMELERİ
-   design-system.css dosyasının EN SONUNA ekleyin
-   ═══════════════════════════════════════════════════════════ */
-
-/* ────────────────────────────────────────────────
-   1. KAMPANYA KARTI — "Detaylar" butonu
-      Bağış Yap butonu gibi turuncu gradient
-   ──────────────────────────────────────────────── */
-.campaignCard .sapMBtn .sapMBtnInner {
-    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color:  transparent !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    padding:       0 24px !important;
-    height:        42px !important;
-    box-shadow:    0 4px 16px rgba(244,162,97,0.45) !important;
-    transition:    all 0.22s ease !important;
-    width:         100% !important;
-}
-.campaignCard .sapMBtn .sapMBtnInner:hover {
-    transform:  translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(244,162,97,0.55) !important;
-    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+/* Hero headerContent her zaman görünür */
+.sapUxAPObjectPageHeaderDetails,
+.sapUxAPObjectPageHeaderDetailsHidden {
+    visibility: visible !important;
+    overflow:   visible !important;
+    height:     auto !important;
+    display:    block !important;
 }
 
-/* ────────────────────────────────────────────────
-   2. HERO — "Bağış Yap" butonu (zaten var, güçlendir)
-   ──────────────────────────────────────────────── */
-.btnHeroPrimary .sapMBtnInner {
-    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color:  transparent !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    padding:       0 32px !important;
-    height:        48px !important;
-    box-shadow:    0 6px 24px rgba(244,162,97,0.50) !important;
-    transition:    all 0.22s ease !important;
-}
-.btnHeroPrimary .sapMBtnInner:hover {
-    transform:  translateY(-3px) !important;
-    box-shadow: 0 10px 32px rgba(244,162,97,0.60) !important;
-    background: linear-gradient(135deg, #E07A3A, #C85F20) !important;
+.sapUxAPObjectPageHeaderContent {
+    visibility: visible !important;
+    display:    block !important;
 }
 
-/* ────────────────────────────────────────────────
-   3. HERO — "Gönüllü Ol" butonu
-      Yeşil outline → hover'da dolu yeşil
-   ──────────────────────────────────────────────── */
-.btnHeroOutline .sapMBtnInner {
-    background:    rgba(255,255,255,0.12) !important;
-    border:        2px solid rgba(255,255,255,0.70) !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    padding:       0 32px !important;
-    height:        48px !important;
-    backdrop-filter: blur(6px) !important;
-    transition:    all 0.22s ease !important;
-}
-.btnHeroOutline .sapMBtnInner:hover {
-    background:    rgba(255,255,255,0.25) !important;
-    border-color:  #fff !important;
-    transform:     translateY(-3px) !important;
-    box-shadow:    0 8px 24px rgba(255,255,255,0.15) !important;
-}
-
-/* ────────────────────────────────────────────────
-   4. NAVBAR — "Giriş Yap" butonu
-      Navbar yeşil arka planda beyaz outline
-   ──────────────────────────────────────────────── */
-.btnLogin .sapMBtnInner,
-.sapFDynamicPageTitle .sapMBtnEmphasized .sapMBtnInner {
-    background:    rgba(255,255,255,0.12) !important;
-    border:        2px solid rgba(255,255,255,0.60) !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   600 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    padding:       0 20px !important;
-    height:        40px !important;
-    transition:    all 0.22s ease !important;
-}
-.btnLogin .sapMBtnInner:hover,
-.sapFDynamicPageTitle .sapMBtnEmphasized .sapMBtnInner:hover {
-    background:   rgba(255,255,255,0.22) !important;
-    border-color: #fff !important;
-    transform:    translateY(-1px) !important;
-}
-
-/* ────────────────────────────────────────────────
-   5. NAVBAR — "Panel" / "Yönetim" butonları
-   ──────────────────────────────────────────────── */
-.sapFDynamicPageTitle .sapMBtn:not(.btnHeroPrimary):not(.btnHeroOutline) .sapMBtnInner {
-    background:    rgba(255,255,255,0.10) !important;
-    border:        1px solid rgba(255,255,255,0.30) !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   600 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    transition:    all 0.22s ease !important;
-}
-.sapFDynamicPageTitle .sapMBtn:not(.btnHeroPrimary):not(.btnHeroOutline) .sapMBtnInner:hover {
-    background:   rgba(255,255,255,0.20) !important;
-    border-color: rgba(255,255,255,0.60) !important;
-}
-
-/* ────────────────────────────────────────────────
-   6. MENÜ BUTONU (kullanıcı adı) navbar'da
-   ──────────────────────────────────────────────── */
-.sapFDynamicPageTitle .sapMMenuBtn .sapMBtnInner {
-    background:    rgba(255,255,255,0.10) !important;
-    border:        1px solid rgba(255,255,255,0.30) !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   600 !important;
-    transition:    all 0.22s ease !important;
-}
-.sapFDynamicPageTitle .sapMMenuBtn .sapMBtnInner:hover {
-    background: rgba(255,255,255,0.20) !important;
-}
-
-/* ────────────────────────────────────────────────
-   7. HAKKIMIZDA — "Hikayemizi Okuyun →" butonu
-   ──────────────────────────────────────────────── */
-#aboutSection .sapMBtnEmphasized .sapMBtnInner {
-    background:    linear-gradient(135deg, #2D6A4F, #40916C) !important;
-    border-color:  transparent !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    padding:       0 24px !important;
-    height:        42px !important;
-    box-shadow:    0 4px 16px rgba(45,106,79,0.35) !important;
-    transition:    all 0.22s ease !important;
-}
-#aboutSection .sapMBtnEmphasized .sapMBtnInner:hover {
-    transform:  translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(45,106,79,0.45) !important;
-}
-
-/* ────────────────────────────────────────────────
-   8. KAMPANYA DETAY SAYFASI — Header "Bağış Yap"
-   ──────────────────────────────────────────────── */
-#cdPage .sapMBtnEmphasized .sapMBtnInner {
-    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color:  transparent !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    padding:       0 24px !important;
-    height:        40px !important;
-    box-shadow:    0 4px 16px rgba(244,162,97,0.45) !important;
-    transition:    all 0.22s ease !important;
-}
-#cdPage .sapMBtnEmphasized .sapMBtnInner:hover {
-    transform:  translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(244,162,97,0.55) !important;
-}
-
-/* ────────────────────────────────────────────────
-   9. SAP varsayılan Emphasized (mavi) rengi ezme
-      Tüm Emphasized butonlara turuncu gradient
-   ──────────────────────────────────────────────── */
-.sapMBtnEmphasized .sapMBtnInner {
-    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
-    border-color:  transparent !important;
-    color:         #fff !important;
-    border-radius: 50px !important;
-    font-weight:   700 !important;
-    font-family:   'DM Sans', sans-serif !important;
-    box-shadow:    0 4px 16px rgba(244,162,97,0.40) !important;
-    transition:    all 0.22s ease !important;
-}
-.sapMBtnEmphasized .sapMBtnInner:hover {
-    background:    linear-gradient(135deg, #E07A3A, #C85F20) !important;
-    transform:     translateY(-2px) !important;
-    box-shadow:    0 8px 24px rgba(244,162,97,0.50) !important;
+/* clip-path sıfırla — SAP bazen scroll'da kesiyor */
+.sapUxAPObjectPageWrapper {
+    clip-path: none !important;
 }

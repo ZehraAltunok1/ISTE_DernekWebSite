@@ -1,569 +1,75 @@
-/* ════════════════════════════════════════
-   CAMPAIGN DETAIL  ·  Doğa Temalı
-   Tab Bar + Grid Layout  (hero görseli yok)
-════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Root & Layout */
+.cdRoot { max-width: 1200px; margin: 0 auto; padding: 24px 24px 60px; font-family: 'DM Sans', sans-serif; }
+.cdLayout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
 
-:root {
-  --bg:           #EEF6EE;
-  --bg2:          #E2F0E2;
-  --surface:      #FFFFFF;
-  --surface2:     #F4FAF4;
-  --border:       #C8E0C8;
-  --border-lt:    #DFF0DF;
-  --primary:      #2D6A4F;
-  --primary-lt:   #40916C;
-  --primary-xlt:  #74C69D;
-  --accent:       #F4A261;
-  --accent-dk:    #E07A3A;
-  --text:         #1A2E1A;
-  --text-md:      #3A5A3A;
-  --text-sm:      #6B8C6B;
-  --radius:       16px;
-  --radius-sm:    10px;
-  --shadow:       0 2px 8px rgba(45,106,79,0.08), 0 6px 24px rgba(45,106,79,0.06);
-  --shadow-hover: 0 4px 16px rgba(45,106,79,0.14), 0 10px 32px rgba(45,106,79,0.10);
-  --ff:           'Plus Jakarta Sans', sans-serif;
-  --tr:           0.22s ease;
+@media(max-width:900px) {
+    .cdLayout { grid-template-columns: 1fr; }
+    .cdRight { position: static !important; }
 }
 
-.cdWrap * { box-sizing: border-box; margin: 0; padding: 0; }
-.cdWrap {
-  background: var(--bg);
-  font-family: var(--ff);
-  color: var(--text);
-  min-height: 100vh;
-}
+/* Breadcrumb */
+.cdBreadcrumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6B7C75; margin-bottom: 24px; }
+.cdBcLink { color: #2D6A4F; cursor: pointer; text-decoration: none; }
+.cdBcLink:hover { text-decoration: underline; }
+.cdBcSep { color: #B0BFB8; }
+.cdBcCurrent { color: #2C3E35; font-weight: 600; }
 
-/* ════════════
-   TAB BAR  (hero yerine)
-════════════ */
-.cdTabBar {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-lt) 100%);
-  padding: 20px 24px 0;
-  position: relative;
-  overflow: hidden;
-}
-.cdTabBar::before {
-  content: '🍃';
-  position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
-  font-size: 5rem; opacity: 0.07; pointer-events: none;
-}
+/* Hero */
+.cdHero { margin-bottom: 28px; }
+.cdHeroBadge { display: inline-block; background: #E8F5EE; color: #2D6A4F; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; }
+.cdHeroTitle { font-size: 2.2rem; font-weight: 900; color: #1B3A2D; line-height: 1.2; margin-bottom: 14px; }
+.cdHeroMeta { display: flex; flex-wrap: wrap; gap: 8px; }
+.cdMetaChip { background: #F5F5F5; color: #555; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+.cdMetaGreen { background: #E8F5EE !important; color: #2D6A4F !important; }
 
-.cdTabBarInner {
-  max-width: 1160px;
-  margin: 0 auto;
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+/* Cards */
+.cdImgCards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.cdImgCard { border-radius: 12px; overflow: hidden; border: 1px solid #E8F0EB; background: #fff; box-shadow: 0 2px 12px rgba(45,106,79,.08); }
+.cdImgCardPhoto { width: 100%; height: 200px; overflow: hidden; }
+.cdImgCardPhoto img { width: 100%; height: 100%; object-fit: cover; }
+.cdImgCardBody { padding: 16px; }
+.cdImgCardTitle { font-size: 15px; font-weight: 700; color: #1B3A2D; margin-bottom: 6px; }
+.cdImgCardText { font-size: 13px; color: #6B7C75; line-height: 1.6; }
 
-.cdTabBarTitle {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  padding-bottom: 14px;
-  flex-shrink: 0;
-}
+/* Sections */
+.cdSection { background: #fff; border: 1px solid #E8F0EB; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.cdSectionHead { margin-bottom: 18px; border-bottom: 1px solid #F0F5F2; padding-bottom: 14px; }
+.cdSectionTitle { font-size: 1.05rem; font-weight: 700; color: #1B3A2D; }
+.cdDescP { font-size: 14px; color: #4A5A52; line-height: 1.8; margin-bottom: 12px; }
 
-.cdTabBtns {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
+/* Timeline */
+.cdTLItem { display: flex; gap: 16px; }
+.cdTLDotWrap { display: flex; flex-direction: column; align-items: center; }
+.cdTLDot { width: 14px; height: 14px; border-radius: 50%; margin-top: 3px; }
+.cdTLDot.green { background: #40916C; }
+.cdTLDot.blue { background: #2980B9; }
+.cdTLDot.orange { background: #E67E22; }
+.cdTLLine { width: 2px; flex: 1; background: #E8F0EB; margin: 4px 0; min-height: 20px; }
+.cdTLContent { padding-bottom: 20px; flex: 1; }
+.cdTLDate { font-size: 11px; color: #9BA8A3; font-weight: 600; }
+.cdTLTitle { font-size: 14px; font-weight: 700; color: #1B3A2D; }
+.cdTLText { font-size: 13px; color: #6B7C75; }
 
-.cdTab {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 18px 12px;
-  background: rgba(255,255,255,0.1);
-  border: 1.5px solid rgba(255,255,255,0.15);
-  border-bottom: none;
-  border-radius: 12px 12px 0 0;
-  color: rgba(255,255,255,0.75);
-  font-family: var(--ff);
-  font-size: 0.84rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--tr), color var(--tr);
-  user-select: none;
-  position: relative;
-}
-.cdTab:hover {
-  background: rgba(255,255,255,0.18);
-  color: #fff;
-}
-.cdTabActive {
-  background: var(--bg) !important;
-  color: var(--primary) !important;
-  font-weight: 800;
-  border-color: var(--border-lt);
-}
-.cdTabEmoji { font-size: 1.05rem; }
-.cdTabLabel { font-size: 0.82rem; }
+/* Sticky Right Panel */
+.cdRight { position: sticky; top: 80px; }
+.cdSticky { display: flex; flex-direction: column; gap: 16px; }
+.cdStickyCard { background: #fff; border: 1px solid #E8F0EB; border-radius: 14px; padding: 20px; box-shadow: 0 2px 12px rgba(45,106,79,.08); }
+.cdStickyProgressTop { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.cdStickyRaised { font-size: 1.5rem; font-weight: 900; color: #2D6A4F; }
+.cdStickyTrack { height: 8px; background: #E8F0EB; border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
+.cdStickyFill { height: 100%; background: linear-gradient(90deg, #2D6A4F, #40916C); transition: width .8s ease; }
 
-@media (max-width: 600px) {
-  .cdTabBarInner { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .cdTabBarTitle { padding-bottom: 0; }
-  .cdTab { font-size: 0.75rem; padding: 8px 12px 10px; }
-}
+/* Form Elements */
+.cdAmtGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+.cdAmtBtn { padding: 9px 4px; text-align: center; border: 1.5px solid #D1E9DC; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; }
+.cdAmtSel { background: #2D6A4F !important; color: #fff !important; }
+.cdCustomInput { display: flex; align-items: center; border: 1.5px solid #D1E9DC; border-radius: 8px; margin-bottom: 12px; }
+.cdCustomInput span { padding: 0 12px; font-weight: 700; color: #2D6A4F; }
+.cdCustomInput input { border: none; padding: 10px; outline: none; width: 100%; }
+.cdDonateBtn { width: 100%; padding: 14px; background: linear-gradient(135deg, #F4A261, #E07A3A); border: none; border-radius: 10px; color: #fff; font-weight: 700; cursor: pointer; }
 
-/* ════════════
-   GRID BODY
-════════════ */
-.cdBody {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 18px 24px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-.cdBlockHeader   { grid-column: 1 / 3; }
-.cdBlockProgress { grid-column: 1 / 3; }
-.cdBlockInfo     { grid-column: 1 / 2; }
-.cdBlockDonate   { grid-column: 2 / 3; }
-.cdBlockTimeline { grid-column: 1 / 2; }
-.cdBlockDonors   { grid-column: 2 / 3; }
-
-@media (max-width: 860px) {
-  .cdBlockHeader, .cdBlockProgress,
-  .cdBlockInfo, .cdBlockDonate,
-  .cdBlockTimeline, .cdBlockDonors { grid-column: 1 / 3; }
-}
-@media (max-width: 520px) {
-  .cdBody { padding: 12px 12px 50px; gap: 12px; }
-}
-
-/* ════════════
-   CAMPAIGN HEADER CARD
-════════════ */
-.cdCampHeader {
-  background: var(--surface);
-  border: 1px solid var(--border-lt);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.cdCampHeaderLeft {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex: 1;
-  min-width: 0;
-}
-
-.cdCampEmoji {
-  font-size: 2.8rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.cdCampHeaderText { min-width: 0; }
-
-.cdCampCategory {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 3px;
-}
-
-.cdCampTitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 800;
-  color: var(--text);
-  line-height: 1.2;
-  margin-bottom: 10px;
-}
-
-.cdCampMeta {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.cdCampMetaItem {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-sm);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.cdMetaLive {
-  color: var(--primary-lt) !important;
-  font-weight: 700;
-}
-
-/* Faaliyetler butonu */
-.cdActivitiesLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 18px;
-  background: var(--bg2);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--primary);
-  font-family: var(--ff);
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--tr);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.cdActivitiesLink:hover {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(45,106,79,0.2);
-}
-
-/* ════════════
-   CARD
-════════════ */
-.cdCard {
-  background: var(--surface);
-  border: 1px solid var(--border-lt);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 22px 24px;
-  transition: box-shadow var(--tr);
-}
-.cdCard:hover { box-shadow: var(--shadow-hover); }
-
-.cdCardHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 14px;
-  margin-bottom: 18px;
-  border-bottom: 1.5px solid var(--border-lt);
-}
-.cdCardTitle {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.cdCardTitle .cti { font-size: 1.1rem; }
-.cdCardPill {
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: var(--bg2);
-  color: var(--primary);
-  border: 1px solid var(--border);
-  letter-spacing: 0.04em;
-}
-
-/* ════════════
-   PROGRESS
-════════════ */
-.cdProgressNumbers {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 12px;
-}
-.cdProgressRaised {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--primary);
-  line-height: 1;
-}
-.cdProgressRaised small {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-sm);
-  margin-left: 5px;
-}
-.cdProgressGoal { font-size: 0.84rem; color: var(--text-sm); font-weight: 600; }
-
-.cdProgressTrack {
-  height: 12px;
-  background: var(--bg2);
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-.cdProgressFill {
-  height: 100%;
-  border-radius: 20px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-lt), var(--primary-xlt));
-  width: 0%;
-  transition: width 1.5s cubic-bezier(.22,1,.36,1);
-  position: relative;
-}
-.cdProgressFill::after {
-  content: '';
-  position: absolute; right: 0; top: 0; bottom: 0; width: 24px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5));
-  animation: shimmer 2s ease infinite;
-}
-@keyframes shimmer { 0%,100%{opacity:0} 50%{opacity:1} }
-
-.cdProgressPct {
-  text-align: right;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-top: 5px;
-}
-
-.cdProgStats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 10px;
-  margin-top: 18px;
-}
-.cdProgStat {
-  background: var(--surface2);
-  border: 1px solid var(--border-lt);
-  border-radius: var(--radius-sm);
-  padding: 14px 8px;
-  text-align: center;
-}
-.cdProgStat .psNum { font-size: 1.4rem; font-weight: 800; line-height: 1; }
-.cdProgStat:nth-child(1) .psNum { color: var(--primary); }
-.cdProgStat:nth-child(2) .psNum { color: #2563EB; }
-.cdProgStat:nth-child(3) .psNum { color: var(--accent-dk); }
-.cdProgStat .psLabel {
-  font-size: 0.68rem;
-  color: var(--text-sm);
-  font-weight: 700;
-  margin-top: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ════════════
-   DESCRIPTION
-════════════ */
-.cdDesc { font-size: 0.9rem; line-height: 1.8; color: var(--text-md); }
-.cdDesc p { margin-bottom: 10px; }
-.cdDesc p:last-child { margin: 0; }
-
-/* ════════════
-   DONATE CARD
-════════════ */
-.cdDonateCard {
-  background: linear-gradient(145deg, var(--primary) 0%, var(--primary-lt) 100%);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: 0 6px 24px rgba(45,106,79,0.25);
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-}
-.cdDonateCard::before {
-  content: '🌿';
-  position: absolute; right: -12px; bottom: -12px;
-  font-size: 7rem; opacity: 0.08; pointer-events: none;
-}
-.cdDonateCard h3 { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 5px; }
-.cdDonateCard > p { font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.5; margin-bottom: 18px; }
-
-.cdAmtGrid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 7px;
-  margin-bottom: 10px;
-}
-.cdAmtBtn {
-  padding: 9px 4px;
-  text-align: center;
-  background: rgba(255,255,255,0.12);
-  border: 1.5px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  color: #fff;
-  font-family: var(--ff);
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--tr);
-  user-select: none;
-}
-.cdAmtBtn:hover { background: rgba(255,255,255,0.22); }
-.cdAmtBtn.sel {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 3px 12px rgba(244,162,97,0.45);
-}
-
-.cdCustom {
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.12);
-  border: 1.5px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-sm);
-  padding: 2px 12px;
-  margin-bottom: 12px;
-  transition: border-color var(--tr);
-}
-.cdCustom:focus-within { border-color: rgba(255,255,255,0.6); }
-.cdCustom span { font-size: 0.88rem; color: rgba(255,255,255,0.7); font-weight: 700; }
-.cdCustom input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-family: var(--ff);
-  font-size: 0.95rem;
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 8px;
-}
-.cdCustom input::placeholder { color: rgba(255,255,255,0.35); }
-.cdCustom input.cdInputErr {
-  animation: shake 0.4s ease;
-  color: #FDBA74;
-}
-@keyframes shake {
-  0%,100%{ transform:translateX(0); }
-  20%    { transform:translateX(-6px); }
-  40%    { transform:translateX(6px); }
-  60%    { transform:translateX(-4px); }
-  80%    { transform:translateX(4px); }
-}
-
-.cdDonateBtn {
-  width: 100%;
-  padding: 13px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--ff);
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: background var(--tr), transform var(--tr), box-shadow var(--tr);
-  box-shadow: 0 4px 14px rgba(244,162,97,0.4);
-}
-.cdDonateBtn:hover {
-  background: var(--accent-dk);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(244,162,97,0.45);
-}
-.cdDonateBtn:active { transform: translateY(0); }
-.cdDonateSecure {
-  text-align: center;
-  margin-top: 9px;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.6);
-}
-
-/* ════════════
-   TIMELINE
-════════════ */
-.cdTimeline { position: relative; padding-left: 26px; }
-.cdTimeline::before {
-  content: '';
-  position: absolute; left: 8px; top: 6px; bottom: 6px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--primary), var(--border));
-  border-radius: 2px;
-}
-.cdTLItem { position: relative; margin-bottom: 18px; }
-.cdTLItem:last-child { margin-bottom: 0; }
-.cdTLDot {
-  position: absolute; left: -30px; top: 11px;
-  width: 16px; height: 16px; border-radius: 50%;
-  border: 3px solid var(--surface);
-}
-.cdTLDot.green  { background: var(--primary);  box-shadow: 0 0 0 3px rgba(45,106,79,0.18); }
-.cdTLDot.blue   { background: #3B82F6;          box-shadow: 0 0 0 3px rgba(59,130,246,0.18); }
-.cdTLDot.orange { background: var(--accent);    box-shadow: 0 0 0 3px rgba(244,162,97,0.18); }
-.cdTLDot.yellow { background: #F59E0B;          box-shadow: 0 0 0 3px rgba(245,158,11,0.18); }
-
-.cdTLBody {
-  background: var(--surface2);
-  border: 1px solid var(--border-lt);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  transition: border-color var(--tr), box-shadow var(--tr);
-}
-.cdTLBody:hover { border-color: var(--border); box-shadow: 0 2px 12px rgba(45,106,79,0.09); }
-.cdTLTop { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 5px; }
-.cdTLTitle { font-size: 0.87rem; font-weight: 700; color: var(--text); }
-.cdTLDate  { font-size: 0.7rem; color: var(--text-sm); font-weight: 600; white-space: nowrap; }
-.cdTLText  { font-size: 0.82rem; color: var(--text-md); line-height: 1.6; }
-.cdTLTags  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.cdTLTag {
-  font-size: 0.68rem; font-weight: 700;
-  padding: 2px 9px; border-radius: 20px;
-}
-.cdTLTag.green  { background: #E0F2E9; color: var(--primary); }
-.cdTLTag.blue   { background: #EFF6FF; color: #2563EB; }
-.cdTLTag.orange { background: #FFF7ED; color: #C2410C; }
-.cdTLTag.yellow { background: #FFFBEB; color: #92400E; }
-
-/* ════════════
-   DONORS
-════════════ */
-.cdDonorList { list-style: none; }
-.cdDonorItem { display: flex; align-items: center; gap: 11px; padding: 10px 0; border-bottom: 1px solid var(--border-lt); }
-.cdDonorItem:last-child { border-bottom: none; padding-bottom: 0; }
-.cdDonorAva {
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.82rem; font-weight: 800; color: #fff; flex-shrink: 0;
-}
-.cdDonorAva.g1 { background: linear-gradient(135deg,#2D6A4F,#52B788); }
-.cdDonorAva.g2 { background: linear-gradient(135deg,#3B82F6,#93C5FD); }
-.cdDonorAva.g3 { background: linear-gradient(135deg,#F4A261,#FDBA74); }
-.cdDonorAva.g4 { background: linear-gradient(135deg,#F59E0B,#FDE68A); color:#7C2D12; }
-.cdDonorAva.g5 { background: linear-gradient(135deg,#8B5CF6,#DDD6FE); }
-.cdDonorInfo { flex: 1; min-width: 0; }
-.cdDonorName { font-size: 0.84rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cdDonorTime { font-size: 0.7rem; color: var(--text-sm); margin-top: 2px; }
-.cdDonorAmt  { font-size: 0.9rem; font-weight: 800; color: var(--primary); white-space: nowrap; }
-
-/* ════════════
-   SHARE
-════════════ */
-.cdShareGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.cdShareBtn {
-  padding: 10px 6px;
-  border-radius: var(--radius-sm);
-  font-family: var(--ff); font-size: 0.78rem; font-weight: 700;
-  border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-  transition: var(--tr);
-}
-.cdShareBtn:hover { transform: translateY(-1px); filter: brightness(1.08); }
-.cdShareBtn.fb { background: #1877F2; color: #fff; }
-.cdShareBtn.tw { background: #111;    color: #fff; }
-.cdShareBtn.wa { background: #25D366; color: #fff; }
-.cdShareBtn.cp { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-
-/* ════════════
-   LOADING
-════════════ */
-.cdLoading {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  min-height: 60vh; gap: 14px;
-}
-.cdLoadingLeaf { font-size: 2.8rem; animation: spin 1.2s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.cdLoadingText { font-size: 0.88rem; color: var(--text-sm); font-weight: 600; }
+/* Side Nav */
+.cdSideNav { background: #fff; border: 1px solid #E8F0EB; border-radius: 14px; padding: 18px; }
+.cdSideNavItem { padding: 10px; border-radius: 8px; cursor: pointer; font-size: 13px; color: #2D6A4F; font-weight: 600; }
+.cdSideNavActive { background: #E8F5EE !important; }
+.cdBackBtn { width: 100%; padding: 10px; background: none; border: 1.5px solid #D1E9DC; border-radius: 10px; color: #2D6A4F; cursor: pointer; margin-top: 10px; }

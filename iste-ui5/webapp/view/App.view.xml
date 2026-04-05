@@ -2,7 +2,95 @@
     controllerName="edusupport.platform.controller.App"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     displayBlock="true">
 
-    <App id="app"/>
+    <Page
+        id="mainShell"
+        showHeader="true"
+        showFooter="true"
+        enableScrolling="false"
+        class="mainShellPage">
+
+<customHeader>
+    <Bar id="mainNavBar" class="mainNavBar" design="Header">
+
+        <!-- SOL: Logo + İsim + Nav Linkleri -->
+        <contentLeft>
+            <HBox alignItems="Center" class="navFullRow">
+                <Image src="images/24.png" class="headerLogo"/>
+                <Button text="ANA SAYFA"   type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
+                <Button text="HAKKIMIZDA"  type="Transparent" press="onNavToAbout"  class="navLinkBtn"/>
+                <Button text="FAALİYETLER" type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
+                <Button text="KAMPANYALAR" type="Transparent" press="onNavToDonate" class="navLinkBtn"/>
+                <Button text="İLETİŞİM"   type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
+            </HBox>
+        </contentLeft>
+
+        <!-- SAĞ: Giriş / Kullanıcı + Bağış -->
+        <contentRight>
+            <!-- Giriş yapılmamış -->
+            <Button
+                text="Bağışçı Girişi"
+                icon="sap-icon://customer"
+                type="Transparent"
+                press="onLoginPress"
+                class="navBtnLoginText sapUiTinyMarginEnd"
+                visible="{= !${appData>/isAuthenticated} }"/>
+
+            <!-- Giriş yapılmış -->
+            <Avatar
+                id="headerAvatar"
+                src="{appData>/currentUser/avatar_url}"
+                initials="{appData>/currentUser/initials}"
+                displaySize="XS"
+                visible="{appData>/isAuthenticated}"
+                press="onViewProfile"
+                class="sapUiTinyMarginEnd"/>
+            <MenuButton
+                class="navMenuBtn sapUiTinyMarginEnd"
+                visible="{appData>/isAuthenticated}"
+                menuPosition="BeginBottom"
+                text="{appData>/currentUser/first_name}">
+                <menu>
+                    <Menu>
+                        <items>
+                            <MenuItem text="Profilim"  icon="sap-icon://person-placeholder" press="onViewProfile"/>
+                            <MenuItem text="Panel"     icon="sap-icon://home"               press="onNavToLaunchpad"/>
+                            <MenuItem text="Yönetim"   icon="sap-icon://settings"           press="onNavToDashboard"/>
+                            <MenuItem text="Çıkış Yap" icon="sap-icon://log"                press="onLogout"/>
+                        </items>
+                    </Menu>
+                </menu>
+            </MenuButton>
+
+            <!-- Her zaman görünür -->
+            <Button
+                text="🐾 Bağış Yap"
+                type="Transparent"
+                press="onNavToDonate"
+                class="navBtnDonate"/>
+        </contentRight>
+
+    </Bar>
+</customHeader>
+
+        <content>
+            <NavContainer id="appContent" height="100%"/>
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <Text text="© 2026 Pati ve Gelecek Derneği. Tüm hakları saklıdır."/>
+                <ToolbarSpacer/>
+                <Text text="📞 0 (850) 311 51 42"/>
+                <ToolbarSpacer/>
+                <Text text="✉️ info@patigeleeck.org"/>
+                <ToolbarSpacer/>
+                <Text text="📍 İskenderun, Hatay"/>
+            </OverflowToolbar>
+        </footer>
+
+    </Page>
+
 </mvc:View>

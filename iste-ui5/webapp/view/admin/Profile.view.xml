@@ -9,20 +9,7 @@
     displayBlock="true"
     height="100%">
 
-    <Page
-        showHeader="true"
-        title="Profilim"
-        showNavButton="true"
-        navButtonPress="onNavBack"
-        class="profilePage">
-
-        <headerContent>
-            <Button
-                icon="sap-icon://edit"
-                text="Düzenle"
-                type="Emphasized"
-                press="onOpenEditDialog"/>
-        </headerContent>
+    <Page>
 
         <dependents>
             <Dialog
@@ -64,7 +51,7 @@
                 </content>
                 <buttons>
                     <Button text="Kaydet" type="Emphasized" press="onSaveEditDialog"/>
-                    <Button text="İptal" press="onCloseEditDialog"/>
+                    <Button text="İptal"  press="onCloseEditDialog"/>
                 </buttons>
             </Dialog>
         </dependents>
@@ -72,6 +59,14 @@
         <content>
             <ScrollContainer height="100%" vertical="true">
                 <VBox class="profileContent">
+
+                    <!-- Üst toolbar — geri butonu + düzenle -->
+                    <OverflowToolbar class="sapUiSmallMarginBottom">
+                        <Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack" tooltip="Geri"/>
+                        <Title text="Profilim" level="H3"/>
+                        <ToolbarSpacer/>
+                        <Button icon="sap-icon://edit" text="Düzenle" type="Emphasized" press="onOpenEditDialog"/>
+                    </OverflowToolbar>
 
                     <f:Card class="profileHeaderCard sapUiResponsiveMargin">
                         <f:header>
@@ -101,8 +96,8 @@
                                             state="Success"
                                             icon="sap-icon://shield"
                                             class="sapUiTinyMarginTop"/>
-                                        <Text text="{profileData>/email}" class="sapUiTinyMarginTop profileEmail"/>
-                                        <Text text="{profileData>/phone}" class="sapUiTinyMarginTop"/>
+                                        <Text text="{profileData>/email}"      class="sapUiTinyMarginTop profileEmail"/>
+                                        <Text text="{profileData>/phone}"      class="sapUiTinyMarginTop"/>
                                         <Text text="Üyelik Tarihi: {profileData>/created_at}" class="sapUiTinyMarginTop profileDate"/>
                                     </VBox>
                                 </HBox>
@@ -113,28 +108,28 @@
                     <Panel headerText="Kişisel İstatistikler" class="sapUiResponsiveMargin statsPanel">
                         <layout:Grid defaultSpan="XL3 L3 M6 S12" class="profileStatsGrid">
                             <VBox class="statCard statBlue" alignItems="Center">
-                                <core:Icon src="sap-icon://log" size="2rem" color="#0070F2"/>
-                                <Title text="{profileData>/stats/loginCount}" level="H3" class="statNumber"/>
-                                <Text text="Toplam Giriş" class="statLabel"/>
-                                <Text text="Son: {profileData>/stats/lastLogin}" class="statSubtext"/>
+                                <core:Icon src="sap-icon://log"     size="2rem" color="#0070F2"/>
+                                <Title text="{profileData>/stats/loginCount}"    level="H3" class="statNumber"/>
+                                <Text  text="Toplam Giriş" class="statLabel"/>
+                                <Text  text="Son: {profileData>/stats/lastLogin}" class="statSubtext"/>
                             </VBox>
                             <VBox class="statCard statGreen" alignItems="Center">
                                 <core:Icon src="sap-icon://accept" size="2rem" color="#10B981"/>
                                 <Title text="{profileData>/stats/approvedCount}" level="H3" class="statNumber"/>
-                                <Text text="Onaylanan İşlem" class="statLabel"/>
-                                <Text text="Bu ay" class="statSubtext"/>
+                                <Text  text="Onaylanan İşlem" class="statLabel"/>
+                                <Text  text="Bu ay" class="statSubtext"/>
                             </VBox>
                             <VBox class="statCard statOrange" alignItems="Center">
-                                <core:Icon src="sap-icon://add" size="2rem" color="#F59E0B"/>
-                                <Title text="{profileData>/stats/addedMembers}" level="H3" class="statNumber"/>
-                                <Text text="Eklenen Üye" class="statLabel"/>
-                                <Text text="Bu ay" class="statSubtext"/>
+                                <core:Icon src="sap-icon://add"     size="2rem" color="#F59E0B"/>
+                                <Title text="{profileData>/stats/addedMembers}"  level="H3" class="statNumber"/>
+                                <Text  text="Eklenen Üye" class="statLabel"/>
+                                <Text  text="Bu ay" class="statSubtext"/>
                             </VBox>
                             <VBox class="statCard statPurple" alignItems="Center">
                                 <core:Icon src="sap-icon://history" size="2rem" color="#8B5CF6"/>
-                                <Title text="{profileData>/stats/activeDays}" level="H3" class="statNumber"/>
-                                <Text text="Aktif Gün" class="statLabel"/>
-                                <Text text="Bu ay" class="statSubtext"/>
+                                <Title text="{profileData>/stats/activeDays}"    level="H3" class="statNumber"/>
+                                <Text  text="Aktif Gün" class="statLabel"/>
+                                <Text  text="Bu ay" class="statSubtext"/>
                             </VBox>
                         </layout:Grid>
                     </Panel>
@@ -167,9 +162,9 @@
                                     <HBox alignItems="Center">
                                         <core:Icon src="{profileData>deviceIcon}" size="1.5rem" class="sapUiSmallMarginEnd"/>
                                         <VBox>
-                                            <Text text="{profileData>device}" class="sessionDevice"/>
-                                            <Text text="{profileData>location}" class="sessionLocation"/>
-                                            <Text text="Son Aktivite: {profileData>lastActive}" class="sessionTime"/>
+                                            <Text text="{profileData>device}"                     class="sessionDevice"/>
+                                            <Text text="{profileData>location}"                   class="sessionLocation"/>
+                                            <Text text="Son Aktivite: {profileData>lastActive}"   class="sessionTime"/>
                                         </VBox>
                                     </HBox>
                                     <HBox>

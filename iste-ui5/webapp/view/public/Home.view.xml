@@ -4,490 +4,282 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
-    xmlns:f="sap.f"
     xmlns:uxap="sap.uxap"
     xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
-    <uxap:ObjectPageLayout
-        id="mainPage"
-        showTitleInHeaderContent="true"
-        upperCaseAnchorBar="false"
-        showAnchorBar="false"
-        showFooter="true"
-        enableLazyLoading="true">
+    <Page id="homePage" showHeader="false" showFooter="false" enableScrolling="false">
+        <content>
+            <uxap:ObjectPageLayout
+                id="mainPage"
+                showTitleInHeaderContent="false"
+                upperCaseAnchorBar="false"
+                showAnchorBar="false"
+                showFooter="false"
+                enableLazyLoading="true"
+                height="100%">
 
-        <!-- ══ HEADER ══ -->
-        <uxap:headerTitle>
-            <uxap:ObjectPageDynamicHeaderTitle>
-                <uxap:expandedHeading>
-                    <HBox alignItems="Center">
-                        <Image src="images/24.png" class="headerLogo sapUiTinyMarginEnd"/>
-                        <Title text="Pati ve Gelecek Derneği" level="H1"/>
-                    </HBox>
-                </uxap:expandedHeading>
-                <uxap:actions>
-                    <Button
-                        text="Giriş Yap"
-                        icon="sap-icon://customer"
-                        type="Emphasized"
-                        press="onLoginPress"
-                        visible="{= !${appData>/isAuthenticated} }"/>
-                    <Button
-                        text="Panel"
-                        icon="sap-icon://home"
-                        type="Emphasized"
-                        press="onNavToLaunchpad"
-                       visible="{= ${appData>/isAuthenticated} &amp;&amp; ${appData>/currentUser/user_type} === 'admin' }"
-                        class="sapUiTinyMarginEnd"/>
-                    <Button
-                        text="Yönetim"
-                        type="Default"
-                        press="onNavToDashboard"
-                        visible="{= ${appData>/isAuthenticated} &amp;&amp; ${appData>/currentUser/role} === 'admin' }"
-                        class="btnHeroPrimary sapUiTinyMarginEnd"/>
-                        <Avatar
-                            id="headerAvatar"
-                            src="{appData>/currentUser/avatar_url}"
-                            initials="{appData>/currentUser/initials}"
-                            displaySize="XS"
-                            visible="{appData>/isAuthenticated}"
-                            press="onViewProfile"
-                            class="sapUiTinyMarginEnd"/>
-                        <MenuButton
-                            type="Transparent"
-                            visible="{appData>/isAuthenticated}"
-                            menuPosition="BeginBottom"
-                            text="{appData>/currentUser/first_name}">
-                            <menu>
-                                <Menu>
-                                    <items>
-                                        <MenuItem text="Profilim"   icon="sap-icon://person-placeholder" press="onViewProfile"/>
-                                        <MenuItem text="Çıkış Yap" icon="sap-icon://log"                press="onLogout"/>
-                                    </items>
-                                </Menu>
-                            </menu>
-                        </MenuButton>
-                </uxap:actions>
-            </uxap:ObjectPageDynamicHeaderTitle>
-        </uxap:headerTitle>
+                <!-- ══ HERO ══ -->
+                <uxap:headerContent>
+                    <Image
+                        src="images/23.jpg"
+                        width="100%"
+                        height="460px"
+                        mode="Background"
+                        class="heroImage"
+                        alt="Hero"/>
+                    <l:VerticalLayout class="heroTextOverlay">
+                        <Title text="Her Bağış Bir Can" level="H2"/>
+                        <Text text="Her bağış bir hayvanı hayatında gerçek bir fark yaratır..."/>
+                        <HBox class="heroActions">
+                            <Button text="Şimdi Bağış Yap" press="onDonatePress"    class="btnPrimary btnHero"/>
+                            <Button text="Gönüllü Ol"       press="onVolunteerPress" class="btnOutline"/>
+                        </HBox>
+                    </l:VerticalLayout>
+                </uxap:headerContent>
 
-        <!-- ══ HERO ══ -->
-        <uxap:headerContent>
-            <Image
-                src="images/23.jpg"
-                width="100%"
-                height="460px"
-                mode="Background"
-                class="heroImage"
-                alt="Hero"/>
-            <l:VerticalLayout class="heroTextOverlay">
-                <Title text="Eğitime Destek, Geleceğe Yatırım 🎓" level="H2"/>
-                <Text text="Her bağış bir öğrencinin hayatında gerçek bir fark yaratır..."/>
-                <HBox class="heroActions">
-                    <Button text="Şimdi Bağış Yap" press="onDonatePress" class="btnHeroPrimary sapUiTinyMarginEnd"/>
-                    <Button text="Gönüllü Ol"       press="onVolunteerPress" class="btnHeroOutline"/>
-                </HBox>
-            </l:VerticalLayout>
-        </uxap:headerContent>
+                <uxap:sections>
 
-        <uxap:sections>
-
-<uxap:ObjectPageSection title="Başarılarımız" id="statsSection">
-            <uxap:subSections>
-                <uxap:ObjectPageSubSection>
-                    <uxap:blocks>
-                        <!-- CSS dışarıdan yükleniyor: css/stats.css -->
-                        <core:HTML content="
-                        &lt;link rel='stylesheet' href='css/stats.css'/&gt;
-
-                        &lt;div class='animStatsRow'&gt;
-                            &lt;div class='animStatCard animStatCard1'&gt;
-                                &lt;span class='animStatIcon'&gt;🐕&lt;/span&gt;
-                                &lt;span class='animStatNum'&gt;1.500&lt;/span&gt;
-                                &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
-                                &lt;span class='animStatLabel'&gt;Beslenen Hayvan&lt;/span&gt;
-                            &lt;/div&gt;
-                            &lt;div class='animStatCard animStatCard2'&gt;
-                                &lt;span class='animStatIcon'&gt;💉&lt;/span&gt;
-                                &lt;span class='animStatNum'&gt;400&lt;/span&gt;
-                                &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
-                                &lt;span class='animStatLabel'&gt;Tamamlanan Tedavi&lt;/span&gt;
-                            &lt;/div&gt;
-                            &lt;div class='animStatCard animStatCard3'&gt;
-                                &lt;span class='animStatIcon'&gt;🏠&lt;/span&gt;
-                                &lt;span class='animStatNum'&gt;200&lt;/span&gt;
-                                &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
-                                &lt;span class='animStatLabel'&gt;Sahiplendirme&lt;/span&gt;
-                            &lt;/div&gt;
-                            &lt;div class='animStatCard animStatCard4'&gt;
-                                &lt;span class='animStatIcon'&gt;🤝&lt;/span&gt;
-                                &lt;span class='animStatNum'&gt;5.000&lt;/span&gt;
-                                &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
-                                &lt;span class='animStatLabel'&gt;Gönüllü&lt;/span&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        "/>
-                    </uxap:blocks>
-                </uxap:ObjectPageSubSection>
-            </uxap:subSections>
-        </uxap:ObjectPageSection>
-
-            <!-- ══ FALİYETLER ══ -->
-            <uxap:ObjectPageSection title="Faaliyetlerimiz" id="activitiesSection">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-
-                            <VBox id="mediaLoadingBox" alignItems="Center" class="mediaLoadingBox" visible="true">
-                                <BusyIndicator/>
-                                <Text text="Yükleniyor..."/>
-                            </VBox>
-
-                            <VBox id="mediaEmptyBox" alignItems="Center" class="mediaEmptyBox" visible="false">
-                                <core:Icon src="sap-icon://picture" class="mediaEmptyIcon"/>
-                                <Text text="Henüz içerik eklenmemiş." textAlign="Center"/>
-                            </VBox>
-
-                            <HBox id="mediaCardsBox" visible="false" alignItems="Start" class="faaliyetlerMainBox">
-
-                                <VBox id="photoSection" visible="false" class="faaliyetlerGroup">
-                                    <HBox alignItems="Center" class="faaliyetGroupHeader">
-                                        <core:Icon src="sap-icon://picture" class="faaliyetIcon"/>
-                                        <Title text="Fotoğraflar" level="H4" class="faaliyetGroupTitle"/>
-                                        <Text id="photoCounter" text="" class="faaliyetCounter"/>
-                                    </HBox>
-                                    <HBox alignItems="Center" class="faaliyetSliderRow">
-                                        <Button id="photoPrevBtn" icon="sap-icon://navigation-left-arrow" type="Transparent" press="onPhotoPrev" class="faaliyetArrowBtn" visible="false"/>
-                                        <VBox id="photoCardArea" class="faaliyetCardArea"/>
-                                        <Button id="photoNextBtn" icon="sap-icon://navigation-right-arrow" type="Transparent" press="onPhotoNext" class="faaliyetArrowBtn" visible="false"/>
-                                    </HBox>
-                                </VBox>
-
-                                <core:HTML id="mediaDivider" visible="false"
-                                    content="&lt;div class='faaliyetDivider'&gt;&lt;/div&gt;"/>
-
-                                <VBox id="videoSection" visible="false" class="faaliyetlerGroup">
-                                    <HBox alignItems="Center" class="faaliyetGroupHeader">
-                                        <core:Icon src="sap-icon://video" class="faaliyetIcon"/>
-                                        <Title text="Videolar" level="H4" class="faaliyetGroupTitle"/>
-                                        <Text id="videoCounter" text="" class="faaliyetCounter"/>
-                                    </HBox>
-                                    <HBox alignItems="Center" class="faaliyetSliderRow">
-                                        <Button id="videoPrevBtn" icon="sap-icon://navigation-left-arrow" type="Transparent" press="onVideoPrev" class="faaliyetArrowBtn" visible="false"/>
-                                        <VBox id="videoCardArea" class="faaliyetCardArea"/>
-                                        <Button id="videoNextBtn" icon="sap-icon://navigation-right-arrow" type="Transparent" press="onVideoNext" class="faaliyetArrowBtn" visible="false"/>
-                                    </HBox>
-                                </VBox>
-
-                            </HBox>
-
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-
-            <!-- ══ HAKKIMIZDA ══ -->
-<uxap:ObjectPageSection title="Hakkımızda" id="aboutSection">
-    <uxap:subSections>
-        <uxap:ObjectPageSubSection title="Biz Kimiz?">
-            <uxap:blocks>
-                <l:BlockLayout>
-                    <l:BlockLayoutRow>
-                        <l:BlockLayoutCell>
-                            <Text class="aboutText" text="Hatay bölgesinde sokak hayvanlarına destek olmak amacıyla 2020 yılında İskenderun'da kurulan Pati ve Gelecek Derneği, bugün 5.000'i aşkın gönüllüsüyle bölgenin en köklü sivil toplum kuruluşlarından biri haline gelmiştir."/>
-                            <Button
-                                text="Hikayemizi Okuyun →"
-                                type="Emphasized"
-                                press="onNavToAbout"
-                                class="sapUiSmallMarginTop"/>
-                        </l:BlockLayoutCell>
-                    </l:BlockLayoutRow>
-                </l:BlockLayout>
-            </uxap:blocks>
-        </uxap:ObjectPageSubSection>
-        <uxap:ObjectPageSubSection title="Değerlerimiz">
-            <uxap:blocks>
-                <l:Grid defaultSpan="XL4 L4 M6 S12">
-                    <ObjectStatus title="Vizyonumuz"   text="Türkiye'de eğitimde fırsat eşitliğini sağlayan öncü platform"    icon="sap-icon://target-group" state="Information"/>
-                    <ObjectStatus title="Misyonumuz"   text="Her öğrencinin potansiyelini gerçekleştirmesine katkıda bulunmak" icon="sap-icon://lightbulb"    state="Success"/>
-                    <ObjectStatus title="Değerlerimiz" text="Şeffaflık, güvenilirlik, sosyal sorumluluk ve eşitlik"            icon="sap-icon://sys-help"     state="Warning"/>
-                </l:Grid>
-            </uxap:blocks>
-        </uxap:ObjectPageSubSection>
-    </uxap:subSections>
-</uxap:ObjectPageSection>
-
-            <!-- ══ AKTİF KAMPANYALAR ══ -->
-            <uxap:ObjectPageSection title="Aktif Kampanyalar" id="scholarshipsSection">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <l:Grid defaultSpan="XL4 L4 M6 S12">
-
-                                <Panel headerText="Kampüs Kedileri İçin Kışlık Yuva">
-                                    <content>
-                                        <VBox class="campaignCard">
-                                            <core:Icon src="sap-icon://home" class="campaignIcon campaignIconPrimary"/>
-                                            <Text class="campaignText" text="Soğuk kış aylarında kampüs kedilerine sıcak barınak sağlıyoruz."/>
-                                            <Button text="Detaylar" type="Emphasized" press="onCampaignPress">
-                                                <customData><core:CustomData key="campaignId" value="1"/></customData>
-                                            </Button>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                                <Panel headerText="Sokak Köpeklerine Sahiplenme Desteği">
-                                    <content>
-                                        <VBox class="campaignCard">
-                                            <core:Icon src="sap-icon://sys-help" class="campaignIcon campaignIconMid"/>
-                                            <Text class="campaignText" text="Barınaktaki köpeklerin eğitim almasını ve sağlıklı yuvalara kavuşmasını destekliyoruz."/>
-                                            <Button text="Detaylar" type="Emphasized" press="onCampaignPress">
-                                                <customData><core:CustomData key="campaignId" value="2"/></customData>
-                                            </Button>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                                <Panel headerText="Acil Tedavi Fonu">
-                                    <content>
-                                        <VBox class="campaignCard">
-                                            <core:Icon src="sap-icon://stethoscope" class="campaignIcon campaignIconAccent"/>
-                                            <Text class="campaignText" text="Sokak hayvanlarının acil veteriner tedavi masraflarını karşılamak için oluşturulan dayanışma fonu."/>
-                                            <Button text="Detaylar" type="Emphasized" press="onCampaignPress">
-                                                <customData><core:CustomData key="campaignId" value="3"/></customData>
-                                            </Button>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                            </l:Grid>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-
-            <!-- ══ BLOG ══ 
-            <uxap:ObjectPageSection title="Blog" id="blogSection">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <l:Grid defaultSpan="XL4 L4 M6 S12">
-
-                                <Panel headerText="Eğitimde Fırsat Eşitliği">
-                                    <content>
-                                        <VBox class="blogCard">
-                                            <Image src="images/3.jpg" width="100%" height="200px" mode="Image" class="blogThumbnail"/>
-                                            <HBox class="blogMeta">
-                                                <core:Icon src="sap-icon://newspaper" class="blogMetaIcon"/>
-                                                <Text text="15 Şubat 2026"/>
-                                            </HBox>
-                                            <Text class="blogExcerpt" text="Türkiye'de eğitimde fırsat eşitliğinin önemi..."/>
-                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                                <Panel headerText="Burs Başvuru Rehberi">
-                                    <content>
-                                        <VBox class="blogCard">
-                                            <Image src="images/4.jpg" width="100%" height="200px" mode="Image" class="blogThumbnail"/>
-                                            <HBox class="blogMeta">
-                                                <core:Icon src="sap-icon://document" class="blogMetaIcon"/>
-                                                <Text text="10 Şubat 2026"/>
-                                            </HBox>
-                                            <Text class="blogExcerpt" text="Burs başvurusu yaparken dikkat edilmesi gereken noktalar..."/>
-                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                                <Panel headerText="Başarı Hikayeleri">
-                                    <content>
-                                        <VBox class="blogCard">
-                                            <Image src="images/1.jpg" width="100%" height="200px" mode="Image" class="blogThumbnail"/>
-                                            <HBox class="blogMeta">
-                                                <core:Icon src="sap-icon://leads" class="blogMetaIcon"/>
-                                                <Text text="5 Şubat 2026"/>
-                                            </HBox>
-                                            <Text class="blogExcerpt" text="EduSupport bursuyla hayallerine kavuşan öğrenciler..."/>
-                                            <Button text="Devamını Oku" type="Transparent" icon="sap-icon://navigation-right-arrow" iconFirst="false"/>
-                                        </VBox>
-                                    </content>
-                                </Panel>
-
-                            </l:Grid>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-            -->
-            <!-- ══ DUYURULAR ══ -->
-            <uxap:ObjectPageSection title="Duyurular" id="announcementsSection">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <VBox>
-                                <VBox id="annLoadingBox" alignItems="Center" visible="true">
-                                    <BusyIndicator/>
-                                </VBox>
-                                <VBox id="annEmptyBox" alignItems="Center" visible="false">
-                                    <Text text="Şu an aktif duyuru bulunmuyor." textAlign="Center"/>
-                                </VBox>
-                                <VBox id="annListBox" visible="false"/>
-                            </VBox>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-
-<!-- ══ NASIL ÇALIŞIR ══ -->
-<uxap:ObjectPageSection title="Nasıl Çalışır?" id="howItWorksSection">
-    <uxap:subSections>
-        <uxap:ObjectPageSubSection>
-            <uxap:blocks>
-                <core:HTML content="
-                &lt;div class='hiwTabBar'&gt;
-                    &lt;button class='hiwTabBtn hiwTabActive' id='hiwTabDonor'
-                        onclick=&quot;window._hiwTab('donor')&quot;&gt;🐾 Bağış Yap&lt;/button&gt;
-                    &lt;button class='hiwTabBtn' id='hiwTabVol'
-                        onclick=&quot;window._hiwTab('volunteer')&quot;&gt;🤝 Gönüllü Ol&lt;/button&gt;
-                &lt;/div&gt;
-
-                &lt;div id='hiwPanelDonor' class='hiwPanel hiwPanelActive'&gt;
-                    &lt;div class='hiwSteps'&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwDone'&gt;🔍&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Kampanya Seç&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Desteklemek istediğin hayvanı veya projeyi bul&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwActive'&gt;💳&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Bağış Yap&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Güvenli ödeme ile istediğin miktarı gönder&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;📩&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Bildirim Al&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Bağışının nasıl kullanıldığını e-postayla öğren&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🐕&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Fark Yarat&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Hayatına dokunduğun canı takip et&lt;/div&gt;&lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div id='hiwPanelVol' class='hiwPanel'&gt;
-                    &lt;div class='hiwSteps'&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwDone'&gt;📝&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Başvur&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Formu doldur, ilgi alanını belirt&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwActive'&gt;👥&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Değerlendirme&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Ekibimiz başvurunu inceler&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🗓️&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Oryantasyon&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Kısa tanışma toplantısına katıl&lt;/div&gt;&lt;/div&gt;
-                        &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🐾&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Başla!&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Sahada veya online görevine başla&lt;/div&gt;&lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;script&gt;
-                window._hiwTab = function(t) {
-                    document.getElementById('hiwTabDonor').classList.toggle('hiwTabActive', t==='donor');
-                    document.getElementById('hiwTabVol').classList.toggle('hiwTabActive', t==='volunteer');
-                    document.getElementById('hiwPanelDonor').classList.toggle('hiwPanelActive', t==='donor');
-                    document.getElementById('hiwPanelVol').classList.toggle('hiwPanelActive', t==='volunteer');
-                };
-                &lt;/script&gt;
-                "/>
-            </uxap:blocks>
-        </uxap:ObjectPageSubSection>
-    </uxap:subSections>
-</uxap:ObjectPageSection>
-
-<!-- ══ SSS ══ -->
-<uxap:ObjectPageSection title="Sık Sorulan Sorular" id="faqSection">
-    <uxap:subSections>
-        <uxap:ObjectPageSubSection>
-            <uxap:blocks>
-                <core:HTML content="
-                &lt;div class='faqWrap'&gt;
-
-                    &lt;div class='faqCategory'&gt;🐾 Bağış&lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Bağış nasıl yapılır? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Aktif kampanyalar sayfasından desteklemek istediğiniz projeyi seçin. Güvenli ödeme sayfası üzerinden kredi kartı veya banka havalesiyle bağışınızı tamamlayabilirsiniz.&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Bağışımın nereye gittiğini görebilir miyim? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Evet! Her kampanya için harcama raporu yayınlıyoruz. Ayrıca bağış yaptığınız hayvanın durumuna dair düzenli güncellemeler e-posta ile gönderilir.&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Minimum bağış miktarı var mı? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Hayır, herhangi bir minimum tutar yoktur. 10 ₺ de olsa her katkı büyük fark yaratır.&lt;/div&gt;
-                    &lt;/div&gt;
-
-                    &lt;div class='faqCategory'&gt;🤝 Gönüllü&lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Gönüllü olmak için ne gerekir? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;18 yaş üzeri herkes başvurabilir. Hayvan bakımı, sosyal medya yönetimi, veteriner asistanlığı veya ulaşım desteği gibi alanlarda gönüllü olabilirsiniz.&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Haftada ne kadar zaman ayırmam gerekiyor? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Tamamen size bağlı! Haftada 2 saat bile büyük katkı sağlar. Esnek programınıza göre görev alabilirsiniz.&lt;/div&gt;
-                    &lt;/div&gt;
-
-                    &lt;div class='faqCategory'&gt;📢 Kampanyalar&lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Kampanya süresi ne kadar? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Her kampanya farklı süre ve hedefe sahip olabilir. Kampanya sayfasında bitiş tarihi ve toplanması gereken tutar açıkça belirtilmektedir.&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
-                        &lt;div class='faqQ'&gt;Hedef tutara ulaşılmazsa ne olur? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
-                        &lt;div class='faqA'&gt;Toplanan tüm bağışlar, o kampanya kapsamındaki hayvanlar için kullanılmaya devam eder. Bağışınız hiçbir koşulda boşa gitmez.&lt;/div&gt;
-                    &lt;/div&gt;
-
-                &lt;/div&gt;
-                "/>
-            </uxap:blocks>
-        </uxap:ObjectPageSubSection>
-    </uxap:subSections>
-</uxap:ObjectPageSection>
-
-        <!-- ══ FOOTER ══ -->
-        <uxap:ObjectPageSection id="footerSection" showTitle="false">
-            <uxap:subSections>
-                <uxap:ObjectPageSubSection>
-                    <uxap:blocks>
-                        <core:HTML content="
-                        &lt;div class='siteFooter'&gt;
-                            &lt;div class='footerTop'&gt;
-                                &lt;div class='footerBrand'&gt;
-                                    &lt;img src='images/24.png' class='footerLogo' alt='Logo'/&gt;
-                                    &lt;div&gt;
-                                        &lt;div class='footerBrandName'&gt;Pati ve Gelecek Derneği&lt;/div&gt;
-                                        &lt;div class='footerBrandSlogan'&gt;İyiliğin birlikte büyüdüğü yer&lt;/div&gt;
+                    <!-- ══ BAŞARILARIMIZ ══ -->
+                    <uxap:ObjectPageSection title="Başarılarımız" id="statsSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <core:HTML content="
+                                    &lt;div class='animStatsRow'&gt;
+                                        &lt;div class='animStatCard animStatCard1'&gt;
+                                            &lt;span class='animStatIcon'&gt;🐕&lt;/span&gt;
+                                            &lt;span class='animStatNum'&gt;1.500&lt;/span&gt;
+                                            &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
+                                            &lt;span class='animStatLabel'&gt;Beslenen Hayvan&lt;/span&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='animStatCard animStatCard2'&gt;
+                                            &lt;span class='animStatIcon'&gt;💉&lt;/span&gt;
+                                            &lt;span class='animStatNum'&gt;400&lt;/span&gt;
+                                            &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
+                                            &lt;span class='animStatLabel'&gt;Tamamlanan Tedavi&lt;/span&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='animStatCard animStatCard3'&gt;
+                                            &lt;span class='animStatIcon'&gt;🏠&lt;/span&gt;
+                                            &lt;span class='animStatNum'&gt;200&lt;/span&gt;
+                                            &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
+                                            &lt;span class='animStatLabel'&gt;Sahiplendirme&lt;/span&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='animStatCard animStatCard4'&gt;
+                                            &lt;span class='animStatIcon'&gt;🤝&lt;/span&gt;
+                                            &lt;span class='animStatNum'&gt;5.000&lt;/span&gt;
+                                            &lt;span class='animStatPlus'&gt;+&lt;/span&gt;
+                                            &lt;span class='animStatLabel'&gt;Gönüllü&lt;/span&gt;
+                                        &lt;/div&gt;
                                     &lt;/div&gt;
-                                &lt;/div&gt;
-                                &lt;div class='footerCol'&gt;
-                                    &lt;div class='footerColTitle'&gt;Sayfalar&lt;/div&gt;
-                                    &lt;a onclick=&quot;window._footerScroll('aboutSection')&quot;         class=&quot;footerLink&quot;&gt;Hakkımızda&lt;/a&gt;
-                                    &lt;a onclick=&quot;window._footerScroll('activitiesSection')&quot;    class=&quot;footerLink&quot;&gt;Faaliyetlerimiz&lt;/a&gt;
-                                    &lt;a onclick=&quot;window._footerScroll('scholarshipsSection')&quot;  class=&quot;footerLink&quot;&gt;Kampanyalar&lt;/a&gt;
-                                    &lt;a onclick=&quot;window._footerScroll('announcementsSection')&quot; class=&quot;footerLink&quot;&gt;Duyurular&lt;/a&gt;
-                                &lt;/div&gt;
-                                &lt;div class='footerCol'&gt;
-                                    &lt;div class='footerColTitle'&gt;Yasal&lt;/div&gt;
-                                    &lt;a href='#' class='footerLink'&gt;KVKK Metni&lt;/a&gt;
-                                    &lt;a href='#' class='footerLink'&gt;Gizlilik Politikası&lt;/a&gt;
-                                    &lt;a href='#' class='footerLink'&gt;Bağış Formu&lt;/a&gt;
-                                    &lt;a href='#' class='footerLink'&gt;Kullanım Koşulları&lt;/a&gt;
-                                &lt;/div&gt;
-                                &lt;div class='footerCol'&gt;
-                                    &lt;div class='footerColTitle'&gt;İletişim&lt;/div&gt;
-                                    &lt;div class='footerContact'&gt;📍 İskenderun, Hatay&lt;/div&gt;
-                                    &lt;div class='footerContact'&gt;📞 0 (850) 311 51 42&lt;/div&gt;
-                                    &lt;div class='footerContact'&gt;✉️ info@patigeleeck.org&lt;/div&gt;
-                                    &lt;div class='footerSocial'&gt;
-                                        &lt;a href='#' class='footerSocialBtn'&gt;f&lt;/a&gt;
-                                        &lt;a href='#' class='footerSocialBtn'&gt;ig&lt;/a&gt;
-                                        &lt;a href='#' class='footerSocialBtn footerSocialX'&gt;X&lt;/a&gt;
-                                        &lt;a href='#' class='footerSocialBtn footerSocialYT'&gt;▶&lt;/a&gt;
-                                        &lt;a href='#' class='footerSocialBtn footerSocialLI'&gt;in&lt;/a&gt;
+                                    "/>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ FALİYETLER ══ -->
+                    <uxap:ObjectPageSection title="Faaliyetlerimiz" id="activitiesSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <VBox id="mediaLoadingBox" alignItems="Center" class="mediaLoadingBox" visible="true">
+                                        <BusyIndicator/>
+                                        <Text text="Yükleniyor..."/>
+                                    </VBox>
+                                    <VBox id="mediaEmptyBox" alignItems="Center" class="mediaEmptyBox" visible="false">
+                                        <core:Icon src="sap-icon://picture" class="mediaEmptyIcon iconMuted"/>
+                                        <Text text="Henüz içerik eklenmemiş." textAlign="Center"/>
+                                    </VBox>
+                                    <VBox id="mediaCardsBox" visible="false" class="faaliyetlerMainBox"/>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ HAKKIMIZDA ══ -->
+                    <uxap:ObjectPageSection title="Hakkımızda" id="aboutSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection title="Biz Kimiz?">
+                                <uxap:blocks>
+                                    <l:BlockLayout>
+                                        <l:BlockLayoutRow>
+                                            <l:BlockLayoutCell>
+                                                <Text class="aboutText" text="Hatay bölgesinde sokak hayvanlarına destek olmak amacıyla 2020 yılında İskenderun'da kurulan Pati ve Gelecek Derneği, bugün 5.000'i aşkın gönüllüsüyle bölgenin en köklü sivil toplum kuruluşlarından biri haline gelmiştir."/>
+                                                <!-- type="Emphasized" → design.css'teki genel kural devreye girer (yeşil) -->
+                                                <Button
+                                                    text="Hikayemizi Okuyun →"
+                                                    class="btnPrimary"
+                                                    press="onNavToAbout"
+                                                   />
+                                            </l:BlockLayoutCell>
+                                        </l:BlockLayoutRow>
+                                    </l:BlockLayout>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                            <uxap:ObjectPageSubSection title="Değerlerimiz">
+                                <uxap:blocks>
+                                    <l:Grid defaultSpan="XL4 L4 M6 S12">
+                                        <ObjectStatus title="Misyonumuz"   text="İskenderun ve Hatay genelinde sokak hayvanlarının beslenmesini, sağlık hizmetlerine erişimini ve güvenli yuvalara kavuşmasını sağlamak" icon="sap-icon://target-group" state="Information"/>
+                                        <ObjectStatus title="Vizyonumuz"   text="Hiçbir sokak hayvanının aç, yaralı ya da yalnız kalmadığı; her insanın bir can dostuna sahip çıkabildiği, sevgi ve sorumluluk bilincinin toplumun tüm kesimlerine yayıldığı bir Hatay inşa etmek." icon="sap-icon://lightbulb" state="Success"/>
+                                        <ObjectStatus title="Değerlerimiz" text="Şeffaflık, güvenilirlik, sosyal sorumluluk ve eşitlik" icon="sap-icon://sys-help" state="Warning"/>
+                                    </l:Grid>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ AKTİF KAMPANYALAR ══ -->
+                    <uxap:ObjectPageSection title="Aktif Kampanyalar" id="scholarshipsSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <l:Grid defaultSpan="XL4 L4 M6 S12">
+                                        <Panel headerText="Kampüs Kedileri İçin Kışlık Yuva">
+                                            <content>
+                                                <VBox class="campaignCard">
+                                                    <core:Icon src="sap-icon://home"     class="campaignIcon campaignIconPrimary"/>
+                                                    <Text class="campaignText" text="Soğuk kış aylarında kampüs kedilerine sıcak barınak sağlıyoruz."/>
+                                                    <Button text="Detaylar" class="btnPrimary" press="onCampaignPress">
+                                                        <customData><core:CustomData key="campaignId" value="1"/></customData>
+                                                    </Button>
+                                                </VBox>
+                                            </content>
+                                        </Panel>
+                                        <Panel headerText="Sokak Köpeklerine Sahiplenme Desteği">
+                                            <content>
+                                                <VBox class="campaignCard">
+                                                    <core:Icon src="sap-icon://sys-help" class="campaignIcon campaignIconMid"/>
+                                                    <Text class="campaignText" text="Barınaktaki köpeklerin eğitim almasını ve sağlıklı yuvalara kavuşmasını destekliyoruz."/>
+                                                    <Button text="Detaylar" type="Emphasized" press="onCampaignPress">
+                                                        <customData><core:CustomData key="campaignId" value="2"/></customData>
+                                                    </Button>
+                                                </VBox>
+                                            </content>
+                                        </Panel>
+                                        <Panel headerText="Acil Tedavi Fonu">
+                                            <content>
+                                                <VBox class="campaignCard">
+                                                    <core:Icon src="sap-icon://stethoscope" class="campaignIcon campaignIconAccent"/>
+                                                    <Text class="campaignText" text="Sokak hayvanlarının acil veteriner tedavi masraflarını karşılamak için oluşturulan dayanışma fonu."/>
+                                                    <Button text="Detaylar" type="Emphasized" press="onCampaignPress">
+                                                        <customData><core:CustomData key="campaignId" value="3"/></customData>
+                                                    </Button>
+                                                </VBox>
+                                            </content>
+                                        </Panel>
+                                    </l:Grid>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ DUYURULAR ══ -->
+                    <uxap:ObjectPageSection title="Duyurular" id="announcementsSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <VBox>
+                                        <VBox id="annLoadingBox" alignItems="Center" visible="true">
+                                            <BusyIndicator/>
+                                        </VBox>
+                                        <VBox id="annEmptyBox" alignItems="Center" visible="false">
+                                            <Text text="Şu an aktif duyuru bulunmuyor." textAlign="Center"/>
+                                        </VBox>
+                                        <VBox id="annListBox" visible="false"/>
+                                    </VBox>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ NASIL ÇALIŞIR ══ -->
+                    <uxap:ObjectPageSection title="Nasıl Çalışır?" id="howItWorksSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <core:HTML content="
+                                    &lt;div class='hiwTabBar'&gt;
+                                        &lt;button class='hiwTabBtn hiwTabActive' id='hiwTabDonor' onclick=&quot;window._hiwTab('donor')&quot;&gt;🐾 Bağış Yap&lt;/button&gt;
+                                        &lt;button class='hiwTabBtn' id='hiwTabVol' onclick=&quot;window._hiwTab('volunteer')&quot;&gt;🤝 Gönüllü Ol&lt;/button&gt;
                                     &lt;/div&gt;
-                                &lt;/div&gt;
-                            &lt;/div&gt;
-                            &lt;div class='footerBottom'&gt;
-                                &lt;span&gt;© 2026 Pati ve Gelecek Derneği. Tüm hakları saklıdır.&lt;/span&gt;
-                                &lt;span&gt;Dernek No: 12345 · Vergi No: 1234567890&lt;/span&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        "/>
-                    </uxap:blocks>
-                </uxap:ObjectPageSubSection>
-            </uxap:subSections>
-        </uxap:ObjectPageSection>
-    </uxap:sections>
-    </uxap:ObjectPageLayout>
+                                    &lt;div id='hiwPanelDonor' class='hiwPanel hiwPanelActive'&gt;
+                                        &lt;div class='hiwSteps'&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwDone'&gt;🔍&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Kampanya Seç&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Desteklemek istediğin hayvanı veya projeyi bul&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwActive'&gt;💳&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Bağış Yap&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Güvenli ödeme ile istediğin miktarı gönder&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;📩&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Bildirim Al&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Bağışının nasıl kullanıldığını e-postayla öğren&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🐕&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Fark Yarat&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Hayatına dokunduğun canı takip et&lt;/div&gt;&lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div id='hiwPanelVol' class='hiwPanel'&gt;
+                                        &lt;div class='hiwSteps'&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwDone'&gt;📝&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Başvur&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Formu doldur, ilgi alanını belirt&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle hiwActive'&gt;👥&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Değerlendirme&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Ekibimiz başvurunu inceler&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🗓️&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Oryantasyon&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Kısa tanışma toplantısına katıl&lt;/div&gt;&lt;/div&gt;
+                                            &lt;div class='hiwStep'&gt;&lt;div class='hiwCircle'&gt;🐾&lt;/div&gt;&lt;div class='hiwStepTitle'&gt;Başla!&lt;/div&gt;&lt;div class='hiwStepDesc'&gt;Sahada veya online görevine başla&lt;/div&gt;&lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;script&gt;
+                                    window._hiwTab = function(t) {
+                                        document.getElementById('hiwTabDonor').classList.toggle('hiwTabActive', t==='donor');
+                                        document.getElementById('hiwTabVol').classList.toggle('hiwTabActive', t==='volunteer');
+                                        document.getElementById('hiwPanelDonor').classList.toggle('hiwPanelActive', t==='donor');
+                                        document.getElementById('hiwPanelVol').classList.toggle('hiwPanelActive', t==='volunteer');
+                                    };
+                                    &lt;/script&gt;
+                                    "/>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <!-- ══ SSS ══ -->
+                    <uxap:ObjectPageSection title="Sık Sorulan Sorular" id="faqSection">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <core:HTML content="
+                                    &lt;div class='faqWrap'&gt;
+                                        &lt;div class='faqCategory'&gt;🐾 Bağış&lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Bağış nasıl yapılır? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Aktif kampanyalar sayfasından desteklemek istediğiniz projeyi seçin. Güvenli ödeme sayfası üzerinden kredi kartı veya banka havalesiyle bağışınızı tamamlayabilirsiniz.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Bağışımın nereye gittiğini görebilir miyim? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Evet! Her kampanya için harcama raporu yayınlıyoruz. Ayrıca bağış yaptığınız hayvanın durumuna dair düzenli güncellemeler e-posta ile gönderilir.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Minimum bağış miktarı var mı? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Hayır, herhangi bir minimum tutar yoktur. 10 ₺ de olsa her katkı büyük fark yaratır.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqCategory'&gt;🤝 Gönüllü&lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Gönüllü olmak için ne gerekir? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;18 yaş üzeri herkes başvurabilir. Hayvan bakımı, sosyal medya yönetimi, veteriner asistanlığı veya ulaşım desteği gibi alanlarda gönüllü olabilirsiniz.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Haftada ne kadar zaman ayırmam gerekiyor? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Tamamen size bağlı! Haftada 2 saat bile büyük katkı sağlar. Esnek programınıza göre görev alabilirsiniz.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqCategory'&gt;📢 Kampanyalar&lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Kampanya süresi ne kadar? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Her kampanya farklı süre ve hedefe sahip olabilir. Kampanya sayfasında bitiş tarihi ve toplanması gereken tutar açıkça belirtilmektedir.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class='faqItem' onclick='this.classList.toggle(&quot;faqOpen&quot;)'&gt;
+                                            &lt;div class='faqQ'&gt;Hedef tutara ulaşılmazsa ne olur? &lt;span class='faqIcon'&gt;+&lt;/span&gt;&lt;/div&gt;
+                                            &lt;div class='faqA'&gt;Toplanan tüm bağışlar, o kampanya kapsamındaki hayvanlar için kullanılmaya devam eder. Bağışınız hiçbir koşulda boşa gitmez.&lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    "/>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                </uxap:sections>
+            </uxap:ObjectPageLayout>
+        </content>
+    </Page>
 
 </mvc:View>

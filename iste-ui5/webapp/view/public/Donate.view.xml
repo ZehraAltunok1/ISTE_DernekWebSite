@@ -113,7 +113,7 @@
 
                 <!-- ── ÖDEME ── -->
                 <VBox id="donateStepPayment" class="donate-section donate-step-hidden">
-                    <core:HTML content="&lt;div class='donate-step-header'&gt;&lt;span class='donate-step-num'&gt;3&lt;/span&gt;&lt;h2&gt;Ödeme Yöntemi&lt;/h2&gt;&lt;/div&gt;"/>
+                    <core:HTML content="&lt;div class='donate-step-header'&gt;&lt;span class='donate-step-num'&gt;3&lt;/span&gt;&lt;h2&gt;Ödeme Bilgileri&lt;/h2&gt;&lt;/div&gt;"/>
 
                     <core:HTML id="donatePaymentSection" content="
                         &lt;div class='donate-payment-wrap'&gt;
@@ -123,21 +123,7 @@
                                 &lt;span class='donate-summary-amount'&gt;&lt;strong id='summAmount'&gt;0&lt;/strong&gt; ₺&lt;/span&gt;
                             &lt;/div&gt;
 
-                            &lt;div class='donate-method-tabs'&gt;
-                                &lt;button class='donate-method-tab active' id='tabIban' onclick='switchMethod(&quot;iban&quot;)'&gt;🏦 IBAN / Havale&lt;/button&gt;
-                                &lt;button class='donate-method-tab' id='tabCard' onclick='switchMethod(&quot;card&quot;)'&gt;💳 Kredi Kartı&lt;/button&gt;
-                            &lt;/div&gt;
-
-                            &lt;div id='ibanSection'&gt;
-                                &lt;div class='donate-iban-box'&gt;
-                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;Banka&lt;/span&gt;&lt;strong&gt;Ziraat Bankası&lt;/strong&gt;&lt;/div&gt;
-                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;Hesap Sahibi&lt;/span&gt;&lt;strong&gt;Pati ve Gelecek Derneği&lt;/strong&gt;&lt;/div&gt;
-                                    &lt;div class='donate-iban-row'&gt;&lt;span&gt;IBAN&lt;/span&gt;&lt;strong class='donate-iban-num'&gt;TR00 0000 0000 0000 0000 0000 00&lt;/strong&gt;&lt;/div&gt;
-                                &lt;/div&gt;
-                                &lt;p class='donate-iban-note'&gt;⚠️ Formu gönderdikten sonra size bir referans kodu verilecektir. Havale açıklamasına bu kodu yazmayı unutmayın.&lt;/p&gt;
-                            &lt;/div&gt;
-
-                            &lt;div id='cardSection' style='display:none'&gt;
+                            &lt;div id='cardSection'&gt;
                                 &lt;div class='donate-card-form'&gt;
                                     &lt;div class='donate-test-badge'&gt;🧪 Test Modu — Kart: 5528790000000008 · SKT: 12/2030 · CVV: 123&lt;/div&gt;
                                     &lt;div class='donate-field'&gt;&lt;label&gt;Kart Üzerindeki Ad&lt;/label&gt;&lt;input id='cHolder' placeholder='AD SOYAD'/&gt;&lt;/div&gt;
@@ -172,8 +158,7 @@
                         &lt;div class='donate-success-wrap'&gt;
                             &lt;div class='donate-success-icon'&gt;🎉&lt;/div&gt;
                             &lt;h2&gt;Teşekkürler!&lt;/h2&gt;
-                            &lt;p id='successMsg'&gt;Bağışınız alındı.&lt;/p&gt;
-                            &lt;div id='ibanResultBox' class='donate-iban-result' style='display:none'&gt;&lt;/div&gt;
+                            &lt;p id='successMsg'&gt;Bağışınız başarıyla tamamlandı.&lt;/p&gt;
                             &lt;a href='index.html' class='donate-home-btn'&gt;← Anasayfaya Dön&lt;/a&gt;
                         &lt;/div&gt;
                     "/>

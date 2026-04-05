@@ -1,0 +1,76 @@
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS  —  Pati ve Gelecek Derneği
+   TEK KAYNAK — tüm sayfalar bu dosyayı import eder
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Font Import (sadece bu dosyada, bir kez) ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ══════════════════════════════════════════════════════════
+   1. GLOBAL DESIGN TOKENS
+   ══════════════════════════════════════════════════════════ */
+:root {
+    /* Marka renkleri — Yeşil Palet */
+    --clr-primary:        #2D6A4F;
+    --clr-primary-dark:   #1B3A2D;
+    --clr-primary-mid:    #40916C;
+    --clr-primary-light:  #74C69D;
+    --clr-accent:         #F4A261;
+    --clr-accent-hover:   #E07A3A;
+
+    /* Arka plan & yüzeyler */
+    --clr-bg:             #F0FAF5;   /* TÜM SAYFALARDA aynı — önceden iki farklı değer vardı */
+    --clr-bg-warm:        #F8F5F0;   /* özel ılık arka plan gerekirse */
+    --clr-surface:        #FFFFFF;
+    --clr-green-light:    #F0FAF5;
+    --clr-green-soft:     #E8F5EE;
+
+    /* Metin */
+    --clr-text:           #2C3E35;
+    --clr-muted:          #6B7C75;
+
+    /* Kenarlıklar */
+    --clr-border:         #D1E9DC;
+    --clr-border-soft:    #E8F0EB;
+
+    /* Durum renkleri */
+    --clr-success:        #40916C;
+    --clr-success-bg:     #F0FAF5;
+    --clr-warning:        #8A6200;
+    --clr-warning-bg:     #FFF8E8;
+    --clr-warning-border: #F0D98A;
+    --clr-error:          #B23A2F;
+    --clr-error-bg:       #FDF0F0;
+    --clr-error-border:   #F5C5C2;
+
+    /* Vurgu / bilgi rengi (yeşil tabanlı, mor değil) */
+    --clr-info:           #2D6A4F;
+    --clr-info-bg:        #F0FAF5;
+    --clr-info-border:    #74C69D;
+
+    /* Genel amaçlı istatistik renkleri — site genelinde STANDART */
+    --clr-stat-blue:      #2D6A4F;   /* eski #0070F2 / #6C63FF yerine sistem primary */
+    --clr-stat-green:     #40916C;
+    --clr-stat-orange:    #F4A261;
+    --clr-stat-purple:    #8B5CF6;   /* tek mor kullanım — kabul edilebilir aksesuar */
+
+    /* Border radius */
+    --radius-sm:          8px;
+    --radius:             14px;
+    --radius-lg:          20px;
+    --radius-pill:        50px;
+
+    /* Gölgeler */
+    --shadow-sm:          0 2px 12px rgba(45,106,79,0.08);
+    --shadow:             0 4px 24px rgba(45,106,79,0.10);
+    --shadow-lg:          0 8px 32px rgba(45,106,79,0.15);
+    --shadow-xl:          0 12px 40px rgba(45,106,79,0.20);
+
+    /* Tipografi */
+    --font-display:       'Playfair Display', serif;
+    --font-body:          'DM Sans', sans-serif;
+
+    /* Geçişler */
+    --transition:         0.2s ease;
+    --transition-bounce:  0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

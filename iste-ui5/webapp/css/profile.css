@@ -1,10 +1,11 @@
-/* ============================================
-   PROFILE PAGE STYLES
-   ============================================ */
+/* ══════════════════════════════════════════════════════════
+   PROFILE PAGE  —  Pati ve Gelecek Derneği
+   design-tokens.css import edildikten sonra bu dosya yüklenir
+   ══════════════════════════════════════════════════════════ */
 
-/* Page Background */
 .profilePage {
-    background: #f5f7fa;
+    background: var(--clr-bg);
+    font-family: var(--font-body);
 }
 
 .profileContent {
@@ -13,237 +14,200 @@
     padding: 1rem;
 }
 
-/* Profile Header Card */
+/* ── Header kartı — yeşil gradyan (eski: #667eea/#764ba2 mor) ── */
 .profileHeaderCard {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 16px !important;
+    background: linear-gradient(135deg, var(--clr-primary-dark) 0%, var(--clr-primary) 55%, var(--clr-primary-mid) 100%);
+    color: #fff;
+    border-radius: var(--radius-lg) !important;
     overflow: hidden;
+    box-shadow: var(--shadow-lg);
 }
 
 .profileHeaderCard .sapFCardHeader {
     background: transparent;
-    color: white;
 }
 
 .profileHeaderCard .sapFCardHeaderText {
-    color: white !important;
+    color: #fff !important;
 }
 
 .profileHeader {
     padding: 1rem;
 }
 
-/* Avatar Section */
+/* ── Avatar ── */
 .avatarSection {
     padding: 1rem;
 }
 
 .profileAvatar {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.profileAvatar:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
+    border: 4px solid rgba(255,255,255,0.35);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: transform var(--transition);
     cursor: pointer;
 }
+.profileAvatar:hover { transform: scale(1.05); }
 
-/* Profile Info */
+/* ── Profil bilgi metinleri ── */
 .profileName {
-    color: white !important;
-    font-weight: 600 !important;
+    color: #fff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
     margin-bottom: 0.5rem !important;
 }
 
-.profileEmail {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95rem;
-}
-
+.profileEmail,
 .profileDate {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.875rem;
+    font-family: var(--font-body);
 }
 
-/* Statistics Panel */
+.profileEmail { color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+.profileDate  { color: rgba(255,255,255,0.75); font-size: 0.875rem; }
+
+/* ── İstatistik paneli ── */
 .statsPanel {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
 }
 
-.profileStatsGrid {
-    padding: 1rem;
-}
+.profileStatsGrid { padding: 1rem; }
 
-/* Stat Cards */
+/* ── İstatistik kartları ── */
 .statCard {
-    background: white;
-    border-radius: 12px;
+    background: var(--clr-surface);
+    border-radius: var(--radius);
     padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
 }
-
 .statCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
 }
 
-.statBlue {
-    border-left: 4px solid #0070F2;
-}
-
-.statGreen {
-    border-left: 4px solid #10B981;
-}
-
-.statOrange {
-    border-left: 4px solid #F59E0B;
-}
-
-.statPurple {
-    border-left: 4px solid #8B5CF6;
-}
+/* Sol kenarlık renkleri — sistem renkleriyle (eski: #0070F2 gibi yabancı renkler kaldırıldı) */
+.statBlue   { border-left: 4px solid var(--clr-primary-mid); }
+.statGreen  { border-left: 4px solid var(--clr-success); }
+.statOrange { border-left: 4px solid var(--clr-accent); }
+.statPurple { border-left: 4px solid #8B5CF6; }  /* tek kabul edilen yabancı renk */
 
 .statNumber {
+    font-family: var(--font-display) !important;
     font-size: 2rem !important;
     font-weight: 700 !important;
+    color: var(--clr-primary-dark) !important;
     margin: 0.5rem 0 !important;
 }
 
 .statLabel {
-    font-size: 0.95rem;
-    color: #666;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--clr-muted);
     font-weight: 500;
 }
 
 .statSubtext {
+    font-family: var(--font-body);
     font-size: 0.8rem;
-    color: #999;
+    color: var(--clr-muted);
     margin-top: 0.25rem;
 }
 
-/* Details Panel */
+/* ── Detay / ayar / aktivite panelleri ── */
 .detailsPanel,
 .settingsPanel,
 .activityPanel,
 .sessionsPanel {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
 }
 
 .profileInfoRow {
     padding: 0.75rem 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--clr-border-soft);
 }
-
-.profileInfoRow:last-child {
-    border-bottom: none;
-}
+.profileInfoRow:last-child { border-bottom: none; }
 
 .profileInfoRow .sapMLabel {
     font-weight: 600;
-    color: #666;
+    color: var(--clr-muted);
+    font-family: var(--font-body);
 }
-
 .profileInfoRow .sapMText {
-    color: #1a1a1a;
+    color: var(--clr-text);
+    font-family: var(--font-body);
 }
 
-/* Settings Panel Buttons */
+/* ── Ayar butonları ── */
 .settingsPanel .sapMBtn {
     margin-bottom: 0.5rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-body) !important;
+    transition: all var(--transition) !important;
 }
-
 .settingsPanel .sapMBtn:hover {
-    background-color: #f5f7fa;
-    transform: translateX(4px);
+    background: var(--clr-green-light) !important;
+    transform: translateX(3px) !important;
 }
 
-/* Activity Table */
+/* ── Aktivite tablosu ── */
 .activityPanel .sapMListTbl {
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
 }
-
 .activityPanel .sapMListTblCell {
     padding: 1rem;
+    font-family: var(--font-body);
 }
 
-/* Session Cards */
+/* ── Oturum kartları ── */
 .sessionDevice {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--clr-text);
     font-size: 0.95rem;
+    font-family: var(--font-body);
 }
-
 .sessionLocation {
-    color: #666;
+    color: var(--clr-muted);
     font-size: 0.875rem;
     margin-top: 0.25rem;
+    font-family: var(--font-body);
 }
-
 .sessionTime {
-    color: #999;
+    color: var(--clr-muted);
     font-size: 0.8rem;
     margin-top: 0.25rem;
+    font-family: var(--font-body);
 }
 
-/* Responsive Design */
+/* ── Animasyonlar ── */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.profileContent > * { animation: fadeIn 0.4s ease; }
+.profileContent > *:nth-child(1) { animation-delay: 0.05s; }
+.profileContent > *:nth-child(2) { animation-delay: 0.10s; }
+.profileContent > *:nth-child(3) { animation-delay: 0.15s; }
+.profileContent > *:nth-child(4) { animation-delay: 0.20s; }
+.profileContent > *:nth-child(5) { animation-delay: 0.25s; }
+
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-    .profileStatsGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .profileStatsGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-    .profileHeader {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .avatarSection {
-        margin-bottom: 1rem;
-    }
-    
-    .profileStatsGrid {
-        grid-template-columns: 1fr;
-    }
-    
-    .statCard {
-        padding: 1rem;
-    }
-    
-    .profileContent {
-        padding: 0.5rem;
-    }
+    .profileHeader  { flex-direction: column; text-align: center; }
+    .avatarSection  { margin-bottom: 1rem; }
+    .profileStatsGrid { grid-template-columns: 1fr; }
+    .statCard       { padding: 1rem; }
+    .profileContent { padding: 0.5rem; }
 }
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.profileContent > * {
-    animation: fadeIn 0.5s ease;
-}
-
-.profileContent > *:nth-child(1) { animation-delay: 0.1s; }
-.profileContent > *:nth-child(2) { animation-delay: 0.2s; }
-.profileContent > *:nth-child(3) { animation-delay: 0.3s; }
-.profileContent > *:nth-child(4) { animation-delay: 0.4s; }
-.profileContent > *:nth-child(5) { animation-delay: 0.5s; }

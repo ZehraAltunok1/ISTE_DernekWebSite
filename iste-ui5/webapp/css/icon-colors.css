@@ -1,0 +1,188 @@
+/* ══════════════════════════════════════════════════════════
+   ICON RENK SİSTEMİ  —  Pati ve Gelecek Derneği
+   XML'deki tüm hardcoded color="..." buraya taşındı.
+   design-tokens.css'ten sonra yüklenir.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Sistem icon renkleri (class bazlı, CSS token'lardan beslenir) ── */
+
+.sapUiIcon.iconBlue,
+.sapUiIcon.kpiIconBlue {
+    color: var(--clr-primary-mid) !important;   /* eski: #0070F2 */
+}
+
+.sapUiIcon.iconGreen,
+.sapUiIcon.kpiIconGreen {
+    color: var(--clr-success) !important;        /* eski: #10B981 */
+}
+
+.sapUiIcon.iconOrange,
+.sapUiIcon.kpiIconOrange {
+    color: var(--clr-accent) !important;         /* eski: #F59E0B */
+}
+
+.sapUiIcon.iconPurple,
+.sapUiIcon.kpiIconPurple {
+    color: #8B5CF6 !important;                   /* tek kabul edilen yabancı renk */
+}
+
+.sapUiIcon.iconMuted {
+    color: var(--clr-muted) !important;          /* eski: #9CA3AF */
+}
+
+/* Genel içerik ikonları → sistem primary rengi */
+.sapUiIcon.iconPrimary {
+    color: var(--clr-primary-mid) !important;
+}
+
+/* Welcome banner ikonu */
+.sapUiIcon.welcomeIcon {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Login dialog header ikonu (Fragment'taki #6C63FF kaldırıldı) */
+.loginDialog .sapUiIcon {
+    color: var(--clr-primary) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   BUTON SİSTEMİ — tek tip, tüm sayfalarda geçerli
+   ══════════════════════════════════════════════════════════ */
+
+/*
+   KURAL HİYERARŞİSİ:
+   1. type="Emphasized"  → yeşil (primary) — tüm sayfalar
+   2. .btnHeroPrimary    → turuncu (accent) — sadece hero
+   3. .navBtnDonate      → turuncu (accent) — sadece navbar
+   4. .campaignCard btn  → turuncu (accent) — kampanya kartları
+
+   #aboutSection özel override'ı KALDIRILDI →
+   artık o bölümdeki Emphasized buton da yeşil görünür.
+*/
+
+/* ── 1. Tüm Emphasized butonlar → YEŞİL ── */
+.sapMBtnEmphasized .sapMBtnInner {
+    background:    linear-gradient(135deg, var(--clr-primary), var(--clr-primary-mid)) !important;
+    border-color:  transparent !important;
+    color:         #ffffff !important;
+    border-radius: var(--radius-sm) !important;   /* 8px — tüm butonlarda aynı */
+    font-family:   var(--font-body) !important;
+    font-weight:   600 !important;
+    box-shadow:    0 2px 8px rgba(45,106,79,0.25) !important;
+    transition:    all var(--transition) !important;
+}
+.sapMBtnEmphasized .sapMBtnInner:hover {
+    background:    linear-gradient(135deg, var(--clr-primary-dark), var(--clr-primary)) !important;
+    transform:     translateY(-2px) !important;
+    box-shadow:    0 6px 20px rgba(45,106,79,0.35) !important;
+}
+
+/* ── 2. Hero primary butonu → TURUNCU (override) ── */
+.btnHeroPrimary .sapMBtnInner {
+    background:    linear-gradient(135deg, var(--clr-accent), var(--clr-accent-hover)) !important;
+    border-radius: var(--radius-pill) !important;  /* hero'da pill */
+    box-shadow:    0 6px 24px rgba(244,162,97,0.50) !important;
+}
+.btnHeroPrimary .sapMBtnInner:hover {
+    background:    linear-gradient(135deg, var(--clr-accent-hover), #C85F20) !important;
+    box-shadow:    0 10px 32px rgba(244,162,97,0.60) !important;
+}
+
+/* ── 3. Hero outline butonu ── */
+.btnHeroOutline .sapMBtnInner {
+    background:      rgba(255,255,255,0.12) !important;
+    border:          2px solid rgba(255,255,255,0.70) !important;
+    color:           #ffffff !important;
+    border-radius:   var(--radius-pill) !important;
+    font-weight:     700 !important;
+    backdrop-filter: blur(6px) !important;
+}
+.btnHeroOutline .sapMBtnInner:hover {
+    background:   rgba(255,255,255,0.25) !important;
+    border-color: #ffffff !important;
+    transform:    translateY(-2px) !important;
+}
+
+/* ── 4. Kampanya kartı butonları → TURUNCU ── */
+.campaignCard .sapMBtn .sapMBtnInner {
+    background:    linear-gradient(135deg, var(--clr-accent), var(--clr-accent-hover)) !important;
+    border-color:  transparent !important;
+    color:         #ffffff !important;
+    border-radius: var(--radius-sm) !important;
+    font-weight:   600 !important;
+    box-shadow:    0 4px 16px rgba(244,162,97,0.40) !important;
+}
+.campaignCard .sapMBtn .sapMBtnInner:hover {
+    background:  linear-gradient(135deg, var(--clr-accent-hover), #C85F20) !important;
+    transform:   translateY(-2px) !important;
+}
+
+/* ── 5. Default (type="Default") butonlar ── */
+.sapMBtnDefault .sapMBtnInner {
+    background:    var(--clr-surface) !important;
+    border:        1.5px solid var(--clr-border) !important;
+    color:         var(--clr-text) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family:   var(--font-body) !important;
+    font-weight:   500 !important;
+    transition:    all var(--transition) !important;
+}
+.sapMBtnDefault .sapMBtnInner:hover {
+    background:    var(--clr-green-light) !important;
+    border-color:  var(--clr-primary) !important;
+    color:         var(--clr-primary) !important;
+}
+
+/* ── 6. Transparent butonlar (edit/delete ikonları) ── */
+.sapMBtnTransparent .sapMBtnInner {
+    background:    transparent !important;
+    border:        none !important;
+    color:         var(--clr-muted) !important;
+    border-radius: var(--radius-sm) !important;
+    transition:    all var(--transition) !important;
+}
+.sapMBtnTransparent .sapMBtnInner:hover {
+    background: var(--clr-green-light) !important;
+    color:      var(--clr-primary) !important;
+}
+
+/* ── 7. Sayfalama butonları (SAP Paginator) ── */
+.sapMPaginator .sapMBtnInner,
+.sapMPaginatorButton .sapMBtnInner {
+    border-radius: var(--radius-sm) !important;
+    font-family:   var(--font-body) !important;
+}
+
+/* Aktif sayfa butonu */
+.sapMPaginator .sapMBtnEmphasized .sapMBtnInner {
+    background: var(--clr-primary) !important;
+    color:      #ffffff !important;
+}
+
+/* ── 8. hiwTabBar (Nasıl Çalışır) — native HTML button ── */
+.hiwTabBtn {
+    padding:       8px 22px;
+    border-radius: var(--radius-sm);           /* 8px — sistem standardı */
+    border:        1.5px solid var(--clr-border);
+    background:    var(--clr-surface);
+    color:         var(--clr-muted);
+    font-family:   var(--font-body);
+    font-size:     14px;
+    font-weight:   500;
+    cursor:        pointer;
+    transition:    all var(--transition);
+}
+.hiwTabBtn:hover {
+    border-color: var(--clr-primary);
+    color:        var(--clr-primary);
+    background:   var(--clr-green-light);
+}
+.hiwTabBtn.hiwTabActive {
+    background:   var(--clr-green-soft);
+    color:        var(--clr-primary-dark);
+    border-color: var(--clr-primary);
+    font-weight:  600;
+}
+
+/* ── 9. Navbar butonları (navbar.css zaten doğru, buradan dokunmuyoruz) ── */
+/* navBtnDonate, navBtnLoginText vb. → navbar.css'te kalır */

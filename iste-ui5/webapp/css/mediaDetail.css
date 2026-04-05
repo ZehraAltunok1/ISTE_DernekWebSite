@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════════════════
    MediaDetail.css  —  Faaliyet Detay Sayfası
    ═══════════════════════════════════════════════════ */
-
 .mediaDetailBox {
     max-width: 860px;
     margin: 0 auto;
@@ -9,22 +8,30 @@
     width: 100%;
     box-sizing: border-box;
 }
+#mediaDetailPage .sapMBarLeft,
+#mediaDetailPage .sapMBarRight {
+    flex: 1 1 0 !important;
+}
 
+#mediaDetailPage .sapMBarMiddle {
+    justify-content: center !important;
+    text-align: center !important;
+}
 /* Loading */
 .mediaDetailLoading { padding: 80px 0; }
 
 /* ── Sayfa başlık bandı ── */
-.sapMPage.mediaDetailPage > .sapMPageHeader {
+#mediaDetailPage > .sapMPageHeader {
     background: linear-gradient(135deg, #1B3A2D 0%, #2D6A4F 60%, #40916C 100%) !important;
     box-shadow: 0 4px 24px rgba(27,58,45,0.25) !important;
     border-bottom: none !important;
 }
-.sapMPage.mediaDetailPage .sapMBarChild.sapMBarMiddle .sapMTitle {
+#mediaDetailPage .sapMBarMiddle .sapMTitle {
     color: #fff !important;
     font-family: 'Playfair Display', serif !important;
     font-weight: 700 !important;
 }
-.sapMPage.mediaDetailPage .sapMBarChild .sapMBtn .sapMBtnInner {
+#mediaDetailPage .sapMBtn .sapMBtnInner {
     color: rgba(255,255,255,0.85) !important;
 }
 .sapMPage.mediaDetailPage .sapMBarChild .sapMBtn .sapMBtnInner:hover {
@@ -169,11 +176,6 @@
 /* ── Fotoğraf grid üst banner ── */
 .mediaDetailPhotoGrid::before {
     content: none;
-}
-
-/* ── Genel sayfa arkaplanı ── */
-.mediaDetailBox {
-    background: transparent;
 }
 
 /* Responsive */

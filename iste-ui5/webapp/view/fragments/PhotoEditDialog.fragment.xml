@@ -1,0 +1,85 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="photoEditDialog"
+        title="📷 Fotoğraf Grubunu Düzenle"
+        contentWidth="700px"
+        contentHeight="620px"
+        draggable="true"
+        resizable="true"
+        stretch="{device>/system/phone}">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- ── Grup Adı & Açıklama ── -->
+                <Label text="Grup Adı (Başlık) *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="photoEditTitle"
+                    value="{photoEditModel>/groupTitle}"
+                    placeholder="Örnek: Burs Töreni 2024"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Label text="Açıklama" class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="photoEditDescription"
+                    value="{photoEditModel>/description}"
+                    placeholder="Kısa bir açıklama..."
+                    rows="2"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Yeni Fotoğraf Ekle ── -->
+                <core:HTML
+                    id="photoEditDropZone"
+                    content="&lt;div id='editDropZone'
+                        style='border:2px dashed #0070F2;border-radius:10px;padding:14px;
+                               text-align:center;background:#F0F7FF;cursor:pointer;
+                               margin-bottom:12px;transition:background 0.2s;'
+                        ondragover=&quot;event.preventDefault();this.style.background=&apos;#DBEAFE&apos;;&quot;
+                        ondragleave=&quot;this.style.background=&apos;#F0F7FF&apos;;&quot;
+                        ondrop=&quot;window._editHandleDrop(event);&quot;
+                        onclick=&quot;document.getElementById(&apos;editFileInput&apos;).click();&quot;&gt;
+                        &lt;span style='font-size:1.5rem;'&gt;➕&lt;/span&gt;
+                        &lt;span style='font-size:0.85rem;color:#0070F2;font-weight:600;margin-left:8px;'&gt;
+                            Yeni fotoğraf ekle (sürükle veya tıkla)
+                        &lt;/span&gt;
+                        &lt;input type='file' id='editFileInput' multiple
+                            accept='image/jpeg,image/png,image/gif,image/webp'
+                            style='display:none'
+                            onchange='window._editHandleSelect(event)'/&gt;
+                    &lt;/div&gt;"/>
+
+                <!-- Yeni eklenenler önizleme -->
+                <core:HTML id="editNewPreview"
+                    content="&lt;div id='editNewPreviewContainer'
+                        style='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;min-height:0;'&gt;
+                    &lt;/div&gt;"/>
+                <Text id="editNewCount" text="" visible="false" class="sapUiTinyMarginBottom"/>
+
+                <!-- ── Mevcut Fotoğraflar ── -->
+                <Title text="Mevcut Fotoğraflar" level="H5" class="sapUiTinyMarginBottom"/>
+                <MessageStrip
+                    text="Sürükle-bırak ile sırala · ⭐ butonuyla kapak seç · 🗑 ile sil"
+                    type="Information"
+                    showIcon="false"
+                    class="sapUiTinyMarginBottom"/>
+
+                <core:HTML id="photoGridArea"
+                    content="&lt;div id='photoEditGrid' style='
+                        display:flex;flex-wrap:wrap;gap:10px;min-height:120px;
+                        padding:8px;border:1px solid #E5E7EB;border-radius:8px;background:#FAFAFA;
+                    '&gt;&lt;/div&gt;"/>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Kaydet"  type="Emphasized" icon="sap-icon://save" press="onSavePhotoEdit"/>
+            <Button text="İptal"   type="Transparent"                       press="onClosePhotoEditDialog"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

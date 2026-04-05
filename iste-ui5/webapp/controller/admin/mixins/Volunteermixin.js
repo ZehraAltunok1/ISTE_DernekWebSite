@@ -70,7 +70,7 @@ sap.ui.define([], function () {
                 });
 
                 oModel.setProperty("/volunteers", aList);
-
+                oModel.setProperty("/volunteers_all", aList.slice()); // arama için yedek
                 // KPI güncelle
                 var nPending  = aList.filter(function (v) { return v.status === "pending";  }).length;
                 var nApproved = aList.filter(function (v) { return v.status === "approved"; }).length;
@@ -91,6 +91,35 @@ sap.ui.define([], function () {
         onVolStatusFilter: function () {
             this.onLoadVolunteers();
         },
+        onSearchVolunteers: function (oEvent) {
+        var sQuery = oEvent.getParameter("query") || oEvent.getParameter("newValue") || "";
+        sQuery = sQuery.toLowerCase().trim();
+
+        var oModel  = this.getView().getModel("adminData");
+        var aAll    = oModel.getProperty("/volunteers_all") || oModel.getProperty("/volunteers") || [];
+
+        // İlk yüklemede orijinal listeyi sakla
+        if (!oModel.getProperty("/volunteers_all")) {
+            oModel.setProperty("/volunteers_all", aAll.slice());
+        }
+
+        if (!sQuery) {
+            // Arama kutusu boşsa tüm listeyi göster
+            oModel.setProperty("/volunteers", oModel.getProperty("/volunteers_all"));
+            return;
+        }
+
+        var aFiltered = (oModel.getProperty("/volunteers_all") || []).filter(function (v) {
+            var sFullName = ((v.first_name || "") + " " + (v.last_name || "")).toLowerCase();
+            var sEmail    = (v.email  || "").toLowerCase();
+            var sPhone    = (v.phone  || "").toLowerCase();
+            return sFullName.indexOf(sQuery) > -1
+                || sEmail.indexOf(sQuery)    > -1
+                || sPhone.indexOf(sQuery)    > -1;
+        });
+
+        oModel.setProperty("/volunteers", aFiltered);
+    },
 
         onApproveVolunteer: function (oEvent) {
             var that     = this;
@@ -104,7 +133,7 @@ sap.ui.define([], function () {
                     emphasizedAction: sap.m.MessageBox.Action.OK,
                     onClose: function (oAction) {
                         if (oAction !== sap.m.MessageBox.Action.OK) return;
-                        that._updateVolunteerStatus(oVol.id, "approved");
+                        that._updateVolunteerStatus(oVol._id, "approved");
                     }
                 }
             );
@@ -122,7 +151,7 @@ sap.ui.define([], function () {
                     emphasizedAction: sap.m.MessageBox.Action.OK,
                     onClose: function (oAction) {
                         if (oAction !== sap.m.MessageBox.Action.OK) return;
-                        that._updateVolunteerStatus(oVol.id, "rejected");
+                        that._updateVolunteerStatus(oVol._id, "rejected");
                     }
                 }
             );
@@ -211,7 +240,7 @@ sap.ui.define([], function () {
                 onClose: function (oAction) {
                     if (oAction !== sap.m.MessageBox.Action.OK) return;
 
-                    fetch("http://localhost:3000/api/volunteers/" + oVol.id, {
+                    fetch("http://localhost:3000/api/volunteers/" + oVol._id, {
                         method: "DELETE",
                         headers: {
                             "Authorization": "Bearer " + localStorage.getItem("authToken")

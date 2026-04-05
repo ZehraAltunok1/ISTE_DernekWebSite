@@ -1,53 +1,321 @@
-/* Şimdi Bağış Yap — turuncu */
-.btnHeroPrimary .sapMBtnInner {
-    background: #FF6B35 !important;
-    border-color: #FF6B35 !important;
-    color: #FFFFFF !important;
-    border-radius: 28px !important;
+/* ══════════════════════════════════════════════════════
+   NAVBAR  —  App.view.xml > customHeader > Bar
+   ══════════════════════════════════════════════════════ */
+
+/* ── 1. Bar arka planı ── */
+.mainNavBar.sapMBar,
+.mainNavBar.sapMBar.sapMPageHeader,
+.mainNavBar.sapMBar.sapContrastPlus,
+.mainNavBar.sapMBar.sapMPageHeader.sapContrastPlus {
+    background:    linear-gradient(135deg, #1B3A2D 0%, #2D6A4F 55%, #40916C 100%) !important;
+    border-bottom: none !important;
+    box-shadow:    0 4px 20px rgba(27, 58, 45, 0.40) !important;
+    height:        64px !important;
+    padding:       0 24px !important;
+    box-sizing:    border-box !important;
+}
+
+/* Bar içindeki tüm section'lar dikeyde ortalamalı */
+.mainNavBar .sapMBarLeft,
+.mainNavBar .sapMBarMiddle,
+.mainNavBar .sapMBarRight {
+    align-items: center !important;
+    display:     flex !important;
+    height:      64px !important;
+}
+
+/* contentLeft genişletilebilir — linkler buraya sığsın */
+.mainNavBar .sapMBarLeft {
+    flex:       1 1 auto !important;
+    max-width:  none !important;
+    overflow:   visible !important;
+    min-width:  0 !important;
+}
+
+/* contentRight sıkışmasın */
+.mainNavBar .sapMBarRight {
+    flex:       0 0 auto !important;
+    gap:        4px !important;
+}
+
+/* ── 2. Logo ── */
+.mainNavBar .headerLogo {
+    width:         120px !important;
+    min-width:     90px !important;
+    object-fit:    contain !important;
+    display:       block !important;
+}
+
+/* ── 3. Site başlığı ── */
+.mainNavBar .navBarTitle .sapMTitleStyle,
+.mainNavBar .navBarTitle.sapMTitle .sapMTitleStyle,
+.mainNavBar.sapContrastPlus .navBarTitle .sapMTitleStyle {
+    color:       #ffffff !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size:   1.2rem !important;
     font-weight: 700 !important;
-    padding: 0 26px !important;
-    height: 44px !important;
-    box-shadow: 0 4px 18px rgba(255,107,53,0.45) !important;
-    transition: all .2s !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+}
+
+/* ── 4. Orta navigasyon linkleri ── */
+.navLinkBtn.sapMBtn .sapMBtnInner,
+.mainNavBar .navLinkBtn .sapMBtnInner {
+    background:     transparent !important;
+    border:         none !important;
+    color:          rgba(255, 255, 255, 0.88) !important;
+    font-family:    'DM Sans', sans-serif !important;
+    font-size:      0.76rem !important;
+    font-weight:    700 !important;
+    letter-spacing: 0.07em !important;
+    text-transform: uppercase !important;
+    padding:        0 12px !important;
+    height:         64px !important;
+    border-radius:  0 !important;
+    box-shadow:     none !important;
+    border-bottom:  3px solid transparent !important;
+    transition:     color 0.18s, border-bottom 0.18s, background 0.18s !important;
+}
+.navLinkBtn.sapMBtn .sapMBtnInner:hover,
+.mainNavBar .navLinkBtn .sapMBtnInner:hover {
+    color:          #ffffff !important;
+    background:     rgba(255, 255, 255, 0.08) !important;
+    border-bottom:  3px solid #F4A261 !important;
+}
+
+/* Aktif link vurgusu (controller'dan class eklenirse) */
+.navLinkBtn.navLinkActive .sapMBtnInner {
+    color:         #ffffff !important;
+    border-bottom: 3px solid #F4A261 !important;
+}
+
+/* ── 5. "BAĞIŞÇI GİRİŞİ" — transparan link stili ── */
+.navBtnLoginText.sapMBtn .sapMBtnInner,
+.mainNavBar .navBtnLoginText .sapMBtnInner {
+    background:     transparent !important;
+    border:         1px solid rgba(255, 255, 255, 0.35) !important;
+    color:          #ffffff !important;
+    font-family:    'DM Sans', sans-serif !important;
+    font-size:      0.80rem !important;
+    font-weight:    600 !important;
+    letter-spacing: 0.04em !important;
+    padding:        0 16px !important;
+    height:         38px !important;
+    border-radius:  6px !important;
+    box-shadow:     none !important;
+    transition:     all 0.18s !important;
+}
+.navBtnLoginText.sapMBtn .sapMBtnInner:hover,
+.mainNavBar .navBtnLoginText .sapMBtnInner:hover {
+    background:  rgba(255, 255, 255, 0.14) !important;
+    border-color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* ── 6. "🐾 BAĞIŞ" — turuncu pill ── */
+.navBtnDonate.sapMBtn .sapMBtnInner,
+.mainNavBar .navBtnDonate .sapMBtnInner {
+    background:     linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border:         none !important;
+    color:          #ffffff !important;
+    border-radius:  8px !important;
+    font-family:    'DM Sans', sans-serif !important;
+    font-size:      0.82rem !important;
+    font-weight:    800 !important;
+    letter-spacing: 0.05em !important;
+    padding:        0 20px !important;
+    height:         38px !important;
+    box-shadow:     0 4px 14px rgba(244, 162, 97, 0.55) !important;
+    transition:     all 0.2s !important;
+}
+.navBtnDonate.sapMBtn .sapMBtnInner:hover,
+.mainNavBar .navBtnDonate .sapMBtnInner:hover {
+    background:  linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform:   translateY(-1px) !important;
+    box-shadow:  0 6px 20px rgba(244, 162, 97, 0.65) !important;
+}
+
+/* ── 7. MenuButton (kullanıcı adı) ── */
+.navMenuBtn.sapMMenuBtn .sapMBtnInner,
+.mainNavBar .navMenuBtn .sapMBtnInner {
+    background:    rgba(255, 255, 255, 0.12) !important;
+    border:        1px solid rgba(255, 255, 255, 0.25) !important;
+    color:         #ffffff !important;
+    border-radius: 50px !important;
+    font-weight:   600 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    font-size:     0.82rem !important;
+    padding:       0 16px !important;
+    height:        38px !important;
+    transition:    all 0.18s !important;
+}
+.navMenuBtn.sapMMenuBtn .sapMBtnInner:hover,
+.mainNavBar .navMenuBtn .sapMBtnInner:hover {
+    background:   rgba(255, 255, 255, 0.22) !important;
+    border-color: rgba(255, 255, 255, 0.50) !important;
+}
+
+/* MenuButton ok ikonu */
+.navMenuBtn .sapMMenuBtnSplit .sapMBtnInner {
+    background:    transparent !important;
+    border-left:   1px solid rgba(255,255,255,0.25) !important;
+}
+
+/* ── 8. Avatar ── */
+.mainNavBar .sapFAvatar {
+    border:     2px solid rgba(255, 255, 255, 0.45) !important;
+    cursor:     pointer !important;
+    transition: border-color 0.2s, transform 0.2s !important;
+}
+.mainNavBar .sapFAvatar:hover {
+    border-color: #ffffff !important;
+    transform:    scale(1.05) !important;
+}
+
+/* ── 9. Tüm ikon renkleri navbar içinde ── */
+.mainNavBar .sapMBtnIcon,
+.mainNavBar .sapUiIcon,
+.mainNavBar .sapMMenuBtnArrow {
+    color: #ffffff !important;
+}
+
+/* ── 10. Eski sınıf uyumluluğu (varsa hâlâ kullanılanlar) ── */
+.navBtnLogin.sapMBtn .sapMBtnInner,
+.mainNavBar .navBtnLogin .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border:        none !important;
+    color:         #ffffff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 20px !important;
+    height:        38px !important;
+    box-shadow:    0 4px 14px rgba(244, 162, 97, 0.45) !important;
+}
+
+.navBtnDefault.sapMBtn .sapMBtnInner,
+.mainNavBar .navBtnDefault .sapMBtnInner {
+    background:    rgba(255,255,255,0.12) !important;
+    border:        1px solid rgba(255,255,255,0.30) !important;
+    color:         #ffffff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    font-family:   'DM Sans', sans-serif !important;
+    padding:       0 18px !important;
+    height:        38px !important;
+}
+
+/* ── 11. Hero butonları ── */
+.btnHeroPrimary .sapMBtnInner {
+    background:    linear-gradient(135deg, #F4A261, #E07A3A) !important;
+    border-color:  transparent !important;
+    color:         #fff !important;
+    border-radius: 50px !important;
+    font-weight:   700 !important;
+    padding:       0 28px !important;
+    height:        46px !important;
+    box-shadow:    0 6px 20px rgba(244, 162, 97, 0.50) !important;
+    transition:    all 0.22s ease !important;
 }
 .btnHeroPrimary .sapMBtnInner:hover {
-    background: #E55A2A !important;
-    border-color: #E55A2A !important;
-    transform: translateY(-2px) !important;
+    background:  linear-gradient(135deg, #E07A3A, #C85F20) !important;
+    transform:   translateY(-3px) !important;
+    box-shadow:  0 10px 28px rgba(244, 162, 97, 0.60) !important;
 }
 
-/* Gönüllü Ol — açık yeşil */
 .btnHeroOutline .sapMBtnInner {
-    background: #279b2d !important;
-    border-color: #279b2d !important;
-    color: #FFFFFF !important;
-    border-radius: 28px !important;
-    font-weight: 700 !important;
-    padding: 0 26px !important;
-    height: 44px !important;
-    box-shadow: 0 4px 18px rgba(170,209,87,0.40) !important;
-    transition: all .2s !important;
+    background:      rgba(255, 255, 255, 0.12) !important;
+    border:          2px solid rgba(255, 255, 255, 0.70) !important;
+    color:           #fff !important;
+    border-radius:   50px !important;
+    font-weight:     700 !important;
+    padding:         0 28px !important;
+    height:          46px !important;
+    backdrop-filter: blur(6px) !important;
+    transition:      all 0.22s ease !important;
 }
 .btnHeroOutline .sapMBtnInner:hover {
-    background: #8AB02A !important;
-    border-color: #8AB02A !important;
-    transform: translateY(-2px) !important;
+    background:   rgba(255, 255, 255, 0.25) !important;
+    border-color: #fff !important;
+    transform:    translateY(-3px) !important;
 }
 
-/* Burs Başvurusu — mavi */
-.btnHeroGhost .sapMBtnInner {
-    background: #3B82F6 !important;
-    border-color: #3B82F6 !important;
-    color: #FFFFFF !important;
-    border-radius: 28px !important;
-    font-weight: 500 !important;
-    padding: 0 26px !important;
-    height: 44px !important;
-    box-shadow: 0 4px 18px rgba(59,130,246,0.35) !important;
-    transition: all .2s !important;
+/* ── 12. Sayfa yüksekliği ── */
+html, body {
+    height:  100%;
+    margin:  0;
+    padding: 0;
 }
-.btnHeroGhost .sapMBtnInner:hover {
-    background: #2563EB !important;
-    border-color: #2563EB !important;
-    transform: translateY(-2px) !important;
+
+.mainShellPage {
+    height: 100vh;
+}
+
+.mainShellPage > .sapMPageScroll {
+    height: 100%;
+}
+/* ══ ÇIFT SCROLL TAMAMEN DÜZELTME ══ */
+
+/* Ana Page scroll'u kapat */
+.mainShellPage.sapMPage,
+.mainShellPage.sapMPage > .sapMPageScroll {
+    overflow:   hidden !important;
+    height:     100vh !important;
+}
+
+/* NavContainer scroll'u kapat — içindeki Page yönetir */
+#appContent.sapMNavContainer,
+#appContent.sapMNavContainer > .sapMNavItem {
+    height:   calc(100vh - 64px) !important;
+    overflow: hidden !important;
+}
+
+/* İçteki Page scroll kapat — ObjectPage yönetir */
+#appContent .sapMPage,
+#appContent .sapMPage > .sapMPageScroll {
+    overflow: hidden !important;
+    height:   100% !important;
+}
+
+/* ObjectPageWrapper — TEK scroll burası olsun */
+.sapUxAPObjectPageWrapper {
+    overflow-y:         auto !important;
+    overflow-x:         hidden !important;
+    height:             100% !important;
+    scroll-behavior:    smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* ObjectPage ve içeriği taşmasın */
+.sapUxAPObjectPage {
+    height:   100% !important;
+    overflow: hidden !important;
+}
+
+/* Spacer'ı gizle — SAP'nin yapay yüksekliği */
+[id$="-spacer"] {
+    display: none !important;
+    height:  0 !important;
+}
+
+
+/* ══ BAR VE HIZALAMA ══ */
+.mainNavBar.sapMBar,
+.mainNavBar.sapMBar.sapMPageHeader,
+.mainNavBar.sapMBar.sapContrastPlus,
+.mainNavBar.sapMBar.sapMPageHeader.sapContrastPlus {
+    padding: 0 0 0 0 !important;   /* padding sıfırla, içerik hizası navFullRow'dan gelsin */
+}
+
+.mainNavBar .sapMBarLeft {
+    padding-left: 0 !important;
+    overflow:     visible !important;
+}
+
+/* navFullRow — hero ile aynı kenar hizası */
+.navFullRow {
+    padding-left:  48px !important;   /* hero fotoğrafının sol kenarıyla eşleş */
+    flex-wrap:     nowrap !important;
+    align-items:   center !important;
+    height:        64px !important;
+    gap:           0 !important;
 }

@@ -5,9 +5,6 @@
    Renkler: Ana site design token'larıyla senkronize
    ══════════════════════════════════════════════════════════ */
 
-/* ── Font Import (ana site ile aynı) ── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
-
 /* ── Design Tokens (ana siteden miras) ── */
 .adminDashboardPage {
     --clr-primary:        #2D6A4F;

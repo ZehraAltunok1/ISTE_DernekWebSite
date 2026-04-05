@@ -5,11 +5,7 @@
     xmlns:core="sap.ui.core">
 
     <Page
-        id="mediaDetailPage"
-        showNavButton="true"
-        navButtonPress="onNavBack"
-        title="{detailModel>/title}"
-        titleAlignment="Center">
+    >
 
         <content>
             <VBox class="mediaDetailBox" alignItems="Center">
@@ -23,15 +19,15 @@
                 <!-- İçerik -->
                 <VBox id="detailContentBox" visible="false" class="mediaDetailContent">
 
-                    <core:HTML id="photoDetailArea" content=""/>
-                    <core:HTML id="videoDetailArea" content=""/>
+
 
                     <VBox class="mediaDetailInfo">
                         <Title text="{detailModel>/title}"       level="H2" class="mediaDetailTitle"/>
                         <Text  text="{detailModel>/description}" class="mediaDetailDesc"/>
                         <Text  text="{detailModel>/date}"        class="mediaDetailDate"/>
                     </VBox>
-
+                    <core:HTML id="photoDetailArea" content=""/>
+                    <core:HTML id="videoDetailArea" content=""/>
                     <Button
                         text="← Faaliyetlere Dön"
                         type="Transparent"

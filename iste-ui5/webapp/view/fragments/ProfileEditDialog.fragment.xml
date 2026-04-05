@@ -3,9 +3,7 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.ui.layout.form">
     
-    <Dialog
-        title="Profil Düzenle"
-        contentWidth="500px">
+    <Dialog>
         
         <content>
             <f:SimpleForm

@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="videoEditDialog"
+        title="🎬 Videoyu Düzenle"
+        contentWidth="520px"
+        contentHeight="600px"
+        draggable="true"
+        resizable="true"
+        stretch="{device>/system/phone}">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- ── Başlık ── -->
+                <Label text="Başlık *" required="true" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="videoEditTitle"
+                    value="{videoEditModel>/title}"
+                    placeholder="Video başlığı"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Açıklama ── -->
+                <Label text="Açıklama" class="sapUiTinyMarginBottom"/>
+                <TextArea
+                    id="videoEditDescription"
+                    value="{videoEditModel>/description}"
+                    placeholder="Kısa açıklama..."
+                    rows="2"
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── YouTube URL ── -->
+                <Label text="YouTube URL" class="sapUiTinyMarginBottom"/>
+                <Input
+                    id="videoEditUrl"
+                    value="{videoEditModel>/youtube_url}"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    width="100%"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── Kapak Fotoğrafı ── -->
+                <Label text="Kapak Fotoğrafı (Thumbnail)" class="sapUiTinyMarginBottom"/>
+
+                <!-- Mevcut thumbnail önizleme -->
+                <core:HTML id="videoCurrentThumb"
+                    content="&lt;div id='videoCurrentThumbArea' style='margin-bottom:8px;'&gt;&lt;/div&gt;"/>
+
+                <!-- Drop zone -->
+                <core:HTML
+                    id="videoThumbDropZone"
+                    content="&lt;div id='videoThumbZone'
+                        style='border:2px dashed #0070F2;border-radius:10px;padding:14px;
+                               text-align:center;background:#F0F7FF;cursor:pointer;
+                               margin-bottom:8px;transition:background 0.2s;'
+                        ondragover=&quot;event.preventDefault();this.style.background=&apos;#DBEAFE&apos;;&quot;
+                        ondragleave=&quot;this.style.background=&apos;#F0F7FF&apos;;&quot;
+                        ondrop=&quot;window._videoThumbDrop(event);&quot;
+                        onclick=&quot;document.getElementById(&apos;videoThumbInput&apos;).click();&quot;&gt;
+                        &lt;span style='font-size:1.5rem;'&gt;🖼️&lt;/span&gt;
+                        &lt;span style='font-size:0.85rem;color:#0070F2;font-weight:600;margin-left:8px;'&gt;
+                            Yeni kapak seç (sürükle veya tıkla)
+                        &lt;/span&gt;
+                        &lt;br/&gt;
+                        &lt;span style='font-size:0.72rem;color:#6B7280;'&gt;Önerilen: 1280×720px · JPG, PNG, WEBP · max 20 MB&lt;/span&gt;
+                        &lt;input type='file' id='videoThumbInput'
+                            accept='image/jpeg,image/png,image/gif,image/webp'
+                            style='display:none'
+                            onchange='window._videoThumbSelect(event)'/&gt;
+                    &lt;/div&gt;"/>
+
+                <!-- Seçilen yeni thumbnail önizleme -->
+                <core:HTML id="videoNewThumbPreview"
+                    content="&lt;div id='videoNewThumbArea' style='margin-bottom:8px;'&gt;&lt;/div&gt;"/>
+
+                <!-- Kaldır butonu — JS ile görünürlük yönetilir -->
+                <core:HTML id="videoRemoveThumbHtml"
+                    content="&lt;div id='videoRemoveThumbBtn' style='display:none;'&gt;
+                        &lt;button onclick='window._videoRemoveThumb()'
+                            style='background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;
+                                   border-radius:8px;padding:6px 14px;cursor:pointer;
+                                   font-size:0.82rem;font-weight:600;'&gt;
+                            🗑 Kapak fotoğrafını kaldır
+                        &lt;/button&gt;
+                    &lt;/div&gt;"/>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Kaydet"  type="Emphasized" icon="sap-icon://save" press="onSaveVideoEdit"/>
+            <Button text="İptal"   type="Transparent"                       press="onCloseVideoEditDialog"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -31,23 +31,29 @@ sap.ui.define([
             this.getView().byId("detailContentBox").setVisible(false);
             this.getView().byId("detailEmptyBox").setVisible(false);
 
-            // ── FOTOĞRAF GRUBU ──
             if (sType === "photo_group") {
-                try {
-                    var aItems = JSON.parse(decodeURIComponent(sId.replace(/%27/g, "'")));
-                    if (aItems && aItems.length) {
-                        that._renderPhotoGrid(aItems);
-                    } else {
-                        that._showEmpty();
-                    }
-                } catch (e) {
-                    console.error("photo_group parse hatası:", e);
-                    that._showEmpty();
-                }
+                // Grup başlığını decode et, API'den çek
+                var sGroupTitle = decodeURIComponent(sId);
+
+                fetch(API_BASE + "/media")
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        var aAll = (data.success && data.media) ? data.media : [];
+                        var aItems = aAll.filter(function (m) {
+                            return m.type === "photo" && (m.title || "").trim() === sGroupTitle.trim();
+                        });
+                        if (aItems.length) {
+                            that._renderPhotoGrid(aItems);
+                        } else {
+                            that._showEmpty();
+                        }
+                    })
+                    .catch(function () { that._showEmpty(); });
+
                 return;
             }
 
-            // ── TEK VİDEO ──
+            // Tek video — değişmedi
             fetch(API_BASE + "/media/" + sId)
                 .then(function (r) { return r.json(); })
                 .then(function (data) {

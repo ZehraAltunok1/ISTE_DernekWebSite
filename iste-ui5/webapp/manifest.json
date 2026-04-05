@@ -46,12 +46,15 @@
     },
     "resources": {
       "css": [
+          
+        { "uri": "css/design-tokens.css" },
         { "uri": "css/designsystem.css" },
-        { "uri": "css/dashboard.css"      },
+        { "uri": "css/dashboard.css"      }, 
+        { "uri": "css/navbar.css"         },
+        { "uri": "css/icon-colors.css"    },
         { "uri": "css/profile.css"        },
         { "uri": "css/login.css"          },
         { "uri": "css/mediaCards.css"     },
-        { "uri": "css/navbar.css"         },
         { "uri": "css/Campaigndetail.css" },
         { "uri": "css/mediaDetail.css"    },
         { "uri": "css/stats.css"          },
@@ -64,7 +67,7 @@
         "type": "View",
         "viewType": "XML",
         "path": "edusupport.platform.view",
-        "controlId": "app",
+        "controlId": "appContent",
         "controlAggregation": "pages",
         "transition": "slide",
         "bypassed": {
@@ -80,8 +83,9 @@
         { "pattern": "admin/profile",       "name": "profile",        "target": "profile"        },
         { "pattern": "bagis",               "name": "donate",         "target": "donate"         },
         { "pattern": "campaign",            "name": "campaignDetail", "target": "campaignDetail" },
-        { "pattern": "media/{type}/{id}",   "name": "mediaDetail",    "target": "mediaDetail"    },
-        {"pattern": "about",                "name": "about",          "target": "about"}
+        { "pattern": "mediaDetail/{type}/{id}",   "name": "mediaDetail",    "target": "mediaDetail"    },
+        {"pattern": "about",                "name": "about",          "target": "about"},
+        { "pattern": "reset-password/{token}", "name": "resetPassword", "target": "resetPassword" }
       ],
       "targets": {
         "login": {
@@ -143,7 +147,13 @@
         "viewName": "public.About",
         "viewLevel": 1,
         "title": "Hakkımızda"
-      }
+        },
+        "resetPassword": {
+        "viewType": "XML",
+        "viewName": "public.ResetPassword",
+        "viewId": "resetPassword",
+        "viewLevel": 1
+        }
 
       }
     },
