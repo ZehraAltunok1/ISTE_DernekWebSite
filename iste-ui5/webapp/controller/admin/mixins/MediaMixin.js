@@ -15,17 +15,17 @@ sap.ui.define([
         _loadMedia: function () {
             var that   = this;
             var oModel = this.getModel("dashboardData");
-
+        
             this._apiCall("GET", "/media")
                 .then(function (data) {
                     if (!data.success) return;
-
+        
                     var aAll = data.media || [];
-
-                    // ── Fotoğrafları başlığa göre grupla ──────────────────────
+        
+                    // ── Fotoğraf grupları ──
                     var oPhotoGroups = {};
                     var aPhotoOrder  = [];
-
+        
                     aAll.filter(function (m) { return m.type === "photo"; })
                         .forEach(function (m) {
                             var sKey = (m.title || "Diğer").trim();
@@ -35,7 +35,7 @@ sap.ui.define([
                             }
                             oPhotoGroups[sKey].push(m);
                         });
-
+        
                     var aPhotoGroups = aPhotoOrder.map(function (sKey) {
                         var aItems    = oPhotoGroups[sKey];
                         var oCover    = aItems.find(function (i) { return i.is_cover; }) || aItems[0];
@@ -43,19 +43,23 @@ sap.ui.define([
                             ? (oCover.url.startsWith("http") ? oCover.url : "http://localhost:3000" + oCover.url)
                             : "";
                         return {
-                            _isGroup:      true,
-                            groupTitle:    sKey,
-                            count:         aItems.length,
-                            coverUrl:      sCoverUrl,
-                            items:         aItems,
-                            ids:           aItems.map(function (i) { return i._id || i.id; }),
+                            _isGroup     : true,
+                            groupTitle   : sKey,
+                            count        : aItems.length,
+                            coverUrl     : sCoverUrl,
+                            items        : aItems,
+                            ids          : aItems.map(function (i) { return i._id || i.id; }),
                             created_at_tr: oCover.created_at
                                 ? new Date(oCover.created_at).toLocaleDateString("tr-TR")
-                                : "-"
+                                : "-",
+                            // Filtre için ay/yıl key (YYYY-MM)
+                            monthKey     : oCover.created_at
+                                ? new Date(oCover.created_at).toISOString().slice(0, 7)
+                                : ""
                         };
                     });
-
-                    // ── Videoları düz liste olarak bırak ──────────────────────
+        
+                    // ── Videolar ──
                     var aVideos = aAll
                         .filter(function (m) { return m.type === "video"; })
                         .map(function (m) {
@@ -63,16 +67,146 @@ sap.ui.define([
                             m.created_at_tr = m.created_at
                                 ? new Date(m.created_at).toLocaleDateString("tr-TR")
                                 : "-";
+                            // Filtre için ay/yıl key
+                            m.monthKey = m.created_at
+                                ? new Date(m.created_at).toISOString().slice(0, 7)
+                                : "";
                             return m;
                         });
-
+        
+                    // Ham veriyi sakla — filtre için kullanacağız
+                    that._allPhotoGroups = aPhotoGroups;
+                    that._allVideos      = aVideos;
+        
                     oModel.setProperty("/mediaGroups", aPhotoGroups);
                     oModel.setProperty("/mediaVideos", aVideos);
                     oModel.setProperty("/mediaItems",  aAll);
+        
+                    // Tarih dropdown'ını doldur
+                    that._buildMediaDateDropdown(aPhotoGroups, aVideos);
+        
+                    // Sonuç metnini güncelle
+                    that._updateMediaResultText(aPhotoGroups.length, aVideos.length);
                 })
                 .catch(function () {
-                    MessageToast.show("Medya yüklenemedi.");
+                    sap.m.MessageToast.show("Medya yüklenemedi.");
                 });
+        },
+        
+        // ── Tarih dropdown'ını doldur ────────────────────────────
+        _buildMediaDateDropdown: function (aPhotos, aVideos) {
+            var oSelect = this.byId("mediaDateFilter");
+            if (!oSelect) return;
+        
+            // Tüm ay/yıl değerlerini topla
+            var oMonths = {};
+            aPhotos.forEach(function (g) { if (g.monthKey) oMonths[g.monthKey] = true; });
+            aVideos.forEach(function (v) { if (v.monthKey) oMonths[v.monthKey] = true; });
+        
+            // Önce mevcut item'ları temizle ("all" hariç)
+            var aItems = oSelect.getItems();
+            aItems.forEach(function (oItem) {
+                if (oItem.getKey() !== "all") oSelect.removeItem(oItem);
+            });
+        
+            // Aylara göre sırala (yeniden eskiye)
+            Object.keys(oMonths).sort().reverse().forEach(function (sKey) {
+                var oParts = sKey.split("-");
+                var sLabel = new Date(parseInt(oParts[0]), parseInt(oParts[1]) - 1, 1)
+                    .toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
+                oSelect.addItem(new sap.ui.core.Item({ key: sKey, text: "📅 " + sLabel }));
+            });
+        },
+        
+        // ── Filtre uygula ────────────────────────────────────────
+        onMediaFilter: function () {
+            var oModel   = this.getModel("dashboardData");
+        
+            var sSearch  = (this.byId("mediaSearchField")  ? this.byId("mediaSearchField").getValue().trim().toLowerCase()  : "");
+            var sType    = (this.byId("mediaTypeFilter")   ? this.byId("mediaTypeFilter").getSelectedKey()                   : "all");
+            var sDate    = (this.byId("mediaDateFilter")   ? this.byId("mediaDateFilter").getSelectedKey()                   : "all");
+        
+            var bFiltered = sSearch !== "" || sType !== "all" || sDate !== "all";
+        
+            // Temizle butonunu göster/gizle
+            var oClearBtn = this.byId("mediaClearFilter");
+            if (oClearBtn) oClearBtn.setVisible(bFiltered);
+        
+            // ── Fotoğraf gruplarını filtrele ──
+            var aFilteredPhotos = (this._allPhotoGroups || []).filter(function (g) {
+                var bSearch = !sSearch || g.groupTitle.toLowerCase().indexOf(sSearch) !== -1;
+                var bDate   = sDate === "all" || g.monthKey === sDate;
+                var bType   = sType === "all" || sType === "photo";
+                return bSearch && bDate && bType;
+            });
+        
+            // ── Videoları filtrele ──
+            var aFilteredVideos = (this._allVideos || []).filter(function (v) {
+                var bSearch = !sSearch || (v.title || "").toLowerCase().indexOf(sSearch) !== -1 ||
+                                        (v.description || "").toLowerCase().indexOf(sSearch) !== -1;
+                var bDate   = sDate === "all" || v.monthKey === sDate;
+                var bType   = sType === "all" || sType === "video";
+                return bSearch && bDate && bType;
+            });
+        
+            // Modeli güncelle → tablo binding otomatik yenilenir
+            oModel.setProperty("/mediaGroups", aFilteredPhotos);
+            oModel.setProperty("/mediaVideos", aFilteredVideos);
+        
+            // Boş durum göstergeleri
+            var oPhotoEmpty = this.byId("photoGroupsEmpty");
+            if (oPhotoEmpty) oPhotoEmpty.setVisible(aFilteredPhotos.length === 0 && sType !== "video");
+        
+            // Panel görünürlüğü — tür filtresine göre
+            var oPhotoPanel = this.byId("mediaPhotoPanel");
+            var oVideoPanel = this.byId("mediaVideoPanel");
+            if (oPhotoPanel) oPhotoPanel.setVisible(sType !== "video");
+            if (oVideoPanel) oVideoPanel.setVisible(sType !== "photo");
+        
+            // Sonuç metni
+            this._updateMediaResultText(aFilteredPhotos.length, aFilteredVideos.length);
+        },
+        
+        // ── Filtreyi temizle ─────────────────────────────────────
+        onMediaFilterClear: function () {
+            var oSearch = this.byId("mediaSearchField");
+            var oType   = this.byId("mediaTypeFilter");
+            var oDate   = this.byId("mediaDateFilter");
+            var oClear  = this.byId("mediaClearFilter");
+        
+            if (oSearch) oSearch.setValue("");
+            if (oType)   oType.setSelectedKey("all");
+            if (oDate)   oDate.setSelectedKey("all");
+            if (oClear)  oClear.setVisible(false);
+        
+            // Panel'leri tekrar göster
+            var oPhotoPanel = this.byId("mediaPhotoPanel");
+            var oVideoPanel = this.byId("mediaVideoPanel");
+            if (oPhotoPanel) oPhotoPanel.setVisible(true);
+            if (oVideoPanel) oVideoPanel.setVisible(true);
+        
+            // Orijinal veriyi geri yükle
+            var oModel = this.getModel("dashboardData");
+            oModel.setProperty("/mediaGroups", this._allPhotoGroups || []);
+            oModel.setProperty("/mediaVideos", this._allVideos      || []);
+        
+            var oPhotoEmpty = this.byId("photoGroupsEmpty");
+            if (oPhotoEmpty) oPhotoEmpty.setVisible(false);
+        
+            this._updateMediaResultText(
+                (this._allPhotoGroups || []).length,
+                (this._allVideos      || []).length
+            );
+        },
+        
+        // ── Sonuç sayısı metni ───────────────────────────────────
+        _updateMediaResultText: function (nPhotos, nVideos) {
+            var oText = this.byId("mediaFilterResultText");
+            if (!oText) return;
+            var sParts = [];
+            if (nPhotos > 0) sParts.push(nPhotos + " grup");
+            if (nVideos > 0) sParts.push(nVideos + " video");
+            oText.setText(sParts.length ? sParts.join(", ") + " gösteriliyor" : "Sonuç bulunamadı");
         },
 
         // ─────────────────────────────────────────────────────────────

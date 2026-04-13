@@ -188,3 +188,56 @@
 @media (max-width: 380px) {
     .mediaDetailPhotoGrid { grid-template-columns: 1fr; }
 }
+/* ════════════════════════════════════════════════════════
+   Admin Dashboard — Medya Filtre Bandı CSS
+   Mevcut admin CSS dosyanızın SONUNA ekleyin.
+   ════════════════════════════════════════════════════════ */
+
+/* Filtre bandı container */
+.mediaFilterBar {
+    background    : #F8FBF9;
+    border        : 1.5px solid #D1E9DC;
+    border-radius : 10px;
+    padding       : 10px 16px;
+    gap           : 8px;
+    flex-wrap     : wrap;
+    align-items   : center;
+}
+
+/* SearchField override */
+.mediaFilterBar .sapMSF {
+    border-radius : 8px !important;
+    border-color  : #D1E9DC !important;
+}
+.mediaFilterBar .sapMSF:focus-within {
+    border-color  : #2D6A4F !important;
+    box-shadow    : 0 0 0 2px rgba(45,106,79,0.15) !important;
+}
+
+/* Select override */
+.mediaFilterBar .sapMSlt {
+    border-radius : 8px !important;
+    border-color  : #D1E9DC !important;
+}
+.mediaFilterBar .sapMSlt:focus {
+    border-color  : #2D6A4F !important;
+}
+
+/* Sonuç metni */
+.mediaFilterResultText.sapMText {
+    font-size   : 0.82rem !important;
+    color       : #6B7C75 !important;
+    font-weight : 600 !important;
+    font-style  : italic !important;
+}
+
+/* Temizle butonu */
+.mediaFilterBar .sapMBtn.sapMBtnTransparent .sapMBtnInner {
+    color       : #DC2626 !important;
+    font-size   : 0.82rem !important;
+    font-weight : 600 !important;
+}
+.mediaFilterBar .sapMBtn.sapMBtnTransparent .sapMBtnInner:hover {
+    background  : rgba(220,38,38,0.08) !important;
+    color       : #B91C1C !important;
+}

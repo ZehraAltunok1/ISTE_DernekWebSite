@@ -143,7 +143,7 @@
                     <!-- ══ TAB 3: ETKİNLİKLER ══ -->
                     <IconTabFilter
                         icon="sap-icon://appointment-2"
-                        text="Etkinlikler"
+                        text="Notlar"
                         count="{dashboardData>/stats/totalEvents}"
                         key="events">
                         <VBox class="tabContent">
@@ -246,83 +246,162 @@
                         </VBox>
                     </IconTabFilter>
 
-                    <!-- ══ TAB 4: MEDYA ══ -->
-                    <IconTabFilter icon="sap-icon://picture" text="Faaliyetler" key="media">
-                        <ScrollContainer height="100%" vertical="true">
-                            <VBox class="tabContent">
-                                <OverflowToolbar class="sapUiTinyMarginBottom">
-                                    <Title text="Faaliyetler — Medya Yönetimi" level="H3"/>
-                                    <ToolbarSpacer/>
-                                    <Button text="Fotoğraf Yükle"    icon="sap-icon://upload" type="Emphasized" press="onAddPhoto"  class="sapUiTinyMarginEnd"/>
-                                    <Button text="YouTube Video Ekle" icon="sap-icon://video"  type="Default"    press="onAddVideo"/>
-                                </OverflowToolbar>
-                                <MessageStrip
-                                    text="Buraya eklediğiniz içerikler anasayfada 'Faaliyetlerimiz' bölümünde otomatik görünür. Aynı başlıktaki fotoğraflar grup olarak gösterilir."
-                                    type="Information"
-                                    showIcon="true"
-                                    class="sapUiSmallMarginBottom"/>
-                                <Panel headerText="📷 Fotoğraf Grupları" expandable="true" expanded="true" class="sapUiSmallMarginBottom">
-                                    <VBox id="photoGroupsEmpty"
-                                        visible="{= !${dashboardData>/mediaGroups} || ${dashboardData>/mediaGroups}.length === 0 }"
-                                        alignItems="Center" class="sapUiMediumMargin">
-                                        <core:Icon src="sap-icon://picture" size="2rem" class="iconMuted"/>
-                                        <Text text="Henüz fotoğraf eklenmedi." class="sapUiSmallMarginTop"/>
-                                    </VBox>
-                                    <Table
-                                        id="photoGroupsTable"
-                                        items="{dashboardData>/mediaGroups}"
-                                        noDataText="Henüz fotoğraf grubu yok."
-                                        visible="{= ${dashboardData>/mediaGroups} !== undefined &amp;&amp; ${dashboardData>/mediaGroups/length} > 0 }"
-                                        class="mediaGroupTable">
-                                        <columns>
-                                            <Column width="110px"><Text text="Kapak"/></Column>
-                                            <Column><Text text="Grup Adı / Açıklama"/></Column>
-                                            <Column width="100px" hAlign="Center"><Text text="Fotoğraf"/></Column>
-                                            <Column width="120px" minScreenWidth="Tablet" demandPopin="true"><Text text="Tarih"/></Column>
-                                            <Column width="120px" hAlign="Center"><Text text="İşlemler"/></Column>
-                                        </columns>
-                                        <items>
-                                            <ColumnListItem vAlign="Middle">
-                                                <cells>
-                                                    <core:HTML content="{= '&lt;img src=&quot;' + ${dashboardData>coverUrl} + '&quot; style=&quot;width:96px;height:68px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.12);&quot; onerror=&quot;this.src=\\\'images/placeholder.jpg\\\'&quot;/&gt;' }"/>
-                                                    <ObjectIdentifier title="{dashboardData>groupTitle}" text="{= ${dashboardData>items/0/description} || '' }"/>
-                                                    <ObjectStatus text="{dashboardData>count} fotoğraf" state="Success" icon="sap-icon://picture"/>
-                                                    <Text text="{dashboardData>created_at_tr}"/>
-                                                    <HBox justifyContent="Center">
-                                                        <Button icon="sap-icon://edit"   type="Transparent" tooltip="Grubu Düzenle" press="onEditPhotoGroup"  class="sapUiTinyMarginEnd"/>
-                                                        <Button icon="sap-icon://delete" type="Transparent" tooltip="Grubu Sil"     press="onDeletePhotoGroup"/>
-                                                    </HBox>
-                                                </cells>
-                                            </ColumnListItem>
-                                        </items>
-                                    </Table>
-                                </Panel>
-                                <Panel headerText="▶ Videolar" expandable="true" expanded="true">
-                                    <Table id="videoTable" items="{dashboardData>/mediaVideos}" noDataText="Henüz video eklenmedi." class="mediaGroupTable">
-                                        <columns>
-                                            <Column width="110px"><Text text="Önizleme"/></Column>
-                                            <Column><Text text="Başlık / Açıklama"/></Column>
-                                            <Column width="120px" minScreenWidth="Tablet" demandPopin="true"><Text text="Tarih"/></Column>
-                                            <Column width="120px" hAlign="Center"><Text text="İşlemler"/></Column>
-                                        </columns>
-                                        <items>
-                                            <ColumnListItem vAlign="Middle">
-                                                <cells>
-                                                    <core:HTML content="{= '&lt;img src=&quot;' + ${dashboardData>thumbnail_url} + '&quot; style=&quot;width:96px;height:68px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.12);&quot;/&gt;' }"/>
-                                                    <ObjectIdentifier title="{dashboardData>title}" text="{dashboardData>description}"/>
-                                                    <Text text="{dashboardData>created_at_tr}"/>
-                                                    <HBox justifyContent="Center">
-                                                        <Button icon="sap-icon://edit"   type="Transparent" tooltip="Videoyu Düzenle" press="onEditVideo"    class="sapUiTinyMarginEnd"/>
-                                                        <Button icon="sap-icon://delete" type="Transparent" tooltip="Videoyu Sil"     press="onDeleteMedia"/>
-                                                    </HBox>
-                                                </cells>
-                                            </ColumnListItem>
-                                        </items>
-                                    </Table>
-                                </Panel>
-                            </VBox>
-                        </ScrollContainer>
-                    </IconTabFilter>
+<!-- ════════════════════════════════════════════════════════
+     Dashboard.view.xml — TAB 4: MEDYA bölümünü
+     TAMAMEN aşağıdakiyle değiştirin.
+     ════════════════════════════════════════════════════════ -->
+
+<IconTabFilter icon="sap-icon://picture" text="Faaliyetler" key="media">
+    <ScrollContainer height="100%" vertical="true">
+        <VBox class="tabContent">
+
+            <!-- ── Toolbar ── -->
+            <OverflowToolbar class="sapUiTinyMarginBottom">
+                <Title text="Faaliyetler — Medya Yönetimi" level="H3"/>
+                <ToolbarSpacer/>
+                <Button text="Fotoğraf Yükle"     icon="sap-icon://upload" type="Emphasized" press="onAddPhoto"  class="sapUiTinyMarginEnd"/>
+                <Button text="YouTube Video Ekle"  icon="sap-icon://video"  type="Default"    press="onAddVideo"/>
+            </OverflowToolbar>
+
+            <MessageStrip
+                text="Buraya eklediğiniz içerikler anasayfada 'Faaliyetlerimiz' bölümünde otomatik görünür. Aynı başlıktaki fotoğraflar grup olarak gösterilir."
+                type="Information"
+                showIcon="true"
+                class="sapUiSmallMarginBottom"/>
+
+            <!-- ══ FİLTRE BANDI ══ -->
+            <HBox
+                alignItems="Center"
+                wrap="Wrap"
+                class="mediaFilterBar sapUiSmallMarginBottom">
+
+                <!-- Arama kutusu -->
+                <SearchField
+                    id="mediaSearchField"
+                    width="220px"
+                    placeholder="Başlık veya grup adı ara..."
+                    liveChange="onMediaFilter"
+                    search="onMediaFilter"
+                    class="sapUiTinyMarginEnd"/>
+
+                <!-- Tür filtresi -->
+                <Select
+                    id="mediaTypeFilter"
+                    width="160px"
+                    change="onMediaFilter"
+                    class="sapUiTinyMarginEnd">
+                    <items>
+                        <core:Item key="all"   text="📁 Tüm Türler"/>
+                        <core:Item key="photo" text="📷 Fotoğraflar"/>
+                        <core:Item key="video" text="▶ Videolar"/>
+                    </items>
+                </Select>
+
+                <!-- Tarih filtresi — ay/yıl -->
+                <Select
+                    id="mediaDateFilter"
+                    width="160px"
+                    change="onMediaFilter"
+                    class="sapUiTinyMarginEnd">
+                    <items>
+                        <core:Item key="all" text="📅 Tüm Tarihler"/>
+                    </items>
+                </Select>
+
+                <!-- Filtre temizle -->
+                <Button
+                    id="mediaClearFilter"
+                    text="Filtreyi Temizle"
+                    icon="sap-icon://clear-filter"
+                    type="Transparent"
+                    press="onMediaFilterClear"
+                    visible="false"/>
+
+                <!-- Sonuç sayısı -->
+                <ToolbarSpacer/>
+                <Text id="mediaFilterResultText" text="" class="mediaFilterResultText"/>
+            </HBox>
+
+            <!-- ══ FOTOĞRAF GRUPLARI ══ -->
+            <Panel
+                id="mediaPhotoPanel"
+                headerText="📷 Fotoğraf Grupları"
+                expandable="true"
+                expanded="true"
+                class="sapUiSmallMarginBottom">
+                <VBox
+                    id="photoGroupsEmpty"
+                    visible="false"
+                    alignItems="Center"
+                    class="sapUiMediumMargin">
+                    <core:Icon src="sap-icon://picture" size="2rem" class="iconMuted"/>
+                    <Text text="Eşleşen fotoğraf grubu bulunamadı." class="sapUiSmallMarginTop"/>
+                </VBox>
+                <Table
+                    id="photoGroupsTable"
+                    items="{dashboardData>/mediaGroups}"
+                    noDataText="Henüz fotoğraf grubu yok."
+                    class="mediaGroupTable">
+                    <columns>
+                        <Column width="110px"><Text text="Kapak"/></Column>
+                        <Column><Text text="Grup Adı / Açıklama"/></Column>
+                        <Column width="100px" hAlign="Center"><Text text="Fotoğraf"/></Column>
+                        <Column width="120px" minScreenWidth="Tablet" demandPopin="true"><Text text="Tarih"/></Column>
+                        <Column width="120px" hAlign="Center"><Text text="İşlemler"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <core:HTML content="{= '&lt;img src=&quot;' + ${dashboardData>coverUrl} + '&quot; style=&quot;width:96px;height:68px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.12);&quot; onerror=&quot;this.src=\\\'images/placeholder.jpg\\\'&quot;/&gt;' }"/>
+                                <ObjectIdentifier title="{dashboardData>groupTitle}" text="{= ${dashboardData>items/0/description} || '' }"/>
+                                <ObjectStatus text="{dashboardData>count} fotoğraf" state="Success" icon="sap-icon://picture"/>
+                                <Text text="{dashboardData>created_at_tr}"/>
+                                <HBox justifyContent="Center">
+                                    <Button icon="sap-icon://edit"   type="Transparent" tooltip="Grubu Düzenle" press="onEditPhotoGroup"   class="sapUiTinyMarginEnd"/>
+                                    <Button icon="sap-icon://delete" type="Transparent" tooltip="Grubu Sil"     press="onDeletePhotoGroup"/>
+                                </HBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+
+            <!-- ══ VİDEOLAR ══ -->
+            <Panel
+                id="mediaVideoPanel"
+                headerText="▶ Videolar"
+                expandable="true"
+                expanded="true">
+                <Table
+                    id="videoTable"
+                    items="{dashboardData>/mediaVideos}"
+                    noDataText="Henüz video eklenmedi."
+                    class="mediaGroupTable">
+                    <columns>
+                        <Column width="110px"><Text text="Önizleme"/></Column>
+                        <Column><Text text="Başlık / Açıklama"/></Column>
+                        <Column width="120px" minScreenWidth="Tablet" demandPopin="true"><Text text="Tarih"/></Column>
+                        <Column width="120px" hAlign="Center"><Text text="İşlemler"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <core:HTML content="{= '&lt;img src=&quot;' + ${dashboardData>thumbnail_url} + '&quot; style=&quot;width:96px;height:68px;object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.12);&quot;/&gt;' }"/>
+                                <ObjectIdentifier title="{dashboardData>title}" text="{dashboardData>description}"/>
+                                <Text text="{dashboardData>created_at_tr}"/>
+                                <HBox justifyContent="Center">
+                                    <Button icon="sap-icon://edit"   type="Transparent" tooltip="Videoyu Düzenle" press="onEditVideo"   class="sapUiTinyMarginEnd"/>
+                                    <Button icon="sap-icon://delete" type="Transparent" tooltip="Videoyu Sil"     press="onDeleteMedia"/>
+                                </HBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+
+        </VBox>
+    </ScrollContainer>
+</IconTabFilter>
 
                     <!-- ══ TAB 5: GÖNÜLLÜLER ══ -->
                     <IconTabFilter id="volunteersTab" text="Gönüllüler" icon="sap-icon://collaborate" key="volunteers">

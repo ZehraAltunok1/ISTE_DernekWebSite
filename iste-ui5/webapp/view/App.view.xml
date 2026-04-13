@@ -21,9 +21,9 @@
                 <Image src="images/24.png" class="headerLogo"/>
                 <Button text="ANA SAYFA"   type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
                 <Button text="HAKKIMIZDA"  type="Transparent" press="onNavToAbout"  class="navLinkBtn"/>
-                <Button text="FAALİYETLER" type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
-                <Button text="KAMPANYALAR" type="Transparent" press="onNavToDonate" class="navLinkBtn"/>
-                <Button text="İLETİŞİM"   type="Transparent" press="onNavToHome"   class="navLinkBtn"/>
+                <Button text="FAALİYETLER" type="Transparent" press="onNavToFaaliyetler" class="navLinkBtn"/>
+                <Button text="KAMPANYALAR" type="Transparent" press="onNavToKampanyalar" class="navLinkBtn"/>
+                <Button text="İLETİŞİM"   type="Transparent" press="onNavToIletisim"   class="navLinkBtn"/>
             </HBox>
         </contentLeft>
 

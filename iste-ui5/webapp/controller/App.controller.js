@@ -38,7 +38,35 @@ sap.ui.define([
         onNavToDashboard: function () { this.getOwnerComponent().getRouter().navTo("adminDashboard"); },
         onNavToLaunchpad: function () { this.getOwnerComponent().getRouter().navTo("launchpad");      },
         onViewProfile:    function () { this.getOwnerComponent().getRouter().navTo("profile");        },
+        
+        onNavToFaaliyetler: function () {
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("home");
+            setTimeout(function () {
+                if (window._footerScroll) {
+                    window._footerScroll("activitiesSection");
+                }
+            }, 800);
+        },
 
+        onNavToKampanyalar: function () {
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("home");
+            setTimeout(function () {
+                if (window._footerScroll) {
+                    window._footerScroll("scholarshipsSection");
+                }
+            }, 800);
+        },
+
+        onNavToIletisim: function () {
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("home");
+            setTimeout(function () {
+                var oPage = sap.ui.getCore().byId("home---mainPage");
+                if (oPage) oPage.scrollToSection("home---faqSection");
+            }, 500);
+        },
         /* ══════════════════════════════════════════════
            GİRİŞ YAP BUTONU → Fragment aç
            Promise tabanlı — fragment sadece 1 kez yüklenir,

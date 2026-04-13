@@ -15,7 +15,7 @@
                 upperCaseAnchorBar="false"
                 showAnchorBar="false"
                 showFooter="false"
-                enableLazyLoading="true"
+                enableLazyLoading="false"
                 height="100%">
 
                 <!-- ══ HERO ══ -->
@@ -78,7 +78,7 @@
                     </uxap:ObjectPageSection>
 
                     <!-- ══ FALİYETLER ══ -->
-                    <uxap:ObjectPageSection title="Faaliyetlerimiz" id="activitiesSection">
+                    <uxap:ObjectPageSection title="Faaliyetler" id="activitiesSection">
                         <uxap:subSections>
                             <uxap:ObjectPageSubSection>
                                 <uxap:blocks>

@@ -29,6 +29,20 @@ sap.ui.define([
             this._allMediaItems = [];
             this._groupIndex    = {};
 
+            var that = this;
+
+        window._footerScroll = function (sSectionId) {
+            var oSection = that.getView().byId(sSectionId);
+            if (!oSection) return;
+            
+            var oDomRef = oSection.getDomRef();
+            if (!oDomRef) return;
+
+            var oScrollContainer = document.getElementById("container-edusupport.platform---home--mainPage-scroll");
+            if (oScrollContainer) {
+                oScrollContainer.scrollTo({ top: oDomRef.offsetTop - 50, behavior: "smooth" });
+            }
+        };
             this.getOwnerComponent().getRouter()
                 .getRoute("home")
                 .attachPatternMatched(this._onRouteMatched, this);
@@ -40,13 +54,29 @@ sap.ui.define([
             this._loadPublicAnnouncements();
             this._loadCampaigns();
 
-            var that = this;
-            window._footerScroll = function (sSectionId) {
-                var oPage    = that.getView().byId("mainPage");
-                var oSection = that.getView().byId(sSectionId);
-                if (oPage && oSection) oPage.scrollToSection(oSection.getId(), 500);
-            };
+            var oModel = this.getOwnerComponent().getModel("appData");
+            var sSection = oModel.getProperty("/scrollTo");
+
+            if (sSection) {
+                this._scrollToSection = sSection;
+            }
         },
+        onAfterRendering: function () {
+
+        if (this._scrollToSection) {
+
+            var oPage = this.byId("mainPage");
+            var oSection = this.byId(this._scrollToSection);
+
+            console.log("AFTER RENDER Scroll:", this._scrollToSection);
+
+            if (oPage && oSection) {
+                oPage.scrollToSection(oSection.getId());
+            }
+
+            this._scrollToSection = null;
+        }
+    },
 
         _checkLoginStatus: function () {
             var oAppData  = this.getOwnerComponent().getModel("appData");
