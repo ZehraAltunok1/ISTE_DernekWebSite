@@ -69,4 +69,5 @@ logs/
 .che/
 .fioritools/
 *.db
-
+.env
+.env.*
