@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pati ve Gelecek Derneği — SAPUI5 ile hazırlanmış hayali bir hayvan refahı derneği demo projesi.">
+    <title>Pati ve Gelecek Derneği</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+
+    <!-- Marka yazı tipleri: başlıklar Playfair Display, metinler DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@700;900&amp;display=swap">
+
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/1.148.12/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-language="tr"
+        data-sap-ui-resource-roots='{ "pg.site": "./" }'
+        data-sap-ui-on-init="module:sap/ui/core/ComponentSupport"
+        data-sap-ui-compat-version="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-frame-options="trusted"
+        data-sap-ui-xx-component-preload="off">
+    </script>
+    <!--
+        component-preload="off": Kaynak dosyaları derlemeden (ui5 build olmadan) sunduğumuz için
+        Component-preload.js yok; UI5'in onu boşuna arayıp konsola hata yazmasını engeller.
+    -->
+</head>
+<body class="sapUiBody" id="content">
+    <div
+        data-sap-ui-component
+        data-name="pg.site"
+        data-id="container"
+        data-settings='{ "id": "pg.site" }'
+        data-height="100%">
+    </div>
+</body>
+</html>

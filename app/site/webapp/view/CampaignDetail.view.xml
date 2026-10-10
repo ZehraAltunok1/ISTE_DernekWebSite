@@ -1,0 +1,83 @@
+<mvc:View
+    controllerName="pg.site.controller.CampaignDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <!-- Sayfa, controller'da bindElement ile tek bir kampanyaya bağlanır (element binding). -->
+    <Page id="page" showHeader="false" class="pgPage" busyIndicatorDelay="0">
+        <VBox class="pgSection pgContainer">
+            <Button text="{i18n>backToCampaigns}" icon="sap-icon://nav-back" type="Transparent" press=".onNavCampaigns" class="sapUiSmallMarginBottom"/>
+
+            <l:Grid defaultSpan="XL7 L7 M12 S12" hSpacing="2">
+                <!-- Sol: görsel + açıklama -->
+                <VBox>
+                    <Image src="{coverImage}" alt="{title}" width="100%" densityAware="false" class="pgDetailCover"/>
+                    <Title text="{i18n>aboutCampaign}" level="H2" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+                    <Text text="{description}" class="pgBodyText"/>
+                </VBox>
+
+                <!-- Sağ: özet kutusu -->
+                <VBox class="pgDetailSummary">
+                    <layoutData>
+                        <l:GridData span="XL5 L5 M12 S12"/>
+                    </layoutData>
+                    <ObjectStatus
+                        text="{= %{status} === 'Completed' ? ${i18n>statusCompleted} : ${i18n>statusActive} }"
+                        state="{= %{status} === 'Completed' ? 'Success' : 'Information' }"
+                        inverted="true"/>
+                    <Title text="{title}" level="H1" wrapping="true" class="pgDetailTitle"/>
+                    <Text text="{summary}" class="pgMuted sapUiSmallMarginTop"/>
+
+                    <Text text="{path: 'raisedAmount', targetType: 'any', formatter: '.formatter.currency'}" class="pgAmountLarge sapUiMediumMarginTop"/>
+                    <Text text="{parts: ['i18n>campaignGoal', {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.labelCurrency'}" class="pgMuted"/>
+                    <ProgressIndicator
+                        class="sapUiSmallMarginTop"
+                        percentValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percent'}"
+                        displayValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percentText'}"
+                        showValue="true"/>
+
+                    <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop" wrap="Wrap">
+                        <VBox>
+                            <Label text="{i18n>startDate}"/>
+                            <Text text="{path: 'startDate', targetType: 'any', formatter: '.formatter.date'}"/>
+                        </VBox>
+                        <VBox alignItems="End">
+                            <Label text="{i18n>remaining}"/>
+                            <Text text="{parts: [{path: 'endDate', targetType: 'any'}, {path: 'status', targetType: 'any'}], formatter: '.formatter.daysLeft'}"/>
+                        </VBox>
+                    </HBox>
+
+                    <Button
+                        text="{i18n>supportCampaign}"
+                        icon="sap-icon://heart"
+                        type="Emphasized"
+                        width="100%"
+                        class="sapUiMediumMarginTop"
+                        enabled="{= %{status} === 'Active' }"
+                        press=".onDonate"/>
+
+                    <!-- Son bağışlar: "donations" navigasyon özelliği → OData $expand -->
+                    <Title text="{i18n>recentDonations}" level="H3" class="sapUiMediumMarginTop"/>
+                    <List
+                        id="donationList"
+                        noDataText="{i18n>noDonationsYet}"
+                        growing="true"
+                        growingThreshold="5"
+                        growingTriggerText="{i18n>showMore}"
+                        items="{path: 'donations', sorter: {path: 'createdAt', descending: true}, templateShareable: false}">
+                        <StandardListItem
+                            title="{donorName}"
+                            description="{path: 'createdAt', targetType: 'any', formatter: '.formatter.date'}"
+                            info="{path: 'amount', targetType: 'any', formatter: '.formatter.currency'}"
+                            infoState="Success"
+                            icon="sap-icon://heart-2"/>
+                    </List>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

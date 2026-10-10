@@ -1,0 +1,450 @@
+{
+  "_version": "2.0.0",
+  "sap.app": {
+    "id": "pg.yonetim",
+    "type": "application",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        ""
+      ],
+      "fallbackLocale": ""
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "0.1.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/admin/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "manage": {
+          "semanticObject": "PatiVeGelecek",
+          "action": "manage",
+          "title": "{{appTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icon": "sap-icon://heart",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.148.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {},
+        "sap.f": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pg.yonetim.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "Dashboard",
+          "target": "Dashboard"
+        },
+        {
+          "pattern": "Campaigns:?query:",
+          "name": "CampaignsList",
+          "target": "CampaignsList"
+        },
+        {
+          "pattern": "Campaigns({key}):?query:",
+          "name": "CampaignsObjectPage",
+          "target": "CampaignsObjectPage"
+        },
+        {
+          "pattern": "Donations:?query:",
+          "name": "DonationsList",
+          "target": "DonationsList"
+        },
+        {
+          "pattern": "Donations({key}):?query:",
+          "name": "DonationsObjectPage",
+          "target": "DonationsObjectPage"
+        },
+        {
+          "pattern": "VolunteerApplications:?query:",
+          "name": "VolunteerApplicationsList",
+          "target": "VolunteerApplicationsList"
+        },
+        {
+          "pattern": "VolunteerApplications({key}):?query:",
+          "name": "VolunteerApplicationsObjectPage",
+          "target": "VolunteerApplicationsObjectPage"
+        },
+        {
+          "pattern": "Announcements:?query:",
+          "name": "AnnouncementsList",
+          "target": "AnnouncementsList"
+        },
+        {
+          "pattern": "Announcements({key}):?query:",
+          "name": "AnnouncementsObjectPage",
+          "target": "AnnouncementsObjectPage"
+        },
+        {
+          "pattern": "Faqs:?query:",
+          "name": "FaqsList",
+          "target": "FaqsList"
+        },
+        {
+          "pattern": "Faqs({key}):?query:",
+          "name": "FaqsObjectPage",
+          "target": "FaqsObjectPage"
+        },
+        {
+          "pattern": "SiteStats:?query:",
+          "name": "SiteStatsList",
+          "target": "SiteStatsList"
+        },
+        {
+          "pattern": "SiteStats({key}):?query:",
+          "name": "SiteStatsObjectPage",
+          "target": "SiteStatsObjectPage"
+        },
+        {
+          "pattern": "ContactMessages:?query:",
+          "name": "ContactMessagesList",
+          "target": "ContactMessagesList"
+        },
+        {
+          "pattern": "ContactMessages({key}):?query:",
+          "name": "ContactMessagesObjectPage",
+          "target": "ContactMessagesObjectPage"
+        }
+      ],
+      "targets": {
+        "Dashboard": {
+          "type": "Component",
+          "id": "Dashboard",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "viewName": "pg.yonetim.ext.dashboard.Dashboard",
+              "contextPath": "/Donations"
+            }
+          }
+        },
+        "CampaignsList": {
+          "type": "Component",
+          "id": "CampaignsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Campaigns",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Campaigns": {
+                  "detail": {
+                    "route": "CampaignsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CampaignsObjectPage": {
+          "type": "Component",
+          "id": "CampaignsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Campaigns",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "DonationsList": {
+          "type": "Component",
+          "id": "DonationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Donations",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Donations": {
+                  "detail": {
+                    "route": "DonationsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DonationsObjectPage": {
+          "type": "Component",
+          "id": "DonationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Donations",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "VolunteerApplicationsList": {
+          "type": "Component",
+          "id": "VolunteerApplicationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/VolunteerApplications",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "VolunteerApplications": {
+                  "detail": {
+                    "route": "VolunteerApplicationsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "VolunteerApplicationsObjectPage": {
+          "type": "Component",
+          "id": "VolunteerApplicationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/VolunteerApplications",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "AnnouncementsList": {
+          "type": "Component",
+          "id": "AnnouncementsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Announcements",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Announcements": {
+                  "detail": {
+                    "route": "AnnouncementsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AnnouncementsObjectPage": {
+          "type": "Component",
+          "id": "AnnouncementsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Announcements",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "FaqsList": {
+          "type": "Component",
+          "id": "FaqsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Faqs",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Faqs": {
+                  "detail": {
+                    "route": "FaqsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "FaqsObjectPage": {
+          "type": "Component",
+          "id": "FaqsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Faqs",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "SiteStatsList": {
+          "type": "Component",
+          "id": "SiteStatsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/SiteStats",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "SiteStats": {
+                  "detail": {
+                    "route": "SiteStatsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SiteStatsObjectPage": {
+          "type": "Component",
+          "id": "SiteStatsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/SiteStats",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "ContactMessagesList": {
+          "type": "Component",
+          "id": "ContactMessagesList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/ContactMessages",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "ContactMessages": {
+                  "detail": {
+                    "route": "ContactMessagesObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ContactMessagesObjectPage": {
+          "type": "Component",
+          "id": "ContactMessagesObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/ContactMessages",
+              "editableHeaderContent": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

@@ -1,0 +1,3 @@
+ID;name;email;subject;message;consentGiven;status;adminNote;createdAt
+e0000000-0000-4000-8000-000000000001;Melis Arıkan;melis.arikan@example.com;Kurumsal bağış;Şirketimiz adına yıllık mama bağışı yapmak istiyoruz. Süreç hakkında bilgi alabilir miyiz?;true;New;;2026-10-08T10:30:00Z
+e0000000-0000-4000-8000-000000000002;Tolga Şen;tolga.sen@example.com;Yaralı kedi bildirimi;Mahallemizde ayağı yaralı bir kedi var, nasıl yardımcı olabilirim?;true;Answered;Gönüllü ekibimiz yönlendirildi.;2026-10-05T18:45:00Z

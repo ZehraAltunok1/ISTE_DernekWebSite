@@ -1,0 +1,16 @@
+<mvc:View
+    controllerName="pg.site.controller.BaseController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" showHeader="false" class="pgPage">
+        <IllustratedMessage
+            illustrationType="sapIllus-PageNotFound"
+            title="{i18n>notFoundTitle}"
+            description="{i18n>notFoundText}"
+            enableVerticalResponsiveness="true">
+            <additionalContent>
+                <Button text="{i18n>backHome}" icon="sap-icon://home" type="Emphasized" press=".onNavHome"/>
+            </additionalContent>
+        </IllustratedMessage>
+    </Page>
+</mvc:View>

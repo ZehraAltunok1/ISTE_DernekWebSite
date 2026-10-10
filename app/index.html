@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pati ve Gelecek · Demo</title>
+    <link rel="icon" href="site/webapp/images/logo.png" type="image/png">
+    <style>
+        :root { --green: #2D6A4F; --cream: #F0FAF5; --text: #1F2937; --muted: #5B6573; }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--cream); color: var(--text); }
+        main { max-width: 56rem; margin: 0 auto; padding: 3rem 1rem; }
+        header { display: flex; align-items: center; gap: 1rem; }
+        header img { width: 11rem; height: auto; background: #fff; border-radius: .5rem; padding: .35rem .6rem; }
+        h1 { margin: 0; font-size: 1.75rem; }
+        p { color: var(--muted); line-height: 1.6; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin-top: 2rem; }
+        a.card { display: block; background: #fff; border-radius: 1rem; padding: 1.5rem; text-decoration: none; color: inherit;
+                 box-shadow: 0 1px 3px rgba(0,0,0,.08); border: 2px solid transparent; }
+        a.card:hover, a.card:focus-visible { border-color: var(--green); }
+        a.card h2 { margin: 0 0 .5rem; color: var(--green); font-size: 1.2rem; }
+        code { background: #fff; padding: .1rem .35rem; border-radius: .25rem; }
+        .note { margin-top: 2rem; font-size: .9rem; }
+    </style>
+</head>
+<body>
+<main>
+    <header>
+        <img src="site/webapp/images/logo.png" alt="">
+        <div>
+            <h1>Pati ve Gelecek</h1>
+            <p style="margin:0">SAPUI5 + SAP CAP portföy projesi · hayali bir dernek</p>
+        </div>
+    </header>
+
+    <div class="cards">
+        <a class="card" href="site/webapp/index.html">
+            <h2>🌐 Herkese açık site</h2>
+            <p>Freestyle SAPUI5 · kampanyalar, bağış sihirbazı, gönüllü başvurusu.</p>
+        </a>
+        <a class="card" href="yonetim/webapp/index.html">
+            <h2>🛠️ Yönetim paneli</h2>
+            <p>Fiori elements · Fiori Launchpad sandbox içinde.<br>
+               Giriş: <code>admin@example.com</code> / <code>admin123</code></p>
+        </a>
+    </div>
+
+    <p class="note">
+        OData servisleri: <a href="odata/v4/site/">/odata/v4/site</a> ·
+        <a href="odata/v4/admin/">/odata/v4/admin</a> (yetkili) ·
+        Veriler bellekte tutulur ve sunucu her yeniden başladığında demo verisine döner.
+    </p>
+</main>
+</body>
+</html>

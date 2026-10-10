@@ -1,0 +1,5 @@
+code;label;value;icon;sortOrder
+fed;Beslenen Hayvan;1500;sap-icon://nutrition-activity;1
+treated;Tedavi Edilen;400;sap-icon://stethoscope;2
+adopted;Yuvaya Kavuşan;180;sap-icon://home;3
+volunteers;Aktif Gönüllü;320;sap-icon://group;4

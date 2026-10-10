@@ -1,0 +1,71 @@
+sap.ui.define([
+    "pg/site/model/formatter"
+], function (formatter) {
+    "use strict";
+
+    // Bazı formatter'lar "this" olarak controller bekler (i18n metni için).
+    // Testte gerçek controller yerine, anahtarı ve parametreleri döndüren sahte bir nesne kullanıyoruz.
+    var oFakeController = {
+        getText: function (sKey, aArgs) {
+            return aArgs ? sKey + ":" + aArgs.join(",") : sKey;
+        }
+    };
+
+    var isoDateFromToday = function (iDays) {
+        var d = new Date();
+        d.setDate(d.getDate() + iDays);
+        return d.toISOString().slice(0, 10);
+    };
+
+    QUnit.module("formatter — sayılar");
+
+    QUnit.test("percent: toplanan / hedef yüzdesi, 0–100 aralığında", function (assert) {
+        assert.strictEqual(formatter.percent("20250.00", "40000.00"), 51, "OData Decimal metinleri sayıya çevrilir");
+        assert.strictEqual(formatter.percent(30500, 30000), 100, "hedef aşılsa da en fazla 100");
+        assert.strictEqual(formatter.percent(500, 0), 0, "hedef 0 ise 0 (sıfıra bölme yok)");
+        assert.strictEqual(formatter.percent(null, undefined), 0, "boş değerler 0");
+    });
+
+    QUnit.test("percentText: Türkçede yüzde işareti başta", function (assert) {
+        assert.strictEqual(formatter.percentText(1, 4), "%25");
+    });
+
+    QUnit.test("currency ve integer: binlik ayırıcı nokta", function (assert) {
+        assert.ok(formatter.currency("20250.00").indexOf("20.250") >= 0, "20.250 içerir: " + formatter.currency("20250.00"));
+        assert.ok(formatter.currency(100).indexOf("₺") >= 0, "TL simgesi içerir");
+        assert.strictEqual(formatter.integer(1500), "1.500");
+    });
+
+    QUnit.test("labelCurrency: etiket + tutar", function (assert) {
+        assert.ok(formatter.labelCurrency("Hedef", 40000).indexOf("Hedef: ") === 0);
+    });
+
+    QUnit.module("formatter — tarihler ve metinler");
+
+    QUnit.test("date: ISO tarih → uzun Türkçe tarih", function (assert) {
+        assert.ok(/Ekim/.test(formatter.date("2026-10-04")), formatter.date("2026-10-04"));
+        assert.strictEqual(formatter.date(null), "", "boş tarih → boş metin");
+    });
+
+    QUnit.test("daysLeft: kampanya durumuna ve bitiş tarihine göre", function (assert) {
+        var daysLeft = formatter.daysLeft.bind(oFakeController);
+        assert.strictEqual(daysLeft(isoDateFromToday(10), "Completed"), "campaignCompleted", "tamamlanan kampanya");
+        assert.strictEqual(daysLeft(isoDateFromToday(-3), "Active"), "campaignEnded", "süresi geçmiş");
+        // Saat dilimi ve günün saatine göre ±1 gün oynayabilir; testin kararlı olması için aralık kabul ediyoruz
+        assert.ok(/^campaignDaysLeft:(9|10|11)$/.test(daysLeft(isoDateFromToday(10), "Active")), "yaklaşık 10 gün kaldı");
+        assert.strictEqual(daysLeft(null, "Active"), "", "bitiş tarihi yok");
+    });
+
+    QUnit.test("donationImpact: 50 ₺ ≈ 1 hafta mama, 200 ₺ ≈ 1 tedavi", function (assert) {
+        var impact = formatter.donationImpact.bind(oFakeController);
+        assert.strictEqual(impact(100), "impactFood:2");
+        assert.strictEqual(impact(10), "impactFood:1", "en az 1 hafta");
+        assert.strictEqual(impact(450), "impactTreatment:2");
+    });
+
+    QUnit.test("duyuru türü → renk ve ikon", function (assert) {
+        assert.strictEqual(formatter.announcementHighlight("Urgent"), "Error");
+        assert.strictEqual(formatter.announcementHighlight("Info"), "Information");
+        assert.strictEqual(formatter.announcementIcon("Success"), "sap-icon://sys-enter-2");
+    });
+});

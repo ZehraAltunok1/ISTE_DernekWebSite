@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+    <VBox class="pgFooter" renderType="Bare">
+        <l:Grid defaultSpan="XL4 L4 M6 S12" class="pgContainer" vSpacing="1">
+            <VBox>
+                <Image src="images/logo.png" alt="{i18n>appTitle}" width="9rem" densityAware="false" class="pgFooterLogo"/>
+                <Text text="{i18n>footerAbout}" class="pgFooterText"/>
+            </VBox>
+            <VBox>
+                <Title text="{i18n>footerLinks}" level="H3" class="pgFooterTitle"/>
+                <Link text="{i18n>navCampaigns}" press=".onNavCampaigns" class="pgFooterLink"/>
+                <Link text="{i18n>navDonate}" press=".onNavDonate" class="pgFooterLink"/>
+                <Link text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgFooterLink"/>
+                <Link text="{i18n>navAbout}" press=".onNavAbout" class="pgFooterLink"/>
+                <Link text="{i18n>navFaq}" press=".onNavFaq" class="pgFooterLink"/>
+                <Link text="{i18n>navContact}" press=".onNavContact" class="pgFooterLink"/>
+            </VBox>
+            <VBox>
+                <Title text="{i18n>footerContact}" level="H3" class="pgFooterTitle"/>
+                <Text text="{i18n>footerAddress}" class="pgFooterText"/>
+                <Text text="{i18n>footerEmail}" class="pgFooterText"/>
+                <Text text="{i18n>footerPhone}" class="pgFooterText"/>
+            </VBox>
+        </l:Grid>
+        <Text text="{i18n>footerDisclaimer}" class="pgFooterDisclaimer" textAlign="Center" width="100%"/>
+    </VBox>
+</core:FragmentDefinition>

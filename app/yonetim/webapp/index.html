@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr" class="sapUShellFullHeight">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli · Pati ve Gelecek</title>
+    <link rel="icon" href="../../site/webapp/images/logo.png" type="image/png">
+
+    <!-- 1) FLP sandbox ayarı  2) FLP önyükleyici  3) UI5 çekirdeği → başlayınca flpInit.js kabuğu çizer -->
+    <script src="flpSandboxConfig.js"></script>
+    <script src="https://ui5.sap.com/1.148.12/resources/sap/ushell/bootstrap/sandbox2.js" id="sap-ushell-bootstrap"></script>
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/1.148.12/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-language="tr"
+        data-sap-ui-libs="sap.m, sap.ushell, sap.fe.templates"
+        data-sap-ui-resource-roots='{ "pg.yonetim": "./" }'
+        data-sap-ui-compat-version="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-frame-options="allow"
+        data-sap-ui-xx-component-preload="off"
+        data-sap-ui-flexibility-services='[{"connector": "SessionStorageConnector"}]'
+        data-sap-ui-on-init="module:pg/yonetim/flpInit">
+    </script>
+</head>
+<body class="sapUiBody sapUShellFullHeight" id="content"></body>
+</html>

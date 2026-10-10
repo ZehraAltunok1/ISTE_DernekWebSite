@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Lint ve testler
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Lint (ESLint + UI5 Linter)
+        run: npm run lint
+
+      - name: Backend testleri
+        run: npm test
+
+      # Ubuntu 23.10+ AppArmor kısıtlaması Chrome'un sandbox'ını engelliyor (Puppeteer dokümantasyonu)
+      - name: Başsız Chrome için izin
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+
+      - name: Sunucuyu başlat
+        run: npm start > server.log 2>&1 &
+
+      - name: Sunucunun açılmasını bekle
+        run: |
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:4004/ > /dev/null && exit 0
+            sleep 2
+          done
+          cat server.log
+          exit 1
+
+      - name: UI5 testleri (QUnit + OPA5)
+        run: npm run test:ui
+
+      - name: Test raporunu sakla
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui5-test-report
+          path: |
+            report/
+            server.log

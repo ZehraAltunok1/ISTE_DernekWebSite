@@ -1,0 +1,75 @@
+<mvc:View
+    controllerName="pg.site.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <tnt:ToolPage id="toolPage" class="pgToolPage">
+        <tnt:header>
+            <!-- Yeşil gradyanlı üst menü (stiller: css/style.css → "Navbar") -->
+            <tnt:ToolHeader id="header" class="pgHeader">
+                <Image
+                    src="images/logo.png"
+                    alt="{i18n>appTitle}"
+                    width="8.5rem"
+                    densityAware="false"
+                    decorative="false"
+                    press=".onNavHome"
+                    class="pgLogo">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Image>
+
+                <ToolbarSpacer width="1rem"/>
+
+                <!-- Masaüstü menüsü: telefonda gizlenir. Aktif sayfa "Default" tipiyle işaretlenir. -->
+                <Button id="navHomeButton" text="{i18n>navHome}" press=".onNavHome" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'home' ? 'Default' : 'Transparent' }"/>
+                <Button id="navAboutButton" text="{i18n>navAbout}" press=".onNavAbout" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'about' ? 'Default' : 'Transparent' }"/>
+                <Button id="navCampaignsButton" text="{i18n>navCampaigns}" press=".onNavCampaigns" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'campaigns' || ${appView>/currentRoute} === 'campaignDetail' ? 'Default' : 'Transparent' }"/>
+                <Button id="navVolunteerButton" text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'volunteer' ? 'Default' : 'Transparent' }"/>
+                <Button id="navFaqButton" text="{i18n>navFaq}" press=".onNavFaq" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'faq' ? 'Default' : 'Transparent' }"/>
+                <Button id="navContactButton" text="{i18n>navContact}" press=".onNavContact" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'contact' ? 'Default' : 'Transparent' }"/>
+
+                <ToolbarSpacer/>
+
+                <Button
+                    id="navDonateButton"
+                    text="{= ${device>/system/phone} ? '' : ${i18n>navDonate} }"
+                    tooltip="{i18n>navDonate}"
+                    icon="sap-icon://heart"
+                    press=".onNavDonate"
+                    class="pgNavDonate">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Button>
+
+                <!-- Telefon menüsü -->
+                <Button
+                    icon="sap-icon://menu2"
+                    tooltip="{i18n>menu}"
+                    type="Transparent"
+                    class="pgNavMenu"
+                    visible="{device>/system/phone}"
+                    press=".onOpenMenu">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Button>
+            </tnt:ToolHeader>
+        </tnt:header>
+
+        <tnt:mainContents>
+            <!-- Router sayfaları buraya yerleştirir (manifest.json → routing.config.controlId) -->
+            <NavContainer id="pageContainer"/>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

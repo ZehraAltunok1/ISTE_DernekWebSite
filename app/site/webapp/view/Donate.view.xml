@@ -1,0 +1,143 @@
+<mvc:View
+    controllerName="pg.site.controller.Donate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderDonate">
+            <VBox class="pgContainer">
+                <Title text="{i18n>donateTitle}" level="H1" class="pgPageTitle"/>
+                <Text text="{i18n>donateIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer pgNarrow">
+            <MessageStrip text="{i18n>donateDemoNotice}" type="Warning" showIcon="true" class="sapUiSmallMarginBottom"/>
+
+            <!-- Wizard: her adımın "validated" özelliği controller'daki kontrollere bağlı -->
+            <Wizard
+                id="wizard"
+                class="pgWizard"
+                renderMode="Scroll"
+                height="auto"
+                showNextButton="true"
+                finishButtonText="{i18n>completeDonation}"
+                complete=".onSubmit"
+                busy="{donate>/busy}"
+                busyIndicatorDelay="0">
+
+                <!-- 1. Adım: kampanya ve tutar -->
+                <WizardStep id="stepAmount" title="{i18n>stepAmount}" icon="sap-icon://heart" validated="{donate>/amountValid}">
+                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" columnsL="1" columnsM="1">
+                        <Label text="{i18n>campaign}" labelFor="campaignSelect"/>
+                        <Select
+                            id="campaignSelect"
+                            width="100%"
+                            selectedKey="{donate>/campaignId}"
+                            change=".onCampaignChange"
+                            items="{path: 'donate>/campaigns', templateShareable: false}">
+                            <core:Item key="{donate>ID}" text="{donate>title}"/>
+                        </Select>
+
+                        <Label text="{i18n>amount}" labelFor="amountInput" required="true"/>
+                        <SegmentedButton selectedKey="{donate>/preset}" selectionChange=".onPresetChange" width="100%" class="pgAmountPresets">
+                            <items>
+                                <SegmentedButtonItem key="50" text="50 ₺"/>
+                                <SegmentedButtonItem key="100" text="100 ₺"/>
+                                <SegmentedButtonItem key="250" text="250 ₺"/>
+                                <SegmentedButtonItem key="500" text="500 ₺"/>
+                                <SegmentedButtonItem key="custom" text="{i18n>customAmount}"/>
+                            </items>
+                        </SegmentedButton>
+
+                        <Label text=""/>
+                        <StepInput
+                            id="amountInput"
+                            value="{donate>/amount}"
+                            min="10"
+                            max="100000"
+                            step="10"
+                            width="12rem"
+                            description="₺"
+                            valueState="{donate>/amountState}"
+                            valueStateText="{i18n>amountRangeError}"
+                            change=".onAmountChange"/>
+
+                        <Label text=""/>
+                        <MessageStrip text="{path: 'donate>/amount', formatter: '.formatter.donationImpact'}" type="Success" showIcon="true" customIcon="sap-icon://nutrition-activity"/>
+                    </f:SimpleForm>
+                </WizardStep>
+
+                <!-- 2. Adım: bağışçı bilgileri -->
+                <WizardStep id="stepDonor" title="{i18n>stepDonor}" icon="sap-icon://person-placeholder" validated="{donate>/donorValid}">
+                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" columnsL="1" columnsM="1">
+                        <Label text="{i18n>fullName}" labelFor="nameInput" required="true"/>
+                        <Input
+                            id="nameInput"
+                            value="{donate>/donorName}"
+                            maxLength="100"
+                            valueLiveUpdate="true"
+                            liveChange=".validateDonor"
+                            valueState="{donate>/nameState}"
+                            valueStateText="{i18n>nameRequired}"
+                            autocomplete="false"/>
+
+                        <Label text="{i18n>email}" labelFor="emailInput" required="true"/>
+                        <Input
+                            id="emailInput"
+                            type="Email"
+                            value="{donate>/donorEmail}"
+                            maxLength="254"
+                            valueLiveUpdate="true"
+                            liveChange=".validateDonor"
+                            valueState="{donate>/emailState}"
+                            valueStateText="{i18n>emailInvalid}"/>
+
+                        <Label text="{i18n>messageOptional}" labelFor="messageInput"/>
+                        <TextArea
+                            id="messageInput"
+                            value="{donate>/message}"
+                            maxLength="500"
+                            showExceededText="true"
+                            rows="3"
+                            width="100%"/>
+
+                        <Label text=""/>
+                        <CheckBox text="{i18n>anonymousDonation}" selected="{donate>/isAnonymous}"/>
+                    </f:SimpleForm>
+                </WizardStep>
+
+                <!-- 3. Adım: ödeme yöntemi ve özet -->
+                <WizardStep id="stepPayment" title="{i18n>stepPayment}" icon="sap-icon://credit-card" validated="true">
+                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" columnsL="1" columnsM="1">
+                        <Label text="{i18n>paymentMethod}"/>
+                        <SegmentedButton selectedKey="{donate>/method}">
+                            <items>
+                                <SegmentedButtonItem key="Card" text="{i18n>methodCard}" icon="sap-icon://credit-card"/>
+                                <SegmentedButtonItem key="IBAN" text="{i18n>methodIban}" icon="sap-icon://loan"/>
+                            </items>
+                        </SegmentedButton>
+
+                        <Label text=""/>
+                        <MessageStrip
+                            text="{= ${donate>/method} === 'Card' ? ${i18n>cardSimulationInfo} : ${i18n>ibanInfo} }"
+                            type="Information"
+                            showIcon="true"/>
+
+                        <core:Title text="{i18n>summary}"/>
+                        <Label text="{i18n>campaign}"/>
+                        <Text text="{donate>/campaignTitle}"/>
+                        <Label text="{i18n>amount}"/>
+                        <Text text="{path: 'donate>/amount', formatter: '.formatter.currency'}" class="pgAmount"/>
+                        <Label text="{i18n>donor}"/>
+                        <Text text="{= ${donate>/isAnonymous} ? ${i18n>anonymous} : ${donate>/donorName} }"/>
+                    </f:SimpleForm>
+                </WizardStep>
+            </Wizard>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

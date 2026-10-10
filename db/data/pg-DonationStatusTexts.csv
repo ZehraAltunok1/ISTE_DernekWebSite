@@ -1,0 +1,5 @@
+code;text;criticality
+Pending;Bekliyor;2
+Confirmed;Onaylandı;3
+Rejected;Reddedildi;1
+Failed;Başarısız;1

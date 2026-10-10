@@ -1,0 +1,188 @@
+{
+  "_version": "2.0.0",
+  "sap.app": {
+    "id": "pg.site",
+    "type": "application",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        ""
+      ],
+      "fallbackLocale": ""
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "0.1.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/site/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "pg.site.view.App",
+      "type": "XML",
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.148.0",
+      "libs": {
+        "sap.m": {},
+        "sap.f": {},
+        "sap.tnt": {},
+        "sap.ui.core": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pg.site.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "type": "View",
+        "viewType": "XML",
+        "path": "pg.site.view",
+        "controlId": "pageContainer",
+        "controlAggregation": "pages",
+        "transition": "show",
+        "bypassed": {
+          "target": "notFound"
+        }
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "home",
+          "target": "home"
+        },
+        {
+          "pattern": "kampanyalar",
+          "name": "campaigns",
+          "target": "campaigns"
+        },
+        {
+          "pattern": "kampanyalar/{campaignId}",
+          "name": "campaignDetail",
+          "target": "campaignDetail"
+        },
+        {
+          "pattern": "bagis:?query:",
+          "name": "donate",
+          "target": "donate"
+        },
+        {
+          "pattern": "gonullu-ol",
+          "name": "volunteer",
+          "target": "volunteer"
+        },
+        {
+          "pattern": "hakkimizda",
+          "name": "about",
+          "target": "about"
+        },
+        {
+          "pattern": "sss",
+          "name": "faq",
+          "target": "faq"
+        },
+        {
+          "pattern": "iletisim",
+          "name": "contact",
+          "target": "contact"
+        }
+      ],
+      "targets": {
+        "home": {
+          "id": "home",
+          "name": "Home",
+          "title": "{i18n>navHome}"
+        },
+        "campaigns": {
+          "id": "campaigns",
+          "name": "Campaigns",
+          "title": "{i18n>navCampaigns}"
+        },
+        "campaignDetail": {
+          "id": "campaignDetail",
+          "name": "CampaignDetail",
+          "title": "{i18n>campaignDetailTitle}"
+        },
+        "donate": {
+          "id": "donate",
+          "name": "Donate",
+          "title": "{i18n>navDonate}"
+        },
+        "volunteer": {
+          "id": "volunteer",
+          "name": "Volunteer",
+          "title": "{i18n>navVolunteer}"
+        },
+        "about": {
+          "id": "about",
+          "name": "About",
+          "title": "{i18n>navAbout}"
+        },
+        "faq": {
+          "id": "faq",
+          "name": "Faq",
+          "title": "{i18n>navFaq}"
+        },
+        "notFound": {
+          "id": "notFound",
+          "name": "NotFound",
+          "title": "{i18n>notFoundTitle}"
+        },
+        "contact": {
+          "id": "contact",
+          "name": "Contact",
+          "title": "{i18n>navContact}"
+        }
+      }
+    }
+  }
+}

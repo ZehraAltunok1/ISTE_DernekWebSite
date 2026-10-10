@@ -1,0 +1,105 @@
+<mvc:View
+    controllerName="pg.site.controller.Volunteer"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderVolunteer">
+            <VBox class="pgContainer">
+                <Title text="{i18n>volunteerTitle}" level="H1" class="pgPageTitle"/>
+                <Text text="{i18n>volunteerIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <l:Grid defaultSpan="XL5 L5 M12 S12" hSpacing="2">
+                <!-- Sol: gönüllülük alanları (OData'dan) -->
+                <VBox>
+                    <Title text="{i18n>volunteerAreasTitle}" level="H2" class="sapUiSmallMarginBottom"/>
+                    <List
+                        id="areaList"
+                        showSeparators="Inner"
+                        items="{path: '/VolunteerAreas', sorter: {path: 'name'}, templateShareable: false}">
+                        <StandardListItem title="{name}" description="{descr}" icon="sap-icon://employee" wrapping="true"/>
+                    </List>
+                    <Title text="{i18n>volunteerStepsTitle}" level="H2" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+                    <Text text="{i18n>volunteerSteps}" class="pgBodyText"/>
+                </VBox>
+
+                <!-- Sağ: başvuru formu -->
+                <VBox class="pgFormCard">
+                    <layoutData>
+                        <l:GridData span="XL7 L7 M12 S12"/>
+                    </layoutData>
+                    <f:SimpleForm
+                        id="volunteerForm"
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        title="{i18n>applicationForm}"
+                        labelSpanL="4" labelSpanM="4" columnsL="1" columnsM="1">
+
+                        <Label text="{i18n>firstName}" labelFor="firstName" required="true"/>
+                        <Input id="firstName" value="{form>/firstName}" maxLength="60" valueState="{form>/state/firstName}" valueStateText="{i18n>nameRequired}"/>
+
+                        <Label text="{i18n>lastName}" labelFor="lastName" required="true"/>
+                        <Input id="lastName" value="{form>/lastName}" maxLength="60" valueState="{form>/state/lastName}" valueStateText="{i18n>nameRequired}"/>
+
+                        <Label text="{i18n>email}" labelFor="email" required="true"/>
+                        <Input id="email" type="Email" value="{form>/email}" maxLength="254" valueState="{form>/state/email}" valueStateText="{i18n>emailInvalid}"/>
+
+                        <Label text="{i18n>phone}" labelFor="phone" required="true"/>
+                        <Input id="phone" type="Tel" value="{form>/phone}" maxLength="20" placeholder="0555 000 00 00" valueState="{form>/state/phone}" valueStateText="{i18n>phoneInvalid}"/>
+
+                        <Label text="{i18n>volunteerArea}" labelFor="area" required="true"/>
+                        <Select
+                            id="area"
+                            width="100%"
+                            forceSelection="false"
+                            selectedKey="{form>/areaCode}"
+                            valueState="{form>/state/areaCode}"
+                            valueStateText="{i18n>areaRequired}"
+                            items="{path: '/VolunteerAreas', sorter: {path: 'name'}, templateShareable: false}">
+                            <core:Item key="{code}" text="{name}"/>
+                        </Select>
+
+                        <Label text="{i18n>availability}" labelFor="availability"/>
+                        <Input id="availability" value="{form>/availability}" maxLength="200" placeholder="{i18n>availabilityPlaceholder}"/>
+
+                        <Label text="{i18n>motivation}" labelFor="motivation" required="true"/>
+                        <TextArea
+                            id="motivation"
+                            value="{form>/motivation}"
+                            rows="4"
+                            width="100%"
+                            maxLength="1000"
+                            showExceededText="true"
+                            placeholder="{i18n>motivationPlaceholder}"
+                            valueState="{form>/state/motivation}"
+                            valueStateText="{i18n>motivationTooShort}"/>
+
+                        <Label text=""/>
+                        <HBox alignItems="Center" wrap="Wrap">
+                            <CheckBox id="consent" selected="{form>/consentGiven}" valueState="{form>/state/consentGiven}" text="{i18n>consentText}"/>
+                            <Link text="{i18n>privacyNotice}" press=".onShowPrivacy" class="sapUiTinyMarginBegin"/>
+                        </HBox>
+
+                        <Label text=""/>
+                        <Button
+                            id="submitButton"
+                            text="{i18n>submitApplication}"
+                            icon="sap-icon://paper-plane"
+                            type="Emphasized"
+                            press=".onSubmit"
+                            busy="{form>/busy}"
+                            busyIndicatorDelay="0"/>
+                    </f:SimpleForm>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

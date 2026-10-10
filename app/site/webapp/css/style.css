@@ -1,0 +1,936 @@
+/*
+ * Pati ve Gelecek — tek özel stil dosyası.
+ * Tasarım dili eski İSTE Dernek projesinden alınmıştır:
+ * yeşil palet, turuncu "hap" butonlar, Playfair Display başlıklar, DM Sans metinler.
+ *
+ * Kural: Renk ve yazı tiplerini önce SAP tema değişkenleriyle (--sap...) değiştiriyoruz;
+ * böylece UI5 kontrolleri (Wizard, Select, Input...) de otomatik olarak marka görünümüne geçer.
+ * "html:root" seçicisi, tema dosyası sonra yüklense bile değişkenleri ezer (özgüllüğü daha yüksektir).
+ */
+
+/* ══════════════════════════════════════════════════════════
+   1. TASARIM DEĞİŞKENLERİ (eski projedeki design-tokens.css)
+   ══════════════════════════════════════════════════════════ */
+
+html:root {
+    --clr-primary:       #2D6A4F;
+    --clr-primary-dark:  #1B3A2D;
+    --clr-primary-mid:   #40916C;
+    --clr-primary-light: #74C69D;
+    --clr-accent:        #F4A261;
+    --clr-accent-hover:  #E07A3A;
+    --clr-bg:            #F0FAF5;
+    --clr-green-soft:    #E8F5EE;
+    --clr-text:          #2C3E35;
+    --clr-muted:         #6B7C75;
+    --clr-border:        #D1E9DC;
+
+    --radius:            14px;
+    --radius-lg:         20px;
+    --radius-pill:       50px;
+    --shadow-sm:         0 2px 12px rgba(45, 106, 79, .08);
+    --shadow:            0 4px 24px rgba(45, 106, 79, .10);
+    --shadow-lg:         0 8px 32px rgba(45, 106, 79, .15);
+    --max-width:         74rem;
+    --font-display:      "Playfair Display", Georgia, serif;
+    --font-body:         "DM Sans", "72", Arial, sans-serif;
+
+    /* SAP tema değişkenleri → marka */
+    --sapFontFamily:                       var(--font-body);
+    --sapFontHeaderFamily:                 var(--font-display);
+    --sapBackgroundColor:                  var(--clr-bg);
+    --sapTextColor:                        var(--clr-text);
+    --sapTitleColor:                       var(--clr-primary-dark);
+    --sapBrandColor:                       var(--clr-primary);
+    --sapHighlightColor:                   var(--clr-primary);
+    --sapSelectedColor:                    var(--clr-primary);
+    --sapActiveColor:                      var(--clr-primary);
+    --sapLinkColor:                        var(--clr-primary);
+    --sapContent_FocusColor:               var(--clr-primary-mid);
+    --sapButton_Emphasized_Background:     var(--clr-accent);
+    --sapButton_Emphasized_BorderColor:    var(--clr-accent);
+    --sapButton_Emphasized_Hover_Background:  var(--clr-accent-hover);
+    --sapButton_Emphasized_Hover_BorderColor: var(--clr-accent-hover);
+    --sapButton_Emphasized_Active_Background: var(--clr-accent-hover);
+    --sapButton_TextColor:                 var(--clr-primary);
+    --sapButton_BorderColor:               var(--clr-border);
+    --sapButton_Selected_Background:       var(--clr-primary);
+    --sapButton_Selected_BorderColor:      var(--clr-primary);
+    --sapButton_Selected_Hover_Background: var(--clr-primary-dark);
+    --sapButton_Selected_TextColor:        #FFFFFF;
+    --sapButton_Selected_Hover_TextColor:  #FFFFFF;
+    --sapField_Focus_BorderColor:          var(--clr-primary);
+}
+
+/* ══════════════════════════════════════════════════════════
+   2. GENEL DÜZEN
+   ══════════════════════════════════════════════════════════ */
+
+.pgPage > section {
+    background: var(--clr-bg);
+}
+
+.pgContainer {
+    max-width: var(--max-width);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.pgNarrow {
+    max-width: 52rem;
+}
+
+.pgSection {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.pgSectionAlt {
+    background: #FFFFFF;
+}
+
+.pgEyebrow.sapMText {
+    color: var(--clr-accent-hover);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-size: .78rem;
+    margin-bottom: .35rem;
+}
+
+.pgSectionTitle.sapMTitle {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 3vw, 2.4rem);
+    color: var(--clr-primary-dark);
+    line-height: 1.2;
+}
+
+.pgSectionTitle.sapMTitle::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 4px;
+    margin-top: .75rem;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-hover));
+}
+
+/* Ortalanmış başlıklarda alt çizgi de ortada dursun */
+.pgSectionTitle.sapMTitle.sapMTitleAlignCenter::after {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pgMuted.sapMText {
+    color: var(--clr-muted);
+}
+
+.pgBodyText.sapMText {
+    line-height: 1.75;
+    color: var(--clr-text);
+}
+
+.pgDemoStrip.sapMMessageStrip {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+.pgRoundedPhoto {
+    display: block;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* ══════════════════════════════════════════════════════════
+   3. NAVBAR (eski navbar.css)
+   ══════════════════════════════════════════════════════════ */
+
+.pgHeader.sapTntToolHeader {
+    background: linear-gradient(135deg, var(--clr-primary-dark) 0%, var(--clr-primary) 55%, var(--clr-primary-mid) 100%);
+    box-shadow: 0 4px 20px rgba(27, 58, 45, .40);
+    border-bottom: none;
+    height: 4rem;
+    padding: 0 1.5rem;
+}
+
+/* Logo, beyaz yuvarlatılmış kutu içinde */
+.pgLogo.sapMImg {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 4px 8px;
+    box-sizing: content-box;
+    cursor: pointer;
+}
+
+/* Menü linkleri: büyük harf, beyaz, aktifken turuncu alt çizgi */
+.pgHeader .pgNavLink.sapMBtn {
+    height: 4rem;
+    padding: 0;
+}
+
+.pgHeader .pgNavLink .sapMBtnInner {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    height: 4rem;
+    padding: 0 .8rem;
+    box-shadow: none;
+    transition: background .18s, border-color .18s;
+}
+
+/* Horizon, ToolHeader içindeki butonlara daha özgül bir renk verir; bu yüzden !important */
+.pgHeader .pgNavLink .sapMBtnContent {
+    color: rgba(255, 255, 255, .88) !important;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    line-height: 4rem;
+}
+
+.pgHeader .pgNavLink .sapMBtnInner:hover,
+.pgHeader .pgNavLink .sapMBtnInner.sapMBtnDefault {
+    background: rgba(255, 255, 255, .08);
+    border-bottom-color: var(--clr-accent);
+}
+
+.pgHeader .pgNavLink .sapMBtnInner.sapMBtnDefault .sapMBtnContent,
+.pgHeader .pgNavLink .sapMBtnInner:hover .sapMBtnContent {
+    color: #FFFFFF !important;
+}
+
+/* "Bağış Yap": turuncu gradyan buton */
+.pgHeader .pgNavDonate .sapMBtnInner {
+    background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-hover));
+    border: none;
+    border-radius: 8px;
+    height: 2.4rem;
+    padding: 0 1.1rem;
+    box-shadow: 0 4px 14px rgba(244, 162, 97, .55);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.pgHeader .pgNavDonate .sapMBtnInner:hover {
+    background: linear-gradient(135deg, var(--clr-accent-hover), #C85F20);
+    transform: translateY(-1px);
+}
+
+.pgHeader .pgNavDonate .sapMBtnContent,
+.pgHeader .pgNavDonate .sapMBtnIcon {
+    color: #FFFFFF !important;
+    font-weight: 800;
+    letter-spacing: .03em;
+}
+
+.pgHeader .pgNavMenu .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   4. BUTONLAR (eski "button design system")
+   ══════════════════════════════════════════════════════════ */
+
+.pgBtnPrimary .sapMBtnInner,
+.pgBtnOutline .sapMBtnInner,
+.pgBtnGlass .sapMBtnInner {
+    border-radius: var(--radius-pill);
+    height: 2.75rem;
+    padding: 0 1.6rem;
+    transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+.pgBtnPrimary .sapMBtnInner,
+.pgBtnOutline .sapMBtnInner,
+.pgBtnGlass .sapMBtnInner,
+.pgHeader .pgNavDonate .sapMBtnInner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+}
+
+.pgBtnPrimary .sapMBtnIcon,
+.pgBtnOutline .sapMBtnIcon,
+.pgBtnGlass .sapMBtnIcon,
+.pgHeader .pgNavDonate .sapMBtnIcon {
+    position: static;
+    margin: 0;
+    width: auto;
+    height: auto;
+    line-height: 1;
+}
+
+.pgBtnPrimary .sapMBtnContent,
+.pgBtnOutline .sapMBtnContent,
+.pgBtnGlass .sapMBtnContent {
+    font-weight: 700;
+    line-height: normal;
+    padding: 0;
+}
+
+/* Turuncu, dolu */
+.pgBtnPrimary .sapMBtnInner {
+    background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-hover));
+    border: none;
+    box-shadow: 0 4px 16px rgba(244, 162, 97, .45);
+}
+
+.pgBtnPrimary .sapMBtnInner:hover {
+    background: linear-gradient(135deg, var(--clr-accent-hover), #C85F20);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(244, 162, 97, .55);
+}
+
+.pgBtnPrimary .sapMBtnContent,
+.pgBtnPrimary .sapMBtnIcon {
+    color: #FFFFFF;
+}
+
+/* Yeşil çerçeveli */
+.pgBtnOutline .sapMBtnInner {
+    background: transparent;
+    border: 2px solid var(--clr-primary);
+}
+
+.pgBtnOutline .sapMBtnInner:hover {
+    background: var(--clr-green-soft);
+}
+
+.pgBtnOutline .sapMBtnContent,
+.pgBtnOutline .sapMBtnIcon {
+    color: var(--clr-primary);
+}
+
+/* Fotoğraf üzerinde: yarı saydam cam */
+.pgBtnGlass .sapMBtnInner {
+    background: rgba(255, 255, 255, .14);
+    border: 2px solid rgba(255, 255, 255, .75);
+    backdrop-filter: blur(6px);
+}
+
+.pgBtnGlass .sapMBtnInner:hover {
+    background: rgba(255, 255, 255, .26);
+    border-color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.pgBtnGlass .sapMBtnContent,
+.pgBtnGlass .sapMBtnIcon {
+    color: #FFFFFF;
+}
+
+.pgBtnLarge .sapMBtnInner {
+    height: 3rem;
+    padding: 0 2rem;
+}
+
+.pgBtnLarge .sapMBtnContent {
+    font-size: 1rem;
+}
+
+.pgBtnSmall .sapMBtnInner {
+    height: 2.25rem;
+    padding: 0 1.1rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   5. HERO (ana sayfa)
+   ══════════════════════════════════════════════════════════ */
+
+.pgHero {
+    position: relative;
+    min-height: 32rem;
+    padding: 4rem 5%;
+    background:
+        linear-gradient(90deg, rgba(27, 58, 45, .78) 0%, rgba(27, 58, 45, .35) 45%, rgba(27, 58, 45, 0) 70%),
+        url("../images/photos/hero-kopek-cocuk.jpg") center / cover no-repeat;
+}
+
+.pgHeroText {
+    max-width: 36rem;
+}
+
+.pgHeroBadge.sapMText {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(244, 162, 97, .2);
+    border: 1px solid rgba(244, 162, 97, .5);
+    color: #FBBF77;
+    border-radius: var(--radius-pill);
+    padding: .3rem 1rem;
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pgHeroTitle.sapMTitle {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: #FFFFFF;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .35);
+    margin: 1rem 0 .75rem;
+}
+
+.pgHeroLead.sapMText {
+    color: rgba(255, 255, 255, .95);
+    font-size: 1.1rem;
+    line-height: 1.65;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, .5);
+}
+
+.pgHeroActions {
+    gap: .75rem;
+    margin-top: 1.75rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   6. BAŞARILARIMIZ — istatistik kartları (eski stats.css)
+   ══════════════════════════════════════════════════════════ */
+
+.pgStats {
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.pgStats > .sapMFlexItem {
+    flex: 1 1 12rem;
+    max-width: 16rem;
+}
+
+.pgStatCard {
+    position: relative;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid var(--clr-green-soft);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(45, 106, 79, .10);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.pgStatCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.pgStatCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(45, 106, 79, .18);
+}
+
+.pgStatIcon.sapUiIcon {
+    font-size: 2rem;
+    margin-bottom: .75rem;
+}
+
+.pgStatNumber.sapMText {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 1;
+}
+
+.pgStatNumber.sapMText::after {
+    content: "+";
+    font-family: var(--font-body);
+    font-size: 1.4rem;
+    color: #9CA3AF;
+    margin-left: .15rem;
+}
+
+.pgStatLabel.sapMText {
+    color: var(--clr-muted);
+    font-size: .88rem;
+    font-weight: 500;
+    margin-top: .5rem;
+}
+
+/* Her kartın kendi rengi (turuncu, yeşil, mor, mavi) */
+.pgStats > .sapMFlexItem:nth-child(4n+1) .pgStatCard::before { background: linear-gradient(90deg, #F4A261, #E07A3A); }
+.pgStats > .sapMFlexItem:nth-child(4n+2) .pgStatCard::before { background: linear-gradient(90deg, #2D6A4F, #40916C); }
+.pgStats > .sapMFlexItem:nth-child(4n+3) .pgStatCard::before { background: linear-gradient(90deg, #8B5CF6, #6D28D9); }
+.pgStats > .sapMFlexItem:nth-child(4n+4) .pgStatCard::before { background: linear-gradient(90deg, #0EA5E9, #0284C7); }
+.pgStats > .sapMFlexItem:nth-child(4n+1) .pgStatIcon,
+.pgStats > .sapMFlexItem:nth-child(4n+1) .pgStatNumber { color: #E07A3A; }
+.pgStats > .sapMFlexItem:nth-child(4n+2) .pgStatIcon,
+.pgStats > .sapMFlexItem:nth-child(4n+2) .pgStatNumber { color: #2D6A4F; }
+.pgStats > .sapMFlexItem:nth-child(4n+3) .pgStatIcon,
+.pgStats > .sapMFlexItem:nth-child(4n+3) .pgStatNumber { color: #8B5CF6; }
+.pgStats > .sapMFlexItem:nth-child(4n+4) .pgStatIcon,
+.pgStats > .sapMFlexItem:nth-child(4n+4) .pgStatNumber { color: #0EA5E9; }
+
+/* ══════════════════════════════════════════════════════════
+   7. KAMPANYA KARTI
+   ══════════════════════════════════════════════════════════ */
+
+.pgCampaignCard.sapFCard {
+    height: 100%;
+    overflow: hidden;
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.pgCampaignCard.sapFCard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+.pgCampaignCover {
+    display: block;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.pgCardBody {
+    padding: 1.25rem 1.4rem 1.4rem;
+}
+
+.pgCardBody > .sapMTitle,
+.pgCardBody .sapMTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--clr-primary-dark);
+}
+
+.pgCardActions {
+    gap: .5rem;
+}
+
+.pgAmount.sapMText {
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--clr-primary);
+}
+
+.pgAmountLarge.sapMText {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--clr-primary);
+}
+
+/*
+ * İlerleme çubuğu. Horizon'da yapı: .sapMPI > .sapMPIBar (dolu kısım) + .sapMPIBarRemaining (kalan kısım,
+ * sonunda ::after ile çizilen bir nokta). Kalan kısmı açık yeşil, dolu kısmı yeşil gradyan yapıyoruz.
+ */
+.pgPage .sapMPI {
+    background: transparent;
+    border: none;
+}
+
+.pgPage .sapMPI .sapMPIBar {
+    height: .65rem;
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+    background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
+}
+
+.pgPage .sapMPI .sapMPIBarRemaining {
+    height: .65rem;
+    border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+    background: var(--clr-green-soft);
+}
+
+.pgPage .sapMPI .sapMPIBarRemaining::after {
+    display: none;
+}
+
+/* Hedefe ulaşıldıysa dolu kısım tam yuvarlak */
+.pgPage .sapMPI.sapMPIValueMax .sapMPIBar {
+    border-radius: var(--radius-pill);
+}
+
+.pgPage .sapMPI .sapMPITextLeft,
+.pgPage .sapMPI .sapMPITextRight {
+    font-weight: 700;
+    color: var(--clr-primary-dark);
+}
+
+/* ══════════════════════════════════════════════════════════
+   8. SAYFA BAŞLIK BANTLARI (fotoğraf + yeşil perde, eski about-hero)
+   ══════════════════════════════════════════════════════════ */
+
+.pgPageHeader {
+    --pg-header-photo: url("../images/photos/kopek-kurtarma.jpg");
+    position: relative;
+    padding: 5rem 0 4rem;
+    background:
+        linear-gradient(135deg, rgba(27, 58, 45, .90) 0%, rgba(45, 106, 79, .72) 50%, rgba(15, 110, 86, .55) 100%),
+        var(--pg-header-photo) center / cover no-repeat;
+}
+
+.pgHeaderCampaigns { --pg-header-photo: url("../images/photos/kopek-kurtarma.jpg"); }
+.pgHeaderDonate    { --pg-header-photo: url("../images/photos/gonullu-kedi-kopek.jpg"); }
+.pgHeaderVolunteer { --pg-header-photo: url("../images/photos/gonullu-eller.jpg"); }
+.pgHeaderAbout     { --pg-header-photo: url("../images/photos/kadin-kopek-park.jpg"); }
+.pgHeaderFaq       { --pg-header-photo: url("../images/photos/tesekkurler-kopek.jpg"); }
+.pgHeaderContact   { --pg-header-photo: url("../images/photos/kedi-tirmalama.jpg"); }
+
+.pgPageHeader .pgContainer {
+    align-items: center;
+    text-align: center;
+}
+
+.pgPageTitle.sapMTitle {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: #FFFFFF;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .3);
+    text-align: center;
+}
+
+.pgPageHeader .pgMuted.sapMText {
+    color: rgba(255, 255, 255, .85);
+    font-size: 1.1rem;
+    margin-top: .75rem;
+    text-align: center;
+}
+
+.pgPageHeader .pgEyebrow.sapMText {
+    color: #FBBF77;
+    background: rgba(244, 162, 97, .18);
+    border: 1px solid rgba(244, 162, 97, .4);
+    border-radius: var(--radius-pill);
+    padding: .3rem 1rem;
+    margin-bottom: 1rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   9. KUTULAR, ADIMLAR, DEĞERLER
+   ══════════════════════════════════════════════════════════ */
+
+.pgDetailCover {
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+}
+
+.pgDetailTitle.sapMTitle {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: .5rem;
+}
+
+.pgDetailSummary,
+.pgFormCard {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.75rem;
+}
+
+.pgStep {
+    padding: 1rem .5rem;
+}
+
+.pgStep .sapMTitle {
+    margin: .75rem 0 .35rem;
+    font-size: 1.15rem;
+}
+
+/* Numaralı yeşil daire (eski bağış sayfasındaki adım numaraları) */
+.pgStepNumber.sapMText {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    border-radius: 50%;
+    text-align: center;
+    background: var(--clr-primary);
+    color: #FFFFFF;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.25rem;
+    box-shadow: 0 6px 16px rgba(45, 106, 79, .3);
+}
+
+.pgStepIcon.sapUiIcon {
+    font-size: 1.75rem;
+    color: var(--clr-primary);
+    background: var(--clr-green-soft);
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    text-align: center;
+    margin-bottom: .75rem;
+}
+
+.pgValueCard.sapFCard {
+    height: 100%;
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.pgValuePill {
+    flex-direction: row !important;
+    align-items: center;
+    gap: .5rem;
+    background: var(--clr-green-soft);
+    border-radius: var(--radius-pill);
+    padding: .5rem 1rem;
+    margin: 0 .5rem .5rem 0;
+}
+
+.pgValuePillIcon.sapUiIcon {
+    color: var(--clr-primary);
+}
+
+.pgValuePillText.sapMText {
+    font-weight: 700;
+    color: var(--clr-primary-dark);
+}
+
+/* İletişim bilgileri listesi */
+.pgContactItem {
+    padding: .5rem 0;
+}
+
+.pgContactItem .pgStepIcon.sapUiIcon {
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+/* Liste kartı (duyurular) */
+.pgCardList.sapMList {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* ══════════════════════════════════════════════════════════
+   10. GALERİ (Hakkımızda → Sahadan Kareler)
+   ══════════════════════════════════════════════════════════ */
+
+.pgGallery {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 13rem;
+    grid-auto-flow: dense;
+    gap: 1rem;
+}
+
+.pgGalleryItem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s;
+}
+
+.pgGalleryItem:hover {
+    transform: scale(1.02);
+}
+
+.pgGalleryWide {
+    grid-column: span 2;
+}
+
+.pgGalleryTall {
+    grid-row: span 2;
+}
+
+/* ══════════════════════════════════════════════════════════
+   11. ÇAĞRI BANDI
+   ══════════════════════════════════════════════════════════ */
+
+.pgCta {
+    padding: 5rem 1.25rem;
+    background:
+        linear-gradient(135deg, rgba(27, 58, 45, .92), rgba(45, 106, 79, .78)),
+        url("../images/photos/sarilma-kopek.jpg") center / cover no-repeat;
+}
+
+.pgCtaTitle.sapMTitle {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    color: #FFFFFF;
+}
+
+.pgCtaText.sapMText {
+    color: rgba(255, 255, 255, .88);
+    font-size: 1.1rem;
+    max-width: 36rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   12. FORMLAR, SİHİRBAZ, SSS
+   ══════════════════════════════════════════════════════════ */
+
+.pgWizard {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* Sihirbazdaki "Adım 2 / Bağışı Tamamla" düğmeleri de turuncu hap */
+.pgWizard .sapMWizardNextButton .sapMBtnInner,
+.pgFormCard .sapMBtnEmphasized,
+.pgPage .sapMBtnEmphasized {
+    border-radius: var(--radius-pill);
+}
+
+.pgFaqList .sapMLIB {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.pgFaqList .sapMGHLI {
+    background: transparent;
+}
+
+.pgFaqList .sapMGHLITitle {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .8rem;
+    color: var(--clr-accent-hover);
+}
+
+.pgFaqPanel.sapMPanel {
+    margin-bottom: .6rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.pgFaqPanel .sapMPanelHdr,
+.pgFaqPanel .sapMPanelWrappingDiv {
+    background: #FFFFFF;
+    font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════
+   13. ALT BİLGİ
+   ══════════════════════════════════════════════════════════ */
+
+.pgFooter {
+    background: linear-gradient(135deg, var(--clr-primary-dark) 0%, #234A39 100%);
+    padding: 3rem 0 1.5rem;
+}
+
+.pgFooterLogo {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 1rem;
+}
+
+.pgFooterTitle.sapMTitle,
+.pgFooterText.sapMText,
+.pgFooterDisclaimer.sapMText {
+    color: #E8F3EC;
+}
+
+.pgFooterTitle.sapMTitle {
+    font-size: 1.05rem;
+    margin-bottom: .75rem;
+}
+
+.pgFooterText.sapMText {
+    line-height: 1.8;
+    color: rgba(232, 243, 236, .8);
+}
+
+.pgFooter .pgFooterLink.sapMLnk {
+    color: rgba(232, 243, 236, .85);
+    display: block;
+    line-height: 2;
+}
+
+.pgFooter .pgFooterLink.sapMLnk:hover {
+    color: var(--clr-accent);
+}
+
+.pgFooterDisclaimer.sapMText {
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    opacity: .7;
+    font-size: .8rem;
+    margin-top: 2rem;
+    padding: 1.25rem 1rem 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   14. TELEFON
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+    .pgHeader.sapTntToolHeader {
+        padding: 0 .75rem;
+    }
+
+    .pgSection {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .pgHero {
+        min-height: 26rem;
+        padding: 3rem 1.25rem;
+        background:
+            linear-gradient(180deg, rgba(27, 58, 45, .45) 0%, rgba(27, 58, 45, .85) 100%),
+            url("../images/photos/hero-kopek-cocuk.jpg") 70% center / cover no-repeat;
+    }
+
+    .pgPageHeader {
+        padding: 3.5rem 0 3rem;
+    }
+
+    .pgGallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 10rem;
+    }
+
+    /* İstatistik kartları telefonda iki sütun */
+    .pgStats {
+        gap: .75rem;
+    }
+
+    .pgStats > .sapMFlexItem {
+        flex: 1 1 calc(50% - .75rem);
+        max-width: none;
+    }
+
+    .pgStatCard {
+        padding: 1.25rem .5rem 1rem;
+    }
+
+    .pgStatNumber.sapMText {
+        font-size: 2rem;
+    }
+
+    /* Bağış tutarı düğmeleri dar ekrana sığsın */
+    .pgAmountPresets .sapMSegBBtn {
+        padding: 0 .35rem;
+        min-width: 0;
+    }
+
+    .pgHeader .pgNavDonate .sapMBtnInner {
+        padding: 0 .8rem;
+    }
+}

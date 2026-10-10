@@ -1,0 +1,110 @@
+<mvc:View
+    controllerName="pg.site.controller.Contact"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderContact">
+            <VBox class="pgContainer">
+                <Title text="{i18n>contactTitle}" level="H1" class="pgPageTitle"/>
+                <Text text="{i18n>contactIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <l:Grid defaultSpan="XL5 L5 M12 S12" hSpacing="2" vSpacing="2">
+                <!-- Sol: iletişim bilgileri (hayali) -->
+                <VBox class="pgFormCard">
+                    <Text text="{i18n>contactInfoEyebrow}" class="pgEyebrow"/>
+                    <Title text="{i18n>contactInfoTitle}" level="H2" class="pgSectionTitle"/>
+                    <VBox class="sapUiMediumMarginTop pgContactList">
+                        <HBox alignItems="Center" class="pgContactItem">
+                            <core:Icon src="sap-icon://map" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>contactAddress}"/>
+                                <Text text="{i18n>footerAddress}"/>
+                            </VBox>
+                        </HBox>
+                        <HBox alignItems="Center" class="pgContactItem">
+                            <core:Icon src="sap-icon://email" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>email}"/>
+                                <Text text="{i18n>footerEmail}"/>
+                            </VBox>
+                        </HBox>
+                        <HBox alignItems="Center" class="pgContactItem">
+                            <core:Icon src="sap-icon://call" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>phone}"/>
+                                <Text text="{i18n>footerPhone}"/>
+                            </VBox>
+                        </HBox>
+                        <HBox alignItems="Center" class="pgContactItem">
+                            <core:Icon src="sap-icon://appointment-2" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>contactHours}"/>
+                                <Text text="{i18n>contactHoursText}"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                    <Image src="images/photos/golden-sevgi.jpg" alt="{i18n>gallery1}" width="100%" densityAware="false" class="pgRoundedPhoto sapUiMediumMarginTop"/>
+                </VBox>
+
+                <!-- Sağ: mesaj formu -->
+                <VBox class="pgFormCard">
+                    <layoutData>
+                        <l:GridData span="XL7 L7 M12 S12"/>
+                    </layoutData>
+                    <f:SimpleForm
+                        id="contactForm"
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        title="{i18n>contactFormTitle}"
+                        labelSpanL="3" labelSpanM="3" columnsL="1" columnsM="1">
+
+                        <Label text="{i18n>fullName}" labelFor="contactName" required="true"/>
+                        <Input id="contactName" value="{contact>/name}" maxLength="100" valueState="{contact>/state/name}" valueStateText="{i18n>nameRequired}"/>
+
+                        <Label text="{i18n>email}" labelFor="contactEmail" required="true"/>
+                        <Input id="contactEmail" type="Email" value="{contact>/email}" maxLength="254" valueState="{contact>/state/email}" valueStateText="{i18n>emailInvalid}"/>
+
+                        <Label text="{i18n>contactSubject}" labelFor="contactSubject" required="true"/>
+                        <Input id="contactSubject" value="{contact>/subject}" maxLength="150" valueState="{contact>/state/subject}" valueStateText="{i18n>subjectRequired}"/>
+
+                        <Label text="{i18n>contactMessage}" labelFor="contactMessage" required="true"/>
+                        <TextArea
+                            id="contactMessage"
+                            value="{contact>/message}"
+                            rows="6"
+                            width="100%"
+                            maxLength="2000"
+                            showExceededText="true"
+                            valueState="{contact>/state/message}"
+                            valueStateText="{i18n>messageTooShort}"/>
+
+                        <Label text=""/>
+                        <HBox alignItems="Center" wrap="Wrap">
+                            <CheckBox id="contactConsent" selected="{contact>/consentGiven}" valueState="{contact>/state/consentGiven}" text="{i18n>contactConsentText}"/>
+                            <Link text="{i18n>privacyNotice}" press=".onShowPrivacy" class="sapUiTinyMarginBegin"/>
+                        </HBox>
+
+                        <Label text=""/>
+                        <Button
+                            id="contactSubmit"
+                            text="{i18n>sendMessage}"
+                            icon="sap-icon://paper-plane"
+                            press=".onSubmit"
+                            busy="{contact>/busy}"
+                            busyIndicatorDelay="0"
+                            class="pgBtnPrimary"/>
+                    </f:SimpleForm>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

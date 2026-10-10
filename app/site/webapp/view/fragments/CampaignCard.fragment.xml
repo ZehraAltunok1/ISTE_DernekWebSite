@@ -1,0 +1,51 @@
+<!--
+    Kampanya kartı. Ana sayfa ve Kampanyalar sayfasında liste şablonu (template) olarak kullanılır;
+    bu yüzden içindeki bütün binding'ler göreli (relative) — her kart kendi kampanyasına bağlanır.
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+    <f:Card class="pgCampaignCard" width="100%">
+        <f:content>
+            <VBox width="100%" renderType="Bare">
+                <!-- Kapak fotoğrafı + üzerinde durum rozeti -->
+                <Image
+                    src="{coverImage}"
+                    alt="{title}"
+                    width="100%"
+                    densityAware="false"
+                    class="pgCampaignCover"/>
+                <VBox class="pgCardBody">
+                    <ObjectStatus
+                        text="{= %{status} === 'Completed' ? ${i18n>statusCompleted} : ${i18n>statusActive} }"
+                        state="{= %{status} === 'Completed' ? 'Success' : 'Information' }"
+                        inverted="true"/>
+                    <Title text="{title}" level="H3" wrapping="true" class="sapUiSmallMarginTop"/>
+                    <Text text="{summary}" maxLines="3" class="sapUiTinyMarginTop pgMuted"/>
+
+                    <ProgressIndicator
+                        class="sapUiSmallMarginTop"
+                        percentValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percent'}"
+                        displayValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percentText'}"
+                        showValue="true"/>
+
+                    <HBox justifyContent="SpaceBetween" alignItems="Baseline" wrap="Wrap">
+                        <Text text="{path: 'raisedAmount', targetType: 'any', formatter: '.formatter.currency'}" class="pgAmount"/>
+                        <Text text="{parts: ['i18n>campaignGoal', {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.labelCurrency'}" class="pgMuted"/>
+                    </HBox>
+                    <Text
+                        text="{parts: [{path: 'endDate', targetType: 'any'}, {path: 'status', targetType: 'any'}], formatter: '.formatter.daysLeft'}"
+                        class="sapUiTinyMarginTop pgMuted"/>
+
+                    <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop pgCardActions">
+                        <Button text="{i18n>details}" press=".onCampaignPress" class="pgBtnOutline pgBtnSmall"/>
+                        <Button
+                            text="{i18n>supportCampaign}"
+                            icon="sap-icon://heart"
+                            visible="{= %{status} === 'Active' }"
+                            press=".onCampaignDonate"
+                            class="pgBtnPrimary pgBtnSmall"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </f:content>
+    </f:Card>
+</core:FragmentDefinition>

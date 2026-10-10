@@ -1,0 +1,9 @@
+ID;category;question;answer;sortOrder
+f0000000-0000-4000-8000-000000000001;Bağış;Bağış nasıl yapılır?;Kampanyalar sayfasından desteklemek istediğiniz kampanyayı seçin ya da genel bağış yapın. Ödemeyi kart veya banka havalesiyle tamamlayabilirsiniz. (Bu bir demo projedir, gerçek ödeme alınmaz.);1
+f0000000-0000-4000-8000-000000000002;Bağış;Bağışımın nereye gittiğini görebilir miyim?;Evet. Her kampanyanın hedef ve toplanan tutarı ile son bağışlar kampanya sayfasında herkese açık olarak gösterilir.;2
+f0000000-0000-4000-8000-000000000003;Bağış;Havale ile bağış yaparken nelere dikkat etmeliyim?;Bağış formunu doldurduğunuzda size özel bir referans kodu verilir. Havale açıklamasına bu kodu yazmanız, bağışınızı doğru kampanyayla eşleştirmemizi sağlar.;3
+f0000000-0000-4000-8000-000000000004;Bağış;Minimum bağış tutarı var mı?;En az 10 ₺ bağış yapabilirsiniz. Her katkı bir canın hayatına dokunur.;4
+f0000000-0000-4000-8000-000000000005;Gönüllülük;Gönüllü olmak için ne gerekir?;18 yaşını doldurmuş herkes başvurabilir. Hayvan bakımı, besleme, veteriner asistanlığı, ulaşım, sosyal medya ve etkinlik alanlarında gönüllü olabilirsiniz.;5
+f0000000-0000-4000-8000-000000000006;Gönüllülük;Haftada ne kadar zaman ayırmam gerekiyor?;Tamamen size bağlı. Haftada 2 saat bile büyük fark yaratır, görevleri programınıza göre planlıyoruz.;6
+f0000000-0000-4000-8000-000000000007;Kampanyalar;Kampanya hedefine ulaşılamazsa ne olur?;Toplanan bağışlar o kampanyanın amacı doğrultusunda kullanılmaya devam eder. Bağışınız hiçbir koşulda boşa gitmez.;7
+f0000000-0000-4000-8000-000000000008;Kampanyalar;Bu site gerçek bir derneğe mi ait?;Hayır. Pati ve Gelecek Derneği, SAPUI5 öğrenmek amacıyla hazırlanmış bir portföy projesinin hayali senaryosudur. Sitedeki kişiler, tutarlar ve banka bilgileri gerçek değildir.;8

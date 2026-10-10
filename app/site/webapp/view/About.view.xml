@@ -1,0 +1,121 @@
+<mvc:View
+    controllerName="pg.site.controller.BaseController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderAbout">
+            <VBox class="pgContainer">
+                <Text text="{i18n>aboutEyebrow}" class="pgEyebrow"/>
+                <Title text="{i18n>aboutTitle}" level="H1" class="pgPageTitle" wrapping="true"/>
+                <Text text="{i18n>aboutLead}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <!-- Hikâye -->
+        <VBox class="pgSection pgContainer">
+            <l:Grid defaultSpan="XL7 L7 M12 S12" hSpacing="2">
+                <VBox>
+                    <Title text="{i18n>storyTitle}" level="H2" class="sapUiSmallMarginBottom"/>
+                    <Text text="{i18n>storyText1}" class="pgBodyText"/>
+                    <Text text="{i18n>storyText2}" class="pgBodyText sapUiSmallMarginTop"/>
+                </VBox>
+                <Image src="images/photos/barinak-kopekler.jpg" alt="{i18n>storyImageAlt}" width="100%" densityAware="false" class="pgRoundedPhoto">
+                    <layoutData>
+                        <l:GridData span="XL5 L5 M12 S12"/>
+                    </layoutData>
+                </Image>
+            </l:Grid>
+        </VBox>
+
+        <!-- Misyon / vizyon / değerler -->
+        <VBox class="pgSection pgSectionAlt">
+            <l:Grid defaultSpan="XL4 L4 M12 S12" class="pgContainer">
+                <f:Card class="pgValueCard">
+                    <f:content>
+                        <VBox class="pgCardBody">
+                            <core:Icon src="sap-icon://target-group" class="pgStepIcon"/>
+                            <Title text="{i18n>missionTitle}" level="H3"/>
+                            <Text text="{i18n>missionText}" class="pgMuted sapUiTinyMarginTop"/>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+                <f:Card class="pgValueCard">
+                    <f:content>
+                        <VBox class="pgCardBody">
+                            <core:Icon src="sap-icon://show" class="pgStepIcon"/>
+                            <Title text="{i18n>visionTitle}" level="H3"/>
+                            <Text text="{i18n>visionText}" class="pgMuted sapUiTinyMarginTop"/>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+                <f:Card class="pgValueCard">
+                    <f:content>
+                        <VBox class="pgCardBody">
+                            <core:Icon src="sap-icon://heart" class="pgStepIcon"/>
+                            <Title text="{i18n>valuesTitle}" level="H3"/>
+                            <Text text="{i18n>valuesText}" class="pgMuted sapUiTinyMarginTop"/>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+            </l:Grid>
+        </VBox>
+
+        <!-- Faaliyetler -->
+        <VBox class="pgSection pgContainer">
+            <Title text="{i18n>activitiesTitle}" level="H2" class="pgSectionTitle"/>
+            <l:Grid defaultSpan="XL3 L3 M6 S12" class="sapUiSmallMarginTop">
+                <VBox class="pgStep">
+                    <core:Icon src="sap-icon://nutrition-activity" class="pgStepIcon"/>
+                    <Title text="{i18n>activityFeeding}" level="H3"/>
+                    <Text text="{i18n>activityFeedingText}" class="pgMuted"/>
+                </VBox>
+                <VBox class="pgStep">
+                    <core:Icon src="sap-icon://stethoscope" class="pgStepIcon"/>
+                    <Title text="{i18n>activityVet}" level="H3"/>
+                    <Text text="{i18n>activityVetText}" class="pgMuted"/>
+                </VBox>
+                <VBox class="pgStep">
+                    <core:Icon src="sap-icon://home" class="pgStepIcon"/>
+                    <Title text="{i18n>activityAdoption}" level="H3"/>
+                    <Text text="{i18n>activityAdoptionText}" class="pgMuted"/>
+                </VBox>
+                <VBox class="pgStep">
+                    <core:Icon src="sap-icon://learning-assistant" class="pgStepIcon"/>
+                    <Title text="{i18n>activityAwareness}" level="H3"/>
+                    <Text text="{i18n>activityAwarenessText}" class="pgMuted"/>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <!-- Sahadan kareler (galeri) -->
+        <VBox class="pgSection pgSectionAlt">
+            <VBox class="pgContainer" alignItems="Center">
+                <Text text="{i18n>galleryEyebrow}" class="pgEyebrow" textAlign="Center"/>
+                <Title text="{i18n>galleryTitle}" level="H2" class="pgSectionTitle" textAlign="Center"/>
+            </VBox>
+            <FlexBox class="pgGallery pgContainer sapUiMediumMarginTop" renderType="Bare">
+                <Image src="images/photos/golden-sevgi.jpg" alt="{i18n>gallery1}" densityAware="false" class="pgGalleryItem pgGalleryWide"/>
+                <Image src="images/photos/tesekkurler-kopek.jpg" alt="{i18n>gallery2}" densityAware="false" class="pgGalleryItem pgGalleryTall"/>
+                <Image src="images/photos/sarilma-kopek.jpg" alt="{i18n>gallery3}" densityAware="false" class="pgGalleryItem pgGalleryTall"/>
+                <Image src="images/photos/kus-evi-agac.jpg" alt="{i18n>gallery4}" densityAware="false" class="pgGalleryItem"/>
+                <Image src="images/photos/kedi-tirmalama.jpg" alt="{i18n>gallery5}" densityAware="false" class="pgGalleryItem"/>
+            </FlexBox>
+        </VBox>
+
+        <!-- Çağrı bandı -->
+        <VBox class="pgCta" alignItems="Center">
+            <Title text="{i18n>ctaTitle}" level="H2" wrapping="true" textAlign="Center" class="pgCtaTitle"/>
+            <Text text="{i18n>ctaText}" textAlign="Center" class="sapUiSmallMarginTop pgCtaText"/>
+            <HBox class="sapUiMediumMarginTop pgHeroActions" wrap="Wrap" justifyContent="Center">
+                <Button text="{i18n>navDonate}" press=".onNavDonate" class="pgBtnPrimary pgBtnLarge"/>
+                <Button text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgBtnGlass pgBtnLarge"/>
+            </HBox>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

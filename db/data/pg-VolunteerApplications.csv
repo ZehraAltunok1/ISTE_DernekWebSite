@@ -1,0 +1,5 @@
+ID;firstName;lastName;email;phone;area_code;availability;motivation;consentGiven;status;adminNote;createdAt
+a0000000-0000-4000-8000-000000000001;Nehir;Acar;nehir.acar@example.com;0555 000 00 01;feeding;Hafta sonları;Üniversite kampüsünde zaten kedileri besliyorum, bunu düzenli ve organize şekilde yapmak istiyorum.;true;Pending;;2026-10-01T12:00:00Z
+a0000000-0000-4000-8000-000000000002;Arda;Bulut;arda.bulut@example.com;0555 000 00 02;social;Hafta içi akşamları;Grafik tasarım okuyorum, sahiplendirme ilanlarının daha çok kişiye ulaşması için görsel hazırlayabilirim.;true;Pending;;2026-10-03T19:30:00Z
+a0000000-0000-4000-8000-000000000003;Defne;Ünal;defne.unal@example.com;0555 000 00 03;vet;Salı ve perşembe;Veteriner fakültesi 3. sınıf öğrencisiyim, tedavi süreçlerinde gönüllü olarak deneyim kazanmak istiyorum.;true;Approved;Oryantasyona davet edildi.;2026-09-12T10:00:00Z
+a0000000-0000-4000-8000-000000000004;Kaan;Ersoy;kaan.ersoy@example.com;0555 000 00 04;transport;Belirsiz;Arabam var, ihtiyaç olduğunda hayvanları kliniğe götürebilirim.;true;Rejected;Bu dönem ulaşım ekibi dolu.;2026-08-20T08:30:00Z

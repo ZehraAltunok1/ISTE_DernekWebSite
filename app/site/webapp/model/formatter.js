@@ -1,0 +1,107 @@
+sap.ui.define([
+    "sap/ui/core/format/NumberFormat",
+    "sap/ui/core/format/DateFormat"
+], function (NumberFormat, DateFormat) {
+    "use strict";
+
+    // OData V4, Decimal değerleri metin olarak gönderir ("20250.00"); bu yüzden önce sayıya çeviriyoruz.
+    var toNumber = function (vValue) {
+        var n = Number(vValue);
+        return Number.isFinite(n) ? n : 0;
+    };
+
+    var oCurrency = NumberFormat.getCurrencyInstance({ currencyCode: false, maxFractionDigits: 0 });
+    var oInteger = NumberFormat.getIntegerInstance({ groupingEnabled: true });
+    var oDate = DateFormat.getDateInstance({ style: "long" });
+    var MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+    var formatter = {
+
+        /** 20250 → "20.250 ₺" */
+        currency: function (vAmount) {
+            return oCurrency.format(toNumber(vAmount), "TRY");
+        },
+
+        /** 1500 → "1.500" */
+        integer: function (vValue) {
+            return oInteger.format(toNumber(vValue));
+        },
+
+        /** Toplanan / hedef → 0–100 arası tam sayı (ProgressIndicator için) */
+        percent: function (vRaised, vGoal) {
+            var nGoal = toNumber(vGoal);
+            if (nGoal <= 0) {
+                return 0;
+            }
+            return Math.min(100, Math.round(toNumber(vRaised) / nGoal * 100));
+        },
+
+        /** "%54" (Türkçede yüzde işareti sayının önüne yazılır) */
+        percentText: function (vRaised, vGoal) {
+            return "%" + formatter.percent(vRaised, vGoal);
+        },
+
+        /** ("Hedef", 40000) → "Hedef: 40.000 ₺" */
+        labelCurrency: function (sLabel, vAmount) {
+            return sLabel + ": " + formatter.currency(vAmount);
+        },
+
+        /** "2026-10-04" → "4 Ekim 2026" */
+        date: function (sDate) {
+            return sDate ? oDate.format(new Date(sDate)) : "";
+        },
+
+        /**
+         * Kampanyanın bitişine kalan gün sayısını metne çevirir.
+         * this: controller — view'da ".formatter.daysLeft" diye çağrıldığı için
+         * i18n metinlerine BaseController.getText ile erişebiliriz.
+         */
+        daysLeft: function (sEndDate, sStatus) {
+            if (sStatus === "Completed") {
+                return this.getText("campaignCompleted");
+            }
+            if (!sEndDate) {
+                return "";
+            }
+            var nDays = Math.ceil((new Date(sEndDate) - new Date()) / MS_PER_DAY);
+            if (nDays < 0) {
+                return this.getText("campaignEnded");
+            }
+            return nDays === 0 ? this.getText("campaignLastDay") : this.getText("campaignDaysLeft", [nDays]);
+        },
+
+        /**
+         * Bağış tutarının somut karşılığı: 50 ₺ ≈ 1 haftalık mama, 200 ₺ ≈ 1 temel tedavi.
+         * this: controller
+         */
+        donationImpact: function (vAmount) {
+            var nAmount = toNumber(vAmount);
+            if (nAmount >= 200) {
+                return this.getText("impactTreatment", [Math.floor(nAmount / 200)]);
+            }
+            return this.getText("impactFood", [Math.max(1, Math.floor(nAmount / 50))]);
+        },
+
+        /** Duyuru türü → liste satırının renkli şeridi (sap.ui.core.MessageType / IndicationColor) */
+        announcementHighlight: function (sType) {
+            switch (sType) {
+                case "Urgent": return "Error";
+                case "Warning": return "Warning";
+                case "Success": return "Success";
+                default: return "Information";
+            }
+        },
+
+        /** Duyuru türü → ikon */
+        announcementIcon: function (sType) {
+            switch (sType) {
+                case "Urgent": return "sap-icon://alert";
+                case "Warning": return "sap-icon://warning";
+                case "Success": return "sap-icon://sys-enter-2";
+                default: return "sap-icon://message-information";
+            }
+        }
+    };
+
+    return formatter;
+});

@@ -1,0 +1,5 @@
+code;text;criticality
+Info;Bilgi;0
+Success;Başarı;3
+Warning;Uyarı;2
+Urgent;Acil;1

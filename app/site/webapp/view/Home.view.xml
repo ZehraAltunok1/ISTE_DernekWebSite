@@ -1,0 +1,162 @@
+<mvc:View
+    controllerName="pg.site.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+
+        <MessageStrip text="{i18n>demoNotice}" type="Information" showIcon="true" class="pgDemoStrip"/>
+
+        <!-- ── Hero: tam genişlik fotoğraf (css → .pgHero) ───────── -->
+        <VBox class="pgHero" justifyContent="Center" renderType="Bare">
+            <VBox class="pgHeroText" renderType="Bare">
+                <Text text="{i18n>heroEyebrow}" class="pgHeroBadge"/>
+                <Title text="{i18n>heroTitle}" level="H1" wrapping="true" class="pgHeroTitle"/>
+                <Text text="{i18n>heroText}" class="pgHeroLead"/>
+                <HBox class="pgHeroActions" wrap="Wrap">
+                    <Button text="{i18n>donateNow}" press=".onNavDonate" class="pgBtnPrimary pgBtnLarge"/>
+                    <Button text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgBtnGlass pgBtnLarge"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- ── Başarılarımız (SiteStats) ───────────────────────── -->
+        <VBox class="pgSection pgContainer">
+            <Text text="{i18n>statsEyebrow}" class="pgEyebrow"/>
+            <Title text="{i18n>statsTitle}" level="H2" class="pgSectionTitle"/>
+            <FlexBox
+                id="statsBox"
+                class="pgStats"
+                wrap="Wrap"
+                justifyContent="Center"
+                items="{path: '/SiteStats', sorter: {path: 'sortOrder'}, templateShareable: false}">
+                <VBox class="pgStatCard" alignItems="Center">
+                    <core:Icon src="{icon}" class="pgStatIcon"/>
+                    <Text text="{path: 'value', targetType: 'any', formatter: '.formatter.integer'}" class="pgStatNumber"/>
+                    <Text text="{label}" class="pgStatLabel"/>
+                </VBox>
+            </FlexBox>
+        </VBox>
+
+        <!-- ── Aktif kampanyalar ───────────────────────────────── -->
+        <VBox class="pgSection pgSectionAlt">
+            <VBox class="pgContainer">
+                <HBox justifyContent="SpaceBetween" alignItems="End" wrap="Wrap">
+                    <VBox>
+                        <Text text="{i18n>campaignsEyebrow}" class="pgEyebrow"/>
+                        <Title text="{i18n>activeCampaigns}" level="H2" class="pgSectionTitle"/>
+                        <Text text="{i18n>activeCampaignsText}" class="pgMuted"/>
+                    </VBox>
+                    <Button text="{i18n>allCampaigns}" press=".onNavCampaigns" class="pgBtnOutline sapUiSmallMarginTop"/>
+                </HBox>
+                <l:Grid
+                    id="campaignGrid"
+                    defaultSpan="XL4 L4 M6 S12"
+                    vSpacing="1.5"
+                    hSpacing="1.5"
+                    class="sapUiMediumMarginTop"
+                    content="{
+                        path: '/Campaigns',
+                        filters: [{path: 'status', operator: 'EQ', value1: 'Active'}],
+                        sorter: {path: 'endDate'},
+                        length: 3,
+                        templateShareable: false
+                    }">
+                    <core:Fragment fragmentName="pg.site.view.fragments.CampaignCard" type="XML"/>
+                </l:Grid>
+            </VBox>
+        </VBox>
+
+        <!-- ── Hakkımızda özeti (fotoğraf + metin) ─────────────── -->
+        <VBox class="pgSection pgContainer">
+            <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="2" vSpacing="2">
+                <Image src="images/photos/gonullu-kedi-kopek.jpg" alt="{i18n>aboutImageAlt}" width="100%" densityAware="false" class="pgRoundedPhoto"/>
+                <VBox justifyContent="Center" height="100%">
+                    <Text text="{i18n>whoWeAreEyebrow}" class="pgEyebrow"/>
+                    <Title text="{i18n>whoWeAreTitle}" level="H2" wrapping="true" class="pgSectionTitle"/>
+                    <Text text="{i18n>whoWeAreText}" class="pgBodyText sapUiSmallMarginTop"/>
+                    <HBox class="sapUiMediumMarginTop" wrap="Wrap">
+                        <VBox class="pgValuePill">
+                            <core:Icon src="sap-icon://target-group" class="pgValuePillIcon"/>
+                            <Text text="{i18n>missionTitle}" class="pgValuePillText"/>
+                        </VBox>
+                        <VBox class="pgValuePill">
+                            <core:Icon src="sap-icon://show" class="pgValuePillIcon"/>
+                            <Text text="{i18n>visionTitle}" class="pgValuePillText"/>
+                        </VBox>
+                        <VBox class="pgValuePill">
+                            <core:Icon src="sap-icon://heart" class="pgValuePillIcon"/>
+                            <Text text="{i18n>valuesTitle}" class="pgValuePillText"/>
+                        </VBox>
+                    </HBox>
+                    <Button text="{i18n>readOurStory}" press=".onNavAbout" class="pgBtnPrimary sapUiMediumMarginTop"/>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <!-- ── Nasıl çalışır? ──────────────────────────────────── -->
+        <VBox class="pgSection pgSectionAlt">
+            <VBox class="pgContainer" alignItems="Center">
+                <Text text="{i18n>howItWorksEyebrow}" class="pgEyebrow" textAlign="Center"/>
+                <Title text="{i18n>howItWorks}" level="H2" class="pgSectionTitle" textAlign="Center"/>
+                <l:Grid defaultSpan="XL3 L3 M6 S12" class="sapUiMediumMarginTop pgSteps" width="100%">
+                    <VBox class="pgStep" alignItems="Center">
+                        <Text text="1" class="pgStepNumber"/>
+                        <Title text="{i18n>step1Title}" level="H3" textAlign="Center"/>
+                        <Text text="{i18n>step1Text}" class="pgMuted" textAlign="Center"/>
+                    </VBox>
+                    <VBox class="pgStep" alignItems="Center">
+                        <Text text="2" class="pgStepNumber"/>
+                        <Title text="{i18n>step2Title}" level="H3" textAlign="Center"/>
+                        <Text text="{i18n>step2Text}" class="pgMuted" textAlign="Center"/>
+                    </VBox>
+                    <VBox class="pgStep" alignItems="Center">
+                        <Text text="3" class="pgStepNumber"/>
+                        <Title text="{i18n>step3Title}" level="H3" textAlign="Center"/>
+                        <Text text="{i18n>step3Text}" class="pgMuted" textAlign="Center"/>
+                    </VBox>
+                    <VBox class="pgStep" alignItems="Center">
+                        <Text text="4" class="pgStepNumber"/>
+                        <Title text="{i18n>step4Title}" level="H3" textAlign="Center"/>
+                        <Text text="{i18n>step4Text}" class="pgMuted" textAlign="Center"/>
+                    </VBox>
+                </l:Grid>
+            </VBox>
+        </VBox>
+
+        <!-- ── Duyurular ──────────────────────────────────────── -->
+        <VBox class="pgSection pgContainer pgNarrow">
+            <Text text="{i18n>announcementsEyebrow}" class="pgEyebrow"/>
+            <Title text="{i18n>announcements}" level="H2" class="pgSectionTitle"/>
+            <List
+                id="announcementList"
+                class="sapUiMediumMarginTop pgCardList"
+                noDataText="{i18n>noAnnouncements}"
+                showSeparators="Inner"
+                items="{path: '/Announcements', sorter: {path: 'publishDate', descending: true}, templateShareable: false}">
+                <!-- highlight: duyuru türüne göre satırın solunda renkli şerit -->
+                <StandardListItem
+                    title="{title}"
+                    description="{body}"
+                    info="{path: 'publishDate', targetType: 'any', formatter: '.formatter.date'}"
+                    icon="{path: 'type', formatter: '.formatter.announcementIcon'}"
+                    highlight="{path: 'type', formatter: '.formatter.announcementHighlight'}"
+                    wrapping="true"/>
+            </List>
+        </VBox>
+
+        <!-- ── Çağrı bandı (fotoğraf arka planlı) ─────────────── -->
+        <VBox class="pgCta" alignItems="Center">
+            <Title text="{i18n>ctaTitle}" level="H2" wrapping="true" textAlign="Center" class="pgCtaTitle"/>
+            <Text text="{i18n>ctaText}" textAlign="Center" class="sapUiSmallMarginTop pgCtaText"/>
+            <HBox class="sapUiMediumMarginTop pgHeroActions" wrap="Wrap" justifyContent="Center">
+                <Button text="{i18n>navDonate}" press=".onNavDonate" class="pgBtnPrimary pgBtnLarge"/>
+                <Button text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgBtnGlass pgBtnLarge"/>
+            </HBox>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

@@ -1,0 +1,99 @@
+<!--
+    FPM (Flexible Programming Model) özel sayfası.
+    Fiori elements uygulamasının içine kendi XML view'ımızı yerleştiriyoruz;
+    liste/nesne sayfaları ise yine annotation'lardan otomatik üretiliyor.
+-->
+<mvc:View
+    controllerName="pg.yonetim.ext.dashboard.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+
+    <f:DynamicPage id="dashboardPage" headerExpanded="true" showFooter="false">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>dashboardTitle}" level="H2"/>
+                </f:heading>
+                <f:actions>
+                    <Button text="{i18n>openSite}" icon="sap-icon://action" press=".onOpenSite"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <MessageStrip text="{i18n>dashboardIntro}" type="Information" showIcon="true"/>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <VBox>
+                <Title text="{i18n>todoTitle}" level="H3" class="sapUiSmallMarginBottom"/>
+                <FlexBox wrap="Wrap">
+                    <GenericTile header="{i18n>pendingDonations}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="DonationsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/pendingDonations}" valueColor="{= ${kpi>/pendingDonations} > 0 ? 'Critical' : 'Good' }" icon="sap-icon://lead" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>pendingApplications}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="VolunteerApplicationsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/pendingApplications}" valueColor="{= ${kpi>/pendingApplications} > 0 ? 'Critical' : 'Good' }" icon="sap-icon://group" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>newMessages}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="ContactMessagesList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/newMessages}" valueColor="{= ${kpi>/newMessages} > 0 ? 'Critical' : 'Good' }" icon="sap-icon://email" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>activeCampaigns}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="CampaignsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/activeCampaigns}" icon="sap-icon://heart" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>activeAnnouncements}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AnnouncementsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/activeAnnouncements}" icon="sap-icon://megamenu" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
+                </FlexBox>
+
+                <Title text="{i18n>modulesTitle}" level="H3" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+                <FlexBox wrap="Wrap">
+                    <GenericTile header="{i18n>tileCampaigns}" subheader="{i18n>tileCampaignsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="CampaignsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://heart"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileDonations}" subheader="{i18n>tileDonationsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="DonationsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://lead"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileVolunteers}" subheader="{i18n>tileVolunteersSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="VolunteerApplicationsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://group"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileMessages}" subheader="{i18n>tileMessagesSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="ContactMessagesList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://email"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileAnnouncements}" subheader="{i18n>tileAnnouncementsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AnnouncementsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://megamenu"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileFaqs}" subheader="{i18n>tileFaqsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="FaqsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://question-mark"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileStats}" subheader="{i18n>tileStatsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="SiteStatsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://line-chart"/></TileContent>
+                    </GenericTile>
+                </FlexBox>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

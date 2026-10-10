@@ -1,0 +1,79 @@
+{
+  "name": "pati-ve-gelecek",
+  "version": "0.1.0",
+  "description": "Hayali bir hayvan refahı derneği için SAPUI5 + SAP CAP portföy projesi",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch": "cds watch",
+    "test": "node --test \"test/**/*.test.js\"",
+    "lint": "eslint . && npm run lint:ui5",
+    "lint:ui5": "cd app/site && ui5lint && cd ../yonetim && ui5lint",
+    "test:ui": "ui5-test-runner --coverage false --report-dir report --global-timeout 300000 --url http://localhost:4004/site/webapp/test/testsuite.qunit.html",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": ":memory:"
+        }
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "alice": false,
+          "bob": false,
+          "carol": false,
+          "dave": false,
+          "erin": false,
+          "fred": false,
+          "me": false,
+          "yves": false,
+          "*": false,
+          "admin@example.com": {
+            "password": "admin123",
+            "roles": [
+              "admin"
+            ],
+            "attr": {
+              "name": "Demo Yönetici"
+            }
+          },
+          "uye@example.com": {
+            "password": "uye123",
+            "roles": [
+              "member"
+            ],
+            "attr": {
+              "name": "Demo Üye"
+            }
+          }
+        }
+      }
+    },
+    "i18n": {
+      "default_language": "tr"
+    }
+  },
+  "dependencies": {
+    "@cap-js/sqlite": "^3.1.1",
+    "@sap/cds": "^10.1.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@cap-js/cds-test": "^1.0.2",
+    "@eslint/js": "^10.0.1",
+    "@sap/cds-dk": "^10.1.0",
+    "@ui5/linter": "^1.23.7",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "puppeteer": "^25.13.0",
+    "ui5-test-runner": "^5.14.2"
+  }
+}

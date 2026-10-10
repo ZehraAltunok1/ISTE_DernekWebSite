@@ -1,0 +1,40 @@
+<mvc:View
+    controllerName="pg.site.controller.Campaigns"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderCampaigns">
+            <VBox class="pgContainer">
+                <Title text="{i18n>navCampaigns}" level="H1" class="pgPageTitle"/>
+                <Text text="{i18n>campaignsIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <SegmentedButton id="statusFilter" selectedKey="Active" selectionChange=".onFilterChange" class="sapUiSmallMarginBottom">
+                <items>
+                    <SegmentedButtonItem key="Active" text="{i18n>filterActive}"/>
+                    <SegmentedButtonItem key="Completed" text="{i18n>filterCompleted}"/>
+                    <SegmentedButtonItem key="All" text="{i18n>filterAll}"/>
+                </items>
+            </SegmentedButton>
+
+            <l:Grid
+                id="campaignGrid"
+                defaultSpan="XL4 L4 M6 S12"
+                content="{
+                    path: '/Campaigns',
+                    filters: [{path: 'status', operator: 'EQ', value1: 'Active'}],
+                    sorter: [{path: 'status'}, {path: 'endDate'}],
+                    templateShareable: false
+                }">
+                <core:Fragment fragmentName="pg.site.view.fragments.CampaignCard" type="XML"/>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog
+        id="resultDialog"
+        title="{= ${result>/status} === 'Pending' ? ${i18n>ibanResultTitle} : ${i18n>thankYouTitle} }"
+        state="Success"
+        contentWidth="32rem"
+        escapeHandler=".onCloseResult">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Text text="{= ${result>/status} === 'Pending' ? ${i18n>ibanResultText} : ${i18n>thankYouText} }"/>
+
+                <f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanM="4" labelSpanL="4" class="sapUiSmallMarginTop">
+                    <Label text="{i18n>referenceCode}"/>
+                    <HBox alignItems="Center">
+                        <Text text="{result>/referenceCode}" class="pgAmount"/>
+                        <Button icon="sap-icon://copy" type="Transparent" tooltip="{i18n>copy}" press=".onCopy">
+                            <customData><core:CustomData key="copy" value="{result>/referenceCode}"/></customData>
+                        </Button>
+                    </HBox>
+                    <Label text="{i18n>amount}"/>
+                    <Text text="{path: 'result>/amount', formatter: '.formatter.currency'}"/>
+
+                    <!-- Yalnızca havale/EFT seçildiyse banka bilgisi -->
+                    <Label text="{i18n>bank}" visible="{= ${result>/method} === 'IBAN' }"/>
+                    <Text text="{result>/bankName}" visible="{= ${result>/method} === 'IBAN' }"/>
+                    <Label text="IBAN" visible="{= ${result>/method} === 'IBAN' }"/>
+                    <HBox alignItems="Center" visible="{= ${result>/method} === 'IBAN' }">
+                        <Text text="{result>/iban}"/>
+                        <Button icon="sap-icon://copy" type="Transparent" tooltip="{i18n>copy}" press=".onCopy">
+                            <customData><core:CustomData key="copy" value="{result>/iban}"/></customData>
+                        </Button>
+                    </HBox>
+                    <Label text="{i18n>accountHolder}" visible="{= ${result>/method} === 'IBAN' }"/>
+                    <Text text="{result>/accountHolder}" visible="{= ${result>/method} === 'IBAN' }"/>
+                </f:SimpleForm>
+
+                <MessageStrip
+                    text="{i18n>ibanReferenceHint}"
+                    type="Warning"
+                    showIcon="true"
+                    visible="{= ${result>/method} === 'IBAN' }"
+                    class="sapUiSmallMarginTop"/>
+            </VBox>
+        </content>
+        <endButton>
+            <Button text="{i18n>backHome}" type="Emphasized" press=".onCloseResult"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

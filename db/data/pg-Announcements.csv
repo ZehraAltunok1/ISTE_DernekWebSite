@@ -1,0 +1,6 @@
+ID;title;body;type;publishDate;expiryDate;isActive;createdAt
+b0000000-0000-4000-8000-000000000001;Kış hazırlıkları başladı!;Kampüs kedileri için kışlık yuva atölyemiz her cumartesi 10.00'da açık. Malzeme ve el emeği desteğinizi bekliyoruz.;Info;2026-09-01;;true;2026-09-01T09:00:00Z
+b0000000-0000-4000-8000-000000000002;Mama Bankası hedefine ulaştı 🎉;Destek veren herkese teşekkür ederiz! 25 besleme noktası bir yıl boyunca güvende.;Success;2026-08-01;;true;2026-08-01T09:00:00Z
+b0000000-0000-4000-8000-000000000003;Acil: Yaralı köpek için kan bağışçısı aranıyor;Kliniğimizdeki Karamel için köpek kan bağışçısı arıyoruz. Detaylar için bizimle iletişime geçin.;Urgent;2026-10-02;;true;2026-10-02T09:00:00Z
+b0000000-0000-4000-8000-000000000004;Yaz besleme rotası sona erdi;Bu duyurunun süresi dolduğu için sitede görünmez (filtre örneği).;Warning;2026-06-01;2026-08-31;true;2026-06-01T09:00:00Z
+b0000000-0000-4000-8000-000000000005;Taslak duyuru;Pasif olduğu için sitede görünmez.;Info;2026-09-15;;false;2026-09-15T09:00:00Z

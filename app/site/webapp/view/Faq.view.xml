@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="pg.site.controller.BaseController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderFaq">
+            <VBox class="pgContainer">
+                <Title text="{i18n>faqTitle}" level="H1" class="pgPageTitle"/>
+                <Text text="{i18n>faqIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer pgNarrow">
+            <!--
+                sorter.group = true → kategori başlıkları (GroupHeaderListItem) otomatik oluşur.
+                autoExpandSelect yalnızca ekranda bağlı alanları ister; "category" yalnızca
+                gruplamada kullanıldığı için $select ile açıkça istenmeli.
+            -->
+            <List
+                id="faqList"
+                showSeparators="None"
+                class="pgFaqList"
+                items="{
+                    path: '/Faqs',
+                    parameters: {$select: 'category'},
+                    sorter: [{path: 'category', group: true}, {path: 'sortOrder'}],
+                    templateShareable: false
+                }">
+                <CustomListItem>
+                    <Panel expandable="true" expanded="false" headerText="{question}" width="auto" class="pgFaqPanel">
+                        <Text text="{answer}" class="pgBodyText"/>
+                    </Panel>
+                </CustomListItem>
+            </List>
+
+            <VBox class="pgFormCard sapUiMediumMarginTop" alignItems="Center">
+                <Title text="{i18n>faqMoreQuestions}" level="H3"/>
+                <Text text="{i18n>faqMoreQuestionsText}" textAlign="Center" class="pgMuted sapUiTinyMarginTop"/>
+            </VBox>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>
