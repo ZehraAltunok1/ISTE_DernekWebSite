@@ -15,6 +15,7 @@ sap.ui.define([
             if (this._bVisited) {
                 this.byId("campaignGrid").getBinding("content").refresh();
                 this.byId("statsBox").getBinding("items").refresh();
+                this.byId("animalGrid").getBinding("content").refresh();
             }
             this._bVisited = true;
         }

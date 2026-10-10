@@ -61,4 +61,16 @@ sap.ui.define([
         assert.ok(validation.checkDonor({ donorName: "Ada Test", donorEmail: "ada@example.com" }).valid);
         assert.strictEqual(validation.checkDonor({ donorName: "", donorEmail: "ada@example.com" }).states.donorName, "Error");
     });
+
+    QUnit.test("checkAdoptionApplication: ev halkı onayı ve konut tipi zorunlu", function (assert) {
+        var oValid = {
+            firstName: "Ada", lastName: "Test", email: "ada@example.com", phone: "0555 000 00 00", city: "Hatay",
+            housingType: "House", experience: "Bahçeli evimizde köpek deneyimimiz var.", householdAgrees: true, consentGiven: true
+        };
+        assert.ok(validation.checkAdoptionApplication(oValid).valid);
+        var oResult = validation.checkAdoptionApplication(Object.assign({}, oValid, { householdAgrees: false, housingType: "Castle" }));
+        assert.notOk(oResult.valid);
+        assert.strictEqual(oResult.states.householdAgrees, "Error");
+        assert.strictEqual(oResult.states.housingType, "Error");
+    });
 });

@@ -67,6 +67,20 @@ sap.ui.define([], function () {
             });
         },
 
+        checkAdoptionApplication: function (d) {
+            return toResult({
+                firstName: validation.isName(d.firstName),
+                lastName: validation.isName(d.lastName),
+                email: validation.isEmail(d.email),
+                phone: validation.isPhone(d.phone),
+                city: trim(d.city).length >= 2,
+                housingType: ["Apartment", "House", "Farm"].indexOf(d.housingType) >= 0,
+                experience: trim(d.experience).length >= validation.MIN_MOTIVATION,
+                householdAgrees: d.householdAgrees === true,
+                consentGiven: d.consentGiven === true
+            });
+        },
+
         checkContactMessage: function (d) {
             return toResult({
                 name: validation.isName(d.name),

@@ -2,8 +2,8 @@
 
 Hayali bir hayvan refahı derneği için hazırlanmış, **SAPUI5 öğrenmek amacıyla** geliştirilmiş uçtan uca bir web uygulaması.
 
-- **Herkese açık site** — freestyle SAPUI5: kampanyalar, adım adım bağış sihirbazı, gönüllü başvurusu, iletişim formu
-- **Yönetim paneli** — Fiori elements + Fiori Launchpad sandbox: bağış onayı, başvuru değerlendirme, mesajlar, içerik yönetimi
+- **Herkese açık site** — freestyle SAPUI5: kampanyalar, **sahiplendirme ilanları**, adım adım bağış sihirbazı, gönüllü başvurusu, iletişim formu
+- **Yönetim paneli** — Fiori elements + Fiori Launchpad sandbox: bağış onayı, hayvan kayıtları, sahiplenme ve gönüllü başvuruları, mesajlar, içerik yönetimi
 - **Backend** — SAP Cloud Application Programming Model (CAP) ile OData V4 servisleri
 
 > ⚠️ **Demo projesidir.** Dernek, kişiler, IBAN ve tutarlar hayalidir. Gerçek ödeme alınmaz; e-postalar yalnızca sunucu konsoluna yazılır.
@@ -14,6 +14,10 @@ Hayali bir hayvan refahı derneği için hazırlanmış, **SAPUI5 öğrenmek ama
   <tr>
     <td><img src="docs/screenshots/02-ana-sayfa-kampanyalar.png" alt="Aktif kampanyalar"></td>
     <td><img src="docs/screenshots/04-bagis-sihirbazi.png" alt="Bağış sihirbazı"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/12-sahiplen.png" alt="Sahiplendirme ilanları"></td>
+    <td><img src="docs/screenshots/13-hayvan-detay.png" alt="Hayvan detayı ve fotoğraf karuseli"></td>
   </tr>
   <tr>
     <td><img src="docs/screenshots/08-yonetim-dashboard.png" alt="Yönetim paneli (FPM dashboard)"></td>
@@ -55,6 +59,8 @@ Veriler bellekte tutulur: sunucu her yeniden başladığında demo verisine dön
 | Ana sayfa | OData V4 liste binding'i, ortak kart fragment'ı, `$top` ile sınırlı liste |
 | Kampanyalar | Sunucu tarafı filtreleme (`SegmentedButton` → `binding.filter`) |
 | Kampanya detayı | Element binding (`bindElement`), `$expand` ile son bağışlar, 404 yönetimi |
+| Sahiplen | Birden fazla sunucu filtresi (`Contains`, `NE`), `$count`, XML'de binding olayları, `IllustratedMessage` |
+| Hayvan detayı | `sap.m.Carousel` (composition'dan fotoğraflar), `Dialog` içinde başvuru formu, OData action |
 | Bağış | `sap.m.Wizard`, form doğrulama, **OData action** çağrısı, sonuç `Dialog`'u |
 | Gönüllü ol | OData'dan beslenen `Select`, `SimpleForm`, sunucu hata mesajlarının gösterimi |
 | İletişim | Ortak doğrulama modülü (`model/validation.js`), OData action |
@@ -67,13 +73,15 @@ Tasarım: SAP tema değişkenleri (`--sap…`) ezilerek marka renkleri ve yazı 
 ### Yönetim paneli (`app/yonetim`)
 - **Fiori Launchpad sandbox** içinde çalışan bir Fiori elements V4 uygulaması
 - **FPM dashboard**: bekleyen bağış, başvuru ve mesaj sayaçları ile modül kutucukları
-- **7 modül** (List Report + Object Page): Kampanyalar, Bağışlar, Gönüllü Başvuruları, İletişim Mesajları, Duyurular, SSS, Site İstatistikleri
+- **9 modül** (List Report + Object Page): Kampanyalar, Bağışlar, Hayvanlar, Sahiplenme Başvuruları, Gönüllü Başvuruları, İletişim Mesajları, Duyurular, SSS, Site İstatistikleri
+- Hayvan kaydında fotoğraflar **composition** olarak alt tabloda, taslakla birlikte düzenlenir
+- Sahiplenme başvurusu onaylanınca hayvan sunucuda otomatik "Rezerve" olur
 - Ekranların tamamı `annotations.cds`'teki annotation'lardan üretilir: filtre çubuğu, tablo sütunları, form grupları, açılır listeler, renkli durumlar, ilerleme göstergesi
 - Onay / ret / "yanıtlandı" action'ları yalnızca uygun durumdaki kayıtlarda etkin (`Core.OperationAvailable`)
 - Kampanya, duyuru, SSS ve istatistik düzenlemede **draft** (taslak) desteği
 
 ### Backend (`db/`, `srv/`)
-- `SiteService` — herkese açık, salt okunur; ziyaretçi yalnızca `donate`, `applyVolunteer` ve `sendContactMessage` action'larını çağırabilir
+- `SiteService` — herkese açık, salt okunur; ziyaretçi yalnızca `donate`, `applyVolunteer`, `applyForAdoption` ve `sendContactMessage` action'larını çağırabilir
 - `AdminService` — `@requires: 'admin'`; durum değişiklikleri yalnızca action'larla
 - Sunucu tarafı doğrulama ve Türkçe hata mesajları (`_i18n/messages.properties`)
 - Anonim bağışçıların adı gizlenir; e-posta adresleri herkese açık servisten hiç verilmez
@@ -86,7 +94,7 @@ Tasarım: SAP tema değişkenleri (`--sap…`) ezilerek marka renkleri ve yazı 
               SAP CAP (Node.js) — SQLite (bellek içi) — demo verisi: db/data/*.csv
                  │                                         │
           /odata/v4/site                            /odata/v4/admin
-     (salt okunur + 3 action)                  (@requires: 'admin')
+     (salt okunur + 4 action)                  (@requires: 'admin')
                  │                                         │
    app/site — Freestyle SAPUI5             app/yonetim — FLP sandbox
                                              ├─ FPM Dashboard
@@ -112,7 +120,7 @@ Ayrıntılı gereksinimler, kararlar ve yol haritası: **[PROJE.md](PROJE.md)**
 |---|---|
 | `npm start` | Sunucuyu başlatır (http://localhost:4004) |
 | `npm run watch` | Değişikliklerde otomatik yeniden başlatır |
-| `npm test` | Backend testleri |
+| `npm test` | Backend testleri (26 test) |
 | `npm run test:ui` | QUnit + OPA5 testleri, başsız Chrome'da (önce `npm start`) |
 | `npm run lint` | ESLint + UI5 Linter |
 | `npm run screenshots` | README ekran görüntülerini yeniden üretir (önce `npm start`) |

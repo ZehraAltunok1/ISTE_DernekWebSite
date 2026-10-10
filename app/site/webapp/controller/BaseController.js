@@ -41,6 +41,16 @@ sap.ui.define([
             this.getRouter().navTo("campaigns");
         },
 
+        onNavAnimals: function () {
+            this.getRouter().navTo("animals");
+        },
+
+        /** Hayvan kartındaki "Tanış" — karta bağlı hayvanın detayına gider. */
+        onAnimalPress: function (oEvent) {
+            var sId = oEvent.getSource().getBindingContext().getProperty("ID");
+            this.getRouter().navTo("animalDetail", { animalId: sId });
+        },
+
         onNavDonate: function () {
             this.getRouter().navTo("donate");
         },

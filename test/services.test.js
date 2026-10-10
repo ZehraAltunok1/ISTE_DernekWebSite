@@ -211,3 +211,61 @@ describe('İletişim mesajları', () => {
         assert.equal((await failure(GET(`${SITE}/ContactMessages`))).status, 404)
     })
 })
+
+describe('Sahiplendirme', () => {
+    const KARAMEL = 'f1000000-0000-4000-8000-000000000001' // yuva arıyor, 2 bekleyen başvuru var
+    const ZEYTIN = 'f1000000-0000-4000-8000-000000000002'  // yuva arıyor
+    const FINDIK = 'f1000000-0000-4000-8000-000000000005'  // rezerve
+    const application = animalID => ({
+        animalID,
+        firstName: 'Deniz',
+        lastName: 'Sahiplenen',
+        email: 'deniz.sahip@example.com',
+        phone: '0555 000 20 20',
+        city: 'İskenderun',
+        housingType: 'Apartment',
+        hasGarden: false,
+        experience: 'Daha önce iki köpek sahiplendim, düzenli yürüyüş yapabilirim.',
+        householdAgrees: true,
+        consentGiven: true
+    })
+
+    it('ilanları türe göre filtreler ve başvuruları herkese açık servisten vermez', async () => {
+        const { data } = await GET(`${SITE}/Animals?$filter=species eq 'Cat'&$select=name`)
+        assert.ok(data.value.length >= 2)
+        assert.equal((await failure(GET(`${SITE}/AdoptionApplications`))).status, 404)
+    })
+
+    it('ev halkının onayı olmadan ve rezerve hayvana başvuru alınmaz', async () => {
+        const noHousehold = { ...application(ZEYTIN), householdAgrees: false }
+        assert.equal((await failure(POST(`${SITE}/applyForAdoption`, noHousehold))).code, 'HOUSEHOLD_CONSENT_REQUIRED')
+        const { status, code } = await failure(POST(`${SITE}/applyForAdoption`, application(FINDIK)))
+        assert.equal(status, 409)
+        assert.equal(code, 'ANIMAL_NOT_AVAILABLE')
+    })
+
+    it('aynı hayvana aynı e-postayla ikinci bekleyen başvuruyu engeller', async () => {
+        await POST(`${SITE}/applyForAdoption`, application(ZEYTIN))
+        assert.equal((await failure(POST(`${SITE}/applyForAdoption`, application(ZEYTIN)))).code, 'ADOPTION_ALREADY_PENDING')
+    })
+
+    it('onaylanan başvuru hayvanı rezerve eder; ikinci başvuru artık onaylanamaz', async () => {
+        const { data } = await GET(`${ADMIN}/AdoptionApplications?$filter=animal_ID eq ${KARAMEL} and status eq 'Pending'&$orderby=createdAt`, ADMIN_USER)
+        assert.equal(data.value.length, 2)
+        const [first, second] = data.value
+
+        const approved = await POST(`${ADMIN}/AdoptionApplications(${first.ID})/AdminService.approve`, { note: 'Tanışma planlandı' }, ADMIN_USER)
+        assert.equal(approved.data.status, 'Approved')
+        const animal = await GET(`${SITE}/Animals(${KARAMEL})?$select=status`)
+        assert.equal(animal.data.status, 'Reserved')
+
+        const { status, code } = await failure(POST(`${ADMIN}/AdoptionApplications(${second.ID})/AdminService.approve`, {}, ADMIN_USER))
+        assert.equal(status, 409)
+        assert.equal(code, 'ANIMAL_NOT_AVAILABLE')
+    })
+
+    it('başvuru almış hayvan silinemez', async () => {
+        const { code } = await failure(DELETE(`${ADMIN}/Animals(ID=${KARAMEL},IsActiveEntity=true)`, ADMIN_USER))
+        assert.equal(code, 'ANIMAL_HAS_APPLICATIONS')
+    })
+})

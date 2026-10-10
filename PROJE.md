@@ -1,6 +1,6 @@
 # Pati ve Gelecek Derneği — SAPUI5 Portföy Projesi
 
-> **Durum:** v0.4 · 10 Ekim 2026 — **Faz 1 tamamlandı** (bkz. Bölüm 10). Sırada Faz 2: sahiplendirme.
+> **Durum:** v0.5 · 10 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme tamamlandı**, sırada etkinlikler.
 > Bu doküman projenin **tek referans kaynağıdır**. Her yeni özellik önce buraya eklenir, sonra kodlanır.
 > Durum işaretleri: ✅ tamamlandı · 🟡 kısmen · ⬜ yapılmadı
 
@@ -77,7 +77,11 @@ Bu proje **gerçek bir dernek sitesi değildir.** İki amacı vardır:
 | i18n | Bütün metinler | ✅ |
 | Duyarlı tasarım: `Grid`, `FlexBox`, `device` modeli, `sap.tnt.ToolPage` | Bütün site | ✅ |
 | Tema: `sap_horizon` + tema değişkenleri | `css/style.css` | ✅ |
-| **Fiori elements**: List Report + Object Page | Yönetim paneli (7 modül) | ✅ |
+| **Fiori elements**: List Report + Object Page | Yönetim paneli (9 modül) | ✅ |
+| Composition (alt tablo), taslakta satır ekleme/silme | Hayvan → fotoğraflar | ✅ |
+| `sap.m.Carousel`, liste binding'i sayfalar (pages) olarak | Hayvan detayı | ✅ |
+| Birden fazla filtrenin birleştirilmesi, `Contains` (büyük/küçük harf duyarsız), `$count` | Sahiplen sayfası | ✅ |
+| Binding olayları XML'de (`events: {dataReceived}`), boş durum (`IllustratedMessage`) | Sahiplen sayfası | ✅ |
 | CDS annotation'ları (LineItem, FieldGroup, Facets, DataPoint, ValueList, Criticality) | `app/yonetim/annotations.cds` | ✅ |
 | Draft (taslak kaydetme) | Kampanya, duyuru, SSS, istatistik düzenleme | ✅ |
 | Bound action + `Core.OperationAvailable` | Bağışı onayla/reddet, başvuruyu değerlendir | ✅ |
@@ -109,8 +113,8 @@ Kimlik doğrulama CAP'in **mocked** (basic auth) yöntemiyle yapılır; tarayıc
 ### Faz 1 — Temel ✅
 CAP backend, herkese açık site (ana sayfa, kampanyalar, detay, bağış, gönüllü, hakkımızda, SSS, iletişim, 404), Fiori elements yönetim paneli, eski projenin tasarımı ve fotoğrafları, backend + UI testleri, CI, ekran görüntüleri.
 
-### Faz 2 — Topluluk ⬜
-Sahiplendirme (hayvan ilanları + başvuru), etkinlikler + kayıt, galeri, üye girişi ve üye alanı.
+### Faz 2 — Topluluk 🟡
+✅ Sahiplendirme (hayvan ilanları + başvuru). ⬜ Etkinlikler + kayıt, galeri, üye girişi ve üye alanı.
 
 ### Faz 3 — Cila ve Sunum ⬜
 Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
@@ -129,7 +133,7 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | PUB-04 | SSS: kategorili, açılır-kapanır, veriler backend'den | 1 | ✅ |
 | PUB-05 | İletişim: form (ad, e-posta, konu, mesaj, KVKK onayı) + iletişim bilgileri | 1 | ✅ |
 | PUB-06 | 404 sayfası (geçersiz rota ve yayında olmayan kampanya) | 1 | ✅ |
-| PUB-07 | Sahiplendirme ilanları | 2 | ⬜ |
+| PUB-07 | Sahiplendirme ilanları | 2 | ✅ (bkz. 6.4) |
 | PUB-08 | Etkinlikler | 2 | ⬜ |
 | PUB-09 | Galeri | 2 | ⬜ |
 | PUB-10 | Mobil uyum (telefon menüsü, duyarlı ızgaralar) | 1 | ✅ |
@@ -153,8 +157,19 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | GON-02 | Aynı e-postayla bekleyen başvuru varken yenisi açılamaz | 1 | ✅ |
 | GON-03 | Yönetici onaylar/reddeder, not ekler; e-posta konsola yazılır | 1 | ✅ |
 
-### 6.4 Sahiplendirme · 6.5 Etkinlikler — Faz 2 ⬜
-SAH-01…03 ve ETK-01…03 (bkz. v0.2): hayvan kaydı, sahiplenme başvurusu, etkinlik + kayıt + kapasite kontrolü.
+### 6.4 Sahiplendirme ✅
+
+| Kod | Gereksinim | Faz | Durum |
+|---|---|---|---|
+| SAH-01 | Hayvan kaydı: ad, tür, cins, yaş, cinsiyet, boyut, kısırlaştırma, aşı, karakter, sağlık notu, hikâye, fotoğraflar (composition), durum | 2 | ✅ |
+| SAH-02 | Sahiplenme başvurusu: kişisel bilgiler, konut tipi, bahçe, diğer hayvanlar, deneyim, ev halkı onayı, KVKK onayı; yalnızca "yuva arıyor" durumundaki hayvana | 2 | ✅ |
+| SAH-03 | Başvuru onaylanınca hayvan otomatik "Rezerve" olur; aynı hayvanın diğer başvuruları artık onaylanamaz | 2 | ✅ |
+| SAH-04 | Site: filtrelenebilir liste (tür, boyut, kısırlaştırma, isim araması, yuvaya kavuşanlar) + fotoğraf karuselli detay + başvuru penceresi; ana sayfada son 4 ilan | 2 | ✅ |
+| SAH-05 | Yönetim: hayvan List Report / Object Page (fotoğraf alt tablosu, başvurular), başvuru değerlendirme, dashboard sayacı | 2 | ✅ |
+| SAH-06 | Sahiplendirme sonrası takip notları | 3 | ⬜ |
+
+### 6.5 Etkinlikler — Faz 2 ⬜
+ETK-01…03 (bkz. v0.2): etkinlik, kayıt, kapasite kontrolü, katılım işaretleme.
 
 ### 6.6 İçerik
 
@@ -295,9 +310,14 @@ Bütün iş varlıkları `cuid` (UUID `ID`) ve `managed` (`createdAt/By`, `modif
 | `Faqs` | category, question, answer, sortOrder |
 | `SiteStats` | code, label, value, icon, sortOrder |
 | `ContactMessages` | name, email, subject, message, consentGiven, status (`New`/`Read`/`Answered`), adminNote |
+| `Animals` | name, species (`Cat`/`Dog`/`Other`), breed, ageMonths, sex, size, neutered, vaccinated, traits, healthNotes, story, coverImage, arrivalDate, status (`Available`/`Reserved`/`Adopted`/`InTreatment`) · → photos (composition), applications |
+| `AnimalPhotos` | animal, url, caption, sortOrder |
+| `AdoptionApplications` | animal, firstName, lastName, email, phone, city, housingType (`Apartment`/`House`/`Farm`), hasGarden, otherPets, experience, householdAgrees, consentGiven, status, adminNote |
 | `*StatusTexts`, `*TypeTexts`, `*MethodTexts` | code, text, criticality (kod tabloları) |
 
-Faz 2'de eklenecek: `Animals`, `AnimalPhotos`, `AdoptionApplications`, `Events`, `EventRegistrations`, `Albums`, `MediaItems`.
+Faz 2'de eklenecek: `Events`, `EventRegistrations`, `Albums`, `MediaItems`.
+
+Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); böylece hem sitede hem yönetim panelinde çalışır.
 
 ---
 
@@ -316,7 +336,8 @@ Faz 2'de eklenecek: `Animals`, `AnimalPhotos`, `AdoptionApplications`, `Events`,
 | 8 | Backend testleri, UI5 Linter, README | ✅ |
 | 9 | İletişim formu, QUnit + OPA5, GitHub Actions, ekran görüntüleri, görsel kaynakları | ✅ |
 | 9b | GitHub'a ilk push, `v0.1.0` etiketi | ✅ |
-| 10+ | Faz 2 (sahiplendirme, etkinlikler, galeri, üye alanı), Faz 3 | ⬜ |
+| 10 | Faz 2a: sahiplendirme (backend, site, yönetim, testler) | ✅ |
+| 11+ | Faz 2b: etkinlikler, galeri, üye alanı · Faz 3 | ⬜ |
 
 ---
 

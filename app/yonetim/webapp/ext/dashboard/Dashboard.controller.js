@@ -28,6 +28,7 @@ sap.ui.define([
             var oCounts = {
                 pendingDonations: this._count("/Donations", new Filter("status", FilterOperator.EQ, "Pending")),
                 pendingApplications: this._count("/VolunteerApplications", new Filter("status", FilterOperator.EQ, "Pending")),
+                pendingAdoptions: this._count("/AdoptionApplications", new Filter("status", FilterOperator.EQ, "Pending")),
                 newMessages: this._count("/ContactMessages", new Filter("status", FilterOperator.EQ, "New")),
                 activeCampaigns: this._count("/Campaigns", new Filter("status", FilterOperator.EQ, "Active")),
                 activeAnnouncements: this._count("/Announcements", new Filter("isActive", FilterOperator.EQ, true))

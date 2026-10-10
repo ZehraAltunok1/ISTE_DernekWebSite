@@ -42,6 +42,12 @@
                             <NumericContent value="{kpi>/pendingApplications}" valueColor="{= ${kpi>/pendingApplications} > 0 ? 'Critical' : 'Good' }" icon="sap-icon://group" withMargin="false"/>
                         </TileContent>
                     </GenericTile>
+                    <GenericTile header="{i18n>pendingAdoptions}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AdoptionApplicationsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/pendingAdoptions}" valueColor="{= ${kpi>/pendingAdoptions} > 0 ? 'Critical' : 'Good' }" icon="sap-icon://family-care" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
                     <GenericTile header="{i18n>newMessages}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="ContactMessagesList"/></customData>
                         <TileContent>
@@ -67,6 +73,14 @@
                     <GenericTile header="{i18n>tileCampaigns}" subheader="{i18n>tileCampaignsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="CampaignsList"/></customData>
                         <TileContent><ImageContent src="sap-icon://heart"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileAnimals}" subheader="{i18n>tileAnimalsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AnimalsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://animal-paw"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileAdoptions}" subheader="{i18n>tileAdoptionsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AdoptionApplicationsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://family-care"/></TileContent>
                     </GenericTile>
                     <GenericTile header="{i18n>tileDonations}" subheader="{i18n>tileDonationsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="DonationsList"/></customData>

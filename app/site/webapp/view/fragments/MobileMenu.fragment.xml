@@ -2,6 +2,7 @@
     <ActionSheet id="mobileMenu" placement="Bottom" showCancelButton="true" cancelButtonText="{i18n>close}">
         <Button text="{i18n>navHome}" icon="sap-icon://home" press=".onNavHome"/>
         <Button text="{i18n>navCampaigns}" icon="sap-icon://heart" press=".onNavCampaigns"/>
+        <Button text="{i18n>navAdopt}" icon="sap-icon://animal-paw" press=".onNavAnimals"/>
         <Button text="{i18n>navVolunteer}" icon="sap-icon://group" press=".onNavVolunteer"/>
         <Button text="{i18n>navAbout}" icon="sap-icon://hint" press=".onNavAbout"/>
         <Button text="{i18n>navFaq}" icon="sap-icon://question-mark" press=".onNavFaq"/>

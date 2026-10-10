@@ -68,4 +68,28 @@ sap.ui.define([
         assert.strictEqual(formatter.announcementHighlight("Info"), "Information");
         assert.strictEqual(formatter.announcementIcon("Success"), "sap-icon://sys-enter-2");
     });
+
+    QUnit.module("formatter — sahiplendirme");
+
+    QUnit.test("ageText: 12 aydan küçükse ay, değilse yıl", function (assert) {
+        var ageText = formatter.ageText.bind(oFakeController);
+        assert.strictEqual(ageText(8), "ageMonths:8");
+        assert.strictEqual(ageText(0), "ageMonths:1", "yeni doğan en az 1 aylık gösterilir");
+        assert.strictEqual(ageText(36), "ageYears:3");
+        assert.strictEqual(ageText(null), "", "yaş bilinmiyorsa boş");
+    });
+
+    QUnit.test("animalSummary ve traitsText", function (assert) {
+        var summary = formatter.animalSummary.bind(oFakeController);
+        assert.strictEqual(summary("Kedi", "Dişi", 30), "Kedi · Dişi · ageYears:2");
+        assert.strictEqual(summary("Köpek", null, 5), "Köpek · ageMonths:5", "eksik bilgi atlanır");
+        assert.strictEqual(formatter.traitsText("Uysal, Çocuklarla iyi ,  Oyunbaz"), "Uysal · Çocuklarla iyi · Oyunbaz");
+        assert.strictEqual(formatter.traitsText(null), "");
+    });
+
+    QUnit.test("animalStatusState", function (assert) {
+        assert.strictEqual(formatter.animalStatusState("Available"), "Success");
+        assert.strictEqual(formatter.animalStatusState("Reserved"), "Warning");
+        assert.strictEqual(formatter.animalStatusState("Adopted"), "None");
+    });
 });

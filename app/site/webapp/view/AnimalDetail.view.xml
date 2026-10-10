@@ -1,0 +1,96 @@
+<mvc:View
+    controllerName="pg.site.controller.AnimalDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <!-- Sayfa controller'da bindElement ile tek bir hayvana bağlanır; fotoğraflar "photos" composition'ından gelir. -->
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgSection pgContainer">
+            <Button text="{i18n>backToAnimals}" icon="sap-icon://nav-back" type="Transparent" press=".onNavAnimals" class="sapUiSmallMarginBottom"/>
+
+            <l:Grid defaultSpan="XL7 L7 M12 S12" hSpacing="2" vSpacing="2">
+                <!-- Sol: fotoğraf karuseli -->
+                <VBox>
+                    <Carousel
+                        id="photoCarousel"
+                        height="28rem"
+                        class="pgCarousel"
+                        pages="{path: 'photos', sorter: {path: 'sortOrder'}, templateShareable: false}">
+                        <VBox renderType="Bare" height="100%">
+                            <Image src="{url}" alt="{caption}" width="100%" height="100%" densityAware="false" class="pgCarouselImage"/>
+                        </VBox>
+                    </Carousel>
+                </VBox>
+
+                <!-- Sağ: özet kutusu -->
+                <VBox class="pgDetailSummary">
+                    <layoutData>
+                        <l:GridData span="XL5 L5 M12 S12"/>
+                    </layoutData>
+                    <ObjectStatus
+                        text="{_status/text}"
+                        state="{path: 'status', formatter: '.formatter.animalStatusState'}"
+                        inverted="true"/>
+                    <Title text="{name}" level="H1" class="pgDetailTitle"/>
+                    <Text
+                        text="{parts: ['_species/text', '_sex/text', {path: 'ageMonths', targetType: 'any'}], formatter: '.formatter.animalSummary'}"
+                        class="pgAnimalSummary"/>
+
+                    <f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanL="5" labelSpanM="4" class="sapUiSmallMarginTop pgFactList">
+                        <Label text="{i18n>breed}"/>
+                        <Text text="{breed}"/>
+                        <Label text="{i18n>size}"/>
+                        <Text text="{_size/text}"/>
+                        <Label text="{i18n>arrivalDate}"/>
+                        <Text text="{path: 'arrivalDate', targetType: 'any', formatter: '.formatter.date'}"/>
+                        <Label text="{i18n>traits}"/>
+                        <Text text="{path: 'traits', formatter: '.formatter.traitsText'}"/>
+                    </f:SimpleForm>
+
+                    <HBox wrap="Wrap" class="pgBadges">
+                        <ObjectStatus
+                            text="{= %{neutered} ? ${i18n>neutered} : ${i18n>notNeutered} }"
+                            icon="{= %{neutered} ? 'sap-icon://accept' : 'sap-icon://pending' }"
+                            state="{= %{neutered} ? 'Success' : 'Warning' }"
+                            class="sapUiSmallMarginEnd"/>
+                        <ObjectStatus
+                            text="{= %{vaccinated} ? ${i18n>vaccinated} : ${i18n>notVaccinated} }"
+                            icon="sap-icon://syringe"
+                            state="{= %{vaccinated} ? 'Success' : 'Warning' }"/>
+                    </HBox>
+
+                    <Button
+                        id="adoptButton"
+                        text="{i18n>wantToAdopt}"
+                        icon="sap-icon://heart"
+                        width="100%"
+                        enabled="{= %{status} === 'Available' }"
+                        press=".onOpenAdoption"
+                        class="pgBtnPrimary pgBtnBlock sapUiMediumMarginTop"/>
+                    <Text
+                        text="{i18n>notAvailableHint}"
+                        visible="{= %{status} !== 'Available' }"
+                        class="pgMuted sapUiTinyMarginTop"/>
+                </VBox>
+            </l:Grid>
+
+            <!-- Hikâye ve sağlık notu -->
+            <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="2" class="sapUiMediumMarginTop">
+                <VBox class="pgFormCard">
+                    <Title text="{i18n>animalStory}" level="H2" class="pgSectionTitle"/>
+                    <Text text="{story}" class="pgBodyText sapUiSmallMarginTop"/>
+                </VBox>
+                <VBox class="pgFormCard">
+                    <Title text="{i18n>healthNotes}" level="H2" class="pgSectionTitle"/>
+                    <Text text="{healthNotes}" class="pgBodyText sapUiSmallMarginTop"/>
+                    <MessageStrip text="{i18n>adoptionProcessInfo}" type="Information" showIcon="true" class="sapUiMediumMarginTop"/>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

@@ -337,6 +337,11 @@ html:root {
     font-size: 1rem;
 }
 
+/* Kapsayıcının tamamını kaplayan buton */
+.pgBtnBlock .sapMBtnInner {
+    width: 100%;
+}
+
 .pgBtnSmall .sapMBtnInner {
     height: 2.25rem;
     padding: 0 1.1rem;
@@ -563,6 +568,47 @@ html:root {
     color: var(--clr-primary-dark);
 }
 
+/* ── Sahiplendirme: hayvan kartı, filtre çubuğu, karusel ── */
+
+.pgAnimalCover {
+    display: block;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.pgAnimalSummary.sapMText {
+    color: var(--clr-accent-hover);
+    font-weight: 700;
+    margin-top: .25rem;
+}
+
+.pgBadges .sapMObjStatus {
+    font-size: .8rem;
+}
+
+.pgFilterBar {
+    gap: .25rem;
+    background: #FFFFFF;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: .75rem 1rem;
+}
+
+.pgCarousel.sapMCrsl {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: #FFFFFF;
+}
+
+.pgCarouselImage {
+    object-fit: cover;
+}
+
+.pgFactList .sapMLabel {
+    color: var(--clr-muted);
+}
+
 /* ══════════════════════════════════════════════════════════
    8. SAYFA BAŞLIK BANTLARI (fotoğraf + yeşil perde, eski about-hero)
    ══════════════════════════════════════════════════════════ */
@@ -582,6 +628,7 @@ html:root {
 .pgHeaderAbout     { --pg-header-photo: url("../images/photos/kadin-kopek-park.jpg"); }
 .pgHeaderFaq       { --pg-header-photo: url("../images/photos/tesekkurler-kopek.jpg"); }
 .pgHeaderContact   { --pg-header-photo: url("../images/photos/kedi-tirmalama.jpg"); }
+.pgHeaderAdoption  { --pg-header-photo: url("../images/photos/gonullu-kedi-kopek.jpg"); }
 
 .pgPageHeader .pgContainer {
     align-items: center;

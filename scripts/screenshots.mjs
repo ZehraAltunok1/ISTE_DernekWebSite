@@ -21,7 +21,11 @@ const shots = [
     { name: "08-yonetim-dashboard", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage", admin: true },
     { name: "09-yonetim-bagislar", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Donations", admin: true },
     { name: "10-yonetim-kampanya", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Campaigns(ID=c0000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true },
-    { name: "11-yonetim-mesajlar", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/ContactMessages", admin: true }
+    { name: "11-yonetim-mesajlar", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/ContactMessages", admin: true },
+    { name: "12-sahiplen", url: "/site/webapp/index.html#/sahiplen" },
+    { name: "13-hayvan-detay", url: "/site/webapp/index.html#/sahiplen/f1000000-0000-4000-8000-000000000001" },
+    { name: "14-yonetim-hayvan", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Animals(ID=f1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true },
+    { name: "15-yonetim-sahiplenme-basvurulari", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/AdoptionApplications", admin: true }
 ];
 
 /** UI5 yüklenip bekleyen istekler bitene kadar bekler. */

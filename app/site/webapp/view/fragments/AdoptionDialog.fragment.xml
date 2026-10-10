@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog
+        id="adoptionDialog"
+        title="{adopt>/title}"
+        contentWidth="40rem"
+        stretch="{device>/system/phone}"
+        busy="{adopt>/busy}"
+        busyIndicatorDelay="0">
+        <content>
+            <MessageStrip text="{i18n>adoptionFormInfo}" type="Information" showIcon="true" class="sapUiSmallMargin"/>
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" columnsL="1" columnsM="1">
+                <core:Title text="{i18n>aboutYou}"/>
+                <Label text="{i18n>firstName}" labelFor="adoptFirstName" required="true"/>
+                <Input id="adoptFirstName" value="{adopt>/firstName}" maxLength="60" valueState="{adopt>/state/firstName}" valueStateText="{i18n>nameRequired}"/>
+                <Label text="{i18n>lastName}" labelFor="adoptLastName" required="true"/>
+                <Input id="adoptLastName" value="{adopt>/lastName}" maxLength="60" valueState="{adopt>/state/lastName}" valueStateText="{i18n>nameRequired}"/>
+                <Label text="{i18n>email}" labelFor="adoptEmail" required="true"/>
+                <Input id="adoptEmail" type="Email" value="{adopt>/email}" maxLength="254" valueState="{adopt>/state/email}" valueStateText="{i18n>emailInvalid}"/>
+                <Label text="{i18n>phone}" labelFor="adoptPhone" required="true"/>
+                <Input id="adoptPhone" type="Tel" value="{adopt>/phone}" maxLength="20" placeholder="0555 000 00 00" valueState="{adopt>/state/phone}" valueStateText="{i18n>phoneInvalid}"/>
+                <Label text="{i18n>city}" labelFor="adoptCity" required="true"/>
+                <Input id="adoptCity" value="{adopt>/city}" maxLength="60" valueState="{adopt>/state/city}" valueStateText="{i18n>cityRequired}"/>
+
+                <core:Title text="{i18n>yourHome}"/>
+                <Label text="{i18n>housingType}" labelFor="adoptHousing" required="true"/>
+                <Select id="adoptHousing" width="100%" forceSelection="false" selectedKey="{adopt>/housingType}" valueState="{adopt>/state/housingType}" valueStateText="{i18n>housingRequired}">
+                    <core:Item key="Apartment" text="{i18n>housingApartment}"/>
+                    <core:Item key="House" text="{i18n>housingHouse}"/>
+                    <core:Item key="Farm" text="{i18n>housingFarm}"/>
+                </Select>
+                <Label text=""/>
+                <CheckBox text="{i18n>hasGarden}" selected="{adopt>/hasGarden}"/>
+                <Label text="{i18n>otherPets}" labelFor="adoptOtherPets"/>
+                <Input id="adoptOtherPets" value="{adopt>/otherPets}" maxLength="200" placeholder="{i18n>otherPetsPlaceholder}"/>
+                <Label text="{i18n>experience}" labelFor="adoptExperience" required="true"/>
+                <TextArea
+                    id="adoptExperience"
+                    value="{adopt>/experience}"
+                    rows="4"
+                    width="100%"
+                    maxLength="1000"
+                    showExceededText="true"
+                    placeholder="{i18n>experiencePlaceholder}"
+                    valueState="{adopt>/state/experience}"
+                    valueStateText="{i18n>motivationTooShort}"/>
+
+                <Label text=""/>
+                <CheckBox id="adoptHousehold" text="{i18n>householdAgrees}" selected="{adopt>/householdAgrees}" valueState="{adopt>/state/householdAgrees}"/>
+                <Label text=""/>
+                <HBox alignItems="Center" wrap="Wrap">
+                    <CheckBox id="adoptConsent" text="{i18n>consentText}" selected="{adopt>/consentGiven}" valueState="{adopt>/state/consentGiven}"/>
+                    <Link text="{i18n>privacyNotice}" press=".onShowPrivacy" class="sapUiTinyMarginBegin"/>
+                </HBox>
+            </f:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="adoptSubmit" text="{i18n>submitApplication}" type="Emphasized" press=".onSubmitAdoption"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>cancel}" press=".onCloseAdoption"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

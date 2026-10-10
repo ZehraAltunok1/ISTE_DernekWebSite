@@ -72,6 +72,35 @@ service SiteService {
     @readonly
     entity VolunteerAreas  as projection on pg.VolunteerAreas;
 
+    /** Sahiplendirme ilanları. Başvurular (kişisel veri) bu servisten verilmez. */
+    @readonly
+    entity Animals         as
+        projection on pg.Animals {
+            ID,
+            name,
+            species,
+            breed,
+            ageMonths,
+            sex,
+            size,
+            neutered,
+            vaccinated,
+            traits,
+            healthNotes,
+            story,
+            coverImage,
+            arrivalDate,
+            status,
+            photos,
+            _species,
+            _sex,
+            _size,
+            _status
+        };
+
+    @readonly
+    entity AnimalPhotos    as projection on pg.AnimalPhotos;
+
     // ── Action'lar ──────────────────────────────────────────
 
     type DonationResult {
@@ -102,6 +131,20 @@ service SiteService {
                           availability : String(200),
                           motivation : String(1000),
                           consentGiven : Boolean) returns String;
+
+    /** Sahiplenme başvurusu oluşturur — yalnızca "yuva arıyor" durumundaki hayvanlar için. */
+    action applyForAdoption(animalID : UUID,
+                            firstName : String(60),
+                            lastName : String(60),
+                            email : String(254),
+                            phone : String(20),
+                            city : String(60),
+                            housingType : String(10),
+                            hasGarden : Boolean,
+                            otherPets : String(200),
+                            experience : String(1000),
+                            householdAgrees : Boolean,
+                            consentGiven : Boolean) returns String;
 
     /** İletişim formu mesajı oluşturur. */
     action sendContactMessage(name : String(100),

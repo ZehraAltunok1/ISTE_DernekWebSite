@@ -30,6 +30,21 @@ service AdminService {
             action decline(note : String(500))  returns VolunteerApplications;
         };
 
+    /** Hayvan ilanları — fotoğraflarıyla birlikte (composition) taslak olarak düzenlenir. */
+    @odata.draft.enabled
+    entity Animals               as projection on pg.Animals;
+
+    /**
+     * Sahiplenme başvuruları. Onaylanınca hayvan otomatik olarak "Rezerve" olur;
+     * bu kural sunucudadır, arayüz yalnızca action'ı çağırır.
+     */
+    @readonly
+    entity AdoptionApplications  as projection on pg.AdoptionApplications
+        actions {
+            action approve(note : String(500)) returns AdoptionApplications;
+            action decline(note : String(500)) returns AdoptionApplications;
+        };
+
     /** İletişim formundan gelen mesajlar — yalnızca okunur, durum action ile değişir. */
     @readonly
     entity ContactMessages       as projection on pg.ContactMessages

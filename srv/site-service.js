@@ -11,7 +11,7 @@ const MAX_AMOUNT = 100000
 module.exports = class SiteService extends cds.ApplicationService {
     init() {
         const { Announcements } = this.entities
-        const { Campaigns, Donations, VolunteerApplications, VolunteerAreas, ContactMessages } = cds.entities('pg')
+        const { Campaigns, Donations, VolunteerApplications, VolunteerAreas, ContactMessages, Animals, AdoptionApplications } = cds.entities('pg')
 
         // Yalnızca yayın tarihi gelmiş ve süresi dolmamış duyurular
         this.before('READ', Announcements, req => {
@@ -111,6 +111,50 @@ module.exports = class SiteService extends cds.ApplicationService {
                 to: app.email,
                 subject: 'Gönüllü başvurunuz alındı',
                 text: `Merhaba ${app.firstName},\n\nBaşvurunuz bize ulaştı. Ekibimiz en kısa sürede inceleyip size dönüş yapacak.`
+            })
+            return 'OK'
+        })
+
+        this.on('applyForAdoption', async req => {
+            const data = req.data
+            const app = {
+                animal_ID: data.animalID,
+                firstName: clean(data.firstName),
+                lastName: clean(data.lastName),
+                email: clean(data.email).toLowerCase(),
+                phone: clean(data.phone),
+                city: clean(data.city),
+                housingType: data.housingType,
+                hasGarden: data.hasGarden === true,
+                otherPets: clean(data.otherPets) || null,
+                experience: clean(data.experience),
+                householdAgrees: data.householdAgrees === true,
+                consentGiven: data.consentGiven === true
+            }
+
+            if (app.firstName.length < 2) return req.reject(400, 'FIRST_NAME_REQUIRED', 'firstName')
+            if (app.lastName.length < 2) return req.reject(400, 'LAST_NAME_REQUIRED', 'lastName')
+            if (!EMAIL.test(app.email)) return req.reject(400, 'EMAIL_INVALID', 'email')
+            if (!PHONE.test(app.phone)) return req.reject(400, 'PHONE_INVALID', 'phone')
+            if (app.city.length < 2) return req.reject(400, 'CITY_REQUIRED', 'city')
+            if (!['Apartment', 'House', 'Farm'].includes(app.housingType)) return req.reject(400, 'HOUSING_INVALID', 'housingType')
+            if (app.experience.length < 20) return req.reject(400, 'EXPERIENCE_TOO_SHORT', 'experience', [20])
+            if (!app.householdAgrees) return req.reject(400, 'HOUSEHOLD_CONSENT_REQUIRED', 'householdAgrees')
+            if (!app.consentGiven) return req.reject(400, 'CONSENT_REQUIRED', 'consentGiven')
+
+            const animal = await SELECT.one.from(Animals, app.animal_ID).columns('name', 'status')
+            if (!animal) return req.reject(404, 'ANIMAL_NOT_FOUND')
+            if (animal.status !== 'Available') return req.reject(409, 'ANIMAL_NOT_AVAILABLE', [animal.name])
+
+            const pending = await SELECT.one.from(AdoptionApplications)
+                .where({ animal_ID: app.animal_ID, email: app.email, status: 'Pending' })
+            if (pending) return req.reject(409, 'ADOPTION_ALREADY_PENDING', [animal.name])
+
+            await INSERT.into(AdoptionApplications).entries(app)
+            await mailer.send({
+                to: app.email,
+                subject: `${animal.name} için sahiplenme başvurunuz alındı`,
+                text: `Merhaba ${app.firstName},\n\n${animal.name} için başvurunuz bize ulaştı. Ekibimiz başvurunuzu inceleyip tanışma ziyareti için sizinle iletişime geçecek.`
             })
             return 'OK'
         })

@@ -111,6 +111,16 @@
           "target": "campaignDetail"
         },
         {
+          "pattern": "sahiplen",
+          "name": "animals",
+          "target": "animals"
+        },
+        {
+          "pattern": "sahiplen/{animalId}",
+          "name": "animalDetail",
+          "target": "animalDetail"
+        },
+        {
           "pattern": "bagis:?query:",
           "name": "donate",
           "target": "donate"
@@ -181,6 +191,16 @@
           "id": "contact",
           "name": "Contact",
           "title": "{i18n>navContact}"
+        },
+        "animals": {
+          "id": "animals",
+          "name": "Animals",
+          "title": "{i18n>navAdopt}"
+        },
+        "animalDetail": {
+          "id": "animalDetail",
+          "name": "AnimalDetail",
+          "title": "{i18n>animalDetailTitle}"
         }
       }
     }

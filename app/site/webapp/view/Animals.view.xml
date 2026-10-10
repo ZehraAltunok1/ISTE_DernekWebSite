@@ -1,0 +1,67 @@
+<mvc:View
+    controllerName="pg.site.controller.Animals"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderAdoption">
+            <VBox class="pgContainer">
+                <Text text="{i18n>adoptionEyebrow}" class="pgEyebrow"/>
+                <Title text="{i18n>adoptionTitle}" level="H1" class="pgPageTitle" wrapping="true"/>
+                <Text text="{i18n>adoptionIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <!-- Filtre çubuğu: her değişiklikte filtreler sunucuya ($filter) gönderilir -->
+            <FlexBox class="pgFilterBar" wrap="Wrap" alignItems="Center">
+                <SegmentedButton id="speciesFilter" selectedKey="All" selectionChange=".onFilterChange" class="sapUiSmallMarginEnd sapUiTinyMarginBottom">
+                    <items>
+                        <SegmentedButtonItem key="All" text="{i18n>filterAll}"/>
+                        <SegmentedButtonItem key="Cat" text="{i18n>speciesCat}"/>
+                        <SegmentedButtonItem key="Dog" text="{i18n>speciesDog}"/>
+                    </items>
+                </SegmentedButton>
+                <Select id="sizeFilter" selectedKey="All" change=".onFilterChange" width="10rem" class="sapUiSmallMarginEnd sapUiTinyMarginBottom">
+                    <core:Item key="All" text="{i18n>allSizes}"/>
+                    <core:Item key="Small" text="{i18n>sizeSmall}"/>
+                    <core:Item key="Medium" text="{i18n>sizeMedium}"/>
+                    <core:Item key="Large" text="{i18n>sizeLarge}"/>
+                </Select>
+                <CheckBox id="neuteredFilter" text="{i18n>onlyNeutered}" select=".onFilterChange" class="sapUiSmallMarginEnd"/>
+                <CheckBox id="adoptedFilter" text="{i18n>showAdopted}" select=".onFilterChange" class="sapUiSmallMarginEnd"/>
+                <SearchField id="nameSearch" placeholder="{i18n>searchByName}" width="14rem" liveChange=".onSearch" search=".onSearch" class="sapUiTinyMarginBottom"/>
+            </FlexBox>
+
+            <Text text="{animalsView>/countText}" class="pgMuted sapUiSmallMarginTop"/>
+
+            <l:Grid
+                id="animalGrid"
+                defaultSpan="XL3 L4 M6 S12"
+                vSpacing="1.5"
+                hSpacing="1.5"
+                class="sapUiSmallMarginTop"
+                content="{
+                    path: '/Animals',
+                    parameters: {$count: true},
+                    filters: [{path: 'status', operator: 'NE', value1: 'Adopted'}],
+                    sorter: [{path: 'status'}, {path: 'arrivalDate', descending: true}],
+                    events: {dataReceived: '.onDataReceived'},
+                    templateShareable: false
+                }">
+                <core:Fragment fragmentName="pg.site.view.fragments.AnimalCard" type="XML"/>
+            </l:Grid>
+
+            <IllustratedMessage
+                id="noAnimals"
+                visible="false"
+                illustrationType="sapIllus-NoSearchResults"
+                title="{i18n>noAnimalsTitle}"
+                description="{i18n>noAnimalsText}"/>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

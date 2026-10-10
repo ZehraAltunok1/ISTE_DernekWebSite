@@ -8,6 +8,13 @@ using {
     pg.AnnouncementType,
     pg.MessageStatus,
     pg.ContactMessages,
+    pg.Species,
+    pg.AnimalSex,
+    pg.AnimalSize,
+    pg.AnimalStatus,
+    pg.HousingType,
+    pg.Animals,
+    pg.AdoptionApplications,
     pg.Campaigns,
     pg.Donations,
     pg.VolunteerApplications,
@@ -83,4 +90,49 @@ extend VolunteerApplications with {
 
 extend Announcements with {
     _type : Association to one AnnouncementTypeTexts on _type.code = type;
+}
+
+// ── Sahiplendirme ────────────────────────────────────────────
+
+@cds.autoexpose @readonly
+entity SpeciesTexts {
+    key code : Species;
+        text : String(40);
+}
+
+@cds.autoexpose @readonly
+entity AnimalSexTexts {
+    key code : AnimalSex;
+        text : String(40);
+}
+
+@cds.autoexpose @readonly
+entity AnimalSizeTexts {
+    key code : AnimalSize;
+        text : String(40);
+}
+
+@cds.autoexpose @readonly
+entity AnimalStatusTexts {
+    key code        : AnimalStatus;
+        text        : String(40);
+        criticality : Integer;
+}
+
+@cds.autoexpose @readonly
+entity HousingTypeTexts {
+    key code : HousingType;
+        text : String(40);
+}
+
+extend Animals with {
+    _species : Association to one SpeciesTexts on _species.code = species;
+    _sex     : Association to one AnimalSexTexts on _sex.code = sex;
+    _size    : Association to one AnimalSizeTexts on _size.code = size;
+    _status  : Association to one AnimalStatusTexts on _status.code = status;
+}
+
+extend AdoptionApplications with {
+    _status  : Association to one ApplicationStatusTexts on _status.code = status;
+    _housing : Association to one HousingTypeTexts on _housing.code = housingType;
 }

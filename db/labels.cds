@@ -80,3 +80,44 @@ annotate pg.ContactMessages with @title: '{i18n>ContactMessage}' {
     adminNote    @title: '{i18n>AdminNote}';
     createdAt    @title: '{i18n>ReceivedAt}';
 }
+
+annotate pg.Animals with @title: '{i18n>Animal}' {
+    name        @title: '{i18n>AnimalName}';
+    species     @title: '{i18n>Species}';
+    breed       @title: '{i18n>Breed}';
+    ageMonths   @title: '{i18n>AgeMonths}';
+    sex         @title: '{i18n>Sex}';
+    size        @title: '{i18n>Size}';
+    neutered    @title: '{i18n>Neutered}';
+    vaccinated  @title: '{i18n>Vaccinated}';
+    traits      @title: '{i18n>Traits}';
+    healthNotes @title: '{i18n>HealthNotes}' @UI.MultiLineText;
+    story       @title: '{i18n>Story}'       @UI.MultiLineText;
+    coverImage  @title: '{i18n>CoverImage}';
+    arrivalDate @title: '{i18n>ArrivalDate}';
+    status      @title: '{i18n>Status}';
+}
+
+annotate pg.AnimalPhotos with @title: '{i18n>Photo}' {
+    url       @title: '{i18n>PhotoUrl}';
+    caption   @title: '{i18n>Caption}';
+    sortOrder @title: '{i18n>SortOrder}';
+}
+
+annotate pg.AdoptionApplications with @title: '{i18n>AdoptionApplication}' {
+    animal          @title: '{i18n>Animal}';
+    firstName       @title: '{i18n>FirstName}';
+    lastName        @title: '{i18n>LastName}';
+    email           @title: '{i18n>Email}';
+    phone           @title: '{i18n>Phone}';
+    city            @title: '{i18n>City}';
+    housingType     @title: '{i18n>HousingType}';
+    hasGarden       @title: '{i18n>HasGarden}';
+    otherPets       @title: '{i18n>OtherPets}';
+    experience      @title: '{i18n>Experience}' @UI.MultiLineText;
+    householdAgrees @title: '{i18n>HouseholdAgrees}';
+    consentGiven    @title: '{i18n>ConsentGiven}';
+    status          @title: '{i18n>Status}';
+    adminNote       @title: '{i18n>AdminNote}';
+    createdAt       @title: '{i18n>AppliedAt}';
+}

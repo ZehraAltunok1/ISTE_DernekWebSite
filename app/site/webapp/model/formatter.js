@@ -82,6 +82,41 @@ sap.ui.define([
             return this.getText("impactFood", [Math.max(1, Math.floor(nAmount / 50))]);
         },
 
+        /**
+         * Yaş (ay) → "8 aylık" / "3 yaşında". this: controller
+         */
+        ageText: function (vMonths) {
+            if (vMonths === null || vMonths === undefined || vMonths === "") {
+                return "";
+            }
+            var nMonths = toNumber(vMonths);
+            return nMonths < 12
+                ? this.getText("ageMonths", [Math.max(1, nMonths)])
+                : this.getText("ageYears", [Math.floor(nMonths / 12)]);
+        },
+
+        /** ("Köpek", "Erkek", 36) → "Köpek · Erkek · 3 yaşında". this: controller */
+        animalSummary: function (sSpecies, sSex, vMonths) {
+            return [sSpecies, sSex, formatter.ageText.call(this, vMonths)].filter(Boolean).join(" · ");
+        },
+
+        /** "Uysal, Çocuklarla iyi" → "Uysal · Çocuklarla iyi" */
+        traitsText: function (sTraits) {
+            return (sTraits || "").split(",").map(function (s) {
+                return s.trim();
+            }).filter(Boolean).join(" · ");
+        },
+
+        /** Hayvan durumu → ObjectStatus rengi */
+        animalStatusState: function (sStatus) {
+            switch (sStatus) {
+                case "Available": return "Success";
+                case "Reserved": return "Warning";
+                case "InTreatment": return "Information";
+                default: return "None";
+            }
+        },
+
         /** Duyuru türü → liste satırının renkli şeridi (sap.ui.core.MessageType / IndicationColor) */
         announcementHighlight: function (sType) {
             switch (sType) {

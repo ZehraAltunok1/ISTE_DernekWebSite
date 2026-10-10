@@ -3,7 +3,7 @@ const mailer = require('./lib/mailer')
 
 module.exports = class AdminService extends cds.ApplicationService {
     init() {
-        const { Campaigns, Donations, VolunteerApplications, ContactMessages } = this.entities
+        const { Campaigns, Donations, VolunteerApplications, ContactMessages, Animals, AdoptionApplications } = this.entities
         const db = cds.entities('pg')
 
         // ── Kampanyalar ──────────────────────────────────────
@@ -63,6 +63,40 @@ module.exports = class AdminService extends cds.ApplicationService {
                 text: `Merhaba ${app.firstName},\n\nİlginiz için teşekkür ederiz. Bu dönem başvurunuzu kabul edemiyoruz; ilerleyen dönemlerde tekrar başvurabilirsiniz.`
             })
             return SELECT.one.from(VolunteerApplications, app.ID)
+        })
+
+        // ── Sahiplendirme ────────────────────────────────────
+
+        this.before('DELETE', Animals, async req => {
+            const id = req.params.at(-1)?.ID ?? req.params.at(-1)
+            const application = await SELECT.one.from(db.AdoptionApplications).where({ animal_ID: id }).columns('ID')
+            if (application) req.reject(409, 'ANIMAL_HAS_APPLICATIONS')
+        })
+
+        this.on('approve', AdoptionApplications, async req => {
+            const app = await pendingOnly(req, db.AdoptionApplications, 'APPLICATION_NOT_PENDING')
+            const animal = await SELECT.one.from(db.Animals, app.animal_ID).columns('name', 'status').forUpdate()
+            if (animal.status !== 'Available') return req.reject(409, 'ANIMAL_NOT_AVAILABLE', [animal.name])
+
+            await UPDATE(db.AdoptionApplications, app.ID).with({ status: 'Approved', adminNote: req.data.note })
+            await UPDATE(db.Animals, app.animal_ID).with({ status: 'Reserved' })
+            await mailer.send({
+                to: app.email,
+                subject: `${animal.name} için başvurunuz onaylandı 🐾`,
+                text: `Merhaba ${app.firstName},\n\nTebrikler! ${animal.name} için tanışma ziyaretini planlamak üzere sizi arayacağız.`
+            })
+            return SELECT.one.from(AdoptionApplications, app.ID)
+        })
+
+        this.on('decline', AdoptionApplications, async req => {
+            const app = await pendingOnly(req, db.AdoptionApplications, 'APPLICATION_NOT_PENDING')
+            await UPDATE(db.AdoptionApplications, app.ID).with({ status: 'Rejected', adminNote: req.data.note })
+            await mailer.send({
+                to: app.email,
+                subject: 'Sahiplenme başvurunuz hakkında',
+                text: `Merhaba ${app.firstName},\n\nİlginiz için teşekkür ederiz. Bu başvuruyu olumlu değerlendiremedik; yuva arayan diğer dostlarımıza göz atabilirsiniz.`
+            })
+            return SELECT.one.from(AdoptionApplications, app.ID)
         })
 
         // ── İletişim mesajları ───────────────────────────────

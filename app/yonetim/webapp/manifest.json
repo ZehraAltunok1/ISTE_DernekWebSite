@@ -160,6 +160,26 @@
           "pattern": "ContactMessages({key}):?query:",
           "name": "ContactMessagesObjectPage",
           "target": "ContactMessagesObjectPage"
+        },
+        {
+          "pattern": "Animals:?query:",
+          "name": "AnimalsList",
+          "target": "AnimalsList"
+        },
+        {
+          "pattern": "Animals({key}):?query:",
+          "name": "AnimalsObjectPage",
+          "target": "AnimalsObjectPage"
+        },
+        {
+          "pattern": "AdoptionApplications:?query:",
+          "name": "AdoptionApplicationsList",
+          "target": "AdoptionApplicationsList"
+        },
+        {
+          "pattern": "AdoptionApplications({key}):?query:",
+          "name": "AdoptionApplicationsObjectPage",
+          "target": "AdoptionApplicationsObjectPage"
         }
       ],
       "targets": {
@@ -436,6 +456,82 @@
           "options": {
             "settings": {
               "contextPath": "/ContactMessages",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "AnimalsList": {
+          "type": "Component",
+          "id": "AnimalsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Animals",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Animals": {
+                  "detail": {
+                    "route": "AnimalsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AnimalsObjectPage": {
+          "type": "Component",
+          "id": "AnimalsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Animals",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "AdoptionApplicationsList": {
+          "type": "Component",
+          "id": "AdoptionApplicationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/AdoptionApplications",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "AdoptionApplications": {
+                  "detail": {
+                    "route": "AdoptionApplicationsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AdoptionApplicationsObjectPage": {
+          "type": "Component",
+          "id": "AdoptionApplicationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/AdoptionApplications",
               "editableHeaderContent": false
             }
           }

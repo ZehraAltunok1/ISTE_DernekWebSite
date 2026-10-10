@@ -69,9 +69,36 @@
             </VBox>
         </VBox>
 
-        <!-- ── Hakkımızda özeti (fotoğraf + metin) ─────────────── -->
+        <!-- ── Yuva arayan dostlarımız (sahiplendirme) ─────────── -->
         <VBox class="pgSection pgContainer">
-            <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="2" vSpacing="2">
+            <HBox justifyContent="SpaceBetween" alignItems="End" wrap="Wrap">
+                <VBox>
+                    <Text text="{i18n>homeAnimalsEyebrow}" class="pgEyebrow"/>
+                    <Title text="{i18n>homeAnimalsTitle}" level="H2" class="pgSectionTitle"/>
+                    <Text text="{i18n>homeAnimalsText}" class="pgMuted"/>
+                </VBox>
+                <Button text="{i18n>allAnimals}" press=".onNavAnimals" class="pgBtnOutline sapUiSmallMarginTop"/>
+            </HBox>
+            <l:Grid
+                id="animalGrid"
+                defaultSpan="XL3 L3 M6 S12"
+                vSpacing="1.5"
+                hSpacing="1.5"
+                class="sapUiMediumMarginTop"
+                content="{
+                    path: '/Animals',
+                    filters: [{path: 'status', operator: 'EQ', value1: 'Available'}],
+                    sorter: {path: 'arrivalDate', descending: true},
+                    length: 4,
+                    templateShareable: false
+                }">
+                <core:Fragment fragmentName="pg.site.view.fragments.AnimalCard" type="XML"/>
+            </l:Grid>
+        </VBox>
+
+        <!-- ── Hakkımızda özeti (fotoğraf + metin) ─────────────── -->
+        <VBox class="pgSection pgSectionAlt">
+            <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="2" vSpacing="2" class="pgContainer">
                 <Image src="images/photos/gonullu-kedi-kopek.jpg" alt="{i18n>aboutImageAlt}" width="100%" densityAware="false" class="pgRoundedPhoto"/>
                 <VBox justifyContent="Center" height="100%">
                     <Text text="{i18n>whoWeAreEyebrow}" class="pgEyebrow"/>
@@ -97,7 +124,7 @@
         </VBox>
 
         <!-- ── Nasıl çalışır? ──────────────────────────────────── -->
-        <VBox class="pgSection pgSectionAlt">
+        <VBox class="pgSection">
             <VBox class="pgContainer" alignItems="Center">
                 <Text text="{i18n>howItWorksEyebrow}" class="pgEyebrow" textAlign="Center"/>
                 <Title text="{i18n>howItWorks}" level="H2" class="pgSectionTitle" textAlign="Center"/>
@@ -127,24 +154,26 @@
         </VBox>
 
         <!-- ── Duyurular ──────────────────────────────────────── -->
-        <VBox class="pgSection pgContainer pgNarrow">
-            <Text text="{i18n>announcementsEyebrow}" class="pgEyebrow"/>
-            <Title text="{i18n>announcements}" level="H2" class="pgSectionTitle"/>
-            <List
-                id="announcementList"
-                class="sapUiMediumMarginTop pgCardList"
-                noDataText="{i18n>noAnnouncements}"
-                showSeparators="Inner"
-                items="{path: '/Announcements', sorter: {path: 'publishDate', descending: true}, templateShareable: false}">
-                <!-- highlight: duyuru türüne göre satırın solunda renkli şerit -->
-                <StandardListItem
-                    title="{title}"
-                    description="{body}"
-                    info="{path: 'publishDate', targetType: 'any', formatter: '.formatter.date'}"
-                    icon="{path: 'type', formatter: '.formatter.announcementIcon'}"
-                    highlight="{path: 'type', formatter: '.formatter.announcementHighlight'}"
-                    wrapping="true"/>
-            </List>
+        <VBox class="pgSection pgSectionAlt">
+            <VBox class="pgContainer pgNarrow">
+                <Text text="{i18n>announcementsEyebrow}" class="pgEyebrow"/>
+                <Title text="{i18n>announcements}" level="H2" class="pgSectionTitle"/>
+                <List
+                    id="announcementList"
+                    class="sapUiMediumMarginTop pgCardList"
+                    noDataText="{i18n>noAnnouncements}"
+                    showSeparators="Inner"
+                    items="{path: '/Announcements', sorter: {path: 'publishDate', descending: true}, templateShareable: false}">
+                    <!-- highlight: duyuru türüne göre satırın solunda renkli şerit -->
+                    <StandardListItem
+                        title="{title}"
+                        description="{body}"
+                        info="{path: 'publishDate', targetType: 'any', formatter: '.formatter.date'}"
+                        icon="{path: 'type', formatter: '.formatter.announcementIcon'}"
+                        highlight="{path: 'type', formatter: '.formatter.announcementHighlight'}"
+                        wrapping="true"/>
+                </List>
+            </VBox>
         </VBox>
 
         <!-- ── Çağrı bandı (fotoğraf arka planlı) ─────────────── -->

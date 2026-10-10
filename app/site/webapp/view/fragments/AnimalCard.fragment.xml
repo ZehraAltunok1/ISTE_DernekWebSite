@@ -1,0 +1,42 @@
+<!--
+    Sahiplendirme ilanı kartı. Ana sayfa ve "Sahiplen" sayfasında liste şablonu olarak kullanılır.
+    _species/text gibi yollar, durum kodlarının Türkçe metnini kod tablosundan okur
+    (OData V4 autoExpandSelect bunlar için otomatik $expand üretir).
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+    <f:Card class="pgCampaignCard pgAnimalCard" width="100%">
+        <f:content>
+            <VBox width="100%" renderType="Bare">
+                <Image
+                    src="{coverImage}"
+                    alt="{name}"
+                    width="100%"
+                    densityAware="false"
+                    class="pgAnimalCover"/>
+                <VBox class="pgCardBody">
+                    <ObjectStatus
+                        text="{_status/text}"
+                        state="{path: 'status', formatter: '.formatter.animalStatusState'}"
+                        inverted="true"/>
+                    <Title text="{name}" level="H3" class="sapUiSmallMarginTop"/>
+                    <Text
+                        text="{parts: ['_species/text', '_sex/text', {path: 'ageMonths', targetType: 'any'}], formatter: '.formatter.animalSummary'}"
+                        class="pgAnimalSummary"/>
+                    <Text text="{path: 'traits', formatter: '.formatter.traitsText'}" maxLines="2" class="sapUiTinyMarginTop pgMuted"/>
+
+                    <HBox class="sapUiSmallMarginTop pgBadges" wrap="Wrap">
+                        <ObjectStatus text="{i18n>neutered}" icon="sap-icon://accept" state="Success" visible="{= %{neutered} === true }" class="sapUiTinyMarginEnd"/>
+                        <ObjectStatus text="{i18n>vaccinated}" icon="sap-icon://syringe" state="Success" visible="{= %{vaccinated} === true }"/>
+                    </HBox>
+
+                    <Button
+                        text="{i18n>meetAnimal}"
+                        icon="sap-icon://feeder-arrow"
+                        iconFirst="false"
+                        press=".onAnimalPress"
+                        class="pgBtnOutline pgBtnSmall sapUiSmallMarginTop"/>
+                </VBox>
+            </VBox>
+        </f:content>
+    </f:Card>
+</core:FragmentDefinition>
