@@ -30,8 +30,8 @@ Diğer ekran görüntüleri: [docs/screenshots](docs/screenshots)
 **Gereksinim:** Node.js 22 veya üzeri. Veritabanı kurulumuna ya da hesap açmaya gerek yok.
 
 ```bash
-git clone https://github.com/ZehraAltunok1/PativeGelecek.git
-cd PativeGelecek
+git clone https://github.com/ZehraAltunok1/ISTE_DernekWebSite.git
+cd ISTE_DernekWebSite
 npm install
 npm start
 ```

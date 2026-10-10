@@ -315,14 +315,14 @@ Faz 2'de eklenecek: `Animals`, `AnimalPhotos`, `AdoptionApplications`, `Events`,
 | 7 | Fiori elements yönetim paneli + FPM dashboard + FLP sandbox | ✅ |
 | 8 | Backend testleri, UI5 Linter, README | ✅ |
 | 9 | İletişim formu, QUnit + OPA5, GitHub Actions, ekran görüntüleri, görsel kaynakları | ✅ |
-| 9b | GitHub'a ilk push, `v0.1.0` etiketi | 🟡 repo bekleniyor |
+| 9b | GitHub'a ilk push, `v0.1.0` etiketi | ✅ |
 | 10+ | Faz 2 (sahiplendirme, etkinlikler, galeri, üye alanı), Faz 3 | ⬜ |
 
 ---
 
 ## 11. Açık Sorular
 
-1. **GitHub repo adı** — README'de `ZehraAltunok1/PativeGelecek` varsayıldı; farklıysa güncellenecek.
+1. ~~GitHub repo adı~~ — https://github.com/ZehraAltunok1/ISTE_DernekWebSite (eski proje bu repoda yeni projeyle değiştirildi).
 2. **Dil** — README ve arayüz yalnızca Türkçe mi kalsın, yoksa İngilizce de eklensin mi?
 3. **Canlı demo** — Proje bir yerde yayınlanacak mı (Render, SAP BTP trial)? Yayınlanacaksa mocked auth yerine gerçek kimlik doğrulama gerekir.
 4. **Kaynağı bilinmeyen 2 fotoğraf** (`kus-evi-agac.jpg`, `kedi-tirmalama.jpg`) — kaynağı bulunsun ya da lisanslı bir fotoğrafla değiştirilsin.
