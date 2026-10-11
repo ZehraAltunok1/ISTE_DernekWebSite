@@ -142,4 +142,21 @@ sap.ui.define([
         assert.strictEqual(photoCount("5"), "photoCount:5");
         assert.strictEqual(photoCount(undefined), "photoCount:0");
     });
+
+    QUnit.module("formatter — üye alanı");
+
+    QUnit.test("criticalityState: kod tablosundaki renk numarası → durum", function (assert) {
+        assert.strictEqual(formatter.criticalityState(1), "Error");
+        assert.strictEqual(formatter.criticalityState("2"), "Warning");
+        assert.strictEqual(formatter.criticalityState(3), "Success");
+        assert.strictEqual(formatter.criticalityState(null), "None");
+    });
+
+    QUnit.test("canCancelRegistration: yalnızca gelecekteki ve 'Kayıtlı' durumundaki kayıt", function (assert) {
+        var sFuture = new Date(Date.now() + 86400000).toISOString();
+        var sPast = new Date(Date.now() - 86400000).toISOString();
+        assert.ok(formatter.canCancelRegistration(sFuture, "Registered"));
+        assert.notOk(formatter.canCancelRegistration(sPast, "Registered"), "başlamış etkinlik");
+        assert.notOk(formatter.canCancelRegistration(sFuture, "Attended"), "katılım işaretlenmiş");
+    });
 });

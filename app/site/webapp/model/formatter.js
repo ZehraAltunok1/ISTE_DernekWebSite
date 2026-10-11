@@ -192,6 +192,21 @@ sap.ui.define([
             return this.getText("photoCount", [toNumber(vCount)]);
         },
 
+        /** Kod tablolarındaki criticality (1 kırmızı, 2 turuncu, 3 yeşil) → ObjectStatus durumu */
+        criticalityState: function (vCriticality) {
+            switch (toNumber(vCriticality)) {
+                case 1: return "Error";
+                case 2: return "Warning";
+                case 3: return "Success";
+                default: return "None";
+            }
+        },
+
+        /** Üye kaydını iptal edebilir mi? Etkinlik başlamamış ve kayıt hâlâ "Kayıtlı" ise. */
+        canCancelRegistration: function (sStart, sAttendance) {
+            return sAttendance === "Registered" && !!sStart && new Date(sStart) > new Date();
+        },
+
         /** Duyuru türü → liste satırının renkli şeridi (sap.ui.core.MessageType / IndicationColor) */
         announcementHighlight: function (sType) {
             switch (sType) {

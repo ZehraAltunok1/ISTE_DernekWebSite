@@ -1,6 +1,6 @@
 # Pati ve Gelecek Derneği — SAPUI5 Portföy Projesi
 
-> **Durum:** v0.7 · 11 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme, etkinlikler ve galeri tamamlandı**, sırada üye alanı.
+> **Durum:** v0.8 · 11 Ekim 2026 — **Faz 1 ve Faz 2 tamamlandı** (sahiplendirme, etkinlikler, galeri, üye alanı), sırada Faz 3.
 > Bu doküman projenin **tek referans kaynağıdır**. Her yeni özellik önce buraya eklenir, sonra kodlanır.
 > Durum işaretleri: ✅ tamamlandı · 🟡 kısmen · ⬜ yapılmadı
 
@@ -101,7 +101,7 @@ Bu proje **gerçek bir dernek sitesi değildir.** İki amacı vardır:
 | Rol | Ne yapabilir? | Demo hesap |
 |---|---|---|
 | **Ziyaretçi** | Herkese açık sayfalar; bağış (simülasyon), gönüllü başvurusu, iletişim mesajı | — |
-| **Üye** | Şimdilik ziyaretçiyle aynı; Faz 2'de üye alanı | `uye@example.com` / `uye123` |
+| **Üye** | Ziyaretçinin yapabildikleri + üye alanı: kendi bağışları, başvuruları, etkinlik kayıtları (iptal), profil | `uye@example.com` / `uye123` |
 | **Yönetici** | Yönetim panelindeki her şey | `admin@example.com` / `admin123` |
 
 Kimlik doğrulama CAP'in **mocked** (basic auth) yöntemiyle yapılır; tarayıcı yönetim paneli açılırken kullanıcı adı/şifre sorar. Canlı demo yapılırsa gerçek bir yönteme (IAS/JWT) geçilmelidir.
@@ -113,8 +113,8 @@ Kimlik doğrulama CAP'in **mocked** (basic auth) yöntemiyle yapılır; tarayıc
 ### Faz 1 — Temel ✅
 CAP backend, herkese açık site (ana sayfa, kampanyalar, detay, bağış, gönüllü, hakkımızda, SSS, iletişim, 404), Fiori elements yönetim paneli, eski projenin tasarımı ve fotoğrafları, backend + UI testleri, CI, ekran görüntüleri.
 
-### Faz 2 — Topluluk 🟡
-✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ✅ Galeri. ⬜ Üye girişi ve üye alanı.
+### Faz 2 — Topluluk ✅
+✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ✅ Galeri. ✅ Üye girişi ve üye alanı.
 
 ### Faz 3 — Cila ve Sunum ⬜
 Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
@@ -187,8 +187,17 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | ICR-02 | Galeri yönetimi: albüm + fotoğraf alt tablosu (taslak), etkinliğe bağlama, yayın durumu, ızgara boyutu, "Hakkımızda'da göster"; fotoğrafsız albüm yayınlanamaz, görsel adresi sunucuda doğrulanır | 2 | ✅ |
 | ICR-03 | Ana sayfa sayaçları yönetim panelinden düzenlenir | 1 | ✅ |
 
-### 6.7 Üye Alanı — Faz 2 ⬜
-UYE-01…03: giriş, profil, "Bağışlarım / Başvurularım".
+### 6.7 Üye Alanı ✅
+
+| Kod | Gereksinim | Faz | Durum |
+|---|---|---|---|
+| UYE-01 | Giriş / çıkış: sitenin kendi penceresinden (e-posta + şifre); oturum sekme kapanana kadar sürer; menüde üyenin adı | 2 | ✅ |
+| UYE-02 | Profil: ad, telefon, şehir, bildirim tercihleri; değişiklikler "Kaydet"e kadar sunucuya gitmez; sunucu hatası alanın altında | 2 | ✅ |
+| UYE-03 | Hesabım: Bağışlarım, Başvurularım (gönüllü + sahiplenme), Etkinliklerim — yalnızca üyenin kendi kayıtları (`@restrict … where e-posta = $user`) | 2 | ✅ |
+| UYE-04 | Gelecekteki etkinlik kaydını iptal: kayıt silinir, kontenjan geri açılır | 2 | ✅ |
+| UYE-05 | Giriş yapmış üyenin etkinlik kayıt formu adı ve e-postayla dolu gelir | 2 | ✅ |
+
+> Kimlik doğrulama demo amaçlıdır (CAP *mocked* auth, HTTP Basic). Gerçek bir kurulumda bunun yerine bir kimlik sağlayıcı (ör. SAP BTP XSUAA / IAS) ve kısa ömürlü token kullanılır; yeni üye kaydı da o sağlayıcıda olur.
 
 ### 6.8 Yönetim Paneli (Fiori elements)
 
@@ -326,6 +335,7 @@ Bütün iş varlıkları `cuid` (UUID `ID`) ve `managed` (`createdAt/By`, `modif
 | `*StatusTexts`, `*TypeTexts`, `*MethodTexts` | code, text, criticality (kod tabloları) |
 
 | `Albums` | title, description, albumDate, coverImage, event (isteğe bağlı), isPublished · → media (composition) |
+| `MemberProfiles` | email (anahtar = giriş e-postası), displayName, phone, city, notifyEvents, notifyCampaigns |
 | `MediaItems` | album, url, caption, layout (`Normal`/`Wide`/`Tall`/`Large`), featured, sortOrder |
 
 Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); böylece hem sitede hem yönetim panelinde çalışır.
@@ -350,7 +360,8 @@ Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); b
 | 10 | Faz 2a: sahiplendirme (backend, site, yönetim, testler) | ✅ |
 | 11 | Faz 2b: etkinlikler (backend, site, yönetim, testler) | ✅ |
 | 12 | Faz 2c: galeri (backend, site, yönetim, testler) | ✅ |
-| 13+ | Faz 2d: üye alanı · Faz 3 | ⬜ |
+| 13 | Faz 2d: üye alanı (MemberService, giriş, Hesabım, testler) | ✅ |
+| 14+ | Faz 3 | ⬜ |
 
 ---
 

@@ -9,6 +9,8 @@ const BASE = "http://localhost:4004";
 const OUT = "docs/screenshots";
 // Projenin kendi demo yönetici hesabı (package.json → cds.requires.auth)
 const ADMIN = { username: "admin@example.com", password: "admin123" };
+// Demo üye hesabı — sitenin giriş penceresi oturumu sekmenin sessionStorage'ında tutar (model/session.js)
+const MEMBER_AUTH = "Basic " + Buffer.from("uye@example.com:uye123").toString("base64");
 
 const shots = [
     { name: "01-ana-sayfa", url: "/site/webapp/index.html" },
@@ -31,7 +33,8 @@ const shots = [
     { name: "18-yonetim-etkinlik", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Events(ID=e1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true },
     { name: "19-galeri", url: "/site/webapp/index.html#/galeri" },
     { name: "20-album", url: "/site/webapp/index.html#/galeri/a1000000-0000-4000-8000-000000000002" },
-    { name: "21-yonetim-album", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Albums(ID=a1000000-0000-4000-8000-000000000002,IsActiveEntity=true)", admin: true }
+    { name: "21-yonetim-album", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Albums(ID=a1000000-0000-4000-8000-000000000002,IsActiveEntity=true)", admin: true },
+    { name: "22-hesabim", url: "/site/webapp/index.html#/hesabim", member: true }
 ];
 
 /** UI5 yüklenip bekleyen istekler bitene kadar bekler. */
@@ -51,6 +54,9 @@ for (const shot of shots) {
         ? { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
         : { width: 1440, height: 900, deviceScaleFactor: 1 });
     if (shot.admin) await page.authenticate(ADMIN);
+    if (shot.member) {
+        await page.evaluateOnNewDocument(auth => sessionStorage.setItem("pg.site.auth", auth), MEMBER_AUTH);
+    }
 
     await page.goto(BASE + shot.url, { waitUntil: "domcontentloaded" });
     await waitForUI5(page);

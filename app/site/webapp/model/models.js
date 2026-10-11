@@ -20,6 +20,16 @@ sap.ui.define([
             return new JSONModel({
                 currentRoute: "home"
             });
+        },
+
+        /** Oturum durumu (model/session.js günceller). Şifre bu modelde TUTULMAZ. */
+        createSessionModel: function () {
+            return new JSONModel({
+                loggedIn: false,
+                email: "",
+                displayName: "",
+                roles: []
+            });
         }
     };
 });

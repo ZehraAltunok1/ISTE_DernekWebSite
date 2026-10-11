@@ -49,10 +49,12 @@ sap.ui.define([
 
         onOpenRegistration: function () {
             var oView = this.getView();
+            // Üye giriş yapmışsa adı ve e-postası hazır gelsin (kayıt "Etkinliklerim"de görünür)
+            var oSession = this.getModel("session").getData();
             this.getModel("reg").setData({
                 title: this.getText("registrationDialogTitle", [oView.getBindingContext().getProperty("title")]),
-                name: "",
-                email: "",
+                name: oSession.loggedIn ? oSession.displayName : "",
+                email: oSession.loggedIn ? oSession.email : "",
                 phone: "",
                 consentGiven: false,
                 busy: false,

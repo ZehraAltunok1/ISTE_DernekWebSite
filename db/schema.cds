@@ -233,3 +233,21 @@ entity MediaItems : cuid {
     featured  : Boolean default false;
     sortOrder : Integer default 0;
 }
+
+// ─────────────────────────────────────────────────────────────
+// Üyeler
+// ─────────────────────────────────────────────────────────────
+
+/**
+ * Üye profili. Giriş bilgileri (e-posta + şifre) bu tabloda DEĞİL; demo için
+ * CAP'in "mocked" kimlik doğrulamasında (package.json → cds.requires.auth) durur.
+ * Bağış, başvuru ve kayıtlar üyeye e-posta adresiyle bağlanır.
+ */
+entity MemberProfiles : managed {
+    key email           : Email;
+        displayName     : String(100);
+        phone           : Phone;
+        city            : String(60);
+        notifyEvents    : Boolean default true;
+        notifyCampaigns : Boolean default false;
+}

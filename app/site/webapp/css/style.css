@@ -629,6 +629,7 @@ html:root {
 .pgHeaderFaq       { --pg-header-photo: url("../images/photos/tesekkurler-kopek.jpg"); }
 .pgHeaderContact   { --pg-header-photo: url("../images/photos/kedi-tirmalama.jpg"); }
 .pgHeaderAdoption  { --pg-header-photo: url("../images/photos/gonullu-kedi-kopek.jpg"); }
+.pgHeaderAccount   { --pg-header-photo: url("../images/photos/hero-kopek-cocuk.jpg"); }
 .pgHeaderGallery   { --pg-header-photo: url("../images/photos/golden-sevgi.jpg"); }
 .pgHeaderEvents    { --pg-header-photo: url("../images/photos/sarilma-kopek.jpg"); }
 
@@ -1032,4 +1033,24 @@ html:root {
     .pgHeader .pgNavDonate .sapMBtnInner {
         padding: 0 .8rem;
     }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ÜYE ALANI
+   ══════════════════════════════════════════════════════════ */
+
+.pgListRow {
+    width: 100%;
+    padding: .75rem 1rem;
+    gap: .5rem;
+}
+
+.pgListTitle.sapMText,
+.pgListTitle.sapMLnk {
+    font-weight: 700;
+    color: var(--clr-text);
+}
+
+.pgAccountTabs .sapMITBContent {
+    background: transparent;
 }

@@ -28,6 +28,10 @@ Hayali bir hayvan refahı derneği için hazırlanmış, **SAPUI5 öğrenmek ama
     <td><img src="docs/screenshots/20-album.png" alt="Albüm sayfası"></td>
   </tr>
   <tr>
+    <td><img src="docs/screenshots/22-hesabim.png" alt="Üye alanı (Hesabım)"></td>
+    <td><img src="docs/screenshots/18-yonetim-etkinlik.png" alt="Yönetim: etkinlik"></td>
+  </tr>
+  <tr>
     <td><img src="docs/screenshots/08-yonetim-dashboard.png" alt="Yönetim paneli (FPM dashboard)"></td>
     <td><img src="docs/screenshots/09-yonetim-bagislar.png" alt="Bağışlar (Fiori elements List Report)"></td>
   </tr>
@@ -73,6 +77,7 @@ Veriler bellekte tutulur: sunucu her yeniden başladığında demo verisine dön
 | Etkinlik detayı | Çok parçalı (composite) binding + formatter ile düğme durumu, kayıt sonrası `context.refresh()` |
 | Galeri | `media/$count` ile fotoğrafları indirmeden sayma, `sap.f.Card` |
 | Albüm | `CustomData` + `writeToDom` ile veriden CSS ızgara boyutu, `sap.m.LightBox` |
+| Hesabım (üye) | İkinci OData modeli (`member`), `changeHttpHeaders`, `suspended` binding'ler, `$$updateGroupId` + `submitBatch` ile "Kaydet"li form, bağlı (bound) action, `EventBus`, Component'te tekrar kullanılan giriş penceresi |
 | Bağış | `sap.m.Wizard`, form doğrulama, **OData action** çağrısı, sonuç `Dialog`'u |
 | Gönüllü ol | OData'dan beslenen `Select`, `SimpleForm`, sunucu hata mesajlarının gösterimi |
 | İletişim | Ortak doğrulama modülü (`model/validation.js`), OData action |
@@ -96,6 +101,7 @@ Tasarım: SAP tema değişkenleri (`--sap…`) ezilerek marka renkleri ve yazı 
 ### Backend (`db/`, `srv/`)
 - `SiteService` — herkese açık, salt okunur; ziyaretçi yalnızca `donate`, `applyVolunteer`, `applyForAdoption`, `registerForEvent` ve `sendContactMessage` action'larını çağırabilir
 - `AdminService` — `@requires: 'admin'`; durum değişiklikleri yalnızca action'larla
+- `MemberService` — giriş yapmış kullanıcı; `@restrict … where: 'email = $user'` ile yalnızca kendi kayıtları, profil güncelleme, etkinlik kaydı iptali
 - Sunucu tarafı doğrulama ve Türkçe hata mesajları (`_i18n/messages.properties`)
 - Etkinlik kontenjanı atomik UPDATE ile korunur (eşzamanlı kayıt testi var)
 - Demo tarihleri sunucu açılırken bugüne kaydırılır (`server.js`)
@@ -135,7 +141,7 @@ Ayrıntılı gereksinimler, kararlar ve yol haritası: **[PROJE.md](PROJE.md)**
 |---|---|
 | `npm start` | Sunucuyu başlatır (http://localhost:4004) |
 | `npm run watch` | Değişikliklerde otomatik yeniden başlatır |
-| `npm test` | Backend testleri (40 test) |
+| `npm test` | Backend testleri (51 test) |
 | `npm run test:ui` | QUnit + OPA5 testleri, başsız Chrome'da (önce `npm start`) |
 | `npm run lint` | ESLint + UI5 Linter |
 | `npm run screenshots` | README ekran görüntülerini yeniden üretir (önce `npm start`) |
@@ -151,7 +157,7 @@ Her push'ta GitHub Actions lint'i, backend testlerini ve UI testlerini çalışt
 | Kullanıcı | Şifre | Rol |
 |---|---|---|
 | `admin@example.com` | `admin123` | Yönetici |
-| `uye@example.com` | `uye123` | Üye (yönetim paneline erişemez) |
+| `uye@example.com` | `uye123` | Üye — sitede "Giriş Yap" → Hesabım (yönetim paneline erişemez) |
 
 Bu hesaplar CAP'in geliştirme amaçlı *mocked* kimlik doğrulamasıyla çalışır ve `package.json` içinde tanımlıdır. CAP'in varsayılan şifresiz demo kullanıcıları güvenlik için kapatılmıştır.
 

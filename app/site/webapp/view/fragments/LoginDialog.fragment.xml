@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog
+        id="loginDialog"
+        title="{i18n>loginTitle}"
+        contentWidth="26rem"
+        stretch="{device>/system/phone}"
+        busy="{login>/busy}"
+        busyIndicatorDelay="0"
+        afterClose=".onAfterClose">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <MessageStrip text="{i18n>loginDemoHint}" type="Information" showIcon="true" class="sapUiSmallMarginBottom"/>
+                <MessageStrip
+                    id="loginError"
+                    text="{login>/error}"
+                    type="Error"
+                    showIcon="true"
+                    visible="{= !!${login>/error} }"
+                    class="sapUiSmallMarginBottom"/>
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" columnsL="1" columnsM="1">
+                    <Label text="{i18n>email}" labelFor="loginEmail" required="true"/>
+                    <Input
+                        id="loginEmail"
+                        type="Email"
+                        value="{login>/email}"
+                        valueState="{login>/emailState}"
+                        valueStateText="{i18n>emailInvalid}"
+                        submit=".onLogin"/>
+                    <Label text="{i18n>password}" labelFor="loginPassword" required="true"/>
+                    <Input id="loginPassword" type="Password" value="{login>/password}" submit=".onLogin"/>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button id="loginSubmit" text="{i18n>login}" type="Emphasized" press=".onLogin"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>cancel}" press=".onCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

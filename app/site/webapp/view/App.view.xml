@@ -44,6 +44,20 @@
 
                 <ToolbarSpacer/>
 
+                <!-- Üye girişi: oturum açıksa üyenin adı, değilse "Giriş Yap" -->
+                <Button
+                    id="accountButton"
+                    icon="sap-icon://person-placeholder"
+                    text="{= ${device>/system/phone} ? '' : (${session>/loggedIn} ? ${session>/displayName} : ${i18n>login}) }"
+                    tooltip="{= ${session>/loggedIn} ? ${i18n>navAccount} : ${i18n>login} }"
+                    type="{= ${appView>/currentRoute} === 'account' ? 'Default' : 'Transparent' }"
+                    press=".onAccountPress"
+                    class="pgNavLink pgNavAccount">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Button>
+
                 <Button
                     id="navDonateButton"
                     text="{= ${device>/system/phone} ? '' : ${i18n>navDonate} }"

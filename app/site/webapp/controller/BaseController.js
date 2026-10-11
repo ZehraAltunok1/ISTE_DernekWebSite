@@ -86,6 +86,19 @@ sap.ui.define([
             this._oLightBox.open();
         },
 
+        /** Menüdeki hesap düğmesi: giriş yapılmışsa Hesabım'a gider, değilse giriş penceresini açar. */
+        onAccountPress: function () {
+            if (this.getModel("session").getProperty("/loggedIn")) {
+                this.getRouter().navTo("account");
+                return;
+            }
+            this.getOwnerComponent().getLoginDialog().open().then(function (bLoggedIn) {
+                if (bLoggedIn) {
+                    this.getRouter().navTo("account");
+                }
+            }.bind(this));
+        },
+
         onNavDonate: function () {
             this.getRouter().navTo("donate");
         },

@@ -22,6 +22,13 @@
         "settings": {
           "odataVersion": "4.0"
         }
+      },
+      "memberService": {
+        "uri": "/odata/v4/member/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -71,6 +78,14 @@
           "operationMode": "Server",
           "autoExpandSelect": true,
           "earlyRequests": true
+        }
+      },
+      "member": {
+        "dataSource": "memberService",
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
         }
       }
     },
@@ -139,6 +154,11 @@
           "pattern": "galeri/{albumId}",
           "name": "album",
           "target": "album"
+        },
+        {
+          "pattern": "hesabim",
+          "name": "account",
+          "target": "account"
         },
         {
           "pattern": "bagis:?query:",
@@ -241,6 +261,11 @@
           "id": "album",
           "name": "Album",
           "title": "{i18n>albumDetailTitle}"
+        },
+        "account": {
+          "id": "account",
+          "name": "Account",
+          "title": "{i18n>navAccount}"
         }
       }
     }

@@ -1,0 +1,196 @@
+<mvc:View
+    controllerName="pg.site.controller.Account"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+
+        <!-- Giriş yapılmamışsa -->
+        <IllustratedMessage
+            id="loginRequired"
+            visible="{= !${session>/loggedIn} }"
+            illustrationType="sapIllus-NoMail"
+            title="{i18n>loginRequiredTitle}"
+            description="{i18n>loginRequiredText}"
+            class="pgSection">
+            <additionalContent>
+                <Button text="{i18n>login}" icon="sap-icon://person-placeholder" press=".onAccountPress" class="pgBtnPrimary"/>
+            </additionalContent>
+        </IllustratedMessage>
+
+        <!--
+            Üye verisi "member" OData modelinden gelir (MemberService). Bütün liste binding'leri
+            "suspended" başlar: giriş yapılmadan istek gönderilmez, aksi halde sunucu 401 döner.
+            Controller oturum açılınca binding'leri başlatır (resume) ya da tazeler (refresh).
+        -->
+        <VBox id="accountContent" visible="{session>/loggedIn}">
+            <VBox class="pgPageHeader pgHeaderAccount">
+                <VBox class="pgContainer">
+                    <Text text="{i18n>accountEyebrow}" class="pgEyebrow"/>
+                    <Title text="{i18n>accountGreeting} {session>/displayName}" level="H1" class="pgPageTitle" wrapping="true"/>
+                    <Text text="{session>/email}" class="pgMuted"/>
+                    <Button
+                        id="logoutButton"
+                        text="{i18n>logout}"
+                        icon="sap-icon://log"
+                        press=".onLogout"
+                        class="pgBtnGlass sapUiSmallMarginTop"/>
+                </VBox>
+            </VBox>
+
+            <VBox class="pgSection pgContainer">
+                <IconTabBar id="accountTabs" expandable="false" applyContentPadding="false" class="pgAccountTabs" headerBackgroundDesign="Transparent">
+                    <items>
+                        <!-- ── Bağışlarım ── -->
+                        <IconTabFilter key="donations" icon="sap-icon://lead" text="{i18n>myDonations}">
+                            <Table
+                                id="donationTable"
+                                noDataText="{i18n>noMyDonations}"
+                                growing="true"
+                                items="{
+                                    path: 'member>/MyDonations',
+                                    sorter: {path: 'createdAt', descending: true},
+                                    suspended: true,
+                                    templateShareable: false
+                                }"
+                                class="pgCardList">
+                                <columns>
+                                    <Column><Text text="{i18n>campaign}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>amount}"/></Column>
+                                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>method}"/></Column>
+                                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>date}"/></Column>
+                                    <Column><Text text="{i18n>status}"/></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <ObjectIdentifier title="{= %{member>campaignTitle} || ${i18n>generalDonation} }" text="{member>referenceCode}"/>
+                                        <Text text="{path: 'member>amount', targetType: 'any', formatter: '.formatter.currency'}"/>
+                                        <Text text="{member>_method/text}"/>
+                                        <Text text="{path: 'member>createdAt', targetType: 'any', formatter: '.formatter.date'}"/>
+                                        <ObjectStatus
+                                            text="{member>_status/text}"
+                                            state="{path: 'member>_status/criticality', formatter: '.formatter.criticalityState'}"/>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </IconTabFilter>
+
+                        <!-- ── Başvurularım ── -->
+                        <IconTabFilter key="applications" icon="sap-icon://form" text="{i18n>myApplications}">
+                            <Title text="{i18n>navVolunteer}" level="H3" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+                            <List
+                                id="volunteerList"
+                                noDataText="{i18n>noMyApplications}"
+                                items="{path: 'member>/MyVolunteerApplications', sorter: {path: 'createdAt', descending: true}, suspended: true, templateShareable: false}"
+                                class="pgCardList">
+                                <CustomListItem>
+                                    <HBox class="pgListRow" justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap">
+                                        <VBox>
+                                            <Text text="{member>areaName}" class="pgListTitle"/>
+                                            <Text text="{path: 'member>createdAt', targetType: 'any', formatter: '.formatter.date'}" class="pgMuted"/>
+                                            <Text text="{member>adminNote}" visible="{= !!%{member>adminNote} }" class="sapUiTinyMarginTop"/>
+                                        </VBox>
+                                        <ObjectStatus
+                                            text="{member>_status/text}"
+                                            state="{path: 'member>_status/criticality', formatter: '.formatter.criticalityState'}"
+                                            inverted="true"/>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+
+                            <Title text="{i18n>navAdopt}" level="H3" class="sapUiMediumMarginTop sapUiTinyMarginBottom"/>
+                            <List
+                                id="adoptionList"
+                                noDataText="{i18n>noMyApplications}"
+                                items="{path: 'member>/MyAdoptionApplications', sorter: {path: 'createdAt', descending: true}, suspended: true, templateShareable: false}"
+                                class="pgCardList">
+                                <CustomListItem type="Navigation" press=".onAdoptionPress">
+                                    <HBox class="pgListRow" justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap">
+                                        <HBox alignItems="Center">
+                                            <Avatar src="{member>animalImage}" displaySize="S" class="sapUiSmallMarginEnd"/>
+                                            <VBox>
+                                                <Text text="{member>animalName}" class="pgListTitle"/>
+                                                <Text text="{path: 'member>createdAt', targetType: 'any', formatter: '.formatter.date'}" class="pgMuted"/>
+                                            </VBox>
+                                        </HBox>
+                                        <ObjectStatus
+                                            text="{member>_status/text}"
+                                            state="{path: 'member>_status/criticality', formatter: '.formatter.criticalityState'}"
+                                            inverted="true"/>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </IconTabFilter>
+
+                        <!-- ── Etkinliklerim ── -->
+                        <IconTabFilter key="events" icon="sap-icon://appointment-2" text="{i18n>myEvents}">
+                            <List
+                                id="eventRegList"
+                                noDataText="{i18n>noMyEvents}"
+                                items="{path: 'member>/MyEventRegistrations', sorter: {path: 'eventStart', descending: true}, suspended: true, templateShareable: false}"
+                                class="pgCardList">
+                                <CustomListItem>
+                                    <HBox class="pgListRow" justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap">
+                                        <HBox alignItems="Center">
+                                            <Avatar src="{member>eventImage}" displaySize="S" class="sapUiSmallMarginEnd"/>
+                                            <VBox>
+                                                <Link text="{member>eventTitle}" press=".onEventRegPress" class="pgListTitle"/>
+                                                <Text text="{path: 'member>eventStart', targetType: 'any', formatter: '.formatter.eventDate'}" class="pgMuted"/>
+                                                <Text text="{member>eventLocation}" class="pgMuted"/>
+                                            </VBox>
+                                        </HBox>
+                                        <HBox alignItems="Center">
+                                            <ObjectStatus
+                                                text="{member>_attendance/text}"
+                                                state="{path: 'member>_attendance/criticality', formatter: '.formatter.criticalityState'}"
+                                                inverted="true"
+                                                class="sapUiSmallMarginEnd"/>
+                                            <Button
+                                                text="{i18n>cancelRegistration}"
+                                                type="Reject"
+                                                visible="{parts: [{path: 'member>eventStart', targetType: 'any'}, {path: 'member>attendance', targetType: 'any'}], formatter: '.formatter.canCancelRegistration'}"
+                                                press=".onCancelRegistration"/>
+                                        </HBox>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </IconTabFilter>
+
+                        <!-- ── Profil ── -->
+                        <IconTabFilter key="profile" icon="sap-icon://employee" text="{i18n>myProfile}">
+                            <!--
+                                Element binding controller'da kurulur: /Profile('e-posta').
+                                $$updateGroupId: değişiklikler "Kaydet"e basılana kadar sunucuya gitmez.
+                            -->
+                            <VBox id="profileBox" class="pgFormCard sapUiSmallMarginTop">
+                                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="4" columnsL="1" columnsM="1">
+                                    <Label text="{i18n>fullName}" labelFor="profileName" required="true"/>
+                                    <Input id="profileName" value="{member>displayName}" maxLength="100"/>
+                                    <Label text="{i18n>email}"/>
+                                    <Text text="{member>email}"/>
+                                    <Label text="{i18n>phoneOptional}" labelFor="profilePhone"/>
+                                    <Input id="profilePhone" type="Tel" value="{member>phone}" maxLength="20" placeholder="0555 000 00 00"/>
+                                    <Label text="{i18n>city}" labelFor="profileCity"/>
+                                    <Input id="profileCity" value="{member>city}" maxLength="60"/>
+                                    <Label text="{i18n>notifications}"/>
+                                    <VBox>
+                                        <CheckBox id="profileNotifyEvents" text="{i18n>notifyEvents}" selected="{member>notifyEvents}"/>
+                                        <CheckBox id="profileNotifyCampaigns" text="{i18n>notifyCampaigns}" selected="{member>notifyCampaigns}"/>
+                                    </VBox>
+                                </f:SimpleForm>
+                                <HBox justifyContent="End" class="sapUiSmallMarginTop">
+                                    <Button text="{i18n>reset}" press=".onResetProfile" class="sapUiTinyMarginEnd"/>
+                                    <Button id="saveProfileButton" text="{i18n>save}" type="Emphasized" press=".onSaveProfile" class="pgBtnPrimary"/>
+                                </HBox>
+                            </VBox>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </VBox>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

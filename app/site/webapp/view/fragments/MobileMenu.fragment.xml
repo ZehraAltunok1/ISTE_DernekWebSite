@@ -9,5 +9,6 @@
         <Button text="{i18n>navAbout}" icon="sap-icon://hint" press=".onNavAbout"/>
         <Button text="{i18n>navFaq}" icon="sap-icon://question-mark" press=".onNavFaq"/>
         <Button text="{i18n>navContact}" icon="sap-icon://email" press=".onNavContact"/>
+        <Button text="{= ${session>/loggedIn} ? ${i18n>navAccount} : ${i18n>login} }" icon="sap-icon://person-placeholder" press=".onAccountPress"/>
     </ActionSheet>
 </core:FragmentDefinition>
