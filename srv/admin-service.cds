@@ -1,5 +1,6 @@
 using pg from '../db/schema';
 using from '../db/codes';
+using from '../db/codes-events';
 using from '../db/labels';
 
 /**
@@ -43,6 +44,18 @@ service AdminService {
         actions {
             action approve(note : String(500)) returns AdoptionApplications;
             action decline(note : String(500)) returns AdoptionApplications;
+        };
+
+    /** Etkinlikler — taslak olarak düzenlenir; kayıt sayısı yalnızca sunucuda değişir. */
+    @odata.draft.enabled
+    entity Events                as projection on pg.Events;
+
+    /** Etkinlik kayıtları — ziyaretçiler oluşturur; yönetici yalnızca katılımı işaretler. */
+    @readonly
+    entity EventRegistrations    as projection on pg.EventRegistrations
+        actions {
+            action markAttended() returns EventRegistrations;
+            action markAbsent()   returns EventRegistrations;
         };
 
     /** İletişim formundan gelen mesajlar — yalnızca okunur, durum action ile değişir. */

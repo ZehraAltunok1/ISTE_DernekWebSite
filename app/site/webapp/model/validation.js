@@ -81,6 +81,16 @@ sap.ui.define([], function () {
             });
         },
 
+        /** Etkinlik kaydı — telefon isteğe bağlıdır ama yazılmışsa geçerli olmalıdır. */
+        checkEventRegistration: function (d) {
+            return toResult({
+                name: validation.isName(d.name),
+                email: validation.isEmail(d.email),
+                phone: !trim(d.phone) || validation.isPhone(d.phone),
+                consentGiven: d.consentGiven === true
+            });
+        },
+
         checkContactMessage: function (d) {
             return toResult({
                 name: validation.isName(d.name),

@@ -9,6 +9,7 @@
                 <Title text="{i18n>footerLinks}" level="H3" class="pgFooterTitle"/>
                 <Link text="{i18n>navCampaigns}" press=".onNavCampaigns" class="pgFooterLink"/>
                 <Link text="{i18n>navAdopt}" press=".onNavAnimals" class="pgFooterLink"/>
+                <Link text="{i18n>navEvents}" press=".onNavEvents" class="pgFooterLink"/>
                 <Link text="{i18n>navDonate}" press=".onNavDonate" class="pgFooterLink"/>
                 <Link text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgFooterLink"/>
                 <Link text="{i18n>navAbout}" press=".onNavAbout" class="pgFooterLink"/>

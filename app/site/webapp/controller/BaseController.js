@@ -51,6 +51,16 @@ sap.ui.define([
             this.getRouter().navTo("animalDetail", { animalId: sId });
         },
 
+        onNavEvents: function () {
+            this.getRouter().navTo("events");
+        },
+
+        /** Etkinlik kartındaki "Detaylar" — karta bağlı etkinliğin detayına gider. */
+        onEventPress: function (oEvent) {
+            var sId = oEvent.getSource().getBindingContext().getProperty("ID");
+            this.getRouter().navTo("eventDetail", { eventId: sId });
+        },
+
         onNavDonate: function () {
             this.getRouter().navTo("donate");
         },

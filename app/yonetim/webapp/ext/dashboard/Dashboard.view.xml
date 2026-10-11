@@ -66,6 +66,12 @@
                             <NumericContent value="{kpi>/activeAnnouncements}" icon="sap-icon://megamenu" withMargin="false"/>
                         </TileContent>
                     </GenericTile>
+                    <GenericTile header="{i18n>upcomingEvents}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="EventsList"/></customData>
+                        <TileContent>
+                            <NumericContent value="{kpi>/upcomingEvents}" icon="sap-icon://appointment-2" withMargin="false"/>
+                        </TileContent>
+                    </GenericTile>
                 </FlexBox>
 
                 <Title text="{i18n>modulesTitle}" level="H3" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
@@ -81,6 +87,14 @@
                     <GenericTile header="{i18n>tileAdoptions}" subheader="{i18n>tileAdoptionsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="AdoptionApplicationsList"/></customData>
                         <TileContent><ImageContent src="sap-icon://family-care"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileEvents}" subheader="{i18n>tileEventsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="EventsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://appointment-2"/></TileContent>
+                    </GenericTile>
+                    <GenericTile header="{i18n>tileEventRegistrations}" subheader="{i18n>tileEventRegistrationsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="EventRegistrationsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://add-employee"/></TileContent>
                     </GenericTile>
                     <GenericTile header="{i18n>tileDonations}" subheader="{i18n>tileDonationsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="DonationsList"/></customData>

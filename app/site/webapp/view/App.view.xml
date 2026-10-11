@@ -33,6 +33,8 @@
                     type="{= ${appView>/currentRoute} === 'campaigns' || ${appView>/currentRoute} === 'campaignDetail' ? 'Default' : 'Transparent' }"/>
                 <Button id="navAdoptButton" text="{i18n>navAdopt}" press=".onNavAnimals" class="pgNavLink" visible="{= !${device>/system/phone} }"
                     type="{= ${appView>/currentRoute} === 'animals' || ${appView>/currentRoute} === 'animalDetail' ? 'Default' : 'Transparent' }"/>
+                <Button id="navEventsButton" text="{i18n>navEvents}" press=".onNavEvents" class="pgNavLink" visible="{= !${device>/system/phone} }"
+                    type="{= ${appView>/currentRoute} === 'events' || ${appView>/currentRoute} === 'eventDetail' ? 'Default' : 'Transparent' }"/>
                 <Button id="navVolunteerButton" text="{i18n>navVolunteer}" press=".onNavVolunteer" class="pgNavLink" visible="{= !${device>/system/phone} }"
                     type="{= ${appView>/currentRoute} === 'volunteer' ? 'Default' : 'Transparent' }"/>
                 <Button id="navFaqButton" text="{i18n>navFaq}" press=".onNavFaq" class="pgNavLink" visible="{= !${device>/system/phone} }"

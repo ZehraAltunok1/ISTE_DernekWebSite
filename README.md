@@ -20,6 +20,10 @@ Hayali bir hayvan refahı derneği için hazırlanmış, **SAPUI5 öğrenmek ama
     <td><img src="docs/screenshots/13-hayvan-detay.png" alt="Hayvan detayı ve fotoğraf karuseli"></td>
   </tr>
   <tr>
+    <td><img src="docs/screenshots/16-etkinlikler.png" alt="Etkinlikler"></td>
+    <td><img src="docs/screenshots/17-etkinlik-detay.png" alt="Etkinlik detayı ve kayıt"></td>
+  </tr>
+  <tr>
     <td><img src="docs/screenshots/08-yonetim-dashboard.png" alt="Yönetim paneli (FPM dashboard)"></td>
     <td><img src="docs/screenshots/09-yonetim-bagislar.png" alt="Bağışlar (Fiori elements List Report)"></td>
   </tr>
@@ -61,6 +65,8 @@ Veriler bellekte tutulur: sunucu her yeniden başladığında demo verisine dön
 | Kampanya detayı | Element binding (`bindElement`), `$expand` ile son bağışlar, 404 yönetimi |
 | Sahiplen | Birden fazla sunucu filtresi (`Contains`, `NE`), `$count`, XML'de binding olayları, `IllustratedMessage` |
 | Hayvan detayı | `sap.m.Carousel` (composition'dan fotoğraflar), `Dialog` içinde başvuru formu, OData action |
+| Etkinlikler | Askıda başlayan binding (`suspended`) + controller'da tarih filtresi, sıralama değişimi, `DateFormat` ile tarih rozeti |
+| Etkinlik detayı | Çok parçalı (composite) binding + formatter ile düğme durumu, kayıt sonrası `context.refresh()` |
 | Bağış | `sap.m.Wizard`, form doğrulama, **OData action** çağrısı, sonuç `Dialog`'u |
 | Gönüllü ol | OData'dan beslenen `Select`, `SimpleForm`, sunucu hata mesajlarının gösterimi |
 | İletişim | Ortak doğrulama modülü (`model/validation.js`), OData action |
@@ -72,18 +78,21 @@ Tasarım: SAP tema değişkenleri (`--sap…`) ezilerek marka renkleri ve yazı 
 
 ### Yönetim paneli (`app/yonetim`)
 - **Fiori Launchpad sandbox** içinde çalışan bir Fiori elements V4 uygulaması
-- **FPM dashboard**: bekleyen bağış, başvuru ve mesaj sayaçları ile modül kutucukları
-- **9 modül** (List Report + Object Page): Kampanyalar, Bağışlar, Hayvanlar, Sahiplenme Başvuruları, Gönüllü Başvuruları, İletişim Mesajları, Duyurular, SSS, Site İstatistikleri
+- **FPM dashboard**: bekleyen bağış, başvuru ve mesaj sayaçları, yaklaşan etkinlik sayısı ve modül kutucukları
+- **11 modül** (List Report + Object Page): Kampanyalar, Bağışlar, Hayvanlar, Sahiplenme Başvuruları, Etkinlikler, Etkinlik Kayıtları, Gönüllü Başvuruları, İletişim Mesajları, Duyurular, SSS, Site İstatistikleri
 - Hayvan kaydında fotoğraflar **composition** olarak alt tabloda, taslakla birlikte düzenlenir
 - Sahiplenme başvurusu onaylanınca hayvan sunucuda otomatik "Rezerve" olur
+- Etkinlik sayfasında doluluk çubuğu (`DataPoint` + `#Progress`) ve kayıtlar alt tablosu; katılım "katıldı/katılmadı" action'larıyla işaretlenir
 - Ekranların tamamı `annotations.cds`'teki annotation'lardan üretilir: filtre çubuğu, tablo sütunları, form grupları, açılır listeler, renkli durumlar, ilerleme göstergesi
 - Onay / ret / "yanıtlandı" action'ları yalnızca uygun durumdaki kayıtlarda etkin (`Core.OperationAvailable`)
 - Kampanya, duyuru, SSS ve istatistik düzenlemede **draft** (taslak) desteği
 
 ### Backend (`db/`, `srv/`)
-- `SiteService` — herkese açık, salt okunur; ziyaretçi yalnızca `donate`, `applyVolunteer`, `applyForAdoption` ve `sendContactMessage` action'larını çağırabilir
+- `SiteService` — herkese açık, salt okunur; ziyaretçi yalnızca `donate`, `applyVolunteer`, `applyForAdoption`, `registerForEvent` ve `sendContactMessage` action'larını çağırabilir
 - `AdminService` — `@requires: 'admin'`; durum değişiklikleri yalnızca action'larla
 - Sunucu tarafı doğrulama ve Türkçe hata mesajları (`_i18n/messages.properties`)
+- Etkinlik kontenjanı atomik UPDATE ile korunur (eşzamanlı kayıt testi var)
+- Demo tarihleri sunucu açılırken bugüne kaydırılır (`server.js`)
 - Anonim bağışçıların adı gizlenir; e-posta adresleri herkese açık servisten hiç verilmez
 
 ---
@@ -120,7 +129,7 @@ Ayrıntılı gereksinimler, kararlar ve yol haritası: **[PROJE.md](PROJE.md)**
 |---|---|
 | `npm start` | Sunucuyu başlatır (http://localhost:4004) |
 | `npm run watch` | Değişikliklerde otomatik yeniden başlatır |
-| `npm test` | Backend testleri (26 test) |
+| `npm test` | Backend testleri (35 test) |
 | `npm run test:ui` | QUnit + OPA5 testleri, başsız Chrome'da (önce `npm start`) |
 | `npm run lint` | ESLint + UI5 Linter |
 | `npm run screenshots` | README ekran görüntülerini yeniden üretir (önce `npm start`) |

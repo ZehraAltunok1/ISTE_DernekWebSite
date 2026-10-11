@@ -1,6 +1,6 @@
 # Pati ve Gelecek Derneği — SAPUI5 Portföy Projesi
 
-> **Durum:** v0.5 · 10 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme tamamlandı**, sırada etkinlikler.
+> **Durum:** v0.6 · 11 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme ve etkinlikler tamamlandı**, sırada galeri ve üye alanı.
 > Bu doküman projenin **tek referans kaynağıdır**. Her yeni özellik önce buraya eklenir, sonra kodlanır.
 > Durum işaretleri: ✅ tamamlandı · 🟡 kısmen · ⬜ yapılmadı
 
@@ -114,7 +114,7 @@ Kimlik doğrulama CAP'in **mocked** (basic auth) yöntemiyle yapılır; tarayıc
 CAP backend, herkese açık site (ana sayfa, kampanyalar, detay, bağış, gönüllü, hakkımızda, SSS, iletişim, 404), Fiori elements yönetim paneli, eski projenin tasarımı ve fotoğrafları, backend + UI testleri, CI, ekran görüntüleri.
 
 ### Faz 2 — Topluluk 🟡
-✅ Sahiplendirme (hayvan ilanları + başvuru). ⬜ Etkinlikler + kayıt, galeri, üye girişi ve üye alanı.
+✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ⬜ Galeri, üye girişi ve üye alanı.
 
 ### Faz 3 — Cila ve Sunum ⬜
 Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
@@ -134,7 +134,7 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | PUB-05 | İletişim: form (ad, e-posta, konu, mesaj, KVKK onayı) + iletişim bilgileri | 1 | ✅ |
 | PUB-06 | 404 sayfası (geçersiz rota ve yayında olmayan kampanya) | 1 | ✅ |
 | PUB-07 | Sahiplendirme ilanları | 2 | ✅ (bkz. 6.4) |
-| PUB-08 | Etkinlikler | 2 | ⬜ |
+| PUB-08 | Etkinlikler | 2 | ✅ (bkz. 6.5) |
 | PUB-09 | Galeri | 2 | ⬜ |
 | PUB-10 | Mobil uyum (telefon menüsü, duyarlı ızgaralar) | 1 | ✅ |
 
@@ -168,8 +168,16 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | SAH-05 | Yönetim: hayvan List Report / Object Page (fotoğraf alt tablosu, başvurular), başvuru değerlendirme, dashboard sayacı | 2 | ✅ |
 | SAH-06 | Sahiplendirme sonrası takip notları | 3 | ⬜ |
 
-### 6.5 Etkinlikler — Faz 2 ⬜
-ETK-01…03 (bkz. v0.2): etkinlik, kayıt, kapasite kontrolü, katılım işaretleme.
+### 6.5 Etkinlikler ✅
+
+| Kod | Gereksinim | Faz | Durum |
+|---|---|---|---|
+| ETK-01 | Etkinlik kaydı: başlık, özet, açıklama, kategori, başlangıç/bitiş, yer, kontenjan, kapak görseli, durum (`Draft`/`Published`/`Cancelled`); taslaklar sitede görünmez | 2 | ✅ |
+| ETK-02 | Ziyaretçi kaydı: ad, e-posta, isteğe bağlı telefon, KVKK onayı; aynı e-postayla ikinci kayıt, iptal/geçmiş etkinliğe kayıt reddedilir | 2 | ✅ |
+| ETK-03 | Kontenjan kontrolü sunucuda **atomik** (`registeredCount < capacity` koşullu UPDATE) — aynı anda gelen kayıtlar kontenjanı aşamaz (testle doğrulanır) | 2 | ✅ |
+| ETK-04 | Site: Yaklaşan/Geçmiş/Tümü filtresi, tarih rozetli kartlar, detay sayfası, kayıt penceresi, kalan yer bilgisi; ana sayfada yaklaşan 3 etkinlik | 2 | ✅ |
+| ETK-05 | Yönetim: etkinlik List Report / Object Page (doluluk çubuğu, kayıtlar alt tablosu), katıldı/katılmadı işaretleme, dashboard sayacı; kayıtlı etkinlik silinemez, kontenjan kayıt sayısının altına düşürülemez | 2 | ✅ |
+| ETK-06 | Demo tarihleri: sunucu açılırken etkinlik ve kampanya tarihleri tam hafta olarak bugüne kaydırılır (`srv/lib/demo-dates.js`), böylece demo hep "güncel" görünür | 2 | ✅ |
 
 ### 6.6 İçerik
 
@@ -313,9 +321,11 @@ Bütün iş varlıkları `cuid` (UUID `ID`) ve `managed` (`createdAt/By`, `modif
 | `Animals` | name, species (`Cat`/`Dog`/`Other`), breed, ageMonths, sex, size, neutered, vaccinated, traits, healthNotes, story, coverImage, arrivalDate, status (`Available`/`Reserved`/`Adopted`/`InTreatment`) · → photos (composition), applications |
 | `AnimalPhotos` | animal, url, caption, sortOrder |
 | `AdoptionApplications` | animal, firstName, lastName, email, phone, city, housingType (`Apartment`/`House`/`Farm`), hasGarden, otherPets, experience, householdAgrees, consentGiven, status, adminNote |
+| `Events` | title, summary, description, category (`Adoption`/`Neutering`/`Feeding`/`Awareness`/`Meeting`), startDateTime, endDateTime, location, capacity, registeredCount, coverImage, status · → registrations |
+| `EventRegistrations` | event, name, email, phone, consentGiven, attendance (`Registered`/`Attended`/`Absent`) · (event, email) tekil |
 | `*StatusTexts`, `*TypeTexts`, `*MethodTexts` | code, text, criticality (kod tabloları) |
 
-Faz 2'de eklenecek: `Events`, `EventRegistrations`, `Albums`, `MediaItems`.
+Faz 2'de eklenecek: `Albums`, `MediaItems`.
 
 Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); böylece hem sitede hem yönetim panelinde çalışır.
 
@@ -337,7 +347,8 @@ Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); b
 | 9 | İletişim formu, QUnit + OPA5, GitHub Actions, ekran görüntüleri, görsel kaynakları | ✅ |
 | 9b | GitHub'a ilk push, `v0.1.0` etiketi | ✅ |
 | 10 | Faz 2a: sahiplendirme (backend, site, yönetim, testler) | ✅ |
-| 11+ | Faz 2b: etkinlikler, galeri, üye alanı · Faz 3 | ⬜ |
+| 11 | Faz 2b: etkinlikler (backend, site, yönetim, testler) | ✅ |
+| 12+ | Faz 2c: galeri, üye alanı · Faz 3 | ⬜ |
 
 ---
 

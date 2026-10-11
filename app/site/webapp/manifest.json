@@ -121,6 +121,16 @@
           "target": "animalDetail"
         },
         {
+          "pattern": "etkinlikler",
+          "name": "events",
+          "target": "events"
+        },
+        {
+          "pattern": "etkinlikler/{eventId}",
+          "name": "eventDetail",
+          "target": "eventDetail"
+        },
+        {
           "pattern": "bagis:?query:",
           "name": "donate",
           "target": "donate"
@@ -201,6 +211,16 @@
           "id": "animalDetail",
           "name": "AnimalDetail",
           "title": "{i18n>animalDetailTitle}"
+        },
+        "events": {
+          "id": "events",
+          "name": "Events",
+          "title": "{i18n>navEvents}"
+        },
+        "eventDetail": {
+          "id": "eventDetail",
+          "name": "EventDetail",
+          "title": "{i18n>eventDetailTitle}"
         }
       }
     }

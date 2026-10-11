@@ -27,6 +27,41 @@ type AnimalSize        : String(6)  enum { Small; Medium; Large };
 type AnimalStatus      : String(12) enum { Available; Reserved; Adopted; InTreatment };
 type HousingType       : String(10) enum { Apartment; House; Farm };
 
+type EventCategory     : String(12) enum { Adoption; Neutering; Feeding; Awareness; Meeting };
+type EventStatus       : String(10) enum { Draft; Published; Cancelled };
+type Attendance        : String(10) enum { Registered; Attended; Absent };
+
+// ─────────────────────────────────────────────────────────────
+// Etkinlikler
+// ─────────────────────────────────────────────────────────────
+
+entity Events : cuid, managed {
+    title           : String(120) @mandatory;
+    summary         : String(300) @mandatory;
+    description     : LargeString;
+    category        : EventCategory @mandatory;
+    startDateTime   : DateTime @mandatory;
+    endDateTime     : DateTime;
+    location        : String(150) @mandatory;
+    capacity        : Integer @mandatory  @assert.range: [ 1, 10000 ];
+    // Yalnızca kayıt action'ı ile sunucuda artar; elle düzenlenmez.
+    registeredCount : Integer default 0 @readonly;
+    coverImage      : String(255);
+    status          : EventStatus default 'Draft';
+    registrations   : Association to many EventRegistrations on registrations.event = $self;
+}
+
+/** Aynı e-posta aynı etkinliğe bir kez kaydolabilir (veritabanı seviyesinde de garanti). */
+@assert.unique: { eventEmail: [ event, email ] }
+entity EventRegistrations : cuid, managed {
+    event        : Association to Events @mandatory;
+    name         : String(100) @mandatory;
+    email        : Email       @mandatory;
+    phone        : Phone;
+    consentGiven : Boolean default false;
+    attendance   : Attendance default 'Registered';
+}
+
 // ─────────────────────────────────────────────────────────────
 // Sahiplendirme
 // ─────────────────────────────────────────────────────────────

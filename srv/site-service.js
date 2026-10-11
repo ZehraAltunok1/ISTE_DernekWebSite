@@ -11,7 +11,7 @@ const MAX_AMOUNT = 100000
 module.exports = class SiteService extends cds.ApplicationService {
     init() {
         const { Announcements } = this.entities
-        const { Campaigns, Donations, VolunteerApplications, VolunteerAreas, ContactMessages, Animals, AdoptionApplications } = cds.entities('pg')
+        const { Campaigns, Donations, VolunteerApplications, VolunteerAreas, ContactMessages, Animals, AdoptionApplications, Events, EventRegistrations } = cds.entities('pg')
 
         // Yalnızca yayın tarihi gelmiş ve süresi dolmamış duyurular
         this.before('READ', Announcements, req => {
@@ -155,6 +155,45 @@ module.exports = class SiteService extends cds.ApplicationService {
                 to: app.email,
                 subject: `${animal.name} için sahiplenme başvurunuz alındı`,
                 text: `Merhaba ${app.firstName},\n\n${animal.name} için başvurunuz bize ulaştı. Ekibimiz başvurunuzu inceleyip tanışma ziyareti için sizinle iletişime geçecek.`
+            })
+            return 'OK'
+        })
+
+        this.on('registerForEvent', async req => {
+            const data = req.data
+            const reg = {
+                event_ID: data.eventID,
+                name: clean(data.name),
+                email: clean(data.email).toLowerCase(),
+                phone: clean(data.phone) || null,
+                consentGiven: data.consentGiven === true
+            }
+
+            if (reg.name.length < 2) return req.reject(400, 'NAME_REQUIRED', 'name')
+            if (!EMAIL.test(reg.email)) return req.reject(400, 'EMAIL_INVALID', 'email')
+            if (reg.phone && !PHONE.test(reg.phone)) return req.reject(400, 'PHONE_INVALID', 'phone')
+            if (!reg.consentGiven) return req.reject(400, 'CONSENT_REQUIRED', 'consentGiven')
+
+            const event = await SELECT.one.from(Events, reg.event_ID).columns('title', 'status', 'startDateTime')
+            if (!event || event.status === 'Draft') return req.reject(404, 'EVENT_NOT_FOUND')
+            if (event.status === 'Cancelled') return req.reject(409, 'EVENT_CANCELLED')
+            if (new Date(event.startDateTime) <= new Date()) return req.reject(409, 'EVENT_PAST')
+
+            const existing = await SELECT.one.from(EventRegistrations).where({ event_ID: reg.event_ID, email: reg.email })
+            if (existing) return req.reject(409, 'EVENT_ALREADY_REGISTERED')
+
+            // Atomik kapasite kontrolü: sayaç yalnızca kapasitenin altındaysa artar.
+            // Aynı anda gelen iki kayıt son yeri birlikte alamaz.
+            const updated = await UPDATE(Events)
+                .set`registeredCount = registeredCount + 1`
+                .where`ID = ${reg.event_ID} and registeredCount < capacity`
+            if (!updated) return req.reject(409, 'EVENT_FULL')
+
+            await INSERT.into(EventRegistrations).entries(reg)
+            await mailer.send({
+                to: reg.email,
+                subject: `Kaydınız alındı: ${event.title}`,
+                text: `Merhaba ${reg.name},\n\n"${event.title}" etkinliğine kaydınız alındı. Etkinlikten önce hatırlatma e-postası göndereceğiz.`
             })
             return 'OK'
         })

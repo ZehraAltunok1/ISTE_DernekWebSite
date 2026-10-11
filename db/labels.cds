@@ -121,3 +121,27 @@ annotate pg.AdoptionApplications with @title: '{i18n>AdoptionApplication}' {
     adminNote       @title: '{i18n>AdminNote}';
     createdAt       @title: '{i18n>AppliedAt}';
 }
+
+annotate pg.Events with @title: '{i18n>Event}' {
+    title           @title: '{i18n>Title}';
+    summary         @title: '{i18n>Summary}';
+    description     @title: '{i18n>Description}' @UI.MultiLineText;
+    category        @title: '{i18n>EventCategory}';
+    startDateTime   @title: '{i18n>StartDateTime}';
+    endDateTime     @title: '{i18n>EndDateTime}';
+    location        @title: '{i18n>Location}';
+    capacity        @title: '{i18n>Capacity}';
+    registeredCount @title: '{i18n>RegisteredCount}';
+    coverImage      @title: '{i18n>CoverImage}';
+    status          @title: '{i18n>Status}';
+}
+
+annotate pg.EventRegistrations with @title: '{i18n>EventRegistration}' {
+    event        @title: '{i18n>Event}';
+    name         @title: '{i18n>FullName}';
+    email        @title: '{i18n>Email}';
+    phone        @title: '{i18n>Phone}';
+    consentGiven @title: '{i18n>ConsentGiven}';
+    attendance   @title: '{i18n>Attendance}';
+    createdAt    @title: '{i18n>RegisteredAt}';
+}

@@ -3,7 +3,7 @@ const mailer = require('./lib/mailer')
 
 module.exports = class AdminService extends cds.ApplicationService {
     init() {
-        const { Campaigns, Donations, VolunteerApplications, ContactMessages, Animals, AdoptionApplications } = this.entities
+        const { Campaigns, Donations, VolunteerApplications, ContactMessages, Animals, AdoptionApplications, Events, EventRegistrations } = this.entities
         const db = cds.entities('pg')
 
         // ── Kampanyalar ──────────────────────────────────────
@@ -98,6 +98,34 @@ module.exports = class AdminService extends cds.ApplicationService {
             })
             return SELECT.one.from(AdoptionApplications, app.ID)
         })
+
+        // ── Etkinlikler ──────────────────────────────────────
+
+        this.before('SAVE', Events, async req => {
+            const { ID, capacity, startDateTime, endDateTime } = req.data
+            if (startDateTime && endDateTime && endDateTime < startDateTime) req.error(400, 'END_BEFORE_START', 'endDateTime')
+            const active = await SELECT.one.from(db.Events, ID).columns('registeredCount')
+            if (active && capacity < active.registeredCount) {
+                req.error(400, 'CAPACITY_BELOW_REGISTRATIONS', 'capacity', [active.registeredCount])
+            }
+        })
+
+        this.before('DELETE', Events, async req => {
+            const id = req.params.at(-1)?.ID ?? req.params.at(-1)
+            const registration = await SELECT.one.from(db.EventRegistrations).where({ event_ID: id }).columns('ID')
+            if (registration) req.reject(409, 'EVENT_HAS_REGISTRATIONS')
+        })
+
+        const setAttendance = attendance => async req => {
+            const key = req.params.at(-1)
+            const id = key.ID ?? key
+            const row = await SELECT.one.from(db.EventRegistrations, id).columns('ID')
+            if (!row) return req.reject(404)
+            await UPDATE(db.EventRegistrations, id).with({ attendance })
+            return SELECT.one.from(EventRegistrations, id)
+        }
+        this.on('markAttended', EventRegistrations, setAttendance('Attended'))
+        this.on('markAbsent', EventRegistrations, setAttendance('Absent'))
 
         // ── İletişim mesajları ───────────────────────────────
 

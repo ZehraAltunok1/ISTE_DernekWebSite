@@ -629,6 +629,7 @@ html:root {
 .pgHeaderFaq       { --pg-header-photo: url("../images/photos/tesekkurler-kopek.jpg"); }
 .pgHeaderContact   { --pg-header-photo: url("../images/photos/kedi-tirmalama.jpg"); }
 .pgHeaderAdoption  { --pg-header-photo: url("../images/photos/gonullu-kedi-kopek.jpg"); }
+.pgHeaderEvents    { --pg-header-photo: url("../images/photos/sarilma-kopek.jpg"); }
 
 .pgPageHeader .pgContainer {
     align-items: center;
@@ -925,6 +926,51 @@ html:root {
 /* ══════════════════════════════════════════════════════════
    14. TELEFON
    ══════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════
+   ETKİNLİKLER
+   ══════════════════════════════════════════════════════════ */
+
+.pgEventCover {
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* Kartın solundaki takvim yaprağı: gün büyük, ay kısaltması küçük */
+.pgDateBadge {
+    flex: 0 0 auto;
+    min-width: 3.75rem;
+    padding: .5rem .25rem;
+    border-radius: var(--radius);
+    background: var(--clr-green-soft);
+    border: 1px solid var(--clr-border);
+}
+
+.pgDateBadgeDay.sapMText {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--clr-primary);
+}
+
+.pgDateBadgeMonth.sapMText {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--clr-accent-hover);
+}
+
+.pgInlineIcon.sapUiIcon {
+    margin-right: .375rem;
+    font-size: .875rem;
+    color: var(--clr-primary-mid);
+}
+
+.pgEventFacts > .sapMFlexItem + .sapMFlexItem {
+    margin-top: .75rem;
+}
 
 @media (max-width: 600px) {
     .pgHeader.sapTntToolHeader {

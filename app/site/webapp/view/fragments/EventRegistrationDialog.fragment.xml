@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog
+        id="registrationDialog"
+        title="{reg>/title}"
+        contentWidth="32rem"
+        stretch="{device>/system/phone}"
+        busy="{reg>/busy}"
+        busyIndicatorDelay="0">
+        <content>
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" columnsL="1" columnsM="1">
+                <Label text="{i18n>fullName}" labelFor="regName" required="true"/>
+                <Input id="regName" value="{reg>/name}" maxLength="100" valueState="{reg>/state/name}" valueStateText="{i18n>nameRequired}"/>
+                <Label text="{i18n>email}" labelFor="regEmail" required="true"/>
+                <Input id="regEmail" type="Email" value="{reg>/email}" maxLength="254" valueState="{reg>/state/email}" valueStateText="{i18n>emailInvalid}"/>
+                <Label text="{i18n>phoneOptional}" labelFor="regPhone"/>
+                <Input id="regPhone" type="Tel" value="{reg>/phone}" maxLength="20" placeholder="0555 000 00 00" valueState="{reg>/state/phone}" valueStateText="{i18n>phoneInvalid}"/>
+                <Label text=""/>
+                <HBox alignItems="Center" wrap="Wrap">
+                    <CheckBox id="regConsent" text="{i18n>eventConsentText}" selected="{reg>/consentGiven}" valueState="{reg>/state/consentGiven}"/>
+                    <Link text="{i18n>privacyNotice}" press=".onShowPrivacy" class="sapUiTinyMarginBegin"/>
+                </HBox>
+            </f:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="regSubmit" text="{i18n>completeRegistration}" type="Emphasized" press=".onSubmitRegistration"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>cancel}" press=".onCloseRegistration"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

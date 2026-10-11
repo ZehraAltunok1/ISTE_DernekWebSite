@@ -1,0 +1,79 @@
+<mvc:View
+    controllerName="pg.site.controller.EventDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgSection pgContainer">
+            <Button text="{i18n>backToEvents}" icon="sap-icon://nav-back" type="Transparent" press=".onNavEvents" class="sapUiSmallMarginBottom"/>
+
+            <l:Grid defaultSpan="XL7 L7 M12 S12" hSpacing="2" vSpacing="2">
+                <VBox>
+                    <Image src="{coverImage}" alt="{title}" width="100%" densityAware="false" class="pgDetailCover"/>
+                    <VBox class="pgFormCard sapUiMediumMarginTop">
+                        <Title text="{i18n>aboutEvent}" level="H2" class="pgSectionTitle"/>
+                        <Text text="{description}" class="pgBodyText sapUiSmallMarginTop"/>
+                    </VBox>
+                </VBox>
+
+                <VBox class="pgDetailSummary">
+                    <layoutData>
+                        <l:GridData span="XL5 L5 M12 S12"/>
+                    </layoutData>
+                    <HBox wrap="Wrap">
+                        <ObjectStatus text="{_category/text}" icon="{_category/icon}" state="Information" inverted="true" class="sapUiTinyMarginEnd"/>
+                        <ObjectStatus text="{_status/text}" state="Error" inverted="true" visible="{= %{status} === 'Cancelled' }"/>
+                    </HBox>
+                    <Title text="{title}" level="H1" wrapping="true" class="pgDetailTitle"/>
+                    <Text text="{summary}" class="pgMuted sapUiSmallMarginTop"/>
+
+                    <VBox class="sapUiMediumMarginTop pgEventFacts">
+                        <HBox alignItems="Center">
+                            <core:Icon src="sap-icon://calendar" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>eventDateLabel}"/>
+                                <Text text="{path: 'startDateTime', targetType: 'any', formatter: '.formatter.eventDate'}"/>
+                            </VBox>
+                        </HBox>
+                        <HBox alignItems="Center">
+                            <core:Icon src="sap-icon://time-entry-request" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>eventTimeLabel}"/>
+                                <Text text="{parts: [{path: 'startDateTime', targetType: 'any'}, {path: 'endDateTime', targetType: 'any'}], formatter: '.formatter.eventTime'}"/>
+                            </VBox>
+                        </HBox>
+                        <HBox alignItems="Center">
+                            <core:Icon src="sap-icon://map-2" class="pgStepIcon"/>
+                            <VBox class="sapUiSmallMarginBegin">
+                                <Label text="{i18n>eventLocationLabel}"/>
+                                <Text text="{location}"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <ProgressIndicator
+                        class="sapUiSmallMarginTop"
+                        percentValue="{parts: [{path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.percent'}"
+                        displayValue="{parts: [{path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.capacityText'}"
+                        showValue="true"/>
+                    <ObjectStatus
+                        text="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationHint'}"
+                        state="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationState'}"/>
+
+                    <Button
+                        id="registerButton"
+                        text="{i18n>registerForEvent}"
+                        icon="sap-icon://add-employee"
+                        width="100%"
+                        enabled="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.canRegister'}"
+                        press=".onOpenRegistration"
+                        class="pgBtnPrimary pgBtnBlock sapUiMediumMarginTop"/>
+                </VBox>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

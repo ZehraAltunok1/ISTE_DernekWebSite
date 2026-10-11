@@ -31,7 +31,14 @@ sap.ui.define([
                 pendingAdoptions: this._count("/AdoptionApplications", new Filter("status", FilterOperator.EQ, "Pending")),
                 newMessages: this._count("/ContactMessages", new Filter("status", FilterOperator.EQ, "New")),
                 activeCampaigns: this._count("/Campaigns", new Filter("status", FilterOperator.EQ, "Active")),
-                activeAnnouncements: this._count("/Announcements", new Filter("isActive", FilterOperator.EQ, true))
+                activeAnnouncements: this._count("/Announcements", new Filter("isActive", FilterOperator.EQ, true)),
+                upcomingEvents: this._count("/Events", new Filter({
+                    filters: [
+                        new Filter("status", FilterOperator.EQ, "Published"),
+                        new Filter("startDateTime", FilterOperator.GT, new Date().toISOString())
+                    ],
+                    and: true
+                }))
             };
             Object.keys(oCounts).forEach(function (sKey) {
                 oCounts[sKey].then(function (iCount) {
@@ -47,7 +54,7 @@ sap.ui.define([
         _count: function (sPath, oFilter) {
             var aFilters = [oFilter];
             // Taslak destekli entity'lerde yalnızca etkin (kaydedilmiş) kayıtları say
-            if (sPath === "/Campaigns" || sPath === "/Announcements") {
+            if (["/Campaigns", "/Announcements", "/Events"].indexOf(sPath) >= 0) {
                 aFilters.push(new Filter("IsActiveEntity", FilterOperator.EQ, true));
             }
             var oBinding = this.getView().getModel().bindList(sPath, null, null, aFilters, { $count: true });

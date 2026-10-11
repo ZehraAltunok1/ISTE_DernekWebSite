@@ -25,7 +25,10 @@ const shots = [
     { name: "12-sahiplen", url: "/site/webapp/index.html#/sahiplen" },
     { name: "13-hayvan-detay", url: "/site/webapp/index.html#/sahiplen/f1000000-0000-4000-8000-000000000001" },
     { name: "14-yonetim-hayvan", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Animals(ID=f1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true },
-    { name: "15-yonetim-sahiplenme-basvurulari", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/AdoptionApplications", admin: true }
+    { name: "15-yonetim-sahiplenme-basvurulari", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/AdoptionApplications", admin: true },
+    { name: "16-etkinlikler", url: "/site/webapp/index.html#/etkinlikler" },
+    { name: "17-etkinlik-detay", url: "/site/webapp/index.html#/etkinlikler/e1000000-0000-4000-8000-000000000001" },
+    { name: "18-yonetim-etkinlik", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Events(ID=e1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true }
 ];
 
 /** UI5 yüklenip bekleyen istekler bitene kadar bekler. */

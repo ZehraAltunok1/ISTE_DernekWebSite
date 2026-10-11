@@ -180,6 +180,26 @@
           "pattern": "AdoptionApplications({key}):?query:",
           "name": "AdoptionApplicationsObjectPage",
           "target": "AdoptionApplicationsObjectPage"
+        },
+        {
+          "pattern": "Events:?query:",
+          "name": "EventsList",
+          "target": "EventsList"
+        },
+        {
+          "pattern": "Events({key}):?query:",
+          "name": "EventsObjectPage",
+          "target": "EventsObjectPage"
+        },
+        {
+          "pattern": "EventRegistrations:?query:",
+          "name": "EventRegistrationsList",
+          "target": "EventRegistrationsList"
+        },
+        {
+          "pattern": "EventRegistrations({key}):?query:",
+          "name": "EventRegistrationsObjectPage",
+          "target": "EventRegistrationsObjectPage"
         }
       ],
       "targets": {
@@ -532,6 +552,82 @@
           "options": {
             "settings": {
               "contextPath": "/AdoptionApplications",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "EventsList": {
+          "type": "Component",
+          "id": "EventsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Events",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Events": {
+                  "detail": {
+                    "route": "EventsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EventsObjectPage": {
+          "type": "Component",
+          "id": "EventsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Events",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "EventRegistrationsList": {
+          "type": "Component",
+          "id": "EventRegistrationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/EventRegistrations",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "EventRegistrations": {
+                  "detail": {
+                    "route": "EventRegistrationsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EventRegistrationsObjectPage": {
+          "type": "Component",
+          "id": "EventRegistrationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/EventRegistrations",
               "editableHeaderContent": false
             }
           }

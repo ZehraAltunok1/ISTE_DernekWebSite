@@ -1,0 +1,39 @@
+<!--
+    Etkinlik kartı (liste şablonu): solda tarih rozeti, sağda başlık, saat, yer ve kontenjan.
+    Tarih/saat alanları targetType 'any' ile ham değer olarak formatter'a gelir.
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+    <f:Card class="pgCampaignCard pgEventCard" width="100%">
+        <f:content>
+            <VBox width="100%" renderType="Bare">
+                <Image src="{coverImage}" alt="{title}" width="100%" densityAware="false" class="pgEventCover"/>
+                <HBox class="pgCardBody" alignItems="Start">
+                    <VBox class="pgDateBadge" alignItems="Center" justifyContent="Center">
+                        <Text text="{path: 'startDateTime', targetType: 'any', formatter: '.formatter.eventDay'}" class="pgDateBadgeDay"/>
+                        <Text text="{path: 'startDateTime', targetType: 'any', formatter: '.formatter.eventMonth'}" class="pgDateBadgeMonth"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginBegin" width="100%">
+                        <HBox wrap="Wrap">
+                            <ObjectStatus text="{_category/text}" icon="{_category/icon}" state="Information" inverted="true" class="sapUiTinyMarginEnd"/>
+                            <ObjectStatus text="{_status/text}" state="Error" inverted="true" visible="{= %{status} === 'Cancelled' }"/>
+                        </HBox>
+                        <Title text="{title}" level="H3" wrapping="true" class="sapUiTinyMarginTop"/>
+                        <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                            <core:Icon src="sap-icon://time-entry-request" class="pgInlineIcon"/>
+                            <Text text="{parts: [{path: 'startDateTime', targetType: 'any'}, {path: 'endDateTime', targetType: 'any'}], formatter: '.formatter.eventTime'}" class="pgMuted"/>
+                        </HBox>
+                        <HBox alignItems="Center">
+                            <core:Icon src="sap-icon://map-2" class="pgInlineIcon"/>
+                            <Text text="{location}" class="pgMuted" maxLines="1"/>
+                        </HBox>
+                        <ObjectStatus
+                            class="sapUiTinyMarginTop"
+                            text="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationHint'}"
+                            state="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationState'}"/>
+                        <Button text="{i18n>details}" press=".onEventPress" class="pgBtnOutline pgBtnSmall sapUiSmallMarginTop"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </f:content>
+    </f:Card>
+</core:FragmentDefinition>

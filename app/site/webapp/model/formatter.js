@@ -13,6 +13,10 @@ sap.ui.define([
     var oCurrency = NumberFormat.getCurrencyInstance({ currencyCode: false, maxFractionDigits: 0 });
     var oInteger = NumberFormat.getIntegerInstance({ groupingEnabled: true });
     var oDate = DateFormat.getDateInstance({ style: "long" });
+    var oDay = DateFormat.getDateInstance({ pattern: "d" });
+    var oMonth = DateFormat.getDateInstance({ pattern: "MMM" });
+    var oFullDate = DateFormat.getDateInstance({ pattern: "d MMMM y EEEE" });
+    var oTime = DateFormat.getTimeInstance({ pattern: "HH:mm" });
     var MS_PER_DAY = 24 * 60 * 60 * 1000;
 
     var formatter = {
@@ -115,6 +119,72 @@ sap.ui.define([
                 case "InTreatment": return "Information";
                 default: return "None";
             }
+        },
+
+        // ── Etkinlikler ─────────────────────────────────────
+
+        /** "2026-10-18T07:00:00Z" → "18" (tarih rozeti) */
+        eventDay: function (sDateTime) {
+            return sDateTime ? oDay.format(new Date(sDateTime)) : "";
+        },
+
+        /** "2026-10-18T07:00:00Z" → "EKİ" */
+        eventMonth: function (sDateTime) {
+            return sDateTime ? oMonth.format(new Date(sDateTime)).toLocaleUpperCase("tr-TR") : "";
+        },
+
+        /** → "18 Ekim 2026 Pazar" */
+        eventDate: function (sDateTime) {
+            return sDateTime ? oFullDate.format(new Date(sDateTime)) : "";
+        },
+
+        /** (başlangıç, bitiş) → "10:00 – 16:00" */
+        eventTime: function (sStart, sEnd) {
+            if (!sStart) {
+                return "";
+            }
+            var sText = oTime.format(new Date(sStart));
+            return sEnd ? sText + " – " + oTime.format(new Date(sEnd)) : sText;
+        },
+
+        /** Kayıt yapılabilir mi? Yayında + gelecekte + boş yer var. */
+        canRegister: function (sStatus, sStart, vRegistered, vCapacity) {
+            return sStatus === "Published" && !!sStart && new Date(sStart) > new Date()
+                && toNumber(vRegistered) < toNumber(vCapacity);
+        },
+
+        /** (12, 60) → "12 / 60 kişi". this: controller */
+        capacityText: function (vRegistered, vCapacity) {
+            return this.getText("capacityText", [toNumber(vRegistered), toNumber(vCapacity)]);
+        },
+
+        /** Kayıt durumunu anlatan kısa metin. this: controller */
+        registrationHint: function (sStatus, sStart, vRegistered, vCapacity) {
+            var nLeft = toNumber(vCapacity) - toNumber(vRegistered);
+            if (sStatus === "Cancelled") {
+                return this.getText("eventCancelled");
+            }
+            if (sStart && new Date(sStart) <= new Date()) {
+                return this.getText("eventPast");
+            }
+            if (nLeft <= 0) {
+                return this.getText("eventFull");
+            }
+            return this.getText("seatsLeft", [nLeft]);
+        },
+
+        /** Kayıt durumu → ObjectStatus rengi (sıra registrationHint ile aynı) */
+        registrationState: function (sStatus, sStart, vRegistered, vCapacity) {
+            if (sStatus === "Cancelled") {
+                return "Error";
+            }
+            if (sStart && new Date(sStart) <= new Date()) {
+                return "None";
+            }
+            if (toNumber(vRegistered) >= toNumber(vCapacity)) {
+                return "Error";
+            }
+            return toNumber(vCapacity) - toNumber(vRegistered) <= 5 ? "Warning" : "Success";
         },
 
         /** Duyuru türü → liste satırının renkli şeridi (sap.ui.core.MessageType / IndicationColor) */

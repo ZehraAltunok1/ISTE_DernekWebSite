@@ -1,4 +1,6 @@
 using pg from '../db/schema';
+using from '../db/codes';
+using from '../db/codes-events';
 
 /**
  * Herkese açık servis — sitenin ziyaretçileri kullanır.
@@ -101,6 +103,30 @@ service SiteService {
     @readonly
     entity AnimalPhotos    as projection on pg.AnimalPhotos;
 
+    /** Yayındaki ve iptal edilen etkinlikler (taslaklar gizli). Kayıt listesi (kişisel veri) verilmez. */
+    @readonly
+    entity Events          as
+        projection on pg.Events {
+            ID,
+            title,
+            summary,
+            description,
+            category,
+            startDateTime,
+            endDateTime,
+            location,
+            capacity,
+            registeredCount,
+            coverImage,
+            status,
+            _category,
+            _status
+        }
+        where
+            status in (
+                'Published', 'Cancelled'
+            );
+
     // ── Action'lar ──────────────────────────────────────────
 
     type DonationResult {
@@ -144,6 +170,13 @@ service SiteService {
                             otherPets : String(200),
                             experience : String(1000),
                             householdAgrees : Boolean,
+                            consentGiven : Boolean) returns String;
+
+    /** Etkinliğe kayıt — kapasite sunucuda atomik olarak kontrol edilir. */
+    action registerForEvent(eventID : UUID,
+                            name : String(100),
+                            email : String(254),
+                            phone : String(20),
                             consentGiven : Boolean) returns String;
 
     /** İletişim formu mesajı oluşturur. */

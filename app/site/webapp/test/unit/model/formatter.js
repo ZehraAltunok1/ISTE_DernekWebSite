@@ -92,4 +92,46 @@ sap.ui.define([
         assert.strictEqual(formatter.animalStatusState("Reserved"), "Warning");
         assert.strictEqual(formatter.animalStatusState("Adopted"), "None");
     });
+
+    QUnit.module("formatter — etkinlikler");
+
+    var isoFromNow = function (iHours) {
+        return new Date(Date.now() + iHours * 3600 * 1000).toISOString();
+    };
+
+    QUnit.test("tarih rozeti ve saat aralığı (yerel saatle)", function (assert) {
+        var sStart = new Date(2026, 9, 18, 10, 0).toISOString();
+        var sEnd = new Date(2026, 9, 18, 16, 30).toISOString();
+        assert.strictEqual(formatter.eventDay(sStart), "18");
+        assert.strictEqual(formatter.eventMonth(sStart), "EKİ", "Türkçe büyük harf (i → İ)");
+        assert.strictEqual(formatter.eventTime(sStart, sEnd), "10:00 – 16:30");
+        assert.strictEqual(formatter.eventTime(sStart, null), "10:00", "bitiş yoksa yalnızca başlangıç");
+        assert.strictEqual(formatter.eventDay(null), "");
+    });
+
+    QUnit.test("canRegister: yayında + gelecekte + boş yer", function (assert) {
+        var sFuture = isoFromNow(48);
+        assert.ok(formatter.canRegister("Published", sFuture, 3, 60));
+        assert.notOk(formatter.canRegister("Published", sFuture, 4, 4), "kontenjan dolu");
+        assert.notOk(formatter.canRegister("Cancelled", sFuture, 0, 30), "iptal");
+        assert.notOk(formatter.canRegister("Published", isoFromNow(-2), 0, 30), "başlamış");
+    });
+
+    QUnit.test("registrationHint / registrationState: iptal > geçmiş > dolu > kalan yer", function (assert) {
+        var hint = formatter.registrationHint.bind(oFakeController);
+        var sFuture = isoFromNow(48);
+        var sPast = isoFromNow(-48);
+        assert.strictEqual(hint("Cancelled", sFuture, 0, 30), "eventCancelled");
+        assert.strictEqual(hint("Published", sPast, 30, 30), "eventPast", "geçmiş etkinlik dolu da olsa 'gerçekleşti'");
+        assert.strictEqual(hint("Published", sFuture, 4, 4), "eventFull");
+        assert.strictEqual(hint("Published", sFuture, "3", "60"), "seatsLeft:57");
+        assert.strictEqual(formatter.registrationState("Published", sPast, 30, 30), "None");
+        assert.strictEqual(formatter.registrationState("Published", sFuture, 4, 4), "Error");
+        assert.strictEqual(formatter.registrationState("Published", sFuture, 12, 15), "Warning", "5 veya daha az yer");
+        assert.strictEqual(formatter.registrationState("Published", sFuture, 3, 60), "Success");
+    });
+
+    QUnit.test("capacityText", function (assert) {
+        assert.strictEqual(formatter.capacityText.call(oFakeController, "3", 60), "capacityText:3,60");
+    });
 });

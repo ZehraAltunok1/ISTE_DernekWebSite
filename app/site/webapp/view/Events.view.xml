@@ -1,0 +1,53 @@
+<mvc:View
+    controllerName="pg.site.controller.Events"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderEvents">
+            <VBox class="pgContainer">
+                <Text text="{i18n>eventsEyebrow}" class="pgEyebrow"/>
+                <Title text="{i18n>eventsTitle}" level="H1" class="pgPageTitle" wrapping="true"/>
+                <Text text="{i18n>eventsIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <SegmentedButton id="timeFilter" selectedKey="Upcoming" selectionChange=".onFilterChange" class="sapUiSmallMarginBottom">
+                <items>
+                    <SegmentedButtonItem key="Upcoming" text="{i18n>upcoming}"/>
+                    <SegmentedButtonItem key="Past" text="{i18n>past}"/>
+                    <SegmentedButtonItem key="All" text="{i18n>filterAll}"/>
+                </items>
+            </SegmentedButton>
+
+            <!-- Filtre controller'da kurulur: "yaklaşan" = başlangıç tarihi şimdiden sonra -->
+            <l:Grid
+                id="eventGrid"
+                defaultSpan="XL4 L4 M6 S12"
+                vSpacing="1.5"
+                hSpacing="1.5"
+                content="{
+                    path: '/Events',
+                    parameters: {$count: true},
+                    sorter: {path: 'startDateTime'},
+                    suspended: true,
+                    events: {dataReceived: '.onDataReceived'},
+                    templateShareable: false
+                }">
+                <core:Fragment fragmentName="pg.site.view.fragments.EventCard" type="XML"/>
+            </l:Grid>
+
+            <IllustratedMessage
+                id="noEvents"
+                visible="false"
+                illustrationType="sapIllus-NoActivities"
+                title="{i18n>noEventsTitle}"
+                description="{i18n>noEventsText}"/>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

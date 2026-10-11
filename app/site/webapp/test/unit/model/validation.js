@@ -73,4 +73,15 @@ sap.ui.define([
         assert.strictEqual(oResult.states.householdAgrees, "Error");
         assert.strictEqual(oResult.states.housingType, "Error");
     });
+
+    QUnit.test("checkEventRegistration: telefon isteğe bağlı, onay zorunlu", function (assert) {
+        var oValid = { name: "Ada Test", email: "ada@example.com", phone: "", consentGiven: true };
+        assert.ok(validation.checkEventRegistration(oValid).valid, "telefonsuz geçerli");
+        assert.notOk(validation.checkEventRegistration(Object.assign({}, oValid, { phone: "12" })).valid, "yazıldıysa geçerli olmalı");
+        var oResult = validation.checkEventRegistration({ name: "", email: "x", phone: "", consentGiven: false });
+        assert.deepEqual(
+            Object.keys(oResult.states).filter(function (k) { return oResult.states[k] === "Error"; }).sort(),
+            ["consentGiven", "email", "name"]
+        );
+    });
 });
