@@ -1,6 +1,6 @@
 # Pati ve Gelecek Derneği — SAPUI5 Portföy Projesi
 
-> **Durum:** v0.6 · 11 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme ve etkinlikler tamamlandı**, sırada galeri ve üye alanı.
+> **Durum:** v0.7 · 11 Ekim 2026 — Faz 1 tamamlandı · **Faz 2: sahiplendirme, etkinlikler ve galeri tamamlandı**, sırada üye alanı.
 > Bu doküman projenin **tek referans kaynağıdır**. Her yeni özellik önce buraya eklenir, sonra kodlanır.
 > Durum işaretleri: ✅ tamamlandı · 🟡 kısmen · ⬜ yapılmadı
 
@@ -114,7 +114,7 @@ Kimlik doğrulama CAP'in **mocked** (basic auth) yöntemiyle yapılır; tarayıc
 CAP backend, herkese açık site (ana sayfa, kampanyalar, detay, bağış, gönüllü, hakkımızda, SSS, iletişim, 404), Fiori elements yönetim paneli, eski projenin tasarımı ve fotoğrafları, backend + UI testleri, CI, ekran görüntüleri.
 
 ### Faz 2 — Topluluk 🟡
-✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ⬜ Galeri, üye girişi ve üye alanı.
+✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ✅ Galeri. ⬜ Üye girişi ve üye alanı.
 
 ### Faz 3 — Cila ve Sunum ⬜
 Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
@@ -135,7 +135,7 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | PUB-06 | 404 sayfası (geçersiz rota ve yayında olmayan kampanya) | 1 | ✅ |
 | PUB-07 | Sahiplendirme ilanları | 2 | ✅ (bkz. 6.4) |
 | PUB-08 | Etkinlikler | 2 | ✅ (bkz. 6.5) |
-| PUB-09 | Galeri | 2 | ⬜ |
+| PUB-09 | Galeri: albüm listesi (fotoğraf sayısıyla), albüm sayfası (veriden boyutlanan ızgara), fotoğrafı büyütme (`LightBox`); Hakkımızda seçkisi veriden | 2 | ✅ |
 | PUB-10 | Mobil uyum (telefon menüsü, duyarlı ızgaralar) | 1 | ✅ |
 
 ### 6.2 Bağış (simülasyon)
@@ -184,7 +184,7 @@ Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
 | Kod | Gereksinim | Faz | Durum |
 |---|---|---|---|
 | ICR-01 | Duyurular: tür, yayın/bitiş tarihi; süresi dolan ve pasif olanlar sitede görünmez | 1 | ✅ |
-| ICR-02 | Galeri yönetimi | 2 | ⬜ |
+| ICR-02 | Galeri yönetimi: albüm + fotoğraf alt tablosu (taslak), etkinliğe bağlama, yayın durumu, ızgara boyutu, "Hakkımızda'da göster"; fotoğrafsız albüm yayınlanamaz, görsel adresi sunucuda doğrulanır | 2 | ✅ |
 | ICR-03 | Ana sayfa sayaçları yönetim panelinden düzenlenir | 1 | ✅ |
 
 ### 6.7 Üye Alanı — Faz 2 ⬜
@@ -325,7 +325,8 @@ Bütün iş varlıkları `cuid` (UUID `ID`) ve `managed` (`createdAt/By`, `modif
 | `EventRegistrations` | event, name, email, phone, consentGiven, attendance (`Registered`/`Attended`/`Absent`) · (event, email) tekil |
 | `*StatusTexts`, `*TypeTexts`, `*MethodTexts` | code, text, criticality (kod tabloları) |
 
-Faz 2'de eklenecek: `Albums`, `MediaItems`.
+| `Albums` | title, description, albumDate, coverImage, event (isteğe bağlı), isPublished · → media (composition) |
+| `MediaItems` | album, url, caption, layout (`Normal`/`Wide`/`Tall`/`Large`), featured, sortOrder |
 
 Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); böylece hem sitede hem yönetim panelinde çalışır.
 
@@ -348,7 +349,8 @@ Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); b
 | 9b | GitHub'a ilk push, `v0.1.0` etiketi | ✅ |
 | 10 | Faz 2a: sahiplendirme (backend, site, yönetim, testler) | ✅ |
 | 11 | Faz 2b: etkinlikler (backend, site, yönetim, testler) | ✅ |
-| 12+ | Faz 2c: galeri, üye alanı · Faz 3 | ⬜ |
+| 12 | Faz 2c: galeri (backend, site, yönetim, testler) | ✅ |
+| 13+ | Faz 2d: üye alanı · Faz 3 | ⬜ |
 
 ---
 

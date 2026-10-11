@@ -1,6 +1,7 @@
 using pg from '../db/schema';
 using from '../db/codes';
 using from '../db/codes-events';
+using from '../db/codes-gallery';
 
 /**
  * Herkese açık servis — sitenin ziyaretçileri kullanır.
@@ -126,6 +127,35 @@ service SiteService {
             status in (
                 'Published', 'Cancelled'
             );
+
+    /** Yayındaki albümler; yayında olmayanlar ve fotoğrafları hiç görünmez. */
+    @readonly
+    entity Albums          as
+        projection on pg.Albums {
+            ID,
+            title,
+            description,
+            albumDate,
+            coverImage,
+            event,
+            media
+        }
+        where
+            isPublished = true;
+
+    @readonly
+    entity MediaItems      as
+        projection on pg.MediaItems {
+            ID,
+            album,
+            url,
+            caption,
+            layout,
+            featured,
+            sortOrder
+        }
+        where
+            album.isPublished = true;
 
     // ── Action'lar ──────────────────────────────────────────
 

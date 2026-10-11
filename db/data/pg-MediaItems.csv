@@ -1,0 +1,16 @@
+ID;album_ID;url;caption;layout;featured;sortOrder
+a2000000-0000-4000-8000-000000000001;a1000000-0000-4000-8000-000000000001;/site/webapp/images/photos/sokak-kedisi.jpg;Mahallenin neşesi Tekir mamasını bekliyor;Wide;false;1
+a2000000-0000-4000-8000-000000000002;a1000000-0000-4000-8000-000000000001;/site/webapp/images/photos/gonullu-eller.jpg;Mama paketlerini birlikte hazırladık;Tall;false;2
+a2000000-0000-4000-8000-000000000003;a1000000-0000-4000-8000-000000000001;/site/webapp/images/photos/kus-evi-agac.jpg;Parktaki kuş evlerini de doldurduk;Normal;true;4
+a2000000-0000-4000-8000-000000000004;a1000000-0000-4000-8000-000000000001;/site/webapp/images/photos/kedi-tirmalama.jpg;Besleme noktasındaki misafirimiz;Normal;true;5
+a2000000-0000-4000-8000-000000000005;a1000000-0000-4000-8000-000000000001;/site/webapp/images/photos/barinak-kopekler.jpg;Barınak ziyareti ile günü kapattık;Wide;false;3
+a2000000-0000-4000-8000-000000000006;a1000000-0000-4000-8000-000000000002;/site/webapp/images/photos/golden-sevgi.jpg;Karamel ve yeni ailesinin ilk günü;Wide;true;1
+a2000000-0000-4000-8000-000000000007;a1000000-0000-4000-8000-000000000002;/site/webapp/images/photos/tesekkurler-kopek.jpg;Teşekkürler diyen bir bakış;Tall;true;2
+a2000000-0000-4000-8000-000000000008;a1000000-0000-4000-8000-000000000002;/site/webapp/images/photos/sarilma-kopek.jpg;Sarılmanın en güzel hali;Tall;true;3
+a2000000-0000-4000-8000-000000000009;a1000000-0000-4000-8000-000000000002;/site/webapp/images/photos/hero-kopek-cocuk.jpg;Yeni en iyi arkadaşlar;Normal;false;4
+a2000000-0000-4000-8000-000000000010;a1000000-0000-4000-8000-000000000002;/site/webapp/images/photos/kadin-kopek-park.jpg;Parkta ilk yürüyüş;Normal;false;5
+a2000000-0000-4000-8000-000000000011;a1000000-0000-4000-8000-000000000003;/site/webapp/images/photos/veteriner-muayene.jpg;Genel sağlık kontrolü;Wide;false;1
+a2000000-0000-4000-8000-000000000012;a1000000-0000-4000-8000-000000000003;/site/webapp/images/photos/gonullu-veteriner.jpg;Gönüllü veterinerimiz iş başında;Tall;false;2
+a2000000-0000-4000-8000-000000000013;a1000000-0000-4000-8000-000000000003;/site/webapp/images/photos/kopek-kurtarma.jpg;Kurtarma ekibimiz sahada;Normal;false;3
+a2000000-0000-4000-8000-000000000014;a1000000-0000-4000-8000-000000000003;/site/webapp/images/photos/gonullu-kedi-kopek.jpg;Tedavisi biten dostlarımız;Normal;false;4
+a2000000-0000-4000-8000-000000000015;a1000000-0000-4000-8000-000000000004;/site/webapp/images/photos/barinak-kopekler.jpg;Kulübe yerleri belirlendi;Normal;false;1

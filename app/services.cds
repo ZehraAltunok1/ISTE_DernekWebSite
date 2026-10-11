@@ -2,3 +2,4 @@
 using from './yonetim/annotations';
 using from './yonetim/annotations-adoption';
 using from './yonetim/annotations-events';
+using from './yonetim/annotations-gallery';

@@ -28,7 +28,10 @@ const shots = [
     { name: "15-yonetim-sahiplenme-basvurulari", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/AdoptionApplications", admin: true },
     { name: "16-etkinlikler", url: "/site/webapp/index.html#/etkinlikler" },
     { name: "17-etkinlik-detay", url: "/site/webapp/index.html#/etkinlikler/e1000000-0000-4000-8000-000000000001" },
-    { name: "18-yonetim-etkinlik", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Events(ID=e1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true }
+    { name: "18-yonetim-etkinlik", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Events(ID=e1000000-0000-4000-8000-000000000001,IsActiveEntity=true)", admin: true },
+    { name: "19-galeri", url: "/site/webapp/index.html#/galeri" },
+    { name: "20-album", url: "/site/webapp/index.html#/galeri/a1000000-0000-4000-8000-000000000002" },
+    { name: "21-yonetim-album", url: "/yonetim/webapp/index.html#PatiVeGelecek-manage&/Albums(ID=a1000000-0000-4000-8000-000000000002,IsActiveEntity=true)", admin: true }
 ];
 
 /** UI5 yüklenip bekleyen istekler bitene kadar bekler. */

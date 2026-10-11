@@ -97,13 +97,26 @@
                 <Text text="{i18n>galleryEyebrow}" class="pgEyebrow" textAlign="Center"/>
                 <Title text="{i18n>galleryTitle}" level="H2" class="pgSectionTitle" textAlign="Center"/>
             </VBox>
-            <FlexBox class="pgGallery pgContainer sapUiMediumMarginTop" renderType="Bare">
-                <Image src="images/photos/golden-sevgi.jpg" alt="{i18n>gallery1}" densityAware="false" class="pgGalleryItem pgGalleryWide"/>
-                <Image src="images/photos/tesekkurler-kopek.jpg" alt="{i18n>gallery2}" densityAware="false" class="pgGalleryItem pgGalleryTall"/>
-                <Image src="images/photos/sarilma-kopek.jpg" alt="{i18n>gallery3}" densityAware="false" class="pgGalleryItem pgGalleryTall"/>
-                <Image src="images/photos/kus-evi-agac.jpg" alt="{i18n>gallery4}" densityAware="false" class="pgGalleryItem"/>
-                <Image src="images/photos/kedi-tirmalama.jpg" alt="{i18n>gallery5}" densityAware="false" class="pgGalleryItem"/>
+            <!-- Seçki: yönetim panelinde "Hakkımızda'da göster" işaretli fotoğraflar (yalnızca yayındaki albümlerden) -->
+            <FlexBox
+                id="featuredGallery"
+                class="pgGallery pgContainer sapUiMediumMarginTop"
+                renderType="Bare"
+                items="{
+                    path: '/MediaItems',
+                    filters: [{path: 'featured', operator: 'EQ', value1: true}],
+                    sorter: {path: 'sortOrder'},
+                    templateShareable: false
+                }">
+                <Image src="{url}" alt="{caption}" densityAware="false" class="pgGalleryItem" press=".onOpenPhoto">
+                    <customData>
+                        <core:CustomData key="layout" value="{layout}" writeToDom="true"/>
+                    </customData>
+                </Image>
             </FlexBox>
+            <VBox alignItems="Center" class="sapUiMediumMarginTop">
+                <Button text="{i18n>viewGallery}" icon="sap-icon://camera" press=".onNavGallery" class="pgBtnOutline"/>
+            </VBox>
         </VBox>
 
         <!-- Çağrı bandı -->

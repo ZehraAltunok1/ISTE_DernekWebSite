@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="pg.site.controller.Gallery"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgPageHeader pgHeaderGallery">
+            <VBox class="pgContainer">
+                <Text text="{i18n>galleryEyebrow}" class="pgEyebrow"/>
+                <Title text="{i18n>galleryPageTitle}" level="H1" class="pgPageTitle" wrapping="true"/>
+                <Text text="{i18n>galleryIntro}" class="pgMuted"/>
+            </VBox>
+        </VBox>
+
+        <VBox class="pgSection pgContainer">
+            <!--
+                "media/$count": albümdeki fotoğrafların sayısı. Fotoğrafları indirmeden yalnızca
+                sayısını ister (OData V4 model bunu $expand=media($count=true;$top=0) olarak gönderir).
+            -->
+            <l:Grid
+                id="albumGrid"
+                defaultSpan="XL4 L4 M6 S12"
+                vSpacing="1.5"
+                hSpacing="1.5"
+                content="{
+                    path: '/Albums',
+                    sorter: {path: 'albumDate', descending: true},
+                    templateShareable: false
+                }">
+                <f:Card class="pgCampaignCard pgAlbumCard" width="100%">
+                    <f:content>
+                        <VBox width="100%" renderType="Bare">
+                            <Image src="{coverImage}" alt="{title}" width="100%" densityAware="false" class="pgAnimalCover" press=".onAlbumPress"/>
+                            <VBox class="pgCardBody">
+                                <HBox alignItems="Center" wrap="Wrap">
+                                    <ObjectStatus
+                                        text="{path: 'media/$count', formatter: '.formatter.photoCount'}"
+                                        icon="sap-icon://camera"
+                                        state="Information"
+                                        inverted="true"
+                                        class="sapUiTinyMarginEnd"/>
+                                    <Text text="{path: 'albumDate', targetType: 'any', formatter: '.formatter.date'}" class="pgMuted"/>
+                                </HBox>
+                                <Title text="{title}" level="H3" wrapping="true" class="sapUiTinyMarginTop"/>
+                                <Text text="{description}" class="pgMuted sapUiTinyMarginTop" maxLines="2"/>
+                                <Button text="{i18n>openAlbum}" press=".onAlbumPress" class="pgBtnOutline pgBtnSmall sapUiSmallMarginTop"/>
+                            </VBox>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+            </l:Grid>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

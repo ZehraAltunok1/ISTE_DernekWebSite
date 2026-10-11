@@ -22,13 +22,17 @@ async function shiftDemoDates(now = Date.now()) {
     const weeks = Math.floor((now - ANCHOR) / (7 * DAY))
     if (weeks <= 0) return 0
     const days = weeks * 7
-    const { Events, Campaigns } = cds.entities('pg')
+    const { Events, Campaigns, Albums } = cds.entities('pg')
 
     for (const e of await SELECT.from(Events).columns('ID', 'startDateTime', 'endDateTime')) {
         await UPDATE(Events, e.ID).with({ startDateTime: addDays(e.startDateTime, days), endDateTime: addDays(e.endDateTime, days) })
     }
     for (const c of await SELECT.from(Campaigns).columns('ID', 'startDate', 'endDate')) {
         await UPDATE(Campaigns, c.ID).with({ startDate: addDays(c.startDate, days), endDate: addDays(c.endDate, days) })
+    }
+    // Albümler de kayar: etkinlik albümünün tarihi etkinlikle aynı kalsın
+    for (const a of await SELECT.from(Albums).columns('ID', 'albumDate')) {
+        await UPDATE(Albums, a.ID).with({ albumDate: addDays(a.albumDate, days) })
     }
     LOG.info(`Demo tarihleri ${days} gün ileri kaydırıldı`)
     return days

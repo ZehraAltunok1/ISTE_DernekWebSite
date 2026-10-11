@@ -3,7 +3,7 @@ const mailer = require('./lib/mailer')
 
 module.exports = class AdminService extends cds.ApplicationService {
     init() {
-        const { Campaigns, Donations, VolunteerApplications, ContactMessages, Animals, AdoptionApplications, Events, EventRegistrations } = this.entities
+        const { Campaigns, Donations, VolunteerApplications, ContactMessages, Animals, AdoptionApplications, Events, EventRegistrations, Albums } = this.entities
         const db = cds.entities('pg')
 
         // ── Kampanyalar ──────────────────────────────────────
@@ -127,6 +127,20 @@ module.exports = class AdminService extends cds.ApplicationService {
         this.on('markAttended', EventRegistrations, setAttendance('Attended'))
         this.on('markAbsent', EventRegistrations, setAttendance('Absent'))
 
+        // ── Galeri ───────────────────────────────────────────
+
+        // Taslak etkinleştirilirken (SAVE) req.data, fotoğraflar dahil bütün belgeyi içerir.
+        this.before('SAVE', Albums, req => {
+            const { isPublished, media = [] } = req.data
+            if (isPublished && media.length === 0) req.error(400, 'ALBUM_EMPTY', 'isPublished')
+            media.forEach(item => {
+                if (!isAllowedImageUrl(item.url)) req.error(400, 'MEDIA_URL_INVALID', `media(ID=${item.ID},IsActiveEntity=false)/url`, [item.url])
+            })
+            if (req.data.coverImage && !isAllowedImageUrl(req.data.coverImage)) {
+                req.error(400, 'MEDIA_URL_INVALID', 'coverImage', [req.data.coverImage])
+            }
+        })
+
         // ── İletişim mesajları ───────────────────────────────
 
         this.on('markAnswered', ContactMessages, async req => {
@@ -140,6 +154,15 @@ module.exports = class AdminService extends cds.ApplicationService {
 
         return super.init()
     }
+}
+
+/**
+ * Görseller ya projedeki fotoğraf klasöründen ya da HTTPS bir adresten gelmeli.
+ * "javascript:" gibi adresler ve düz HTTP (karışık içerik) reddedilir.
+ */
+function isAllowedImageUrl(url) {
+    if (typeof url !== 'string' || url.includes('..')) return false
+    return /^\/site\/webapp\/images\/[\w./-]+$/.test(url) || /^https:\/\/\S+$/.test(url)
 }
 
 /**

@@ -1,0 +1,41 @@
+<mvc:View
+    controllerName="pg.site.controller.Album"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <Page id="page" showHeader="false" class="pgPage">
+        <VBox class="pgSection pgContainer">
+            <Button text="{i18n>backToGallery}" icon="sap-icon://nav-back" type="Transparent" press=".onNavGallery" class="sapUiSmallMarginBottom"/>
+
+            <Text text="{path: 'albumDate', targetType: 'any', formatter: '.formatter.date'}" class="pgEyebrow"/>
+            <Title text="{title}" level="H1" wrapping="true" class="pgDetailTitle"/>
+            <Text text="{description}" class="pgMuted sapUiSmallMarginTop"/>
+            <!-- Albüm bir etkinliğe bağlıysa etkinlik sayfasına bağlantı -->
+            <Link
+                text="{i18n>albumEventLink}"
+                visible="{= !!%{event_ID} }"
+                press=".onOpenEvent"
+                class="sapUiSmallMarginTop"/>
+
+            <!--
+                Izgara düzeni CSS'tedir (.pgGallery). Her fotoğrafın boyutu veriden gelir:
+                CustomData + writeToDom, "layout" değerini HTML'e data-layout özniteliği olarak yazar,
+                CSS de [data-layout="Wide"] gibi seçicilerle hücre genişliğini ayarlar.
+            -->
+            <FlexBox
+                id="photoGrid"
+                class="pgGallery sapUiMediumMarginTop"
+                renderType="Bare"
+                items="{path: 'media', sorter: {path: 'sortOrder'}, templateShareable: false}">
+                <Image src="{url}" alt="{caption}" densityAware="false" class="pgGalleryItem" press=".onOpenPhoto">
+                    <customData>
+                        <core:CustomData key="layout" value="{layout}" writeToDom="true"/>
+                    </customData>
+                </Image>
+            </FlexBox>
+        </VBox>
+
+        <core:Fragment fragmentName="pg.site.view.fragments.Footer" type="XML"/>
+    </Page>
+</mvc:View>

@@ -145,3 +145,20 @@ annotate pg.EventRegistrations with @title: '{i18n>EventRegistration}' {
     attendance   @title: '{i18n>Attendance}';
     createdAt    @title: '{i18n>RegisteredAt}';
 }
+
+annotate pg.Albums with @title: '{i18n>Album}' {
+    title       @title: '{i18n>Title}';
+    description @title: '{i18n>Description}' @UI.MultiLineText;
+    albumDate   @title: '{i18n>AlbumDate}';
+    coverImage  @title: '{i18n>CoverImage}';
+    event       @title: '{i18n>Event}';
+    isPublished @title: '{i18n>IsPublished}';
+}
+
+annotate pg.MediaItems with @title: '{i18n>MediaItem}' {
+    url       @title: '{i18n>PhotoUrl}';
+    caption   @title: '{i18n>Caption}';
+    layout    @title: '{i18n>MediaLayout}';
+    featured  @title: '{i18n>Featured}';
+    sortOrder @title: '{i18n>SortOrder}';
+}

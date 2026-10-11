@@ -1,0 +1,5 @@
+ID;title;description;albumDate;coverImage;event_ID;isPublished;createdAt
+a1000000-0000-4000-8000-000000000001;Hafta Sonu Besleme Maratonu;Gönüllülerimizle sokak hayvanları için mahalle mahalle dolaştığımız besleme gününden kareler.;2026-09-20;/site/webapp/images/photos/sokak-kedisi.jpg;e1000000-0000-4000-8000-000000000006;true;2026-09-21T10:00:00Z
+a1000000-0000-4000-8000-000000000002;Yuvaya Kavuşanlar;Sahiplendirdiğimiz dostlarımız ve yeni aileleri. Her biri bizim için ayrı bir mutluluk.;2026-08-30;/site/webapp/images/photos/golden-sevgi.jpg;;true;2026-08-31T10:00:00Z
+a1000000-0000-4000-8000-000000000003;Tedavi ve Kurtarma;Gönüllü veterinerlerimizin muayene günleri ve kurtarma çalışmalarımızdan anlar.;2026-07-12;/site/webapp/images/photos/veteriner-muayene.jpg;;true;2026-07-13T10:00:00Z
+a1000000-0000-4000-8000-000000000004;Kış Hazırlıkları;Kulübe ve battaniye toplama kampanyası (hazırlanıyor).;2026-10-05;/site/webapp/images/photos/barinak-kopekler.jpg;;false;2026-10-06T10:00:00Z

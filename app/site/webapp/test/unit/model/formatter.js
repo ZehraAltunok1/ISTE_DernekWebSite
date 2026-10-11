@@ -134,4 +134,12 @@ sap.ui.define([
     QUnit.test("capacityText", function (assert) {
         assert.strictEqual(formatter.capacityText.call(oFakeController, "3", 60), "capacityText:3,60");
     });
+
+    QUnit.module("formatter — galeri");
+
+    QUnit.test("photoCount: OData $count metin olarak da gelebilir", function (assert) {
+        var photoCount = formatter.photoCount.bind(oFakeController);
+        assert.strictEqual(photoCount("5"), "photoCount:5");
+        assert.strictEqual(photoCount(undefined), "photoCount:0");
+    });
 });

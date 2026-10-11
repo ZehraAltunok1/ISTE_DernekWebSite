@@ -96,6 +96,10 @@
                         <customData><core:CustomData key="route" value="EventRegistrationsList"/></customData>
                         <TileContent><ImageContent src="sap-icon://add-employee"/></TileContent>
                     </GenericTile>
+                    <GenericTile header="{i18n>tileGallery}" subheader="{i18n>tileGallerySub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                        <customData><core:CustomData key="route" value="AlbumsList"/></customData>
+                        <TileContent><ImageContent src="sap-icon://camera"/></TileContent>
+                    </GenericTile>
                     <GenericTile header="{i18n>tileDonations}" subheader="{i18n>tileDonationsSub}" press=".onNavigate" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
                         <customData><core:CustomData key="route" value="DonationsList"/></customData>
                         <TileContent><ImageContent src="sap-icon://lead"/></TileContent>

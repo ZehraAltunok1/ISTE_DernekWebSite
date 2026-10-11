@@ -2,8 +2,10 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
     "sap/m/MessageBox",
+    "sap/m/LightBox",
+    "sap/m/LightBoxItem",
     "pg/site/model/formatter"
-], function (Controller, UIComponent, MessageBox, formatter) {
+], function (Controller, UIComponent, MessageBox, LightBox, LightBoxItem, formatter) {
     "use strict";
 
     /**
@@ -59,6 +61,29 @@ sap.ui.define([
         onEventPress: function (oEvent) {
             var sId = oEvent.getSource().getBindingContext().getProperty("ID");
             this.getRouter().navTo("eventDetail", { eventId: sId });
+        },
+
+        onNavGallery: function () {
+            this.getRouter().navTo("gallery");
+        },
+
+        /**
+         * Galerideki bir fotoğrafa basınca büyük halini LightBox'ta açar.
+         * LightBox bir kez oluşturulur ve view'a "dependent" olarak eklenir;
+         * böylece view yok edilince o da yok edilir ve i18n modeline erişir.
+         */
+        onOpenPhoto: function (oEvent) {
+            var oContext = oEvent.getSource().getBindingContext();
+            if (!this._oLightBox) {
+                this._oLightBox = new LightBox({ imageContent: new LightBoxItem() });
+                this.getView().addDependent(this._oLightBox);
+            }
+            var sCaption = oContext.getProperty("caption") || "";
+            this._oLightBox.getImageContent()[0]
+                .setImageSrc(oContext.getProperty("url"))
+                .setAlt(sCaption)
+                .setTitle(sCaption);
+            this._oLightBox.open();
         },
 
         onNavDonate: function () {

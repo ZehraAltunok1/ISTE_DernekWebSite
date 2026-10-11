@@ -1,6 +1,7 @@
 using pg from '../db/schema';
 using from '../db/codes';
 using from '../db/codes-events';
+using from '../db/codes-gallery';
 using from '../db/labels';
 
 /**
@@ -45,6 +46,10 @@ service AdminService {
             action approve(note : String(500)) returns AdoptionApplications;
             action decline(note : String(500)) returns AdoptionApplications;
         };
+
+    /** Galeri albümleri — fotoğraflarıyla birlikte (composition) taslak olarak düzenlenir. */
+    @odata.draft.enabled
+    entity Albums                as projection on pg.Albums;
 
     /** Etkinlikler — taslak olarak düzenlenir; kayıt sayısı yalnızca sunucuda değişir. */
     @odata.draft.enabled

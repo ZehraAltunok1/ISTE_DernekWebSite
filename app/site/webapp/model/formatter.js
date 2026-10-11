@@ -187,6 +187,11 @@ sap.ui.define([
             return toNumber(vCapacity) - toNumber(vRegistered) <= 5 ? "Warning" : "Success";
         },
 
+        /** Albüm kartı: 5 → "5 fotoğraf". this: controller */
+        photoCount: function (vCount) {
+            return this.getText("photoCount", [toNumber(vCount)]);
+        },
+
         /** Duyuru türü → liste satırının renkli şeridi (sap.ui.core.MessageType / IndicationColor) */
         announcementHighlight: function (sType) {
             switch (sType) {

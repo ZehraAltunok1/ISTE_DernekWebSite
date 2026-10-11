@@ -205,3 +205,31 @@ entity SiteStats {
         icon      : String(60);
         sortOrder : Integer default 0;
 }
+
+// ─────────────────────────────────────────────────────────────
+// Galeri
+// ─────────────────────────────────────────────────────────────
+
+/** Fotoğrafın galeri ızgarasındaki boyutu: Wide = 2 sütun, Tall = 2 satır, Large = 2×2 */
+type MediaLayout : String(6) enum { Normal; Wide; Tall; Large };
+
+entity Albums : cuid, managed {
+    title       : String(100) @mandatory;
+    description : String(500);
+    albumDate   : Date        @mandatory;
+    coverImage  : String(255);
+    /** İsteğe bağlı: albüm bir etkinlikte çekildiyse */
+    event       : Association to Events;
+    isPublished : Boolean default false;
+    media       : Composition of many MediaItems on media.album = $self;
+}
+
+entity MediaItems : cuid {
+    album     : Association to Albums;
+    url       : String(255) @mandatory;
+    caption   : String(150);
+    layout    : MediaLayout default 'Normal';
+    /** Hakkımızda sayfasındaki seçki galerisinde gösterilsin mi? */
+    featured  : Boolean default false;
+    sortOrder : Integer default 0;
+}

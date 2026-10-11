@@ -131,6 +131,16 @@
           "target": "eventDetail"
         },
         {
+          "pattern": "galeri",
+          "name": "gallery",
+          "target": "gallery"
+        },
+        {
+          "pattern": "galeri/{albumId}",
+          "name": "album",
+          "target": "album"
+        },
+        {
           "pattern": "bagis:?query:",
           "name": "donate",
           "target": "donate"
@@ -221,6 +231,16 @@
           "id": "eventDetail",
           "name": "EventDetail",
           "title": "{i18n>eventDetailTitle}"
+        },
+        "gallery": {
+          "id": "gallery",
+          "name": "Gallery",
+          "title": "{i18n>navGallery}"
+        },
+        "album": {
+          "id": "album",
+          "name": "Album",
+          "title": "{i18n>albumDetailTitle}"
         }
       }
     }

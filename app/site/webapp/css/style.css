@@ -629,6 +629,7 @@ html:root {
 .pgHeaderFaq       { --pg-header-photo: url("../images/photos/tesekkurler-kopek.jpg"); }
 .pgHeaderContact   { --pg-header-photo: url("../images/photos/kedi-tirmalama.jpg"); }
 .pgHeaderAdoption  { --pg-header-photo: url("../images/photos/gonullu-kedi-kopek.jpg"); }
+.pgHeaderGallery   { --pg-header-photo: url("../images/photos/golden-sevgi.jpg"); }
 .pgHeaderEvents    { --pg-header-photo: url("../images/photos/sarilma-kopek.jpg"); }
 
 .pgPageHeader .pgContainer {
@@ -792,12 +793,17 @@ html:root {
     transform: scale(1.02);
 }
 
-.pgGalleryWide {
-    grid-column: span 2;
+/* Fotoğraf boyutu veriden gelir (MediaItems.layout → CustomData → data-layout) */
+.pgGalleryItem[data-layout="Wide"]  { grid-column: span 2; }
+.pgGalleryItem[data-layout="Tall"]  { grid-row: span 2; }
+.pgGalleryItem[data-layout="Large"] { grid-column: span 2; grid-row: span 2; }
+
+.pgGalleryItem.sapMImg {
+    cursor: zoom-in;
 }
 
-.pgGalleryTall {
-    grid-row: span 2;
+.pgAlbumCard .pgAnimalCover {
+    cursor: pointer;
 }
 
 /* ══════════════════════════════════════════════════════════

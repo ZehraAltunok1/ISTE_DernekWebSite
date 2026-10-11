@@ -4,6 +4,7 @@
         <Button text="{i18n>navCampaigns}" icon="sap-icon://heart" press=".onNavCampaigns"/>
         <Button text="{i18n>navAdopt}" icon="sap-icon://animal-paw" press=".onNavAnimals"/>
         <Button text="{i18n>navEvents}" icon="sap-icon://calendar" press=".onNavEvents"/>
+        <Button text="{i18n>navGallery}" icon="sap-icon://camera" press=".onNavGallery"/>
         <Button text="{i18n>navVolunteer}" icon="sap-icon://group" press=".onNavVolunteer"/>
         <Button text="{i18n>navAbout}" icon="sap-icon://hint" press=".onNavAbout"/>
         <Button text="{i18n>navFaq}" icon="sap-icon://question-mark" press=".onNavFaq"/>

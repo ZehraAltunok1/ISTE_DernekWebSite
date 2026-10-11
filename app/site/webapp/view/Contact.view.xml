@@ -50,7 +50,7 @@
                             </VBox>
                         </HBox>
                     </VBox>
-                    <Image src="images/photos/golden-sevgi.jpg" alt="{i18n>gallery1}" width="100%" densityAware="false" class="pgRoundedPhoto sapUiMediumMarginTop"/>
+                    <Image src="images/photos/golden-sevgi.jpg" alt="{i18n>contactImageAlt}" width="100%" densityAware="false" class="pgRoundedPhoto sapUiMediumMarginTop"/>
                 </VBox>
 
                 <!-- Sağ: mesaj formu -->

@@ -200,6 +200,16 @@
           "pattern": "EventRegistrations({key}):?query:",
           "name": "EventRegistrationsObjectPage",
           "target": "EventRegistrationsObjectPage"
+        },
+        {
+          "pattern": "Albums:?query:",
+          "name": "AlbumsList",
+          "target": "AlbumsList"
+        },
+        {
+          "pattern": "Albums({key}):?query:",
+          "name": "AlbumsObjectPage",
+          "target": "AlbumsObjectPage"
         }
       ],
       "targets": {
@@ -628,6 +638,44 @@
           "options": {
             "settings": {
               "contextPath": "/EventRegistrations",
+              "editableHeaderContent": false
+            }
+          }
+        },
+        "AlbumsList": {
+          "type": "Component",
+          "id": "AlbumsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Albums",
+              "variantManagement": "Page",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Albums": {
+                  "detail": {
+                    "route": "AlbumsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AlbumsObjectPage": {
+          "type": "Component",
+          "id": "AlbumsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Albums",
               "editableHeaderContent": false
             }
           }
