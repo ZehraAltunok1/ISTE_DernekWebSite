@@ -2,6 +2,7 @@
     controllerName="pg.site.controller.CampaignDetail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
+    xmlns:pg="pg.site.control"
     xmlns:l="sap.ui.layout"
     xmlns="sap.m">
 
@@ -32,11 +33,13 @@
 
                     <Text text="{path: 'raisedAmount', targetType: 'any', formatter: '.formatter.currency'}" class="pgAmountLarge sapUiMediumMarginTop"/>
                     <Text text="{parts: ['i18n>campaignGoal', {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.labelCurrency'}" class="pgMuted"/>
-                    <ProgressIndicator
+                    <!-- Projenin kendi kontrolü (control/ProgressMeter.js): yüzdeyi kendisi hesaplar -->
+                    <pg:ProgressMeter
                         class="sapUiSmallMarginTop"
-                        percentValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percent'}"
-                        displayValue="{parts: [{path: 'raisedAmount', targetType: 'any'}, {path: 'goalAmount', targetType: 'any'}], formatter: '.formatter.percentText'}"
-                        showValue="true"/>
+                        value="{raisedAmount}"
+                        max="{goalAmount}"
+                        label="{i18n>campaignProgress}"
+                        state="{= %{status} === 'Completed' ? 'Success' : 'None' }"/>
 
                     <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop" wrap="Wrap">
                         <VBox>

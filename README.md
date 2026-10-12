@@ -84,6 +84,8 @@ Veriler bellekte tutulur: sunucu her yeniden başladığında demo verisine dön
 | SSS | Gruplanmış liste (`sorter.group`), `Panel` |
 | Hakkımızda, 404 | `sap.f.Card`, fotoğraf galerisi, `IllustratedMessage` |
 
+Özel kontrol: `control/ProgressMeter.js` — kampanya ve etkinlik doluluk çubuğu (metadata, renderer apiVersion 2, `onAfterRendering` animasyonu, ARIA `progressbar`, dile göre yüzde).
+
 Ortak yapı: `sap.tnt.ToolPage` + `NavContainer` + router, telefon menüsü (`ActionSheet`), i18n, formatter'lar, `BaseController`.
 Tasarım: SAP tema değişkenleri (`--sap…`) ezilerek marka renkleri ve yazı tipleri (Playfair Display, DM Sans) uygulanır.
 

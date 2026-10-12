@@ -33,7 +33,7 @@ sap.ui.define(function () {
         },
         tests: {
             "unit/unitTests": {
-                title: "Birim testleri (formatter, doğrulama)"
+                title: "Birim testleri (formatter, doğrulama, özel kontrol)"
             },
             "integration/opaTests": {
                 title: "Entegrasyon testleri (OPA5) — CAP sunucusu açık olmalı",

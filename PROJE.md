@@ -1,6 +1,6 @@
 # Pati ve Gelecek Derneği — SAPUI5 Portföy Projesi
 
-> **Durum:** v0.8 · 11 Ekim 2026 — **Faz 1 ve Faz 2 tamamlandı** (sahiplendirme, etkinlikler, galeri, üye alanı), sırada Faz 3.
+> **Durum:** v0.9 · 11 Ekim 2026 — **Faz 1 ve Faz 2 tamamlandı**; Faz 3a (özel kontrol) tamamlandı, sırada dashboard grafikleri.
 > Bu doküman projenin **tek referans kaynağıdır**. Her yeni özellik önce buraya eklenir, sonra kodlanır.
 > Durum işaretleri: ✅ tamamlandı · 🟡 kısmen · ⬜ yapılmadı
 
@@ -90,7 +90,7 @@ Bu proje **gerçek bir dernek sitesi değildir.** İki amacı vardır:
 | **SAP CAP**: CDS modelleme, servisler, handler'lar, yetkiler, i18n mesajları | `db/`, `srv/`, `_i18n/` | ✅ |
 | UI5 Tooling (`ui5.yaml`), UI5 Linter | Her iki uygulama | ✅ |
 | Backend testleri (`cds.test`) | `test/services.test.js` | ✅ |
-| Özel kontrol (custom control) | Kampanya ilerleme kartı | ⬜ (şimdilik fragment) |
+| Özel kontrol (custom control): metadata, renderer (apiVersion 2), yaşam döngüsü, ARIA, yerel yüzde biçimi | `control/ProgressMeter.js` → kampanya kartı/detayı, etkinlik doluluğu | ✅ |
 | QUnit (formatter, doğrulama) + OPA5 (gezinme, formlar), sayfa nesneleri | `app/site/webapp/test` | ✅ |
 | UI5 **Test Starter** (`testsuite.qunit.js`), başsız test (`ui5-test-runner`) | `npm run test:ui`, CI | ✅ |
 
@@ -116,8 +116,11 @@ CAP backend, herkese açık site (ana sayfa, kampanyalar, detay, bağış, gön�
 ### Faz 2 — Topluluk ✅
 ✅ Sahiplendirme (hayvan ilanları + başvuru). ✅ Etkinlikler + kayıt. ✅ Galeri. ✅ Üye girişi ve üye alanı.
 
-### Faz 3 — Cila ve Sunum ⬜
-Dashboard grafikleri, İngilizce, özel kontrol (custom control), canlı demo.
+### Faz 3 — Cila ve Sunum 🟡
+- ✅ 3a Özel kontrol: `pg.site.control.ProgressMeter` (hazır `ProgressIndicator` + tema sınıflarını ezen CSS yerine)
+- ⬜ 3b Yönetim dashboard'una grafikler
+- ⬜ 3c İngilizce (i18n)
+- ⬜ 3d Canlı demo (barındırma kararı kullanıcıda)
 
 ---
 
@@ -361,7 +364,8 @@ Görsel yolları sunucu köküne göre mutlaktır (`/site/webapp/images/...`); b
 | 11 | Faz 2b: etkinlikler (backend, site, yönetim, testler) | ✅ |
 | 12 | Faz 2c: galeri (backend, site, yönetim, testler) | ✅ |
 | 13 | Faz 2d: üye alanı (MemberService, giriş, Hesabım, testler) | ✅ |
-| 14+ | Faz 3 | ⬜ |
+| 14 | Faz 3a: özel kontrol ProgressMeter + birim testleri | ✅ |
+| 15+ | Faz 3b–3d: grafikler, İngilizce, canlı demo | ⬜ |
 
 ---
 

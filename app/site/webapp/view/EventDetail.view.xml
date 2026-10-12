@@ -2,6 +2,7 @@
     controllerName="pg.site.controller.EventDetail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
+    xmlns:pg="pg.site.control"
     xmlns:l="sap.ui.layout"
     xmlns="sap.m">
 
@@ -53,11 +54,13 @@
                         </HBox>
                     </VBox>
 
-                    <ProgressIndicator
+                    <pg:ProgressMeter
                         class="sapUiSmallMarginTop"
-                        percentValue="{parts: [{path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.percent'}"
-                        displayValue="{parts: [{path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.capacityText'}"
-                        showValue="true"/>
+                        value="{registeredCount}"
+                        max="{capacity}"
+                        label="{i18n>eventCapacity}"
+                        valueText="{parts: [{path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.capacityText'}"
+                        state="{= %{registeredCount} >= %{capacity} ? 'Error' : (5 >= %{capacity} - %{registeredCount} ? 'Warning' : 'None') }"/>
                     <ObjectStatus
                         text="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationHint'}"
                         state="{parts: [{path: 'status', targetType: 'any'}, {path: 'startDateTime', targetType: 'any'}, {path: 'registeredCount', targetType: 'any'}, {path: 'capacity', targetType: 'any'}], formatter: '.formatter.registrationState'}"/>

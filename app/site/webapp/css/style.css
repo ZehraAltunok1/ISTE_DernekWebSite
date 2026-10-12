@@ -533,39 +533,44 @@ html:root {
 }
 
 /*
- * İlerleme çubuğu. Horizon'da yapı: .sapMPI > .sapMPIBar (dolu kısım) + .sapMPIBarRemaining (kalan kısım,
- * sonunda ::after ile çizilen bir nokta). Kalan kısmı açık yeşil, dolu kısmı yeşil gradyan yapıyoruz.
+ * İlerleme çubuğu — projenin kendi kontrolü (control/ProgressMeter.js).
+ * HTML'i biz yazdığımız için tema iç sınıflarını ezmemize gerek yok.
  */
-.pgPage .sapMPI {
-    background: transparent;
-    border: none;
+.pgMeter {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    width: 100%;
 }
 
-.pgPage .sapMPI .sapMPIBar {
+.pgMeterTrack {
+    flex: 1;
     height: .65rem;
-    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
-    background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
-}
-
-.pgPage .sapMPI .sapMPIBarRemaining {
-    height: .65rem;
-    border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
-    background: var(--clr-green-soft);
-}
-
-.pgPage .sapMPI .sapMPIBarRemaining::after {
-    display: none;
-}
-
-/* Hedefe ulaşıldıysa dolu kısım tam yuvarlak */
-.pgPage .sapMPI.sapMPIValueMax .sapMPIBar {
     border-radius: var(--radius-pill);
+    background: var(--clr-green-soft);
+    overflow: hidden;
 }
 
-.pgPage .sapMPI .sapMPITextLeft,
-.pgPage .sapMPI .sapMPITextRight {
+.pgMeterFill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
+    transition: width .9s cubic-bezier(.25, .8, .25, 1);
+}
+
+.pgMeterSuccess .pgMeterFill { background: var(--clr-primary-dark); }
+.pgMeterWarning .pgMeterFill { background: linear-gradient(90deg, var(--clr-accent-hover), var(--clr-accent)); }
+.pgMeterError .pgMeterFill   { background: var(--sapNegativeColor, #b00); }
+
+.pgMeterText {
+    flex: 0 0 auto;
     font-weight: 700;
     color: var(--clr-primary-dark);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pgMeterFill { transition: none; }
 }
 
 /* ── Sahiplendirme: hayvan kartı, filtre çubuğu, karusel ── */

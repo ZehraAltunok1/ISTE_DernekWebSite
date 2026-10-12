@@ -19,17 +19,6 @@ sap.ui.define([
 
     QUnit.module("formatter — sayılar");
 
-    QUnit.test("percent: toplanan / hedef yüzdesi, 0–100 aralığında", function (assert) {
-        assert.strictEqual(formatter.percent("20250.00", "40000.00"), 51, "OData Decimal metinleri sayıya çevrilir");
-        assert.strictEqual(formatter.percent(30500, 30000), 100, "hedef aşılsa da en fazla 100");
-        assert.strictEqual(formatter.percent(500, 0), 0, "hedef 0 ise 0 (sıfıra bölme yok)");
-        assert.strictEqual(formatter.percent(null, undefined), 0, "boş değerler 0");
-    });
-
-    QUnit.test("percentText: Türkçede yüzde işareti başta", function (assert) {
-        assert.strictEqual(formatter.percentText(1, 4), "%25");
-    });
-
     QUnit.test("currency ve integer: binlik ayırıcı nokta", function (assert) {
         assert.ok(formatter.currency("20250.00").indexOf("20.250") >= 0, "20.250 içerir: " + formatter.currency("20250.00"));
         assert.ok(formatter.currency(100).indexOf("₺") >= 0, "TL simgesi içerir");

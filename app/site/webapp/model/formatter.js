@@ -31,20 +31,6 @@ sap.ui.define([
             return oInteger.format(toNumber(vValue));
         },
 
-        /** Toplanan / hedef → 0–100 arası tam sayı (ProgressIndicator için) */
-        percent: function (vRaised, vGoal) {
-            var nGoal = toNumber(vGoal);
-            if (nGoal <= 0) {
-                return 0;
-            }
-            return Math.min(100, Math.round(toNumber(vRaised) / nGoal * 100));
-        },
-
-        /** "%54" (Türkçede yüzde işareti sayının önüne yazılır) */
-        percentText: function (vRaised, vGoal) {
-            return "%" + formatter.percent(vRaised, vGoal);
-        },
-
         /** ("Hedef", 40000) → "Hedef: 40.000 ₺" */
         labelCurrency: function (sLabel, vAmount) {
             return sLabel + ": " + formatter.currency(vAmount);
